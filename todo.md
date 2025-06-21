@@ -1,0 +1,2 @@
+- nodetype and nodeName ke getter functions likhne hn
+- baseURI for node
