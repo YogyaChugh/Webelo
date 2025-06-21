@@ -1,0 +1,2 @@
+class DOMString{};
+class USVString{};

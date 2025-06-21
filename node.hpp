@@ -1,8 +1,6 @@
+#include "events.hpp"
 #include <map>
 
-class EventTarget{};
-class DOMString{};
-class USVString{};
 class Document{};
 class Element{};
 class NodeList{};
