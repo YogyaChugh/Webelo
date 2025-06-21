@@ -31,29 +31,47 @@ struct path_structs{
 class Event{
     private:
         //Read-only
-        DOMString type = ""; //e.g. "click", "haschange" or "submit"
 
-        //This stores a potential event target ! either null or an EventTarget object !
+        // Type of the Event like "click", "haschange", "submit", etc...
+        DOMString type = "";
+
+        // NOTE: a potential event target is null or an EventTarget object !
+
+        // This stores a potential event target !
+        // It is a reference to the object to which the event was originally dispatched.
         EventTarget target = null; //can be null
-        EventTarget target = null; //can be null //legacy
+        EventTarget &srcElement = target; //legacy alias for target
 
         //This also stores an event target but it is for related targets like for mouse events
         //it stores like the element the mouse came from or is going to ! mainly for reference !
         EventTarget relatedTarget = null; //can be null
-        EventTarget currentTarget; //can be null  // Returns the object whose event listener’s callback is currently being invoked.
+
+        // A reference to the currently registered target for the event.
+        // This is the object to which the event is currently slated to be sent.
+        // It's possible this has been changed along the way through retargeting.
+        EventTarget currentTarget; //can be null
+
+        // Indicates which phase of the event flow is being processed.
         enum event_phase eventPhase = NONE; // one of the top definitions
 
-        // indicates whether the event bubbles up through the DOM
+        // Indicates whether the event bubbles up through the DOM
         bool bubbles;
 
-        // indicates whether the default action be prevented using preventDefault()
+        // Indicates whether the default action be prevented using preventDefault()
         bool cancelable;
+
+        // Indicates whether or not the call to event.preventDefault() cancelled the event !
         bool defaultPrevented;
+
+        // Indicating whether or not the event can bubble across the boundary between the shadow DOM and the regular DOM
         bool composed;
+
+        // Indicates whether or not the event was initiated by the browser (after a user click, for instance) or by a script (using an event creation method, for example).
         bool isTrusted; //LEGACY UNFORGEABLE
+
+        // The time at which the event was created (in milliseconds). 
         DOMHighResTimeStamp timeStamp;
 
-        // NOTE: a potential event target is null or an EventTarget object !
 
 
         //Full power baby !!
