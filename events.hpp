@@ -42,7 +42,11 @@ class Event{
         EventTarget relatedTarget = null; //can be null
         EventTarget currentTarget; //can be null  // Returns the object whose event listener’s callback is currently being invoked.
         enum event_phase eventPhase = NONE; // one of the top definitions
+
+        // indicates whether the event bubbles up through the DOM
         bool bubbles;
+
+        // indicates whether the default action be prevented using preventDefault()
         bool cancelable;
         bool defaultPrevented;
         bool composed;
