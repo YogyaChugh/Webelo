@@ -38,7 +38,7 @@ void Event::set_canceled_flag(){
     if (cancelable and !in_passive_listener_flag){
         canceled_flag = true;
     }
-}
+};
 
 void Event::preventDefault(){
     // *Cancels the event (if it is cancelable).

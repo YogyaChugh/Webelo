@@ -48,39 +48,20 @@ class Event{
         bool bubbles;
         bool cancelable;
 
-        // ! Ommitted for function: bool defaultPrevented;
+        // ! Ommitted for function: bool defaultPrevented
 
-        // Indicating whether or not the event can bubble across the boundary between the shadow DOM and the regular DOM
         bool composed;
-
-        // Indicates whether or not the event was initiated by the browser (after a user click, for instance) or by a script (using an event creation method, for example).
         bool isTrusted; //LEGACY UNFORGEABLE
-
-        // The time at which the event was created (in milliseconds). 
         DOMHighResTimeStamp timeStamp;
 
+        //*Editable
 
-        //*Full power baby !! Both readable and editable
+        // ! Ommitted for function: bool returnValue
 
-        bool returnValue; //legacy
-
-        // Returns the event's path (an array of objects on which listeners will be invoked).
-        // This does not include nodes in shadow trees if the shadow root was created with its ShadowRoot.mode closed
-        std::vector<EventTarget> composedPath(); //legacy
-
-
-        // Stops the propagation of events further along in the DOM.
+        std::vector<EventTarget> composedPath();
         void stopPropagation();
-
-        // For this particular event, prevent all other listeners from being called.
-        // This includes listeners attached to the same element as well as those attached
-        // to elements that will be traversed later (during the capture phase, for instance).
         void stopImmediatePropagation();
-
-        // Cancels the event (if it is cancelable).
         void preventDefault();
-
-        // Initializes the value of an Event created. If the event has already been dispatched, this method does nothing. Use the constructor (Event() instead).
         void initEvent(DOMString type, bool bubbles = false, bool cancelable = false) // legacy
 
         // FLAGS BRO !!
@@ -88,17 +69,16 @@ class Event{
 
     public:
 
-        virtual void some_function() const = 0;
-        // path storing the different path_structs
+        virtual void some_function() const = 0; // *Just to disable direct object creation
         std::vector<struct> path;
         std::vector<EventTarget> touch_target_list = {}; //mostly no use until TouchEvent Interface
 
-        void set_canceled_flag(); //
+        void set_canceled_flag();
 
         // Constructor
         Event(DOMString temptype, EventInit eventInitDict = {});
 
-        // GETTER-SETTER METHODS
+        // *GETTER-SETTER METHODS
 
         // Read-only !!
         DOMString type(){
