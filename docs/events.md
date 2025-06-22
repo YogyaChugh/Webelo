@@ -122,8 +122,9 @@ The path where the elements will be stored in propagation from the element invok
 ### Concept for shadow DOM
 
 So, this was actually so confusing for me and that's why I am explaining this all.
-So when any event handler is attached and whenever event is provoked using user interaction , this all happens.<br><br>
-First `path` is created starting from the element that had the event started and going to the top of the DOM. There can be different cases here !<br>
+So when any event handler is attached and whenever event is provoked using user interaction or `dispatchEvent()`, this all happens.<br><br>
+First `path` is created starting from the element that had the event started and going to the top of the DOM.
+Then the `composedPath()` method does further processing when called. There can be different cases here !<br>
 1) The element is outside a shadow tree, then it just goes from that element to the top which could be Document or window.
 2) The element is inside a shadow tree. It also has 4 cases:-
     1) Shadow tree is closed and `composed` in event is true, then the path includes the shadow root to the top. The hierarchy inside the shadow tree isn't included.
@@ -131,4 +132,6 @@ First `path` is created starting from the element that had the event started and
     3) Shadow tree is open and `composed` in event is true, then the path has the full order from the element invoked to the top including shadow tree hierarchy.
     4) Shadow tree is open and `composed` in event is false, then the path has elements from the element invoked till the shadow root.
 
-This is how based on shadow tree, the `path` for even is calculated. Further, composedPath() works on it to 
+It also removes the shadow roots !
+
+This is how the `path` for the current event is calculated. Furthermore, the `composePath()` method works on this path to have the shadow roots removed and also not including the shadow DOM notes if its mode is closed.
