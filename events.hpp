@@ -3,65 +3,52 @@
 
 class EventTarget{};
 
+
+// *Phase/State of the Event
 enum event_phase: unsigned int{
     NONE = 0;
-    CAPTURING_PHASE = 1;
-    AT_TARGET = 2;
-    BUBBLING_PHASE = 3;
+    CAPTURING_PHASE = 1; //top to bottom
+    AT_TARGET = 2; //reached
+    BUBBLING_PHASE = 3; //bottom to top again !
 }
 
 typedef double DOMHighResTimeStamp; //Should represent a time in milliseconds !
 
 struct EventInit{
     bool bubbles = false,
-    bool canceable = false,
+    bool cancelable = false,
     bool composed = false
 }
 
+
+// *Structs to be stored in path for Event !
 struct path_structs{
-    EventTarget invocation_target;
-    bool invocation_target_in_shadow_tree;
-    EventTarget shadow_adjusted_target; //Can be null
-    EventTarget related_target; //Can be null
-    std::vector<EventTarget> touch_target_list = {};
-    bool root_of_closed_tree;
-    bool slot_in_closed_tree;
+    EventTarget invocation_target; // the actual EventTarget object where a listener might run
+    bool invocation_target_in_shadow_tree; //true if this target is inside a shadow tree
+    EventTarget shadow_adjusted_target; //Can be null - The visible target (may be host if shadow is closed)
+    EventTarget related_target; //Can be null - Another relevant node (e.g. for mouseover/mouseout events)
+    std::vector<EventTarget> touch_target_list = {}; //Touch-specific list of targets (for TouchEvents only)
+    bool root_of_closed_tree; // true if the target is the root of a closed shadow DOM
+    bool slot_in_closed_tree; // true if the node is a <slot> in a closed shadow DOM
 }
 
 class Event{
     private:
-        //Read-only
+        // * NOTE: a potential event target is null or an EventTarget object !
 
-        // Type of the Event like "click", "haschange", "submit", etc...
+        //* Read-only
         DOMString type = "";
+        EventTarget target = null;
 
-        // NOTE: a potential event target is null or an EventTarget object !
+        // ! Ommited: EventTarget, it's legacy alias for `target`
 
-        // This stores a potential event target !
-        // It is a reference to the object to which the event was originally dispatched.
-        EventTarget target = null; //can be null
-        EventTarget &srcElement = target; //legacy alias for target
-
-        //This also stores an event target but it is for related targets like for mouse events
-        //it stores like the element the mouse came from or is going to ! mainly for reference !
-        EventTarget relatedTarget = null; //can be null
-
-        // A reference to the currently registered target for the event.
-        // This is the object to which the event is currently slated to be sent.
-        // It's possible this has been changed along the way through retargeting.
-        EventTarget currentTarget; //can be null
-
-        // Indicates which phase of the event flow is being processed.
-        enum event_phase eventPhase = NONE; // one of the top definitions
-
-        // Indicates whether the event bubbles up through the DOM
+        EventTarget relatedTarget = null;
+        EventTarget currentTarget;
+        enum event_phase eventPhase = NONE;
         bool bubbles;
-
-        // Indicates whether the default action be prevented using preventDefault()
         bool cancelable;
 
-        // Indicates whether or not the call to event.preventDefault() cancelled the event !
-        bool defaultPrevented;
+        // ! Ommitted for function: bool defaultPrevented;
 
         // Indicating whether or not the event can bubble across the boundary between the shadow DOM and the regular DOM
         bool composed;
@@ -73,30 +60,47 @@ class Event{
         DOMHighResTimeStamp timeStamp;
 
 
+        //*Full power baby !! Both readable and editable
 
-        //Full power baby !!
         bool returnValue; //legacy
+
+        // Returns the event's path (an array of objects on which listeners will be invoked).
+        // This does not include nodes in shadow trees if the shadow root was created with its ShadowRoot.mode closed
         std::vector<EventTarget> composedPath(); //legacy
 
-        void stopPropagation();
-        void stopImmediatePropagation();
-        void preventDefault();
-        void initEvent(DOMString type, bool bubbles = false, bool cancelable = false) //legacy
 
+        // Stops the propagation of events further along in the DOM.
+        void stopPropagation();
+
+        // For this particular event, prevent all other listeners from being called.
+        // This includes listeners attached to the same element as well as those attached
+        // to elements that will be traversed later (during the capture phase, for instance).
+        void stopImmediatePropagation();
+
+        // Cancels the event (if it is cancelable).
+        void preventDefault();
+
+        // Initializes the value of an Event created. If the event has already been dispatched, this method does nothing. Use the constructor (Event() instead).
+        void initEvent(DOMString type, bool bubbles = false, bool cancelable = false) // legacy
+
+        // FLAGS BRO !!
         bool stop_propagation_flag, stop_immediate_propagation_flag, canceled_flag, in_passive_listener_flag, composed_flag, initialized_flag, dispatch_flag;
 
     public:
 
+        virtual void some_function() const = 0;
+        // path storing the different path_structs
         std::vector<struct> path;
-        std::vector<EventTarget> touch_target_list = {};
+        std::vector<EventTarget> touch_target_list = {}; //mostly no use until TouchEvent Interface
 
-        void set_canceled_flag();
+        void set_canceled_flag(); //
 
+        // Constructor
         Event(DOMString temptype, EventInit eventInitDict = {});
 
         // GETTER-SETTER METHODS
 
-        //Read-only !!
+        // Read-only !!
         DOMString type(){
             return type;
         };
@@ -105,11 +109,6 @@ class Event{
         };
         EventTarget relatedTarget(){
             return relatedTarget;
-        };
-
-        EventTarget srcElement(){
-            //legacy
-            return target;
         };
         EventTarget currentTarget(){
             return currentTarget;
@@ -156,46 +155,4 @@ class Event{
                 set_canceled_flag();
             }
         };
-}
-
-void Event::Event(DOMString temptype, EventInit eventInitDict = {}){
-    type = temptype;
-    if (eventInitDict!={}){
-        bubbles = eventInitDict.bubbles;
-        cancelable = eventInitDict.cancelable;
-    }
-};
-
-void Event::stopPropagation(){
-    stop_propagation_flag = true;
-};
-
-void Event::stopImmediatePropagation(){
-    stop_propagation_flag = true;
-    stop_immediate_propagation_flag = true;
-};
-
-void Event::set_canceled_flag(){
-    if (cancelable and !in_passive_listener_flag){
-        canceled_flag = true;
-    }
-}
-
-void Event::preventDefault(){
-    set_canceled_flag();
-};
-
-void initEvent(DOMString type, bool bubbles = false, bool cancelable = false){
-    if (dispatch_flag){
-        return;
-    }
-    isTrusted = false;
-    initialized_flag = true;
-    stop_propagation_flag = false;
-    stop_immediate_propagation_flag = false;
-    canceled_flag = false;
-    target = null;
-    type = temptype;
-    bubbles = eventInitDict.bubbles;
-    cancelable = eventInitDict.cancelable;
 }
