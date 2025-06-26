@@ -1,9 +1,19 @@
-# DOM
+# WEBELO
+
+A crazy website builder that allows you to just drag & drop stuff , and it writes the code for you !
+
+## Current Implementation
+
+Currently, creating the basis for any web-browser related stuff #DOM ! Soon, set to HTML Parsing and then diving to the visuals !!!
+Follow to keep updated on this amazing software.
+
+
+## DOM
 
 A `Document Object Model` for storing and working of tree for HTML and XML documents.
 It defines a tree with preorder depth first traversal order.
 
-## What exactly is it ??
+### What exactly is it ??
 Basically, it is a tree implementation strictly abiding to the rules of the [DOM STANDARD](https://dom.spec.whatwg.org/) defined by an organization named [WhatWG](https://whatwg.org/).
 
 It is the `intermediate` which is created when `HTML` is parsed.
@@ -19,19 +29,19 @@ When we load a website, its HTML, CSS and JS is fetched and every component is p
 
 > This repository implements the `DOM tree` for the HTML parsing !
 
-## Interesting Fact
+### Interesting Fact
 There are so many browsers in the world like Google Chrome, Brave, Microsoft Edge, Firefox,etc.. but how is it that a website looks the same on all of them ???<br><br>
 `Reason`
 <br>
 This is possible because of the `standards` that all browsers or specifically rendering engines follow !<br> And that's what we are doing here, following the [DOM Standard](https://dom.spec.whatwg.org/) by [WhatWG](https://whatwg.org/) !
 
-## Running
+### Running
 Currently, the base classes are being defined so running it won't do anything ! Implementation for API coming soon...
 
-## Contributing
+### Contributing
 Yup ! Anyone can contribute, just know c++ and dive into the documentation ! But don't get bored, there's HTML Parser and browser coming up after that ! It's a chain !
 
-## Bindings
+### Bindings
 Bindings for Python, Rust and JS will be available after initial release.
 
 <p>

@@ -1,5 +1,7 @@
 # EVENTS
 
+> EXPOSED :&emsp; *
+
 Events allow signalling something has occured and it can be anything from a simple user interaction to a website page loading !<br>
 For defining events, DOM Standard provides an IDL definition at [DOM Standard - Events](https://dom.spec.whatwg.org/#events).
 

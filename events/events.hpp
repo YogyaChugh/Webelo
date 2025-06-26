@@ -1,4 +1,4 @@
-#include "base.hpp"
+#include "../base.hpp"
 #include <vector>
 
 class EventTarget{};
@@ -15,9 +15,9 @@ enum event_phase: unsigned int{
 typedef double DOMHighResTimeStamp; //Should represent a time in milliseconds !
 
 struct EventInit{
-    bool bubbles = false,
-    bool cancelable = false,
-    bool composed = false
+    bool bubbles = false;
+    bool cancelable = false;
+    bool composed = false;
 }
 
 
@@ -33,16 +33,16 @@ struct path_structs{
 }
 
 class Event{
-    private:
+    protected:
         // * NOTE: a potential event target is null or an EventTarget object !
 
         //* Read-only
         DOMString type = "";
-        EventTarget target = null;
+        EventTarget target = nullptr;
 
         // ! Ommited: EventTarget, it's legacy alias for `target`
 
-        EventTarget relatedTarget = null;
+        EventTarget relatedTarget = nullptr;
         EventTarget currentTarget;
         enum event_phase eventPhase = NONE;
         bool bubbles;
@@ -76,13 +76,13 @@ class Event{
         void set_canceled_flag();
 
         // Constructor
-        Event(DOMString temptype, EventInit eventInitDict = {});
+        Event(DOMString type, EventInit eventInitDict = {});
 
         // *GETTER-SETTER METHODS
 
         // Read-only !!
         DOMString type(){
-            return type;
+            return this->type;
         };
         EventTarget target(){
             return target;
@@ -135,4 +135,21 @@ class Event{
                 set_canceled_flag();
             }
         };
+}
+
+
+struct CustomEventInit: EventInit{
+    auto detail;
+}
+
+class CustomEvent: public Event{
+    protected:
+        auto detail;
+    public:
+        void CustomEvent(DOMString type, CustomEventInit eventInitDict = {});
+        void initCustomEvent(DOMString type, auto detail, bool bubbles = false, bool cancelable = false); //legacy
+
+        auto detail(){
+            return detail;
+        }
 }
