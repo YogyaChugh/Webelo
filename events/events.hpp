@@ -1,16 +1,58 @@
 #include "../base.hpp"
 #include <vector>
+#include <variant>
+#include <string>
+#include <optional>
 
-class EventTarget{};
+class Event;
+
+
+// EVENT -TARGET STUFF
+
+class EventListener{
+    public:
+    void handleEvent(Event event);
+};
+
+
+struct EventListenerOptions {
+    bool capture = false;
+};
+
+struct AddEventListenerOptions: EventListenerOptions{
+    bool passive;
+    bool once = false;
+    AbortSignal signal;
+};
+
+class EventTarget{
+    private:
+        std::vector<EventListener> event_listener_list = {};
+    public:
+        EventTarget(){};
+
+        void addEventListener(DOMString type, EventListener callback, std::variant<AddEventListenerOptions,bool> options);
+        void removeEventListener(DOMString type, EventListener callback, std::variant<AddEventListenerOptions,bool> options);
+        bool dispatchEvent(Event& event);
+
+        bool operator==(EventTarget a){
+            return true;
+        }
+
+        std::optional<EventTarget> get_the_parent(Event event){
+            returns std::nullopt;
+        }
+};
+
 
 
 // *Phase/State of the Event
 enum event_phase: unsigned int{
-    NONE = 0;
-    CAPTURING_PHASE = 1; //top to bottom
-    AT_TARGET = 2; //reached
-    BUBBLING_PHASE = 3; //bottom to top again !
-}
+    NONE = 0,
+    CAPTURING_PHASE = 1, //top to bottom
+    AT_TARGET = 2, //reached
+    BUBBLING_PHASE = 3 //bottom to top again !
+};
 
 typedef double DOMHighResTimeStamp; //Should represent a time in milliseconds !
 
@@ -18,7 +60,7 @@ struct EventInit{
     bool bubbles = false;
     bool cancelable = false;
     bool composed = false;
-}
+};
 
 
 // *Structs to be stored in path for Event !
@@ -30,7 +72,7 @@ struct path_structs{
     std::vector<EventTarget> touch_target_list = {}; //Touch-specific list of targets (for TouchEvents only)
     bool root_of_closed_tree; // true if the target is the root of a closed shadow DOM
     bool slot_in_closed_tree; // true if the node is a <slot> in a closed shadow DOM
-}
+};
 
 class Event{
     protected:
@@ -38,11 +80,11 @@ class Event{
 
         //* Read-only
         DOMString type = "";
-        EventTarget target = nullptr;
+        EventTarget target;
 
         // ! Ommited: EventTarget, it's legacy alias for `target`
 
-        EventTarget relatedTarget = nullptr;
+        EventTarget relatedTarget;
         EventTarget currentTarget;
         enum event_phase eventPhase = NONE;
         bool bubbles;
@@ -62,56 +104,64 @@ class Event{
         void stopPropagation();
         void stopImmediatePropagation();
         void preventDefault();
-        void initEvent(DOMString type, bool bubbles = false, bool cancelable = false) // legacy
+        void initEvent(DOMString type, bool bubbles, bool cancelable); // legacy
 
         // FLAGS BRO !!
         bool stop_propagation_flag, stop_immediate_propagation_flag, canceled_flag, in_passive_listener_flag, composed_flag, initialized_flag, dispatch_flag;
 
     public:
 
-        virtual void some_function() const = 0; // *Just to disable direct object creation
-        std::vector<struct> path;
+        virtual Event* new_instance(){
+            EventInit tempv;
+            tempv.bubbles = this->bubbles;
+            tempv.cancelable = this->cancelable;
+            tempv.composed = this->composed;
+            return new Event(this->type,tempv);
+        };
+        std::vector<path_structs> path;
         std::vector<EventTarget> touch_target_list = {}; //mostly no use until TouchEvent Interface
 
         void set_canceled_flag();
 
         // Constructor
-        Event(DOMString type, EventInit eventInitDict = {});
+        Event(DOMString type, EventInit eventInitDict);
+
+        void inner_event_creation_steps(Realm realm, DOMHighResTimeStamp time, EventInit dictionary);
 
         // *GETTER-SETTER METHODS
 
         // Read-only !!
-        DOMString type(){
+        DOMString gettype(){
             return this->type;
         };
-        EventTarget target(){
+        EventTarget gettarget(){
             return target;
         };
-        EventTarget relatedTarget(){
+        EventTarget getrelatedTarget(){
             return relatedTarget;
         };
-        EventTarget currentTarget(){
+        EventTarget getcurrentTarget(){
             return currentTarget;
         };
-        unsigned short eventPhase(){
+        unsigned short geteventPhase(){
             return eventPhase;
         };
-        bool bubbles(){
+        bool getbubbles(){
             return bubbles;
         };
-        bool cancelable(){
+        bool getcancelable(){
             return cancelable;
         };
-        bool defaultPrevented(){
+        bool getdefaultPrevented(){
             return canceled_flag;
         };
-        bool composed(){
+        bool getcomposed(){
             return composed_flag;
         };
-        bool isTrusted(){
+        bool getisTrusted(){
             return isTrusted;
         };
-        DOMHighResTimeStamp timeStamp(){
+        DOMHighResTimeStamp gettimeStamp(){
             return timeStamp;
         };
 
@@ -135,21 +185,21 @@ class Event{
                 set_canceled_flag();
             }
         };
-}
+};
 
 
 struct CustomEventInit: EventInit{
-    auto detail;
-}
+    DOMString detail; //will change later
+};
 
 class CustomEvent: public Event{
     protected:
-        auto detail;
+        DOMString detail;
     public:
-        void CustomEvent(DOMString type, CustomEventInit eventInitDict = {});
-        void initCustomEvent(DOMString type, auto detail, bool bubbles = false, bool cancelable = false); //legacy
+        CustomEvent(DOMString type, CustomEventInit eventInitDict);
+        void initCustomEvent(DOMString type, DOMString detail, bool bubbles, bool cancelable); //legacy
 
-        auto detail(){
+        DOMString getdetail(){
             return detail;
         }
-}
+};
