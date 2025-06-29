@@ -14,6 +14,23 @@ class EventListener{
     void handleEvent(Event event);
 };
 
+struct event_listener{
+    DOMString type;
+    EventListener* callback;
+    bool capture = false;
+    std::optional<bool> passive = std::nullopt;
+    bool once = false;
+    AbortSignal* signal;
+    bool removed = false;
+
+    bool operator==(event_listener ev){
+        if (type==ev.type && callback==ev.callback && capture==ev.capture && passive==ev.passive && once==ev.once && signal==ev.signal && removed==ev.removed){
+            return true;
+        }
+        return false;
+    }
+};
+
 
 struct EventListenerOptions {
     bool capture = false;
@@ -27,20 +44,39 @@ struct AddEventListenerOptions: EventListenerOptions{
 
 class EventTarget{
     private:
-        std::vector<EventListener> event_listener_list = {};
+        std::vector<event_listener> event_listener_list = {};
     public:
         EventTarget(){};
 
         void addEventListener(DOMString type, EventListener callback, std::variant<AddEventListenerOptions,bool> options);
         void removeEventListener(DOMString type, EventListener callback, std::variant<AddEventListenerOptions,bool> options);
+        void removeAllEventListeners();
         bool dispatchEvent(Event& event);
 
         bool operator==(EventTarget a){
             return true;
         }
 
-        std::optional<EventTarget> get_the_parent(Event event){
-            returns std::nullopt;
+
+        //TODO: Implement the get_the_parent algo
+
+        event_listener* flatten(DOMString type, EventListener callback, std::variant<AddEventListenerOptions,bool> options){
+            event_listener* temp = new event_listener();
+            temp->type = type;
+            temp->callback = &callback;
+            temp->once = false;
+            temp->passive = std::nullopt;
+            temp->signal = nullptr;
+            if (std::holds_alternative<bool>(options)){
+                temp->capture = false;
+            }
+            else if (std::holds_alternative<AddEventListenerOptions>(options)){
+                auto& opts = std::get<AddEventListenerOptions>(options);
+                temp->once = opts.once;
+                temp->passive = opts.passive;
+                temp->signal = &opts.signal;
+            }
+            return temp;
         }
 };
 

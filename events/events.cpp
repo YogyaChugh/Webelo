@@ -1,9 +1,13 @@
 #include "events.hpp"
 #include <typeinfo>
 #include "../base.hpp"
+#include "../window.hpp"
+#include "../nodes/node.hpp"
+#include "../exceptions.cpp"
 #include <ctime>
 #include <map>
 #include <iostream>
+#include <vector>
 
 
 Event::Event(DOMString type, EventInit eventInitDict){
@@ -118,6 +122,80 @@ void CustomEvent::initCustomEvent(DOMString type, DOMString detail, bool bubbles
     }
     this->detail = detail;
     this->initEvent(type, bubbles, cancelable);
+}
+
+
+
+void EventTarget::addEventListener(DOMString type, EventListener callback, std::variant<AddEventListenerOptions, bool> options){
+    event_listener* temp = this->flatten(type, callback, options);
+
+    //TODO: Implement the ServiceWorkerGlobalScope check !
+
+    if ((!temp->signal && temp->signal->aborted) || !temp->callback){
+        return;
+    }
+    if (temp->passive == std::nullopt){
+        //TODO: Implement check in window class, node class !
+        temp->passive = false;
+    }
+
+    bool found = false;
+    
+    for (event_listener a: event_listener_list){
+        if (a.type==temp->type && a.callback==temp->callback && a.capture==temp->capture){
+            found = true;
+            break;
+        }
+    }
+    if (!found){
+        event_listener_list.push_back(*temp);
+    }
+
+    //TODO: Implement the add an algorithm part (pt.6 in add an event listener)
+}
+
+
+void EventTarget::removeEventListener(DOMString type, EventListener callback, std::variant<AddEventListenerOptions,bool> options){
+    event_listener* temp = this-> flatten(type, callback, options);
+
+    bool found = false;
+    event_listener to_be_deleted;
+    
+    for (event_listener a: event_listener_list){
+        if (a.type==temp->type && a.callback==temp->callback && a.capture==temp->capture){
+            found = true;
+            delete temp;
+            to_be_deleted = a;
+            break;
+        }
+    }
+    if (!found){
+        return;
+    }
+
+    //TODO: Implement the ServiceWorkerGlobalScope check !
+
+    to_be_deleted.removed = true;
+    auto iter = find(event_listener_list.begin(),event_listener_list.end(),to_be_deleted);
+    if (iter!=event_listener_list.end()){
+        event_listener_list.erase(iter);
+    }
+}
+
+void EventTarget::removeAllEventListeners(){
+    //TODO: Implement stuff here !
+    for (auto a: event_listener_list){
+        a.removed = true;
+    }
+    event_listener_list.clear();
+}
+
+void EventTarget::dispatchEvent(Event& event){
+    if (event.dispatch_flag || !event.initialized_flag){
+        throw InvalidStateError("Invalid State");
+    }
+    event.isTrusted = false;
+    
 }
 
 int main(){

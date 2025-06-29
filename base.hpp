@@ -5,4 +5,7 @@
 typedef std::string DOMString;
 typedef std::string USVString;
 class Realm{};
-class AbortSignal{};
+class AbortSignal{
+    public:
+        bool aborted;
+};

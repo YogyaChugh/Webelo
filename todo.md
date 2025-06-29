@@ -8,3 +8,5 @@
 - Time Implementation for high-res (inner_event_creation_steps)
 - Configure `detail` in CustomEventInit
 - The dictionary passed to inner_event_creation_steps (currently done as EventInit)
+- Implement the ServiceWorkerGlobalScope object stuff in addEventListener at https://dom.spec.whatwg.org/#add-an-event-listener !
+- Follow the add the following algo for addEventListener at https://dom.spec.whatwg.org/#add-an-event-listener
