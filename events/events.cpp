@@ -1,13 +1,23 @@
+#include <iostream>
+#include <map>
+#include <vector>
+#include <ctime>
 #include "events.hpp"
 #include <typeinfo>
 #include "../base.hpp"
 #include "../window.hpp"
-#include "../nodes/node.hpp"
 #include "../exceptions.cpp"
-#include <ctime>
-#include <map>
-#include <iostream>
-#include <vector>
+
+
+
+//any retard(any a, any b){
+//    //TODO: Implement (A's root is not a shadow root and B is a node and A's root is a shadow-including inclusive ancestor of B)
+//    if (dynamic_cast<Node*> a){
+//        return a;
+//    }
+//    //TODO: Set a to a's root's host
+//    return a;
+//}
 
 
 Event::Event(DOMString type, EventInit eventInitDict){
@@ -190,12 +200,68 @@ void EventTarget::removeAllEventListeners(){
     event_listener_list.clear();
 }
 
-void EventTarget::dispatchEvent(Event& event){
-    if (event.dispatch_flag || !event.initialized_flag){
-        throw InvalidStateError("Invalid State");
-    }
-    event.isTrusted = false;
-    
+bool EventTarget::dispatchEvent(Event& event){
+    //if (event.dispatch_flag || !event.initialized_flag){
+    //    throw InvalidStateError("Invalid State");
+    //}
+    //event.isTrusted = false;
+    //
+    //event.dispatch_flag = true;
+//
+    ////TODO: Condition for checking if (this) is associated Document of Window
+    //EventTarget targetOverride = this;
+//
+    //std::optional<EventTarget> activationTarget = std::nullopt;
+    //EventTarget relatedTarget = retard(event.relatedTarget, this);
+    //bool clearTargets = false;
+//
+    //if (this!=relatedTarget || this==event.relatedTarget){
+    //     std::vector<EventTarget> touchTargets = {};
+    //     for (auto a: event.touch_target_list){
+    //        touchTargets.push_back(retard(a,this));
+    //     }
+//
+    //     bool invocationTargetInShadowTree = false;
+    //     if (dynamic_cast<Node*> event){ //TODO: Also check if it's root is a shadow root
+    //        invocationTargetInShadowTree = true;
+    //     }
+//
+    //     //*Append to an event path
+//
+    //     bool root_of_closed_tree = false;
+    //     //TODO: if event is shadow root and mode is "closed" then set root_of_closed_tree to true.
+    //     path_structs nstruct = path_structs(this, invocationTargetInShadowTree, targetOverride, relatedTarget, touchTargets, root_of_closed_tree, false);
+    //     event.path.push_back(nstruct);
+//
+    //     //*NEXT
+//
+    //     bool isActivationEvent = false;
+//
+    //     if ((dynamic_cast<MouseEvent*> event) && event.type=="click"){
+    //        isActivationEvent = true;
+    //     }
+    //     
+    //     if (isActivationEvent and this.) //COMPLETE
+//
+    //     //TODO: Check for slottable and assigned
+    //     std::optional<EventTarget> slottable = this;
+//
+    //     bool slot_in_closed_tree = false;
+//
+    //     std::optional<EventTarget> parent = get_the_parent(event);
+//
+    //     while (parent!=std::nullopt){
+    //        if (slottable!=std::nullopt){
+    //            //assert check for slot
+    //            slottable = std::nullopt;
+    //            //if parent's root is shadow root whose mode is closed, set slot_in_closed_tree to true
+    //        }
+    //     }
+//
+    //     path_structs clearTargetStruct = 
+//
+    //}
+    return true;
 }
 
 int main(){

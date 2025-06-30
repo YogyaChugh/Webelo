@@ -11,4 +11,15 @@ class InvalidStateError : public exception {
         const char* what() const noexcept {
             return message.c_str();
         }
-}
+};
+
+class AbortError: public exception {
+    private:
+        string message;
+    public:
+        AbortError(const char* msg): message(msg){};
+
+        const char* what() const noexcept {
+            return message.c_str();
+        }
+};

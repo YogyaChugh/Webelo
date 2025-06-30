@@ -4,7 +4,7 @@ class Window{
     private:
         Event event; //Replaceable
     public:
-        Event event(){
+        Event getevent(){
             return event;
         };
 };

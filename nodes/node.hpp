@@ -1,15 +1,29 @@
 #include "../events/events.hpp"
-#include <map>
-
-class Document{};
-class Element{};
-class NodeList{};
+#include <optional>
+#include "../base.hpp"
+#include "../nodes/node.hpp"
 
 struct GetRootNodeOptions{
     bool composed = false;
 }
 
+
+//Exposed to Window only !
 class Node: public EventTarget{
+    private:
+        unsigned short nodeType;    // The type of node !
+        DOMString nodeName; // Name for the node !
+        USVString baseURI;  //Base URL For the node document !
+        bool isConnected;
+        std::optional<Document> ownerDocument;
+        std::optional<Node> parentNode;
+        std::optional<Element> parentElement;
+        NodeList childNodes;
+
+        std::optional<Node> firstChild;
+        std::optional<Node> lastChild;
+        std::optional<Node> previousSibling;
+        std::optional<Node> nextSibling;
     public:
         const unsigned short ELEMENT_NODE = 1;
         const unsigned short ATTRIBUTE_NODE = 2;
@@ -25,38 +39,17 @@ class Node: public EventTarget{
         const unsigned short NOTATION_NODE = 12;
 
         unsigned short getNodeType() const;
-
-        unsigned short nodeType;    // The type of node !
-
-        //TODO
-        DOMString nodeName; // Name for the node !
-        USVString baseURI;  //Base URL For the node document !
-
-        bool isConnected;
-        Document ownerDocument; //can be null
-        
         Node getRootNode(GetRootNodeOptions options = {});
-
-        Node parentNode; //can be null
-        Element parentElement; //can be null
-        
         bool hasChildNodes();
 
-        NodeList childNodes;
-
-        Node firstChild; //can be null
-        Node lastChild; //can be null
-        Node previousSibling; //can be null
-        Node nextSibling; //can be null
-
         // CEReactions
-        DOMString nodeValue; //can be null
-        DOMString textContent; //can be null
+        std::optional<DOMString> nodeValue;
+        std::optional<DOMString> textContent;
         void normalize();
-        Node cloneNode(bool subtree = false);
+        Node cloneNode(bool subtree = false); //to return a new objcet everytime !
 
-        bool isEqualNode(Node otherNode); //can be null
-        bool isSameNode(Node otherNode); //can be null
+        bool isEqualNode(std::optional<Node> otherNode);
+        bool isSameNode(std::optional<Node> otherNode);
 
         const unsigned short DOCUMENT_POSITION_DISCONNECTED = 0x01;
         const unsigned short DOCUMENT_POSITION_PRECEDING = 0x02;
@@ -65,16 +58,16 @@ class Node: public EventTarget{
         const unsigned short DOCUMENT_POSITION_CONTAINED_BY = 0x10;
         const unsigned short DOCUMENT_POSITION_IMPLEMENTATION_SPECIFIC = 0x20;
         
-        unsigned short compareDocumentPosition(Node other);
-        bool contains(Node other); //can be null
+        unsigned short compareDocumentPosition(std::optional<Node> other);
+        bool contains(std::optional<Node> other);
 
-        DOMString lookupPrefix(DOMString namespace); // both input and output can be null
-        DOMString lookupNamespaceURI(DOMString prefix); // both input and output can be null
+        std::optional<DOMString> lookupPrefix(std::optional<DOMString> namesp);
+        std::optional<DOMString> lookupNamespaceURI(std::optional<DOMString> prefix);
 
-        bool isDefaultNamespace(DOMString namespace); //can be null
+        bool isDefaultNamespace(std::optional<DOMString> namesp);
 
         //CEReactions
-        Node insertBefore(Node node, Node child); //only child can be null
+        Node insertBefore(Node node, std::optional<Node> child);
         Node appendChild(Node node);
         Node replaceChild(Node node, Node child);
         Node removeChild(Node child);
@@ -88,4 +81,20 @@ void Node::Node(){
 
 bool Node::hasChildNodes(){
     // TODO: Check if Nodelist childnodes is empty or not
+}
+
+
+//Exposed to Window only
+class NodeList{
+    public:
+        std::vector<Node> node_list;
+        std::optional<Node> item(unsigned long index); //can be null
+}
+
+//Exposed to Window only
+class HTMLCollection{
+    // Implement after Element
+    public:
+        std::optional<Element> item(unsigned long index);
+        std::optional<Element> namedItem(DOMString name);
 }

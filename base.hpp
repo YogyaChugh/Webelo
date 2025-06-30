@@ -9,3 +9,7 @@ class AbortSignal{
     public:
         bool aborted;
 };
+class Element{};
+class Document{};
+class DOMImplementation{};
+class CustomElementRegistry{};

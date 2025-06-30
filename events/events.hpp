@@ -1,3 +1,5 @@
+#pragma once
+
 #include "../base.hpp"
 #include <vector>
 #include <variant>
@@ -59,6 +61,9 @@ class EventTarget{
 
 
         //TODO: Implement the get_the_parent algo
+        //virtual std::optional<EventTarget> get_the_parent(Event event){
+        //    return std::nullopt;
+        //}
 
         event_listener* flatten(DOMString type, EventListener callback, std::variant<AddEventListenerOptions,bool> options){
             event_listener* temp = new event_listener();
@@ -108,6 +113,16 @@ struct path_structs{
     std::vector<EventTarget> touch_target_list = {}; //Touch-specific list of targets (for TouchEvents only)
     bool root_of_closed_tree; // true if the target is the root of a closed shadow DOM
     bool slot_in_closed_tree; // true if the node is a <slot> in a closed shadow DOM
+
+    path_structs(EventTarget it, bool itst, EventTarget sat, EventTarget rt, std::vector<EventTarget> ttl, bool rct, bool sct){
+        invocation_target = it;
+        invocation_target_in_shadow_tree = itst;
+        shadow_adjusted_target = sat;
+        related_target = rt;
+        touch_target_list = ttl;
+        root_of_closed_tree = rct;
+        slot_in_closed_tree = sct;
+    }
 };
 
 class Event{
@@ -222,6 +237,10 @@ class Event{
             }
         };
 };
+
+
+//*TEMPORARY AND SHOULD BE REPLACED !
+class MouseEvent: public Event{};
 
 
 struct CustomEventInit: EventInit{
