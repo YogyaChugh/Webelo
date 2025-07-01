@@ -108,13 +108,13 @@ struct EventInit{
 struct path_structs{
     EventTarget invocation_target; // the actual EventTarget object where a listener might run
     bool invocation_target_in_shadow_tree; //true if this target is inside a shadow tree
-    EventTarget shadow_adjusted_target; //Can be null - The visible target (may be host if shadow is closed)
-    EventTarget related_target; //Can be null - Another relevant node (e.g. for mouseover/mouseout events)
-    std::vector<EventTarget> touch_target_list = {}; //Touch-specific list of targets (for TouchEvents only)
+    std::optional<EventTarget> shadow_adjusted_target; //Can be null - The visible target (may be host if shadow is closed)
+    std::optional<EventTarget> related_target; //Can be null - Another relevant node (e.g. for mouseover/mouseout events)
+    std::vector<std::optional<EventTarget>> touch_target_list = {}; //Touch-specific list of targets (for TouchEvents only)
     bool root_of_closed_tree; // true if the target is the root of a closed shadow DOM
     bool slot_in_closed_tree; // true if the node is a <slot> in a closed shadow DOM
 
-    path_structs(EventTarget it, bool itst, EventTarget sat, EventTarget rt, std::vector<EventTarget> ttl, bool rct, bool sct){
+    path_structs(EventTarget it, bool itst, std::optional<EventTarget> sat, std::optional<EventTarget> rt, std::vector<std::optional<EventTarget>> ttl, bool rct, bool sct){
         invocation_target = it;
         invocation_target_in_shadow_tree = itst;
         shadow_adjusted_target = sat;
@@ -131,12 +131,12 @@ class Event{
 
         //* Read-only
         DOMString type = "";
-        EventTarget target;
+        std::optional<EventTarget> target = std::nullopt;
 
-        // ! Ommited: EventTarget, it's legacy alias for `target`
+        // ! Ommited: EventTarget? srcElement; it's legacy alias for `target`
 
-        EventTarget relatedTarget;
-        EventTarget currentTarget;
+        std::optional<EventTarget> relatedTarget = std::nullopt;
+        std::optional<EventTarget> currentTarget = std::nullopt;
         enum event_phase eventPhase = NONE;
         bool bubbles;
         bool cancelable;
@@ -144,23 +144,25 @@ class Event{
         // ! Ommitted for function: bool defaultPrevented
 
         bool composed;
-        bool isTrusted; //LEGACY UNFORGEABLE
+        bool isTrusted = false; //LEGACY UNFORGEABLE
         DOMHighResTimeStamp timeStamp;
 
         //*Editable
 
         // ! Ommitted for function: bool returnValue
 
-        std::vector<EventTarget> composedPath();
-        void stopPropagation();
-        void stopImmediatePropagation();
-        void preventDefault();
-        void initEvent(DOMString type, bool bubbles, bool cancelable); // legacy
+    public:
+
+        // Constructor
+        Event(DOMString type, EventInit eventInitDict); //2nd arg to be made optional
 
         // FLAGS BRO !!
-        bool stop_propagation_flag, stop_immediate_propagation_flag, canceled_flag, in_passive_listener_flag, composed_flag, initialized_flag, dispatch_flag;
-
-    public:
+        bool stop_propagation_flag = false;
+        bool stop_immediate_propagation_flag = false;
+        bool canceled_flag, in_passive_listener_flag = false;
+        bool composed_flag = false;
+        bool initialized_flag = false;
+        bool dispatch_flag = false;
 
         virtual Event* new_instance(){
             EventInit tempv;
@@ -170,12 +172,15 @@ class Event{
             return new Event(this->type,tempv);
         };
         std::vector<path_structs> path;
-        std::vector<EventTarget> touch_target_list = {}; //mostly no use until TouchEvent Interface
+        std::vector<std::optional<EventTarget>> touch_target_list = {}; //mostly no use until TouchEvent Interface
 
+
+        void initEvent(DOMString type, bool bubbles, bool cancelable); // legacy
+        void stopPropagation();
+        void stopImmediatePropagation();
+        void preventDefault();
+        std::vector<EventTarget> composedPath();
         void set_canceled_flag();
-
-        // Constructor
-        Event(DOMString type, EventInit eventInitDict);
 
         void inner_event_creation_steps(Realm realm, DOMHighResTimeStamp time, EventInit dictionary);
 
@@ -185,16 +190,19 @@ class Event{
         DOMString gettype(){
             return this->type;
         };
-        EventTarget gettarget(){
+        std::optional<EventTarget> gettarget(){
             return target;
         };
-        EventTarget getrelatedTarget(){
+        std::optional<EventTarget> getsrcElement(){
+            return target;
+        }
+        std::optional<EventTarget> getrelatedTarget(){
             return relatedTarget;
         };
-        EventTarget getcurrentTarget(){
+        std::optional<EventTarget> getcurrentTarget(){
             return currentTarget;
         };
-        unsigned short geteventPhase(){
+        enum event_phase geteventPhase(){
             return eventPhase;
         };
         bool getbubbles(){
@@ -204,10 +212,16 @@ class Event{
             return cancelable;
         };
         bool getdefaultPrevented(){
-            return canceled_flag;
+            if (canceled_flag){
+                return true;
+            }
+            return false;
         };
         bool getcomposed(){
-            return composed_flag;
+            if (composed_flag){
+                return true;
+            }
+            return false;
         };
         bool getisTrusted(){
             return isTrusted;
@@ -216,20 +230,27 @@ class Event{
             return timeStamp;
         };
 
-        //Full power ones !
+
+
 
         //this bubble is legacy alias so remember for js !
-        bool cancelBubble(){
-            return stop_propagation_flag;
-        };
+        bool getcancelBubble(){
+            if (stop_propagation_flag){
+                return true;
+            }
+            return false;
+        }
         void setcancelBubble(bool value){
             if (value){
                 stop_propagation_flag = true;
             }
         };
 
-        bool returnValue(){
-            return !canceled_flag;
+        bool getreturnValue(){
+            if (canceled_flag){
+                return false;
+            }
+            return true;
         };
         void setreturnValue(bool value){
             if (!value){
@@ -242,19 +263,19 @@ class Event{
 //*TEMPORARY AND SHOULD BE REPLACED !
 class MouseEvent: public Event{};
 
-
+template <typename T>
 struct CustomEventInit: EventInit{
-    DOMString detail; //will change later
+    std::optional<std::any> detail = std::nullopt; //will change later
 };
 
 class CustomEvent: public Event{
     protected:
-        DOMString detail;
+        std::any detail;
     public:
         CustomEvent(DOMString type, CustomEventInit eventInitDict);
-        void initCustomEvent(DOMString type, DOMString detail, bool bubbles, bool cancelable); //legacy
+        void initCustomEvent(DOMString type, bool bubbles, bool cancelable, std::optional<std::any> detail); //legacy
 
-        DOMString getdetail(){
+        std::any getdetail(){
             return detail;
         }
 };

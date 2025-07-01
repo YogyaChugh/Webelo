@@ -7,6 +7,7 @@
 #include "../base.hpp"
 #include "../window.hpp"
 #include "../exceptions.cpp"
+#include <cassert>
 
 
 
@@ -20,7 +21,7 @@
 //}
 
 
-Event::Event(DOMString type, EventInit eventInitDict){
+Event::Event(DOMString type, EventInit eventInitDict = EventInit()){
     // run inner event creation steps !
     time_t timestamp;
     DOMHighResTimeStamp now = timestamp;
@@ -49,7 +50,7 @@ void Event::stopImmediatePropagation(){
 };
 
 void Event::set_canceled_flag(){
-    if (cancelable and !in_passive_listener_flag){
+    if (cancelable && !in_passive_listener_flag){
         canceled_flag = true;
     }
 };
@@ -68,7 +69,7 @@ void Event::initEvent(DOMString type, bool bubbles = false, bool cancelable = fa
     stop_propagation_flag = false;
     stop_immediate_propagation_flag = false;
     canceled_flag = false;
-    target = EventTarget();
+    target = std::nullopt;
     this->type = type;
     this->bubbles = bubbles;
     this->cancelable = cancelable;
@@ -79,10 +80,7 @@ std::vector<EventTarget> Event::composedPath(){
     if (path.empty()){
         return composed_path;
     }
-    // *asserts if currentTarget is of type `EventTarget`
-    if (!dynamic_cast<EventTarget*>(&currentTarget)){
-        throw std::runtime_error("currentTarget isn't a type of EventTarget"); //TODO: Implement try catch while calling !
-    }
+    assert(dynamic_cast<EventTarget*>(currentTarget));
     composed_path.push_back(currentTarget);
     int currentTargetIndex = 0;
     int currentTargetHiddenSubtreeLevel = 0;
@@ -100,6 +98,22 @@ std::vector<EventTarget> Event::composedPath(){
     }
     int currentHiddenLevel = currentTargetHiddenSubtreeLevel;
     int maxHiddenLevel = currentTargetHiddenSubtreeLevel;
+    for (size_t index = currentTargetIndex - 1; index>=0; index--){
+        if (path[index].root_of_closed_tree){
+            currentHiddenLevel++;
+        }
+        if (currentHiddenLevel<=maxHiddenLevel){
+            composed_path.insert(composed_path.begin(),path[index].invocation_target);
+        }
+        if (path[index].slot_in_closed_tree){
+            currentHiddenLevel--;
+            if (currentHiddenLevel<maxHiddenLevel){
+                maxHiddenLevel = currentHiddenLevel;
+            }
+        }
+    }
+    currentHiddenLevel = currentTargetHiddenSubtreeLevel;
+    maxHiddenLevel = currentTargetHiddenSubtreeLevel;
     for (size_t index = currentTargetIndex + 1; index<path.size(); index++){
         if (path[index].slot_in_closed_tree){
             currentHiddenLevel++;
@@ -122,11 +136,11 @@ std::vector<EventTarget> Event::composedPath(){
 // *Custom Event - Inherited from Event class
 
 
-CustomEvent::CustomEvent(DOMString type, CustomEventInit eventInitDict): Event(type, eventInitDict){
+CustomEvent::CustomEvent(DOMString type, CustomEventInit eventInitDict = CustomEventInit()): Event(type, eventInitDict){
     detail = eventInitDict.detail;
 }
 
-void CustomEvent::initCustomEvent(DOMString type, DOMString detail, bool bubbles = false, bool cancelable = false){
+void CustomEvent::initCustomEvent(DOMString type, bool bubbles = false, bool cancelable = false, std::optional<std::any> detail = std::nullopt){
     if (dispatch_flag){
         return;
     }

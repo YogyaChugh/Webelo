@@ -2,7 +2,7 @@
 
 class Window{
     private:
-        Event event; //Replaceable
+        std::optional<Event> event; //Replaceable
     public:
         Event getevent(){
             return event;
