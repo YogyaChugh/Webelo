@@ -5,6 +5,7 @@
 #include <variant>
 #include <string>
 #include <optional>
+#include <any>
 
 class Event;
 
@@ -18,18 +19,15 @@ class EventListener{
 
 struct event_listener{
     DOMString type;
-    EventListener* callback;
+    std::optional<EventListener> callback;
     bool capture = false;
     std::optional<bool> passive = std::nullopt;
     bool once = false;
-    AbortSignal* signal;
+    std::optional<AbortSignal> signal;
     bool removed = false;
 
     bool operator==(event_listener ev){
-        if (type==ev.type && callback==ev.callback && capture==ev.capture && passive==ev.passive && once==ev.once && signal==ev.signal && removed==ev.removed){
-            return true;
-        }
-        return false;
+        return (type==ev.type && callback==ev.callback && capture==ev.capture && passive==ev.passive && once==ev.once && signal==ev.signal && removed==ev.removed);
     }
 };
 
@@ -45,35 +43,32 @@ struct AddEventListenerOptions: EventListenerOptions{
 };
 
 class EventTarget{
-    private:
-        std::vector<event_listener> event_listener_list = {};
     public:
+        std::vector<event_listener> event_listener_list = {};
+
         EventTarget(){};
 
-        void addEventListener(DOMString type, EventListener callback, std::variant<AddEventListenerOptions,bool> options);
-        void removeEventListener(DOMString type, EventListener callback, std::variant<AddEventListenerOptions,bool> options);
+        void addEventListener(DOMString type, std::optional<EventListener> callback, std::variant<AddEventListenerOptions,bool> options);
+        void removeEventListener(DOMString type, std::optional<EventListener> callback, std::variant<AddEventListenerOptions,bool> options);
         void removeAllEventListeners();
         bool dispatchEvent(Event& event);
 
         bool operator==(EventTarget a){
-            return true;
+            if (event_listener_list == a.event_listener_list){
+                return true;
+            }
+            return false;
         }
-
-
-        //TODO: Implement the get_the_parent algo
-        //virtual std::optional<EventTarget> get_the_parent(Event event){
-        //    return std::nullopt;
-        //}
 
         event_listener* flatten(DOMString type, EventListener callback, std::variant<AddEventListenerOptions,bool> options){
             event_listener* temp = new event_listener();
             temp->type = type;
-            temp->callback = &callback;
+            temp->callback = callback;
             temp->once = false;
             temp->passive = std::nullopt;
-            temp->signal = nullptr;
+            temp->signal = std::nullopt;
             if (std::holds_alternative<bool>(options)){
-                temp->capture = false;
+                temp->capture = options;
             }
             else if (std::holds_alternative<AddEventListenerOptions>(options)){
                 auto& opts = std::get<AddEventListenerOptions>(options);
@@ -82,6 +77,10 @@ class EventTarget{
                 temp->signal = &opts.signal;
             }
             return temp;
+        }
+
+        virtual std::optional<EventTarget> get_the_parent(std::optional<Event> event){
+            return std::nullopt;
         }
 };
 

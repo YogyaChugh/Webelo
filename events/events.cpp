@@ -8,6 +8,8 @@
 #include "../window.hpp"
 #include "../exceptions.cpp"
 #include <cassert>
+#include <optional>
+#include <any>
 
 
 
@@ -25,14 +27,14 @@ Event::Event(DOMString type, EventInit eventInitDict = EventInit()){
     // run inner event creation steps !
     time_t timestamp;
     DOMHighResTimeStamp now = timestamp;
-    this->inner_event_creation_steps(Realm(), now, eventInitDict);
+    this->inner_event_creation_steps(std::nullopt, now, eventInitDict);
     this->type = type;
 };
 
 //void create_event(Event eventInterface, Realm realm = nullptr){
 //};
 
-void Event::inner_event_creation_steps(Realm realm, DOMHighResTimeStamp time, EventInit dictionary){
+void Event::inner_event_creation_steps(std::optional<Realm> realm, DOMHighResTimeStamp time, EventInit dictionary){
     this->initialized_flag = true;
     this->timeStamp = time;
     this->bubbles = dictionary.bubbles;
