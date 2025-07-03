@@ -1,15 +1,18 @@
+#include "../../include/events/events.hpp"
+#include "../../include/events/abort.hpp"
+#include "../../include/base.hpp"
+#include "../../include/window.hpp"
+#include "../../include/exceptions.hpp"
+#include "../../include/nodes/document.hpp"
 #include <iostream>
 #include <map>
 #include <vector>
 #include <ctime>
-#include "events.hpp"
-#include <typeinfo>
-#include "../base.hpp"
-#include "../window.hpp"
-#include "../exceptions.cpp"
 #include <cassert>
 #include <optional>
 #include <any>
+#include <functional>
+#include <typeinfo>
 
 
 
@@ -23,23 +26,25 @@
 //}
 
 
-Event::Event(DOMString type, EventInit eventInitDict = EventInit()){
+Event::Event(DOMString type, std::unique_ptr<EventInit> eventInitDict){
     // run inner event creation steps !
     time_t timestamp;
-    DOMHighResTimeStamp now = timestamp;
-    this->inner_event_creation_steps(std::nullopt, now, eventInitDict);
+    DOMHighResTimeStamp now = timestamp; //TODO: IMPROVE
+    this->inner_event_creation_steps(nullptr, now, std::move(eventInitDict));
     this->type = type;
 };
 
 //void create_event(Event eventInterface, Realm realm = nullptr){
 //};
 
-void Event::inner_event_creation_steps(std::optional<Realm> realm, DOMHighResTimeStamp time, EventInit dictionary){
+void Event::inner_event_creation_steps(Realm* realm, DOMHighResTimeStamp time, std::unique_ptr<EventInit> dictionary){
     this->initialized_flag = true;
     this->timeStamp = time;
-    this->bubbles = dictionary.bubbles;
-    this->cancelable = dictionary.cancelable;
-    this->composed = dictionary.composed;
+    if (dictionary){
+        this->bubbles = dictionary->bubbles;
+        this->cancelable = dictionary->cancelable;
+        this->composed = dictionary->composed;
+    }
 };
 
 void Event::stopPropagation(){
@@ -62,7 +67,7 @@ void Event::preventDefault(){
     set_canceled_flag();
 };
 
-void Event::initEvent(DOMString type, bool bubbles = false, bool cancelable = false){
+void Event::initEvent(DOMString type, bool bubbles, bool cancelable){
     if (dispatch_flag){
         return;
     }
@@ -71,14 +76,14 @@ void Event::initEvent(DOMString type, bool bubbles = false, bool cancelable = fa
     stop_propagation_flag = false;
     stop_immediate_propagation_flag = false;
     canceled_flag = false;
-    target = std::nullopt;
+    target = nullptr;
     this->type = type;
     this->bubbles = bubbles;
     this->cancelable = cancelable;
 }
 
-std::vector<EventTarget> Event::composedPath(){
-    std::vector<EventTarget> composed_path;
+std::vector<EventTarget*> Event::composedPath(){
+    std::vector<EventTarget*> composed_path;
     if (path.empty()){
         return composed_path;
     }
@@ -87,27 +92,27 @@ std::vector<EventTarget> Event::composedPath(){
     int currentTargetIndex = 0;
     int currentTargetHiddenSubtreeLevel = 0;
     for (size_t index = path.size() - 1; index>=0; index--){
-        if (path[index].root_of_closed_tree){
+        if (path[index]->root_of_closed_tree){
             currentTargetHiddenSubtreeLevel++;
         }
-        if (path[index].invocation_target==currentTarget){
+        if (path[index]->invocation_target==currentTarget){
             currentTargetIndex = index;
             break;
         }
-        if (path[index].slot_in_closed_tree){
+        if (path[index]->slot_in_closed_tree){
             currentTargetHiddenSubtreeLevel--;
         }
     }
     int currentHiddenLevel = currentTargetHiddenSubtreeLevel;
     int maxHiddenLevel = currentTargetHiddenSubtreeLevel;
     for (size_t index = currentTargetIndex - 1; index>=0; index--){
-        if (path[index].root_of_closed_tree){
+        if (path[index]->root_of_closed_tree){
             currentHiddenLevel++;
         }
         if (currentHiddenLevel<=maxHiddenLevel){
-            composed_path.insert(composed_path.begin(),path[index].invocation_target);
+            composed_path.insert(composed_path.begin(),path[index]->invocation_target);
         }
-        if (path[index].slot_in_closed_tree){
+        if (path[index]->slot_in_closed_tree){
             currentHiddenLevel--;
             if (currentHiddenLevel<maxHiddenLevel){
                 maxHiddenLevel = currentHiddenLevel;
@@ -117,13 +122,13 @@ std::vector<EventTarget> Event::composedPath(){
     currentHiddenLevel = currentTargetHiddenSubtreeLevel;
     maxHiddenLevel = currentTargetHiddenSubtreeLevel;
     for (size_t index = currentTargetIndex + 1; index<path.size(); index++){
-        if (path[index].slot_in_closed_tree){
+        if (path[index]->slot_in_closed_tree){
             currentHiddenLevel++;
         }
         if (currentHiddenLevel<=maxHiddenLevel){
-            composed_path.push_back(path[index].invocation_target);
+            composed_path.push_back(path[index]->invocation_target);
         }
-        if (path[index].root_of_closed_tree){
+        if (path[index]->root_of_closed_tree){
             currentHiddenLevel--;
             if (currentHiddenLevel<maxHiddenLevel){
                 maxHiddenLevel = currentHiddenLevel;
@@ -137,12 +142,15 @@ std::vector<EventTarget> Event::composedPath(){
 
 // *Custom Event - Inherited from Event class
 
-
-CustomEvent::CustomEvent(DOMString type, CustomEventInit eventInitDict = CustomEventInit()): Event(type, eventInitDict){
-    detail = eventInitDict.detail;
+CustomEvent::CustomEvent(DOMString type, std::unique_ptr<CustomEventInit> eventInitDict, std::optional<std::any> detail): Event(type, std::move(eventInitDict)){
+    /*
+        Have to implement the detail attribute separately even though it's present in eventInitDict because
+        base class constructor requires unique_ptr to be moved to Event class.
+    */
+    detail = eventInitDict->detail;
 }
 
-void CustomEvent::initCustomEvent(DOMString type, bool bubbles = false, bool cancelable = false, std::optional<std::any> detail = std::nullopt){
+void CustomEvent::initCustomEvent(DOMString type, bool bubbles, bool cancelable, std::optional<std::any> detail){
     if (dispatch_flag){
         return;
     }
@@ -151,47 +159,67 @@ void CustomEvent::initCustomEvent(DOMString type, bool bubbles = false, bool can
 }
 
 
+void remove_an_event_listener(EventTarget* eventTarget, event_listener* event_listener){
+    //TODO: Implement the ServiceWorkerGlobalScope check !
 
-void EventTarget::addEventListener(DOMString type, EventListener callback, std::variant<AddEventListenerOptions, bool> options){
+    event_listener->removed = true;
+    auto iter = find(eventTarget->event_listener_list.begin(),eventTarget->event_listener_list.end(),event_listener);
+    if (iter!=eventTarget->event_listener_list.end()){
+        delete event_listener;
+        eventTarget->event_listener_list.erase(iter);
+    }
+}
+
+
+void EventTarget::addEventListener(DOMString type, EventListener* callback, std::variant<AddEventListenerOptions, bool> options){
     event_listener* temp = this->flatten(type, callback, options);
 
     //TODO: Implement the ServiceWorkerGlobalScope check !
 
-    if ((!temp->signal && temp->signal->aborted) || !temp->callback){
+    if ((temp->signal && temp->signal->getaborted()) || !temp->callback){
         return;
     }
     if (temp->passive == std::nullopt){
         //TODO: Implement check in window class, node class !
+        if (type=="touchstart" || type=="touchmove" || type=="wheel" || type=="mousewheel"){
+            // ! CHECK HERE AFTER COMPLETING node.hpp ! IMPORTANT
+            //TODO: Implement check for node document's document element and body element !
+            if ((dynamic_cast<Window*> (this)) || (dynamic_cast<Node*> (this) && (dynamic_cast<Node*> (this))->getownerDocument()==dynamic_cast<Document*>(this))){
+                temp->passive = true;
+            }
+        }
         temp->passive = false;
     }
 
     bool found = false;
     
-    for (event_listener a: event_listener_list){
-        if (a.type==temp->type && a.callback==temp->callback && a.capture==temp->capture){
+    for (event_listener* a: event_listener_list){
+        if (a->type==temp->type && a->callback==temp->callback && a->capture==temp->capture){
             found = true;
             break;
         }
     }
     if (!found){
-        event_listener_list.push_back(*temp);
+        event_listener_list.push_back(temp);
     }
 
-    //TODO: Implement the add an algorithm part (pt.6 in add an event listener)
+    if (temp->signal){
+        if (temp->signal->getaborted()){
+            return;
+        }
+        temp->signal->abort_algos.push_back(std::bind(remove_an_event_listener, this, temp));
+    }
 }
 
 
-void EventTarget::removeEventListener(DOMString type, EventListener callback, std::variant<AddEventListenerOptions,bool> options){
+void EventTarget::removeEventListener(DOMString type, EventListener* callback, std::variant<AddEventListenerOptions,bool> options){
     event_listener* temp = this-> flatten(type, callback, options);
 
     bool found = false;
-    event_listener to_be_deleted;
     
-    for (event_listener a: event_listener_list){
-        if (a.type==temp->type && a.callback==temp->callback && a.capture==temp->capture){
+    for (event_listener* a: event_listener_list){
+        if (a->type==temp->type && a->callback==temp->callback && a->capture==temp->capture){
             found = true;
-            delete temp;
-            to_be_deleted = a;
             break;
         }
     }
@@ -199,24 +227,19 @@ void EventTarget::removeEventListener(DOMString type, EventListener callback, st
         return;
     }
 
-    //TODO: Implement the ServiceWorkerGlobalScope check !
-
-    to_be_deleted.removed = true;
-    auto iter = find(event_listener_list.begin(),event_listener_list.end(),to_be_deleted);
-    if (iter!=event_listener_list.end()){
-        event_listener_list.erase(iter);
-    }
+    remove_an_event_listener(this, temp);
 }
 
 void EventTarget::removeAllEventListeners(){
     //TODO: Implement stuff here !
-    for (auto a: event_listener_list){
-        a.removed = true;
+    for (event_listener* a: event_listener_list){
+        a->removed = true;
+        delete a;
     }
     event_listener_list.clear();
 }
 
-bool EventTarget::dispatchEvent(Event& event){
+bool EventTarget::dispatchEvent(Event* event){
     //if (event.dispatch_flag || !event.initialized_flag){
     //    throw InvalidStateError("Invalid State");
     //}
@@ -282,6 +305,6 @@ bool EventTarget::dispatchEvent(Event& event){
 
 int main(){
     EventInit a;
-    Event b = Event("click",a);
+    Event b = Event("click",std::make_unique<EventInit>(a));
     return 0;
 }

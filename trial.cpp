@@ -1,9 +1,21 @@
 #include <iostream>
+#include <memory>
 
-bool go(){
-    return (bool)(5==5 && 6==3);
+class A{
+    public:
+        int num;
+};
+
+class B: public A{
+    public:
+        int num2;
+};
+
+void go(std::unique_ptr<A> goko){
+    goko->num = 7;
+    std::cout<<"A gya tu launde !\n"<<goko->num;
 }
 
 int main(){
-    std::cout<<go();
+    go(std::make_unique<B>());
 }

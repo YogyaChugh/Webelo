@@ -1,7 +1,17 @@
-#include<optional>
-#include "base.hpp"
+#pragma once
+
+#include <string>
+#include <optional>
 #include <cstdarg>
-#include<vector>
+#include <vector>
+
+
+typedef std::string DOMString;
+typedef std::string USVString;
+class Realm{};
+
+class EventHandler{};
+class CustomElementRegistry{};
 
 class DOMTokenList{
     public:
@@ -16,4 +26,4 @@ class DOMTokenList{
         
         bool supports(DOMString token);
         std::vector<DOMString> list;
-}
+};
