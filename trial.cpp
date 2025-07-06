@@ -1,21 +1,13 @@
 #include <iostream>
 #include <memory>
+#include <functional>
 
-class A{
-    public:
-        int num;
-};
-
-class B: public A{
-    public:
-        int num2;
-};
-
-void go(std::unique_ptr<A> goko){
-    goko->num = 7;
-    std::cout<<"A gya tu launde !\n"<<goko->num;
+void go(bool goko){
+    std::cout<<"A gya tu launde !\n"<<goko;
 }
 
 int main(){
-    go(std::make_unique<B>());
+    std::function<void()> printer;
+    printer = std::bind(go,true);
+    printer();
 }

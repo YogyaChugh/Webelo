@@ -1,6 +1,5 @@
 #pragma once
 
-#include "node.hpp"
 #include <variant>
 #include <vector>
 #include <optional>
@@ -117,7 +116,7 @@ struct GetRootNodeOptions{
 //Exposed to Window only !
 class Node: public EventTarget{
     // ! REMEMBER TO DO PRIVATE AND SET GETTER/SETTERS
-    private:
+    public:
         unsigned short nodeType;    // The type of node !
         DOMString nodeName; // Name for the node !
         USVString baseURI;  //Base URL For the node document !
@@ -131,7 +130,6 @@ class Node: public EventTarget{
         Node* lastChild;
         Node* previousSibling;
         Node* nextSibling;
-    public:
         const unsigned short ELEMENT_NODE = 1;
         const unsigned short ATTRIBUTE_NODE = 2;
         const unsigned short TEXT_NODE = 3;
@@ -146,7 +144,7 @@ class Node: public EventTarget{
         const unsigned short NOTATION_NODE = 12;
 
         unsigned short getNodeType() const;
-        Node getRootNode(GetRootNodeOptions options = {});
+        Node* getRootNode(GetRootNodeOptions options = {});
         bool hasChildNodes();
 
         // CEReactions
@@ -236,6 +234,7 @@ class Text: CharacterData{
     private:
         DOMString wholeText;
     public:
+        DOMString slot=""; //! IMPORTANT SOMEWHERE in dispatch_event (slottable check)
         Text(DOMString data = "");
         Text splitText(unsigned long offset); //NewObject
 };
@@ -281,14 +280,13 @@ class DocumentFragment: Node{
 
 //Exposed to window only
 class ShadowRoot: DocumentFragment{
-    private:
+    public:
         ShadowRootMode mode;
         bool delegatesFocus;
         SlotAssignmentMode slotAssignment;
         bool clonable;
         bool serializable;
         Element* host;
-    public:
         EventHandler onslotchange;
 };
 
@@ -348,7 +346,7 @@ class Element: Node{
         //CEReactions
         DOMString id;
         DOMString className;
-        DOMString slot; //TODO-js: Unscopable
+        DOMString slot=""; //TODO-js: Unscopable
         void setAttribute(DOMString qualifiedName, DOMString value);
         void setAttributeNS(std::optional<DOMString> namesp, DOMString qualifiedName, DOMString value);
         void removeAttribute(DOMString qualifiedName);

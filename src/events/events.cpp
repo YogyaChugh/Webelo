@@ -1,5 +1,4 @@
 #include "../../include/events/events.hpp"
-#include "../../include/events/abort.hpp"
 #include "../../include/base.hpp"
 #include "../../include/window.hpp"
 #include "../../include/exceptions.hpp"
@@ -12,21 +11,118 @@
 #include <optional>
 #include <any>
 #include <functional>
-#include <typeinfo>
 
 
 
-//any retard(any a, any b){
-//    //TODO: Implement (A's root is not a shadow root and B is a node and A's root is a shadow-including inclusive ancestor of B)
-//    if (dynamic_cast<Node*> a){
-//        return a;
-//    }
-//    //TODO: Set a to a's root's host
-//    return a;
-//}
+EventTarget* retard(EventTarget* a, EventTarget* b){
+    //TODO: Implement B is a node and A's root is a shadow-including inclusive ancestor of B)
+    auto temp = dynamic_cast<Node*>(a);
+    if (!temp || (temp && !(dynamic_cast<ShadowRoot*>(temp->getRootNode()))) || ((dynamic_cast<Node*>(b)))){
+        return a;
+    }
+    //TODO: Set a to a's root's host
+    return a;
+}
 
 
-Event::Event(DOMString type, std::unique_ptr<EventInit> eventInitDict){
+void fire_event(Event* e,EventTarget* target,bool legacy_target_override_flag = false) {
+    //! MODIFY LATER FOR eventConstructor
+    //! AND MAKE CHANGES to signal_abort where it's called too!
+};
+
+void remove_an_event_listener(EventTarget* eventTarget, event_listener* event_listener){
+    //TODO: Implement the ServiceWorkerGlobalScope check !
+
+    event_listener->removed = true;
+    auto iter = find(eventTarget->event_listener_list.begin(),eventTarget->event_listener_list.end(),event_listener);
+    if (iter!=eventTarget->event_listener_list.end()){
+        delete event_listener;
+        eventTarget->event_listener_list.erase(iter);
+    }
+}
+
+void append_to_event(Event* event, EventTarget* invocationTarget, EventTarget*  shadowAdjustedTarget, EventTarget* relatedTarget, std::vector<EventTarget*> &touchTargets, bool slot_in_closed_tree){
+    bool invocationTargetInShadowTree = false;
+    auto tempji = dynamic_cast<Node*>(invocationTarget);
+    if (tempji &&  dynamic_cast<ShadowRoot*>(tempji->getRootNode())){
+        invocationTargetInShadowTree = true;
+    }
+    bool root_of_closed_tree = false;
+    auto temp = dynamic_cast<ShadowRoot*>(invocationTarget);
+    if (temp && temp->mode==closed){
+        root_of_closed_tree = true;
+    }
+    event->path.push_back(std::make_unique<path_structs>(invocationTarget, invocationTargetInShadowTree, shadowAdjustedTarget, relatedTarget, touchTargets, root_of_closed_tree, slot_in_closed_tree));
+}
+
+bool inner_invoke(Event* event, std::vector<event_listener*> &listeners,DOMString &phase, bool invocationTargetInShadowTree, std::optional<bool> legacyOutputDidListenersThrowFlag = std::nullopt){
+    bool found = false;
+    for (auto listener: listeners) {
+        if (!(listener->removed)) {
+            if (event->type!=listener->type) {
+                continue;
+            }
+            found = true;
+            if ((phase=="capturing" && !(listener->capture)) || (phase=="bubbling" && listener->capture)) {
+                continue;
+            }
+            if (listener->once) {
+                remove_an_event_listener(event->currentTarget, listener);
+            }
+            //! IMPLEMENT global OBJECT WORK HERE
+            //! TEMPORARILY!
+            if (listener->passive) {
+                event->in_passive_listener_flag = true;
+            }
+            //! again global here
+            event->in_passive_listener_flag = false;
+            if (event->stop_immediate_propagation_flag) {
+                break;
+            }
+        }
+    }
+    return found;
+}
+
+void invoke(path_structs* struc, Event* event, DOMString phase, std::optional<bool> legacyOutputDidListenersThrowFlag = std::nullopt) {
+    event->target = nullptr;
+    for (auto tem {event->path.end()};tem!=event->path.begin();--tem) {
+        if ((*tem)->shadow_adjusted_target) {
+            event->target = (*tem)->shadow_adjusted_target;
+            break;
+        }
+    }
+    event->relatedTarget = struc->related_target;
+    event->touch_target_list = struc->touch_target_list;
+    if (event->stop_propagation_flag){ return; }
+    event->currentTarget = struc->invocation_target;
+    std::vector<event_listener*> listeners = event->currentTarget->event_listener_list;
+
+    bool invocationTargetInShadowTree = struc->invocation_target_in_shadow_tree;
+    bool found = inner_invoke(event, listeners, phase, invocationTargetInShadowTree,legacyOutputDidListenersThrowFlag);
+
+    if (!found && event->isTrusted) {
+        DOMString originalEventType = event->type;
+        if (event->type=="animationend") {
+            event->type = "webkitAnimationEnd";
+        }
+        else if (event->type=="animationiteration") {
+            event->type = "webkitAnimationIteration";
+        }
+        else if (event->type=="animationstart") {
+            event->type = "webkitAnimationStart";
+        }
+        else if (event->type=="transitionend") {
+            event->type = "webkitTransitionEnd";
+        }
+        else{return;}
+        inner_invoke(event, listeners, phase, invocationTargetInShadowTree, legacyOutputDidListenersThrowFlag);
+        event->type = originalEventType;
+    }
+}
+
+
+Event::Event(DOMString &type, std::unique_ptr<EventInit> eventInitDict){
     // run inner event creation steps !
     time_t timestamp;
     DOMHighResTimeStamp now = timestamp; //TODO: IMPROVE
@@ -67,7 +163,7 @@ void Event::preventDefault(){
     set_canceled_flag();
 };
 
-void Event::initEvent(DOMString type, bool bubbles, bool cancelable){
+void Event::initEvent(DOMString &type, bool bubbles, bool cancelable){
     if (dispatch_flag){
         return;
     }
@@ -91,7 +187,7 @@ std::vector<EventTarget*> Event::composedPath(){
     composed_path.push_back(currentTarget);
     int currentTargetIndex = 0;
     int currentTargetHiddenSubtreeLevel = 0;
-    for (size_t index = path.size() - 1; index>=0; index--){
+    for (int index = path.size() - 1; index>=0; index--){
         if (path[index]->root_of_closed_tree){
             currentTargetHiddenSubtreeLevel++;
         }
@@ -105,7 +201,7 @@ std::vector<EventTarget*> Event::composedPath(){
     }
     int currentHiddenLevel = currentTargetHiddenSubtreeLevel;
     int maxHiddenLevel = currentTargetHiddenSubtreeLevel;
-    for (size_t index = currentTargetIndex - 1; index>=0; index--){
+    for (int index = currentTargetIndex - 1; index>=0; index--){
         if (path[index]->root_of_closed_tree){
             currentHiddenLevel++;
         }
@@ -121,7 +217,7 @@ std::vector<EventTarget*> Event::composedPath(){
     }
     currentHiddenLevel = currentTargetHiddenSubtreeLevel;
     maxHiddenLevel = currentTargetHiddenSubtreeLevel;
-    for (size_t index = currentTargetIndex + 1; index<path.size(); index++){
+    for (int index = currentTargetIndex + 1; index<path.size(); index++){
         if (path[index]->slot_in_closed_tree){
             currentHiddenLevel++;
         }
@@ -159,24 +255,13 @@ void CustomEvent::initCustomEvent(DOMString type, bool bubbles, bool cancelable,
 }
 
 
-void remove_an_event_listener(EventTarget* eventTarget, event_listener* event_listener){
-    //TODO: Implement the ServiceWorkerGlobalScope check !
-
-    event_listener->removed = true;
-    auto iter = find(eventTarget->event_listener_list.begin(),eventTarget->event_listener_list.end(),event_listener);
-    if (iter!=eventTarget->event_listener_list.end()){
-        delete event_listener;
-        eventTarget->event_listener_list.erase(iter);
-    }
-}
-
 
 void EventTarget::addEventListener(DOMString type, EventListener* callback, std::variant<AddEventListenerOptions, bool> options){
     event_listener* temp = this->flatten(type, callback, options);
 
     //TODO: Implement the ServiceWorkerGlobalScope check !
 
-    if ((temp->signal && temp->signal->getaborted()) || !temp->callback){
+    if ((temp->signal && temp->signal->aborted) || !temp->callback){
         return;
     }
     if (temp->passive == std::nullopt){
@@ -204,7 +289,7 @@ void EventTarget::addEventListener(DOMString type, EventListener* callback, std:
     }
 
     if (temp->signal){
-        if (temp->signal->getaborted()){
+        if (temp->signal->aborted){
             return;
         }
         temp->signal->abort_algos.push_back(std::bind(remove_an_event_listener, this, temp));
@@ -212,7 +297,7 @@ void EventTarget::addEventListener(DOMString type, EventListener* callback, std:
 }
 
 
-void EventTarget::removeEventListener(DOMString type, EventListener* callback, std::variant<AddEventListenerOptions,bool> options){
+void EventTarget::removeEventListener(DOMString& type, EventListener* callback, std::variant<AddEventListenerOptions,bool> &options){
     event_listener* temp = this-> flatten(type, callback, options);
 
     bool found = false;
@@ -240,71 +325,207 @@ void EventTarget::removeAllEventListeners(){
 }
 
 bool EventTarget::dispatchEvent(Event* event){
-    //if (event.dispatch_flag || !event.initialized_flag){
-    //    throw InvalidStateError("Invalid State");
-    //}
-    //event.isTrusted = false;
-    //
-    //event.dispatch_flag = true;
-//
-    ////TODO: Condition for checking if (this) is associated Document of Window
-    //EventTarget targetOverride = this;
-//
-    //std::optional<EventTarget> activationTarget = std::nullopt;
-    //EventTarget relatedTarget = retard(event.relatedTarget, this);
-    //bool clearTargets = false;
-//
-    //if (this!=relatedTarget || this==event.relatedTarget){
-    //     std::vector<EventTarget> touchTargets = {};
-    //     for (auto a: event.touch_target_list){
-    //        touchTargets.push_back(retard(a,this));
-    //     }
-//
-    //     bool invocationTargetInShadowTree = false;
-    //     if (dynamic_cast<Node*> event){ //TODO: Also check if it's root is a shadow root
-    //        invocationTargetInShadowTree = true;
-    //     }
-//
-    //     //*Append to an event path
-//
-    //     bool root_of_closed_tree = false;
-    //     //TODO: if event is shadow root and mode is "closed" then set root_of_closed_tree to true.
-    //     path_structs nstruct = path_structs(this, invocationTargetInShadowTree, targetOverride, relatedTarget, touchTargets, root_of_closed_tree, false);
-    //     event.path.push_back(nstruct);
-//
-    //     //*NEXT
-//
-    //     bool isActivationEvent = false;
-//
-    //     if ((dynamic_cast<MouseEvent*> event) && event.type=="click"){
-    //        isActivationEvent = true;
-    //     }
-    //     
-    //     if (isActivationEvent and this.) //COMPLETE
-//
-    //     //TODO: Check for slottable and assigned
-    //     std::optional<EventTarget> slottable = this;
-//
-    //     bool slot_in_closed_tree = false;
-//
-    //     std::optional<EventTarget> parent = get_the_parent(event);
-//
-    //     while (parent!=std::nullopt){
-    //        if (slottable!=std::nullopt){
-    //            //assert check for slot
-    //            slottable = std::nullopt;
-    //            //if parent's root is shadow root whose mode is closed, set slot_in_closed_tree to true
-    //        }
-    //     }
-//
-    //     path_structs clearTargetStruct = 
-//
-    //}
+    if (event->dispatch_flag || !event->initialized_flag){
+        throw InvalidStateError("Invalid State");
+    }
+    event->isTrusted = false;
+
+    //*DISPATCH AN EVENT ALGO STEPS
+    event->dispatch_flag = true;
+
+    //TODO: Condition for checking if (this) is associated Document of Window
+    EventTarget* targetOverride = this;
+
+    EventTarget* activationTarget = nullptr;
+    EventTarget* relatedTarget = retard(event->relatedTarget, this);
+    bool clearTargets = false;
+
+    if (this!=relatedTarget || this==event->relatedTarget) {
+        std::vector<EventTarget*> touchTargets = {};
+        for (auto touchTarget: event->touch_target_list){
+            touchTargets.push_back(retard(touchTarget,this));
+        }
+
+        append_to_event(event,this,targetOverride,relatedTarget,touchTargets,false);
+
+        bool isActivationEvent = false;
+        if ((dynamic_cast<MouseEvent*>(event)) && event->type=="click"){
+            isActivationEvent = true;
+        }
+     
+        if (isActivationEvent && this->has_activation_behavior){
+            activationTarget = this;
+        }
+        EventTarget* slottable = nullptr;
+        //! CHECK LATER
+        auto temp = dynamic_cast<Element*>(this);
+        auto temp2 = dynamic_cast<Text*>(this);
+        if ((temp && !(temp->slot.empty())) || (temp2 && !(temp2->slot.empty()))){
+            slottable = this;
+        }
+
+        bool slot_in_closed_tree = false;
+        EventTarget* parent = get_the_parent(event);
+        while (parent){
+            if (slottable){
+                assert(4); //!COMPLETE
+                slottable = nullptr;
+                auto pakkatemp = dynamic_cast<Node*>(parent);
+                auto temporary = dynamic_cast<ShadowRoot*>(pakkatemp->getRootNode());
+                if (temporary && temporary->mode==closed){
+                    slot_in_closed_tree = true;
+                }
+            }
+            auto temporary1 = dynamic_cast<Element*>(parent);
+            auto temporary2 = dynamic_cast<Text*>(parent);
+            if (( temporary1 && !(temporary2->slot.empty())) || (temporary2 && !(temporary2->slot.empty()))){
+                slottable = parent;
+            }
+            relatedTarget = retard(event->relatedTarget,parent);
+            touchTargets = {};
+            for (auto a: event->touch_target_list){
+                touchTargets.push_back(retard(a,parent));
+            }
+            auto tempodabaccha = dynamic_cast<Node*>(parent);
+            if (dynamic_cast<Window*>(parent) || (tempodabaccha && tempodabaccha->getRootNode())){
+                if (isActivationEvent && event->bubbles && !activationTarget && parent->has_activation_behavior){
+                    activationTarget = parent;
+                }
+                append_to_event(event, parent, nullptr, relatedTarget, touchTargets, slot_in_closed_tree);
+            } //!COMPLETE
+            else if (parent==relatedTarget){
+                parent = nullptr;
+            }
+            else{
+                //!set target to parent
+                if (isActivationEvent && !activationTarget && this->has_activation_behavior){
+                    activationTarget = this;
+                }
+                append_to_event(event, parent, this, relatedTarget, touchTargets, slot_in_closed_tree);
+            }
+            
+            if (parent){
+                parent = parent->get_the_parent(event);
+            }
+            slot_in_closed_tree = false;
+        }
+
+        path_structs* clearTargetsStruct = nullptr;
+        for (auto a: event->path){
+            if (a->shadow_adjusted_target){
+                clearTargetsStruct = a.get();
+            }
+        }
+
+        auto tempboi = dynamic_cast<Node*>(clearTargetsStruct->shadow_adjusted_target);
+        if (tempboi && dynamic_cast<ShadowRoot*>(tempboi->getRootNode())){
+            clearTargets = true;
+        }
+        auto tempboi2 = dynamic_cast<Node*>(clearTargetsStruct->related_target);
+        if (tempboi2 && dynamic_cast<ShadowRoot*>(tempboi2->getRootNode())){
+            clearTargets = true;
+        }
+        Node* tempgo;
+        for (auto a: clearTargetsStruct->touch_target_list){
+            tempgo = dynamic_cast<Node*>(a);
+            if (tempgo && dynamic_cast<ShadowRoot*>(tempgo->getRootNode())){
+                clearTargets = true;
+            }
+        }
+
+
+        if (activationTarget && activationTarget->has_legacy_pre_activation_behavior){
+            activationTarget->legacy_pre_activation_behavior_algorithm();
+        }
+        for (auto i {event->path.end()};i!=event->path.begin();--i){
+            if ((*i)->shadow_adjusted_target){
+                event->eventPhase = AT_TARGET;
+            }
+            else{
+                event->eventPhase = CAPTURING_PHASE;
+            }
+            invoke(i->get(),event,"capturing");
+        }
+        for (auto a: event->path){
+            if (a->shadow_adjusted_target){
+                event->eventPhase = AT_TARGET;
+            }
+            else{
+                if (!(event->bubbles)){
+                    continue;
+                }
+                event->eventPhase = BUBBLING_PHASE;
+            }
+            invoke(a.get(),event,"bubbling");
+
+        }
+    }
+    event->eventPhase = NONE;
+    event->currentTarget = nullptr;
+    event->path.clear();
+    event->path = {};
+    event->dispatch_flag = false;
+    event->stop_propagation_flag = false;
+    event->stop_immediate_propagation_flag = false;
+    if (clearTargets){
+        event->target = nullptr;
+        event->relatedTarget = nullptr;
+        event->touch_target_list = {};
+    }
+    if (activationTarget){
+        if (!(event->canceled_flag)){
+            activationTarget->activation_behavior_algorithm();
+        }
+        else if(activationTarget->has_legacy_canceled_activation_behavior){
+            activationTarget->legacy_canceled_activation_behavior_algorithm;
+        }
+    }
+    if (event->canceled_flag){
+        return false;
+    }
     return true;
 }
 
+
+void signal_abort(AbortSignal* signal, std::any reason = nullptr) {
+    if (signal->aborted) {
+        return;
+    }
+    if (reason.has_value()){ signal->reason = reason;}
+    else{ signal->reason = AbortError("Damn ! Abort error dude :)");}
+
+    std::vector<AbortSignal*> dependentSignalsToAbort = {};
+    for (auto dependentSignal: signal->dependent_signals) {
+        if (!(dependentSignal->aborted)) {
+            dependentSignal->reason = signal->reason;
+            dependentSignalsToAbort.push_back(dependentSignal);
+        }
+    }
+    for (auto &algo: signal->abort_algos){ algo(); }
+    signal->abort_algos.clear();
+    //fire event
+    for (const auto dependentSignal: dependentSignalsToAbort) {
+        for (auto &algo: dependentSignal->abort_algos) {
+            algo();
+        }
+        dependentSignal->abort_algos.clear();
+        //fire event
+    }
+}
+
+
+AbortController::AbortController(){
+    signal = new AbortSignal();
+}
+
+void AbortController::abort(std::any reason = nullptr) const{
+    signal_abort(signal, reason);
+}
+
+
+
 int main(){
     EventInit a;
-    Event b = Event("click",std::make_unique<EventInit>(a));
+    //Event b = Event("click",std::make_unique<EventInit>(a));
     return 0;
 }

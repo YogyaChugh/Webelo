@@ -41,8 +41,11 @@ struct event_listener{
     AbortSignal *signal;
     bool removed = false;
 
-    bool operator==(event_listener ev){
+    bool operator==(event_listener &ev) const{
         return (type==ev.type && callback==ev.callback && capture==ev.capture && passive==ev.passive && once==ev.once && signal==ev.signal && removed==ev.removed);
+    }
+    bool operator!=(event_listener &ev) const{
+        return (type!=ev.type || callback!=ev.callback || capture!=ev.capture || passive!=ev.passive || once!=ev.once || signal!=ev.signal || removed!=ev.removed);
     }
     ~event_listener(){
         callback = nullptr;
@@ -63,12 +66,20 @@ struct AddEventListenerOptions: EventListenerOptions{
 
 class EventTarget{
     public:
+        bool has_activation_behavior = false;
+        bool has_legacy_canceled_activation_behavior = false;
+        bool has_legacy_pre_activation_behavior = false;
+
+        std::function<void()> activation_behavior_algorithm;
+        std::function<void()> legacy_canceled_activation_behavior_algorithm;
+        std::function<void()> legacy_pre_activation_behavior_algorithm;
+
         std::vector<event_listener*> event_listener_list = {};
 
         EventTarget(){};
 
         void addEventListener(DOMString type, EventListener* callback, std::variant<AddEventListenerOptions,bool> options);
-        void removeEventListener(DOMString type, EventListener* callback, std::variant<AddEventListenerOptions,bool> options);
+        void removeEventListener(DOMString& type, EventListener* callback, std::variant<AddEventListenerOptions,bool> &options);
         void removeAllEventListeners();
         bool dispatchEvent(Event* event);
 
@@ -113,10 +124,9 @@ class EventTarget{
 };
 
 class AbortSignal: public EventTarget{
-    private:
+    public:
         bool aborted;
         std::optional<std::any> reason;
-    public:
         const AbortSignal abort(std::optional<std::any> reason);
         //TODO: Expose to only Window and Worker
         //TODO: EnforceRange
@@ -125,29 +135,17 @@ class AbortSignal: public EventTarget{
         void throwIfAborted();
         EventHandler onabort;
         bool dependent;
-        std::vector<AbortSignal> source_signals = {};
-        std::vector<AbortSignal> dependent_signals = {};
+        std::vector<AbortSignal*> source_signals = {};
+        std::vector<AbortSignal*> dependent_signals = {};
 
         std::vector<std::function<void()>> abort_algos = {};
-
-
-        bool getaborted(){
-            return aborted;
-        }
-        std::optional<std::any> getreason(){
-            return reason;
-        }
 };
 
 class AbortController{
-    private:
-        AbortSignal signal;
     public:
-    AbortController();
-
-    AbortSignal getsignal();
-
-    void abort(std::any reason);
+        AbortSignal* signal;
+        AbortController();
+        void abort(std::any reason) const;
 };
 
 
@@ -209,7 +207,7 @@ struct path_structs{
 };
 
 class Event{
-    protected:
+    public:
         // * NOTE: a potential event target is null or an EventTarget object !
 
         //* Read-only
@@ -232,12 +230,10 @@ class Event{
 
         //*Editable
 
-        // ! Ommitted for function: bool returnValue
-
-    public:
+        // ! Ommitted for function: bool returnV
 
         // Constructor
-        Event(DOMString type, std::unique_ptr<EventInit> eventInitDict = nullptr);
+        Event(DOMString &type, std::unique_ptr<EventInit> eventInitDict = nullptr);
 
         // FLAGS BRO !!
         bool stop_propagation_flag = false;
@@ -254,7 +250,7 @@ class Event{
         std::vector<EventTarget*> touch_target_list = {}; //mostly no use until TouchEvent Interface
 
 
-        void initEvent(DOMString type, bool bubbles = false, bool cancelable = false); // legacy
+        void initEvent(DOMString &type, bool bubbles = false, bool cancelable = false); // legacy
         void stopPropagation();
         void stopImmediatePropagation();
         void preventDefault();

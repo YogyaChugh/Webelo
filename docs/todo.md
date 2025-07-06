@@ -11,8 +11,8 @@
 - Implement the ServiceWorkerGlobalScope object stuff in addEventListener at https://dom.spec.whatwg.org/#add-an-event-listener !
 - Follow the add the following algo for addEventListener at https://dom.spec.whatwg.org/#add-an-event-listener
 - Correct add event listener after node.hpp !
-
-
+- Add check if target is associated Document of the current window in dispath event algo !
+- Assert: parent is a slot in dispatchEvent()
 
 ## COMPLETE LIST
 - NodeList
