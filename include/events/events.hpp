@@ -83,6 +83,8 @@ class EventTarget{
         void removeAllEventListeners();
         bool dispatchEvent(Event* event);
 
+        bool dispatch_an_event(Event* event, bool legacy_target_override_flag);
+
         bool operator==(EventTarget a){
             if (event_listener_list.size()!=a.event_listener_list.size()){
                 return false;
@@ -127,25 +129,33 @@ class AbortSignal: public EventTarget{
     public:
         bool aborted;
         std::optional<std::any> reason;
-        const AbortSignal abort(std::optional<std::any> reason);
+
+        //NEW-OBJECT
+        static AbortSignal* abort(std::optional<std::any> reason);
         //TODO: Expose to only Window and Worker
         //TODO: EnforceRange
-        const AbortSignal timeout(unsigned long long milliseconds);
-        const AbortSignal _any(std::vector<AbortSignal> signals);
+        static AbortSignal* timeout(unsigned long long milliseconds);
+        static AbortSignal* _any(std::vector<AbortSignal*> signals);
+
+
         void throwIfAborted();
-        EventHandler onabort;
-        bool dependent;
+        EventHandler onabort; //TODO: event handler IDL attribute whose event handler evnet type is abort.
+        bool dependent = false;
         std::vector<AbortSignal*> source_signals = {};
         std::vector<AbortSignal*> dependent_signals = {};
 
         std::vector<std::function<void()>> abort_algos = {};
+
+        AbortSignal* create_object() {
+            return new AbortSignal();
+        }
 };
 
 class AbortController{
     public:
         AbortSignal* signal;
         AbortController();
-        void abort(std::any reason) const;
+        void abort(std::optional<std::any> reason = std::nullopt) const;
 };
 
 
@@ -233,7 +243,11 @@ class Event{
         // ! Ommitted for function: bool returnV
 
         // Constructor
-        Event(DOMString &type, std::unique_ptr<EventInit> eventInitDict = nullptr);
+        Event(DOMString type, std::unique_ptr<EventInit> eventInitDict = nullptr);
+
+        Event* create_object() {
+            return new Event(type);
+        }
 
         // FLAGS BRO !!
         bool stop_propagation_flag = false;
@@ -249,7 +263,6 @@ class Event{
         std::vector<std::unique_ptr<path_structs>> path;
         std::vector<EventTarget*> touch_target_list = {}; //mostly no use until TouchEvent Interface
 
-
         void initEvent(DOMString &type, bool bubbles = false, bool cancelable = false); // legacy
         void stopPropagation();
         void stopImmediatePropagation();
@@ -257,7 +270,7 @@ class Event{
         std::vector<EventTarget*> composedPath();
         void set_canceled_flag();
 
-        void inner_event_creation_steps(Realm* realm, DOMHighResTimeStamp time, std::unique_ptr<EventInit> dictionary);
+        void inner_event_creation_steps(Realm* realm, DOMHighResTimeStamp time, std::unique_ptr<EventInit> dictionary = nullptr);
 
         // *GETTER-SETTER METHODS
 

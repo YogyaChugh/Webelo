@@ -24,10 +24,31 @@ EventTarget* retard(EventTarget* a, EventTarget* b){
     return a;
 }
 
+Event* create_event(Event* eventInterface, Realm* realm = nullptr){
+    time_t timestamp;
+    DOMHighResTimeStamp now = timestamp; //TODO: IMPROVE
+    eventInterface->inner_event_creation_steps(realm, now);
+    eventInterface->isTrusted = true;
+    return eventInterface;
+};
 
-void fire_event(Event* e,EventTarget* target,bool legacy_target_override_flag = false) {
+
+bool fire_event(DOMString& e,EventTarget* target,Event* temporary_class = nullptr ,bool legacy_target_override_flag = false) {
     //! MODIFY LATER FOR eventConstructor
     //! AND MAKE CHANGES to signal_abort where it's called too!
+    Event* event;
+    if (!temporary_class){
+        event = new Event(e);
+    }
+    else {
+        event = temporary_class->create_object();
+    }
+    event = create_event(event);
+    event->type = e;
+    //! DO SOMETHING HERE
+    bool returning_val = target->dispatch_an_event(event, legacy_target_override_flag);
+    delete event;
+    return returning_val;
 };
 
 void remove_an_event_listener(EventTarget* eventTarget, event_listener* event_listener){
@@ -69,6 +90,7 @@ bool inner_invoke(Event* event, std::vector<event_listener*> &listeners,DOMStrin
             if (listener->once) {
                 remove_an_event_listener(event->currentTarget, listener);
             }
+            //! IMPORTANT BEFORE PUBLISH
             //! IMPLEMENT global OBJECT WORK HERE
             //! TEMPORARILY!
             if (listener->passive) {
@@ -86,9 +108,9 @@ bool inner_invoke(Event* event, std::vector<event_listener*> &listeners,DOMStrin
 
 void invoke(path_structs* struc, Event* event, DOMString phase, std::optional<bool> legacyOutputDidListenersThrowFlag = std::nullopt) {
     event->target = nullptr;
-    for (auto tem {event->path.end()};tem!=event->path.begin();--tem) {
-        if ((*tem)->shadow_adjusted_target) {
-            event->target = (*tem)->shadow_adjusted_target;
+    for (size_t i = event->path.size() - 1; i > -1; i--) {
+        if (event->path[i]->shadow_adjusted_target) {
+            event->target = event->path[i]->shadow_adjusted_target;
             break;
         }
     }
@@ -122,7 +144,7 @@ void invoke(path_structs* struc, Event* event, DOMString phase, std::optional<bo
 }
 
 
-Event::Event(DOMString &type, std::unique_ptr<EventInit> eventInitDict){
+Event::Event(DOMString type, std::unique_ptr<EventInit> eventInitDict){
     // run inner event creation steps !
     time_t timestamp;
     DOMHighResTimeStamp now = timestamp; //TODO: IMPROVE
@@ -130,10 +152,10 @@ Event::Event(DOMString &type, std::unique_ptr<EventInit> eventInitDict){
     this->type = type;
 };
 
-//void create_event(Event eventInterface, Realm realm = nullptr){
-//};
+
 
 void Event::inner_event_creation_steps(Realm* realm, DOMHighResTimeStamp time, std::unique_ptr<EventInit> dictionary){
+    //TODO: do something with realm baby !
     this->initialized_flag = true;
     this->timeStamp = time;
     if (dictionary){
@@ -324,17 +346,25 @@ void EventTarget::removeAllEventListeners(){
     event_listener_list.clear();
 }
 
-bool EventTarget::dispatchEvent(Event* event){
+bool EventTarget::dispatchEvent(Event* event) {
+    //! MAINTAIN RESPONSIBILITY FOR DELETING EVENT !
     if (event->dispatch_flag || !event->initialized_flag){
         throw InvalidStateError("Invalid State");
     }
     event->isTrusted = false;
+    return dispatch_an_event(event, false);
+}
+
+bool EventTarget::dispatch_an_event(Event* event, bool legacy_target_override_flag){
 
     //*DISPATCH AN EVENT ALGO STEPS
     event->dispatch_flag = true;
 
     //TODO: Condition for checking if (this) is associated Document of Window
-    EventTarget* targetOverride = this;
+    EventTarget* targetOverride;
+    if (!legacy_target_override_flag) {
+        targetOverride = this;
+    }
 
     EventTarget* activationTarget = nullptr;
     EventTarget* relatedTarget = retard(event->relatedTarget, this);
@@ -411,7 +441,7 @@ bool EventTarget::dispatchEvent(Event* event){
         }
 
         path_structs* clearTargetsStruct = nullptr;
-        for (auto a: event->path){
+        for (auto& a: event->path){
             if (a->shadow_adjusted_target){
                 clearTargetsStruct = a.get();
             }
@@ -437,16 +467,16 @@ bool EventTarget::dispatchEvent(Event* event){
         if (activationTarget && activationTarget->has_legacy_pre_activation_behavior){
             activationTarget->legacy_pre_activation_behavior_algorithm();
         }
-        for (auto i {event->path.end()};i!=event->path.begin();--i){
-            if ((*i)->shadow_adjusted_target){
+        for (size_t i = event->path.size() - 1;i > -1; i--){
+            if (event->path[i]->shadow_adjusted_target){
                 event->eventPhase = AT_TARGET;
             }
             else{
                 event->eventPhase = CAPTURING_PHASE;
             }
-            invoke(i->get(),event,"capturing");
+            invoke(event->path[i].get(),event,"capturing");
         }
-        for (auto a: event->path){
+        for (auto& a: event->path){
             if (a->shadow_adjusted_target){
                 event->eventPhase = AT_TARGET;
             }
@@ -463,7 +493,6 @@ bool EventTarget::dispatchEvent(Event* event){
     event->eventPhase = NONE;
     event->currentTarget = nullptr;
     event->path.clear();
-    event->path = {};
     event->dispatch_flag = false;
     event->stop_propagation_flag = false;
     event->stop_immediate_propagation_flag = false;
@@ -487,7 +516,7 @@ bool EventTarget::dispatchEvent(Event* event){
 }
 
 
-void signal_abort(AbortSignal* signal, std::any reason = nullptr) {
+void signal_abort(AbortSignal* signal, std::optional<std::any> reason = std::nullopt) {
     if (signal->aborted) {
         return;
     }
@@ -518,9 +547,70 @@ AbortController::AbortController(){
     signal = new AbortSignal();
 }
 
-void AbortController::abort(std::any reason = nullptr) const{
+void AbortController::abort(std::optional<std::any> reason) const{
     signal_abort(signal, reason);
 }
+
+AbortSignal* create_dependent_abort_signal(std::vector<AbortSignal*> signals, AbortSignal* signalInterface = nullptr, Realm* realm = nullptr) {
+    AbortSignal* resultSignal;
+    if (!signalInterface){
+        resultSignal = new AbortSignal();
+    }
+    else {
+        resultSignal = signalInterface->create_object();
+    }
+    for (auto a: signals) {
+        if (a->aborted) {
+            resultSignal->reason = a->reason;
+            return resultSignal;
+        }
+    }
+    resultSignal->dependent = true;
+    for (auto signal: signals) {
+        if (!(signal-> dependent)) {
+            resultSignal->dependent_signals.push_back(signal);
+            signal->dependent_signals.push_back(resultSignal);
+        }
+        else {
+            for (auto sourceSignal: signal->source_signals) {
+                assert(!(sourceSignal->aborted) && !(sourceSignal->dependent));
+                resultSignal->source_signals.push_back(sourceSignal);
+                sourceSignal->dependent_signals.push_back(resultSignal);
+            }
+        }
+    }
+    return resultSignal;
+}
+
+AbortSignal* AbortSignal::abort(std::optional<std::any> reason) {
+    AbortSignal* signal = new AbortSignal();
+    if (reason.has_value()) {
+        signal->reason = reason;
+    }
+    else {
+        signal->reason = AbortError("Damn ! Abort error paji! ");
+    }
+    return signal;
+}
+
+AbortSignal* AbortSignal::timeout(unsigned long long milliseconds) {
+    AbortSignal* signal = new AbortSignal();
+    //! MF GLOBAL OBJECT AGAIN HERE
+    return signal;
+}
+
+AbortSignal *AbortSignal::_any(std::vector<AbortSignal *> signals) {
+    return create_dependent_abort_signal(signals);
+}
+
+void AbortSignal::throwIfAborted() {
+    if (aborted) {
+        reason = std::nullopt;
+    }
+}
+
+
+
 
 
 

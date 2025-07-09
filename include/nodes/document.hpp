@@ -3,6 +3,9 @@
 #include <variant>
 #include <vector>
 #include <optional>
+#include <initializer_list>
+#include <stdexcept>
+
 #include "../events/events.hpp"
 #include "../base.hpp"
 
@@ -143,15 +146,20 @@ class Node: public EventTarget{
         const unsigned short DOCUMENT_FRAGMENT_NODE = 11;
         const unsigned short NOTATION_NODE = 12;
 
+
         unsigned short getNodeType() const;
-        Node* getRootNode(GetRootNodeOptions options = {});
+        Node* getRootNode(GetRootNodeOptions options = {}) {
+            //! ALTER THIS SOON
+            //! MEMORY LEAKING
+            return new Node();
+        };
         bool hasChildNodes();
 
         // CEReactions
         std::optional<DOMString> nodeValue;
         std::optional<DOMString> textContent;
         void normalize();
-        Node cloneNode(bool subtree = false); //to return a new objcet everytime !
+        Node cloneNode(bool subtree = false); //to return a new object everytime !
 
         bool isEqualNode(Node* otherNode);
         bool isSameNode(Node* otherNode);
@@ -184,21 +192,76 @@ class Node: public EventTarget{
         }
 };
 
-
 //Exposed to Window only
 class NodeList{
-    public:
-        std::vector<Node*> node_list;
-        Node* item(unsigned long index); //can be null
+public:
+    std::vector<Node*> node_list;
+    Node* item(unsigned long index) {
+        try {
+            Node* p = node_list[index];
+            return p;
+        }
+        catch (std::out_of_range) {
+            return nullptr;
+        }
+    }; //can be nullptr
+
+    [[nodiscard]] size_t length() const {
+        return node_list.size();
+    }
 };
 
 //Exposed to Window only
+//LegacyUnenumerableNamedProperties
 class HTMLCollection{
     // Implement after Element
-    public:
-        Element* item(unsigned long index);
-        Element* namedItem(DOMString name);
+public:
+    std::vector<Element*> element_list;
+    Element* item(unsigned long index) {
+        try {
+            Element* p = node_list[index];
+            return p;
+        }
+        catch (std::out_of_range) {
+            return nullptr;
+        }
+    }; //can be nullptr
+    Element* namedItem(DOMString name); //!Implement Later
+    [[nodiscard]] size_t length() const {
+        return node_list.size();
+    }
 };
+
+
+class ParentNode: public Node {
+public:
+    HTMLCollection* children;
+    Element* firstElementChild() {
+        return children->element_list.at(0);
+    };
+    Element* lastElementChild() {
+        return children->element_list.back();
+    };
+
+    unsigned long childElementCount{
+        return children->length();
+    };
+
+    //CEReactions
+    //Unscopable
+    void prepend(std::initializer_list<std::variant<Node,DOMString>> nodes);
+    void append(std::initializer_list<std::variant<Node,DOMString>> nodes);
+    void replaceChildren(std::initializer_list<std::variant<Node,DOMString>> nodes);
+
+    //CEReactions
+    void moveBefore(Node node,Node* child);
+
+    Element* querySelector(DOMString selectors);
+
+    //New Object
+    NodeList querySelectorAll(DOMString selectors);
+};
+
 
 
 //Exposed to window only
@@ -275,7 +338,8 @@ class DocumentType: Node{
 
 class DocumentFragment: Node{
     public:
-    DocumentFragment(){};
+        DocumentFragment(){};
+        friend Element* getElementById(DOMString elementId);
 };
 
 //Exposed to window only
@@ -288,6 +352,12 @@ class ShadowRoot: DocumentFragment{
         bool serializable;
         Element* host;
         EventHandler onslotchange;
+
+        CustomElementRegistry* custom_element_registry = nullptr;
+
+        CustomElementRegistry* get_custom_element_registry() {
+            return custom_element_registry;
+        }
 };
 
 
@@ -381,7 +451,7 @@ class Element: Node{
 
 //Exposed to window only
 class Document: public Node {
-    private:
+public:
         DOMImplementation* implementation;
         USVString URL;
         USVString documentURI;
@@ -393,8 +463,12 @@ class Document: public Node {
 
         DocumentType* doctype;
         Element* docuementElement;
-    public:
+
+        CustomElementRegistry* custom_element_registry = nullptr;
+
         Document();
+
+        friend Element* getElementById(DOMString elementId);
 
         HTMLCollection getElementsByTagName(DOMString qualifiedName);
         HTMLCollection getElementsByTagNameNS(std::optional<DOMString> namesp, DOMString localname);
@@ -420,6 +494,10 @@ class Document: public Node {
         NodeIterator* createNodeIterator(Node* root, unsigned long whatToShow = 0xFFFFFFFF, NodeFilter* filter = nullptr);
         TreeWalker* createTreeWalker(Node* root, unsigned long whatToShow = 0xFFFFFFFF, NodeFilter* filter = nullptr);
 
+
+        CustomElementRegistry* get_custom_element_registry() {
+            return custom_element_registry;
+        }
 };
 
 //Exposed to window only
@@ -435,3 +513,14 @@ class DOMImplementation{
     Document createHTMLDocument(DOMString title);
     bool hasFeature();
 };
+
+
+Element* getElementById(DOMString elementId) {
+    //! LET'S DO IT LATER DUDE ! IT'S CONFUSING CURRENTLY
+    std::vector<Node*> elements;
+    while (!(elements.empty())) {
+        Node* top_stack_element = *(elements.back());
+        int visited = 0;
+        while (visited!=)
+    }
+}

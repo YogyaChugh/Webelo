@@ -1,4 +1,5 @@
-#include "node.hpp"
+#include "document.hpp"
+#include "../../include/base.hpp"
 #include <optional>
 
 std::optional<Node> NodeList::item(unsigned long index){
