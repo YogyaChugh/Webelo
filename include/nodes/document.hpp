@@ -195,13 +195,13 @@ class Node: public EventTarget{
 //Exposed to Window only
 class NodeList{
 public:
-    std::vector<Node*> node_list;
+    std::vector<Node*> node_list = {};
     Node* item(unsigned long index) {
         try {
-            Node* p = node_list[index];
+            Node* p = node_list.at(index);
             return p;
         }
-        catch (std::out_of_range) {
+        catch (const std::out_of_range&) {
             return nullptr;
         }
     }; //can be nullptr
@@ -209,26 +209,40 @@ public:
     [[nodiscard]] size_t length() const {
         return node_list.size();
     }
+
+    ~NodeList() {
+        for (auto a: node_list) {
+            delete a;
+            a = nullptr;
+        }
+        node_list = {};
+    }
 };
 
 //Exposed to Window only
 //LegacyUnenumerableNamedProperties
 class HTMLCollection{
-    // Implement after Element
 public:
     std::vector<Element*> element_list;
     Element* item(unsigned long index) {
         try {
-            Element* p = node_list[index];
+            Element* p = element_list.at(index);
             return p;
         }
-        catch (std::out_of_range) {
+        catch (const std::out_of_range&) {
             return nullptr;
         }
     }; //can be nullptr
-    Element* namedItem(DOMString name); //!Implement Later
+    Element* namedItem(DOMString name) {
+        for (auto a: element_list) {
+            if (a->tagName==name || a->localName == name) {
+                return a;
+            }
+        }
+        return nullptr;
+    }
     [[nodiscard]] size_t length() const {
-        return node_list.size();
+        return element_list.size();
     }
 };
 
@@ -243,7 +257,7 @@ public:
         return children->element_list.back();
     };
 
-    unsigned long childElementCount{
+    unsigned long childElementCount(){
         return children->length();
     };
 
@@ -497,7 +511,7 @@ public:
 
         CustomElementRegistry* get_custom_element_registry() {
             return custom_element_registry;
-        }
+        };
 };
 
 //Exposed to window only
@@ -514,13 +528,3 @@ class DOMImplementation{
     bool hasFeature();
 };
 
-
-Element* getElementById(DOMString elementId) {
-    //! LET'S DO IT LATER DUDE ! IT'S CONFUSING CURRENTLY
-    std::vector<Node*> elements;
-    while (!(elements.empty())) {
-        Node* top_stack_element = *(elements.back());
-        int visited = 0;
-        while (visited!=)
-    }
-}

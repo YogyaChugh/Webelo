@@ -1,16 +1,18 @@
 #include <iostream>
-#include <vector>
-#include <typeinfo>
-#include <string>
-
+#include "include/nodes/document.hpp"
 
 int main() {
-    std::vector<std::string> element = {"goa","maggi"};
-    try {
-        std::cout<<element.back()<<"\n";
-        std::cout<<typeid(element.back()).name();
+    NodeList nodes;
+    std::cout<<"hi";
+    std::cout<<"hi";
+    Node temp1;
+    nodes.node_list.push_back(&temp1);
+    Node* node = nodes.item(0);
+    if (!node) {
+        std::cout<<"it's a nullptr";
     }
-    catch (std::out_of_range) {
-        std::cout<<"out of range";
+    else {
+        std::cout<<"nope it's not !";
     }
+    std::cout<<"maggi";
 }
