@@ -1,8 +1,9 @@
 #include "document.hpp"
 #include "../../include/nodes/document.hpp"
-
 #include "../../include/base.hpp"
 #include <optional>
+
+serialize_url(){};
 
 std::optional<Node> NodeList::item(unsigned long index){
     try{
@@ -15,11 +16,28 @@ std::optional<Node> NodeList::item(unsigned long index){
 
 Node::Node(){
     // TODO: Set baseURI to node document's document base URL #Serialized!
+
 }
 
 bool Node::hasChildNodes(){
-    // TODO: Check if Nodelist childnodes is empty or not
+    if (childNodes->length() == 0) {
+        return false;
+    }
+    return true;
 }
+
+Node* Node::firstChild() {
+    return childNodes->item(0);
+}
+
+Node* Node::lastChild() {
+    return childNodes->item(childNodes.length() - 1);
+}
+
+
+
+
+
 
 
 Node* convert_nodes_to_node(std::initializer_list<std::variant<Node,DOMString>> nodes, Document* ownerDocument) {

@@ -1,18 +1,8 @@
 #include <iostream>
-#include "include/nodes/document.hpp"
+#include <vector>
+
 
 int main() {
-    NodeList nodes;
-    std::cout<<"hi";
-    std::cout<<"hi";
-    Node temp1;
-    nodes.node_list.push_back(&temp1);
-    Node* node = nodes.item(0);
-    if (!node) {
-        std::cout<<"it's a nullptr";
-    }
-    else {
-        std::cout<<"nope it's not !";
-    }
-    std::cout<<"maggi";
+    std::vector<int> a = {1,2,3,4,5};
+    std::cout<<a.at(-1);
 }
