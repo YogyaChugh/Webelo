@@ -8,6 +8,7 @@
 
 #include "../events/events.hpp"
 #include "../base.hpp"
+#include "node.hpp"
 
 class Attr;
 class CharacterData;
@@ -23,10 +24,8 @@ struct ImportNodeOptions;
 struct ShadowRootInit;
 class NamedNodeMap;
 class Element;
-class Document;
 class XMLDocument;
 class DOMImplementation;
-struct GetRootNodeOptions;
 class Node;
 class NodeList;
 class HTMLCollection;
@@ -111,209 +110,8 @@ class Range: AbstractRange{
 enum ShadowRootMode{ open, closed};
 enum SlotAssignmentMode{ manual, named};
 
-struct GetRootNodeOptions{
-    bool composed = false;
-};
 
 
-enum class node_type: unsigned short{
-    ELEMENT_NODE = 1,
-    ATTRIBUTE_NODE = 2,
-    TEXT_NODE = 3,
-    CDATA_SECTION_NODE = 4,
-    ENTITY_REFERENCE_NODE = 5,
-    ENTITY_NODE = 6,
-    PROCESSING_INSTRUCTION_NODE = 7,
-    COMMENT_NODE = 8,
-    DOCUMENT_NODE = 9,
-    DOCUMENT_TYPE_NODE = 10,
-    DOCUMENT_FRAGMENT_NODE = 11,
-    NOTATION_NODE = 12
-};
-
-
-//Exposed to Window only !
-class Node: public EventTarget{
-    public:
-
-    // Made `static` so as to make them class constants and not instance constants !
-    static constexpr unsigned short ELEMENT_NODE = 1;
-    static constexpr unsigned short ATTRIBUTE_NODE = 2;
-    static constexpr unsigned short TEXT_NODE = 3;
-    static constexpr unsigned short CDATA_SECTION_NODE = 4;
-    static constexpr unsigned short ENTITY_REFERENCE_NODE = 5;
-    static constexpr unsigned short ENTITY_NODE = 6;
-    static constexpr unsigned short PROCESSING_INSTRUCTION_NODE = 7;
-    static constexpr unsigned short COMMENT_NODE = 8;
-    static constexpr unsigned short DOCUMENT_NODE = 9;
-    static constexpr unsigned short DOCUMENT_TYPE_NODE = 10;
-    static constexpr unsigned short DOCUMENT_FRAGMENT_NODE = 11;
-    static constexpr unsigned short NOTATION_NODE = 12;
-
-    //AGAIN
-    static constexpr unsigned short DOCUMENT_POSITION_DISCONNECTED = 0x01;
-    static constexpr unsigned short DOCUMENT_POSITION_PRECEDING = 0x02;
-    static constexpr unsigned short DOCUMENT_POSITION_FOLLOWING = 0x04;
-    static constexpr unsigned short DOCUMENT_POSITION_CONTAINS = 0x08;
-    static constexpr unsigned short DOCUMENT_POSITION_CONTAINED_BY = 0x10;
-    static constexpr unsigned short DOCUMENT_POSITION_IMPLEMENTATION_SPECIFIC = 0x20;
-
-    //Basic INFO.
-    node_type nodeType;  // The type of node !
-    DOMString nodeName; // Name for the node !
-    USVString baseURI;  //!TODO Base URL For the node document !
-    Document* ownerDocument;    // node document
-
-    // Not necessary that parent is element ! could be some special node baby !
-    Node* parentNode;
-    Element* parentElement;
-
-    //Currently don't know !
-    bool isConnected;
-
-    //Babies !!! ( Children )
-    NodeList* childNodes;  // Storing children in the form of NodeList
-    Node* firstChild();
-    Node* lastChild();
-
-    Node* previousSibling;
-    Node* nextSibling;
-
-
-    unsigned short getNodeType() const;
-    Node* getRootNode(GetRootNodeOptions options = {}) {
-        if (parentNode) {
-            return parentNode->getRootNode();
-        }
-        return this;
-    };
-    bool hasChildNodes();
-
-    // CEReactions
-    std::optional<DOMString> nodeValue;
-    std::optional<DOMString> textContent;
-    void normalize();
-    Node cloneNode(bool subtree = false); //to return a new object everytime !
-
-    bool isEqualNode(Node* otherNode);
-    bool isSameNode(Node* otherNode);
-
-    unsigned short compareDocumentPosition(Node* other);
-    bool contains(Node* other);
-
-    std::optional<DOMString> lookupPrefix(std::optional<DOMString> namesp);
-    std::optional<DOMString> lookupNamespaceURI(std::optional<DOMString> prefix);
-
-    bool isDefaultNamespace(std::optional<DOMString> namesp);
-
-    //CEReactions
-    Node insertBefore(Node* node, Node* child);
-    Node appendChild(Node* node);
-    Node replaceChild(Node* node, Node* child);
-    Node removeChild(Node* child);
-
-    //TODO: Add associated node document, registered observer list and assigned slot
-
-    EventTarget* get_the_parent(Event* event) override{
-        // As only `element` and `text` are slottables, we'll override the get_the_parent alog again in their respective classes !
-        return parentNode;
-    }
-};
-
-//Exposed to Window only
-class NodeList{
-public:
-    /*
-     * This is a class which is just a collection of nodes !
-     * Just storing an iterable vector and some functions to safely retrieve data !
-     */
-    std::vector<Node*> node_list = {};
-
-    Node* item(unsigned long index) const {
-        // Returns the Node ptr on the index provided !
-        try {
-            Node* p = node_list.at(index);
-            return p;
-        }
-        catch (const std::out_of_range&) {
-            return nullptr;
-        }
-    } //can be nullptr
-
-    Node* operator[](unsigned long index) const {
-        // Returns the Node ptr on the index provided !
-        return this->item(index);
-    }
-
-    [[nodiscard]] unsigned long length() const {
-        // Returns the length of the list stored ! Must be stored in a variable.
-        return node_list.size();
-    }
-
-    ~NodeList() {
-        for (auto a: node_list) {
-            delete a;
-        }
-        node_list = {};
-    }
-};
-
-
-//Exposed to Window only
-//LegacyUnenumerableNamedProperties
-class HTMLCollection{
-public:
-    /*
-     * This is a class which is just a collection of elements !
-     * Just storing an iterable vector and some functions to safely retrieve data !
-     */
-    std::vector<Element*> element_list;
-
-    Element* item(unsigned long index) const {
-        try {
-            Element* p = element_list.at(index);
-            return p;
-        }
-        catch (const std::out_of_range&) {
-            return nullptr;
-        }
-    }; //can be nullptr
-
-    Element* operator[](unsigned long index) const {
-        return this->item(index);
-    }
-
-
-    Element* namedItem(DOMString name) const {
-        if (name=="") {
-            return nullptr;
-        }
-        for (auto element: element_list) {
-            //! CHECK IF `element` IS IN THE HTML NAMESPACE
-            //! CHECK IF `element` HAS A NAME ATTRIBUTE WHOSE VALUE IS name
-            if (element->id==name) {
-                return element;
-            }
-        }
-        return nullptr;
-    }
-
-    Element* operator[](DOMString name) const {
-        return this->namedItem(name);
-    }
-
-
-    [[nodiscard]] unsigned long length() const {
-        return element_list.size();
-    }
-
-    ~HTMLCollection() {
-        for (auto a: element_list) {
-            delete a;
-        }
-        element_list = {};
-    }
-};
 
 
 class ParentNode: public Node {
@@ -401,6 +199,8 @@ class Comment: CharacterData{
 //Exposed to window only
 class CDATASection: Text{};
 
+
+
 //Exposed to window only
 class DocumentType: Node{
     private:
@@ -486,7 +286,7 @@ class NamedNodeMap{
 
 //Exposed to window only
 class Element: Node{
-    private:
+    public:
         std::optional<DOMString> namespaceURI;
         std::optional<DOMString> prefix;
         DOMString localName;
@@ -495,7 +295,6 @@ class Element: Node{
         NamedNodeMap attributes; //Sameobject
         ShadowRoot* shadow_root;
         std::optional<CustomElementRegistry> customElementRegistry;
-    public:
         //CEReactions
         DOMString id;
         DOMString className;
@@ -532,24 +331,40 @@ class Element: Node{
         void insertAdjacentElement(DOMString where, DOMString data); //legacy
 };
 
-//Exposed to window only
-class Document: public Node {
+
+enum class DocType: DOMString{
+    "xml",
+    "html"
+}
+
+enum class DocMode: DOMString{
+    "no-quirks",
+    "quirks",
+    "limited-quirks"
+}
+
+class Document: public Node{
 public:
         DOMImplementation* implementation;
-        USVString URL;
-        USVString documentURI;
-        DOMString compatMode;
-        DOMString characterSet;
-        DOMString charset; //legacy alias (characterSet)
-        DOMString inputEncoding; //same
-        DOMString contentType;
+        USVString URL = "about:blank"; //!serialize
+        USVString documentURI; //!serialize
+        DOMString characterSet = "utf-8";
+        DOMString contentType = "application/xml";
 
-        DocumentType* doctype;
-        Element* docuementElement;
+        DocumentType* doctype = nullptr;
+        Element* documentElement;
 
+        DocType type = "xml";
+        DOMString* origin = nullptr; //lateeeeeer
+        DocMode mode = "no-quirks";
+        bool allow_declarative_shodow_roots = false;
         CustomElementRegistry* custom_element_registry = nullptr;
 
         Document();
+
+        DOMString compatMode();
+
+        std::optional<DOMString> Document::lookupPrefix(std::optional<DOMString> namesp); //Redefining for Node class
 
         friend Element* getElementById(DOMString elementId);
 
@@ -558,9 +373,8 @@ public:
         HTMLCollection getElementsByClassName(DOMString classNames);
 
 
-        //CEReactions + NewObject
-        Element createElement(DOMString localName, std::variant<DOMString,ElementCreationOptions> options); //*NOTE: Keep last argument as optional
-        Element createElementNS(std::optional<DOMString> namesp, DOMString qualifiedName, std::variant<DOMString,ElementCreationOptions> options); //*NOTE: Keep last argument as optional
+        Element createElement(DOMString localName, std::variant<DOMString,ElementCreationOptions> options); //NOTE: Keep last argument as optional
+        Element createElementNS(std::optional<DOMString> namesp, DOMString qualifiedName, std::variant<DOMString,ElementCreationOptions> options); //NOTE: Keep last argument as optional
         Node* importNode(Node* node, std::variant<bool,ImportNodeOptions> options = false);
         Node* adoptNode(Node* node); //no NewObject
 

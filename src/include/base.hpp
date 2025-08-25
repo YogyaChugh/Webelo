@@ -1,4 +1,5 @@
-#pragma once
+#ifndef BASE_DOM
+#define BASE_DOM
 
 #include <string>
 #include <optional>
@@ -27,3 +28,5 @@ class DOMTokenList{
         bool supports(DOMString token);
         std::vector<DOMString> list;
 };
+
+#endif

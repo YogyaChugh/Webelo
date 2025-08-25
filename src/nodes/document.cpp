@@ -1,43 +1,6 @@
-#include "document.hpp"
 #include "../../include/nodes/document.hpp"
 #include "../../include/base.hpp"
 #include <optional>
-
-serialize_url(){};
-
-std::optional<Node> NodeList::item(unsigned long index){
-    try{
-        temp = node_list.at(index);
-        return temp;
-    }catch (const out_of_range& e){
-        return std::nullopt;
-    }
-}
-
-Node::Node(){
-    // TODO: Set baseURI to node document's document base URL #Serialized!
-
-}
-
-bool Node::hasChildNodes(){
-    if (childNodes->length() == 0) {
-        return false;
-    }
-    return true;
-}
-
-Node* Node::firstChild() {
-    return childNodes->item(0);
-}
-
-Node* Node::lastChild() {
-    return childNodes->item(childNodes.length() - 1);
-}
-
-
-
-
-
 
 
 Node* convert_nodes_to_node(std::initializer_list<std::variant<Node,DOMString>> nodes, Document* ownerDocument) {
@@ -64,3 +27,36 @@ Node* convert_nodes_to_node(std::initializer_list<std::variant<Node,DOMString>> 
 void ParentNode::prepend(std::initializer_list<std::variant<Node,DOMString>> nodes) {
     convert_nodes_to_node(nodes, ownerDocument);
 }
+
+
+
+
+
+
+// GOD KNOWS WHAT THIS DOES !!
+// Docment::get_the_parent(Event* event) override{
+//     if (event->type=="load"){
+//         return nullptr
+//     }
+// }
+
+Document::Document(): Node(DOCUMENT_NODE, "#document", nullptr, this, nullptr, nullptr){
+
+}
+
+
+std::optional<DOMString> Document::lookupPrefix(std::optional<DOMString> namesp){
+    if (namesp==std::nullopt || namesp.value==""){ return std::nullopt; }
+    /// later dude 
+    return locate_a_namespace_prefix(, namesp);
+}
+
+
+DOMString Document::compatMode(){
+    if (mode=="quirks"){
+        return "BackCompat"
+    }
+    return "CSS1Compat"
+}
+
+Document* Document::Document(){}
