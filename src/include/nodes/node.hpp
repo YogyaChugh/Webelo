@@ -160,7 +160,7 @@ public:
     Node replaceChild(Node* node, Node* child);
     Node removeChild(Node* child);
 
-    EventTarget* get_the_parent(Event* event) override;
+    Node* get_the_parent(Event* event) override;
 };
 
 

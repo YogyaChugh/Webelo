@@ -147,23 +147,24 @@ public:
 
 //Exposed to window only
 class Attr: public Node{
-    private:
+    public:
         std::optional<DOMString> namespaceURI;
         std::optional<DOMString> prefix;
         DOMString localName;
         DOMString name;
         Element* ownerElement;
-        bool specified;
-    public:
+        bool specified = true;
         //CEReactions
         DOMString value;
+        DOMString qualifiedName();
+
+        Attr(DOMString localName);
 };
 
 //Exposed to window only
 class CharacterData: Node{
-    private:
-        unsigned long length;
     public:
+        unsigned long length();
         DOMString data; //TODO: LegacyNullToEmptyString
         DOMString substringData(unsigned long offset, unsigned long count);
         void appendData(DOMString data);
@@ -175,9 +176,8 @@ class CharacterData: Node{
 
 //Exposed to window only
 class Text: CharacterData{
-    private:
-        DOMString wholeText;
     public:
+        DOMString wholeText;
         DOMString slot=""; //! IMPORTANT SOMEWHERE in dispatch_event (slottable check)
         Text(DOMString data = "");
         Text splitText(unsigned long offset); //NewObject
@@ -185,7 +185,7 @@ class Text: CharacterData{
 
 //Exposed to window only
 class ProcessingInstruction: CharacterData{
-    private:
+    public:
         DOMString target;
 };
 
@@ -208,6 +208,11 @@ class DocumentType: Node{
         DOMString publicId;
         DOMString systemId;
     public:
+        DocumentType(name, publicId="", systemId=""){
+            this->name = name;
+            this->publicId = publicId;
+            this->systemId = systemId;
+        }
         DOMString getname(){
             return name;
         }
@@ -221,26 +226,27 @@ class DocumentType: Node{
 
 class DocumentFragment: Node{
     public:
+        Element* associatedHost = nullptr;
         DocumentFragment(){};
-        friend Element* getElementById(DOMString elementId);
 };
 
 //Exposed to window only
 class ShadowRoot: DocumentFragment{
     public:
         ShadowRootMode mode;
-        bool delegatesFocus;
+        bool delegatesFocus = false;
+        bool availableToElementInternals = false;
+        bool declarative = false;
         SlotAssignmentMode slotAssignment;
-        bool clonable;
-        bool serializable;
-        Element* host;
+        bool clonable = false;
+        bool serializable = false;
+        Element* host(){ return this->associatedHost };
         EventHandler onslotchange;
 
         CustomElementRegistry* custom_element_registry = nullptr;
+        bool keepCustomElementRegistryNull = false;
 
-        CustomElementRegistry* get_custom_element_registry() {
-            return custom_element_registry;
-        }
+        Element* get_the_parent(Event* event) override;
 };
 
 
@@ -250,7 +256,7 @@ struct ElementCreationOptions{
 };
 
 struct ImportNodeOptions{
-    CustomElementRegistry customElementRegistry;
+    CustomElementRegistry* customElementRegistry;
     bool selfOnly = false;
 };
 
@@ -260,7 +266,7 @@ struct ShadowRootInit{
     SlotAssignmentMode slotAssignment = named;
     bool clonable = false;
     bool serializable = false;
-    CustomElementRegistry customElementRegistry;
+    CustomElementRegistry* customElementRegistry = nullptr;
 
     ShadowRootInit(ShadowRootMode mod){
         mode = mod;
@@ -269,9 +275,10 @@ struct ShadowRootInit{
 
 //Exposed to window only + LegacyUnenumerableNamedProperties
 class NamedNodeMap{
-    private:
-        unsigned long length;
     public:
+        std::vector<Attr*> attribute_list = {};
+        Element* associatedElement;
+        unsigned long length();
         std::optional<Attr> item(unsigned long index);
         std::optional<Attr> getNamedItem(DOMString qualifiedName);
 
@@ -284,7 +291,11 @@ class NamedNodeMap{
         Attr removeNamedItemNS(std::optional<DOMString> namesp, DOMString localName);
 };
 
-//Exposed to window only
+enum class ElementState{
+    UNDEFINED, FAILED, UNCUSTOMIZED, PRECUSTOMIZED, CUSTOM
+}
+
+
 class Element: Node{
     public:
         std::optional<DOMString> namespaceURI;
@@ -292,22 +303,26 @@ class Element: Node{
         DOMString localName;
         DOMString tagName;
         DOMTokenList classList; //TODO-js: Sameobject & PutForwards=value
-        NamedNodeMap attributes; //Sameobject
-        ShadowRoot* shadow_root;
-        std::optional<CustomElementRegistry> customElementRegistry;
+        NamedNodeMap attributes;
+        ShadowRoot* shadow_root = nullptr;
+        CustomElementRegistry* customElementRegistry;
+        ElementState customElementState;
         //CEReactions
         DOMString id;
         DOMString className;
         DOMString slot=""; //TODO-js: Unscopable
+
+        Element();
+
+
         void setAttribute(DOMString qualifiedName, DOMString value);
         void setAttributeNS(std::optional<DOMString> namesp, DOMString qualifiedName, DOMString value);
         void removeAttribute(DOMString qualifiedName);
         void removeAttributeNS(std::optional<DOMString> namesp, DOMString localName);
         bool toggleAttribute(DOMString qualifiedName, bool force); //force is optional
-        std::optional<Attr> setAttributeNode(Attr atter);
+        std::optional<Attr> setAttributeNode(Attr attr);
         std::optional<Attr> setAttributeNodeNS(Attr attr);
         Attr removeAttributeNode(Attr attr);
-        std::optional<Element> insertAdjacentElement(DOMString where, Element element); //legacy
         
         bool hasAttributes();
         std::vector<DOMString> getAttributeNames();
@@ -328,13 +343,15 @@ class Element: Node{
         HTMLCollection getElementsByTagNameNS(std::optional<DOMString> namesp, DOMString localName);
         HTMLCollection getElementsByClassName(DOMString classNames);
 
-        void insertAdjacentElement(DOMString where, DOMString data); //legacy
+        std::optional<Element> insertAdjacentElement(DOMString where, Element element); //legacy
+        void insertAdjacentText(DOMString where, DOMString data); //legacy
 };
 
 
 enum class DocType: DOMString{
     "xml",
-    "html"
+    "html",
+    "xml+xhtml"
 }
 
 enum class DocMode: DOMString{
@@ -347,12 +364,12 @@ class Document: public Node{
 public:
         DOMImplementation* implementation;
         USVString URL = "about:blank"; //!serialize
-        USVString documentURI; //!serialize
+        USVString documentURI = URL; //!serialize
         DOMString characterSet = "utf-8";
         DOMString contentType = "application/xml";
 
-        DocumentType* doctype = nullptr;
-        Element* documentElement;
+        DocumentType* doctype();
+        Element* documentElement();
 
         DocType type = "xml";
         DOMString* origin = nullptr; //lateeeeeer
@@ -365,8 +382,6 @@ public:
         DOMString compatMode();
 
         std::optional<DOMString> Document::lookupPrefix(std::optional<DOMString> namesp); //Redefining for Node class
-
-        friend Element* getElementById(DOMString elementId);
 
         HTMLCollection getElementsByTagName(DOMString qualifiedName);
         HTMLCollection getElementsByTagNameNS(std::optional<DOMString> namesp, DOMString localname);
@@ -390,24 +405,20 @@ public:
         Range* createRange();
         NodeIterator* createNodeIterator(Node* root, unsigned long whatToShow = 0xFFFFFFFF, NodeFilter* filter = nullptr);
         TreeWalker* createTreeWalker(Node* root, unsigned long whatToShow = 0xFFFFFFFF, NodeFilter* filter = nullptr);
-
-
-        CustomElementRegistry* get_custom_element_registry() {
-            return custom_element_registry;
-        };
 };
 
 //Exposed to window only
 class XMLDocument: Document{};
 
-//Exposed to window only
+
 class DOMImplementation{
-    public:
+public:
+    Document* associated_doc = nullptr;
     //NewObject
     DocumentType createDocumentType(DOMString name, DOMString publicId, DOMString systemId);
     XMLDocument createDocument(std::optional<DOMString> namesp, DOMString qualifiedName, std::optional<DocumentType> doctype = std::nullopt);
     //qualifiedName is LegacyNullToEmptyString
-    Document createHTMLDocument(DOMString title);
+    Document createHTMLDocument(std::optional<DOMString> title);
     bool hasFeature();
 };
 

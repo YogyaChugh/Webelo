@@ -29,4 +29,20 @@ class DOMTokenList{
         std::vector<DOMString> list;
 };
 
+
+
+std::vector<DOMString> SplitText(DOMString input, DOMString del){
+    std::vector<DOMString> temp = {};
+    int end = 0; int start = 0;
+    while (end!=-1){
+        end = input.find(del, start);
+        temp.push_back(input.substr(start, end-start));
+        start = end + del.size();
+    }
+    return temp;
+}
+
+void StrictSplitText(DOMString input, DOMString);
+
+
 #endif

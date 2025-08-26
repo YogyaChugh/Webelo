@@ -1,7 +1,12 @@
-#include <iostream>
-#include <vector>
+// C++ program to convert whole string to
+// uppercase or lowercase using STL.
+
 #include <bits/stdc++.h>
+#include <iostream>
 
 int main(){
-    auto node = nullptr;
+    char a = 'B';
+    std::cout<<(int)a;
+
+    return 0;
 }
