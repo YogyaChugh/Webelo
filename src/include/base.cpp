@@ -7,7 +7,7 @@
 #include <vector>
 
 
-typedef std::string DOMString;
+typedef std::wstring DOMString;
 typedef std::string USVString;
 class Realm{};
 
@@ -41,8 +41,6 @@ std::vector<DOMString> SplitText(DOMString input, DOMString del){
     }
     return temp;
 }
-
-void StrictSplitText(DOMString input, DOMString);
 
 
 #endif

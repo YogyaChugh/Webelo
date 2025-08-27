@@ -22,8 +22,8 @@
 - replaceNode
 - preRemoveNode
 - ~~ValidNamespacePrefix~~
-- ValidElementLocalName
-    - Very Important ! Just 2 steps left !!
+- ~~ValidElementLocalName~~
+    - ~~Very Important ! Just 2 steps left !!~~
 - ~~ValidAttributeLocalName~~
 - ~~ValidDocTypeName~~
 - flattenElementCreationOptions

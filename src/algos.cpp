@@ -1,32 +1,37 @@
 #include "include/nodes/node.hpp"
 #include "include/nodes/document.hpp"
-#include "include/base.hpp"
-#include <set>
-#include <string>
-#include <vector>
+#include "include/base.hpp" //
+#include <set> //
+#include <string> //
+#include <vector> //
 
 
 std::set<DOMString> ParseOrderedSet(DOMString input){
     std::vector<DOMString> inputTokens = SplitText(input, " ");
     std::set<DOMString> tokens;
-    for (auto a: inputTokens){
+    for (DOMString a: inputTokens){
         tokens.insert(a);
     }
     return tokens;
 }
 
 DOMString SerializeOrderedSet(std::set<DOMString> input){
-    DOMString str = "";
-    for (auto a: input){
-        str += a;
+    DOMString str = L"";
+    for (size_t i=0;i<input.size();i++){
+        str+=input[i];
+        if (i!=(input.size()-1)){
+            str+=" ";
+        }
     }
     return str;
 }
 
 bool ValidNamespacePrefix(DOMString input){
     if (input.size()==0){ return false; }
-    for (auto a: input){
-        if ((int)a ==9 || (int)a ==10 || (int)a ==12 || (int)a == 13 || (int)a ==32 || (int)a ==0 || (int)a ==47 || (int)a ==62){
+    int temp;
+    for (char a: input){
+        temp = (int)a;
+        if (temp==9 || temp==10 || temp==12 || temp==13 || temp==32 || temp==0 || temp==47 || temp==62){
             return false;
         }
     }
@@ -35,8 +40,10 @@ bool ValidNamespacePrefix(DOMString input){
 
 bool ValidAttributeLocalName(DOMString input){
     if (input.size()==0){ return false; }
-    for (auto a: input){
-        if ((int)a ==9 || (int)a ==10 || (int)a ==12 || (int)a == 13 || (int)a ==32 || (int)a ==0 || (int)a ==47 || (int)a ==62 || (int)a ==61){
+    int temp;
+    for (char32_t a: input){
+        temp = (int)a;
+        if (temp==9 || temp==10 || temp==12 || temp==13 || temp==32 || temp==0 || temp==47 || temp==61 || temp==62){
             return false;
         }
     }
@@ -45,21 +52,34 @@ bool ValidAttributeLocalName(DOMString input){
 
 bool validElementLocalName(DOMString input){
     if (input.size()==0){ return false; }
-    if ((input.at(0)>=65 && input.at(0)<=90) || (input.at(0)>=97 && input.at(0)<=122)){
+    std::string first = (int)input[0];
+    int temp;
+    if ((first>=65 && first<=90) || (first>=97 && first<=122)){
         for (auto a: input){
-            if ((int)a ==9 || (int)a ==10 || (int)a ==12 || (int)a == 13 || (int)a ==32 || (int)a ==0 || (int)a ==47 || (int)a ==62){
+            temp = (int)a;
+            if (temp==9 || temp==10 || temp==12 || temp==13 || temp==32 || temp==0 || temp==47 || temp==62){
                 return false;
             }
         }
         return true;
     }
-    if ((int)a!=58 && (int)a!=95)
+    if (first!=58 && first!=95 && (first<128 || first>1114111)){
+        return false;
+    }
+    for (auto a: input){
+        temp = (int)a;
+        if ((temp<65 || temp>90) && (temp<97 || temp>122) && (temp<48 || temp>57) && temp!=45 && temp!=46 && temp!=58 && temp!=95 && (temp<128 || temp>1114111)){
+            return false;
+        }
+    }
     return true;
 }
 
 bool validDocTypeName(DOMString input){
-    for (auto a: input){
-        if ((int)a ==9 || (int)a ==10 || (int)a ==12 || (int)a == 13 || (int)a ==32 || (int)a ==0 || (int)a ==62){
+    int temp;
+    for (char32_t a: input){
+        temp = (int)a;
+        if (temp==9 || temp==10 || temp==12 || temp==13 || temp==32 || temp==0 || temp==62){
             return false;
         }
     }
@@ -70,7 +90,7 @@ ValidateAndExtract(std::optional<DOMString> namesp,DOMString qualifiedName,std::
     if (namesp.value==""){ namesp = std::nullopt; }
     prefix = std::nullopt;
     localName = qualifiedName;
-    if (qualifiedName.find(":")!=-1){
-        StrictSplitText
+    if (qualifiedName.find(":")!=std::string::npos){
+        
     }
 }
