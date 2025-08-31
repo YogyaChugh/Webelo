@@ -7,6 +7,7 @@
 - CEReactions ?
 - NewObject, SameObject
 - This setter/getter resolving !
+- There could be a problem in the future with null character cause it's \0 and also end of string ! So just noting it down !!
 
 ## Algorithms
 > Remember to check all calls to these algo's in-order to rectify arg issues !
@@ -30,7 +31,8 @@
 - CreateElement
 - InternalCreateElementNS
 - AdoptAlgo
-- ValidateAndExtract
+- ~~ValidateAndExtract~~
+    - ~~Check for namespace XML, XMLNS~~
 - CheckHostIncludingInclusiveAncestor
 - ClosedShadowHidden
 - ReTarget

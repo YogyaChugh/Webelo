@@ -217,15 +217,9 @@ struct path_structs{
 };
 
 class Event{
-    public:
-        // * NOTE: a potential event target is null or an EventTarget object !
-
-        //* Read-only
+    private:
         DOMString type = "";
         EventTarget *target = nullptr;
-
-        // ! Ommited: EventTarget? srcElement; it's legacy alias for `target`
-
         EventTarget *relatedTarget = nullptr;
         EventTarget *currentTarget = nullptr;
         enum event_phase eventPhase = NONE;
@@ -238,9 +232,7 @@ class Event{
         bool isTrusted = false; //LEGACY UNFORGEABLE
         DOMHighResTimeStamp timeStamp;
 
-        //*Editable
-
-        // ! Ommitted for function: bool returnV
+    public:
 
         // Constructor
         Event(DOMString type, std::unique_ptr<EventInit> eventInitDict = nullptr);
@@ -317,9 +309,6 @@ class Event{
         DOMHighResTimeStamp gettimeStamp(){
             return timeStamp;
         };
-
-
-
 
         //this bubble is legacy alias so remember for js !
         bool getcancelBubble(){

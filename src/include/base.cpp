@@ -5,9 +5,10 @@
 #include <optional>
 #include <cstdarg>
 #include <vector>
+#include "../utf8.h"
 
 
-typedef std::wstring DOMString;
+typedef std::string DOMString;
 typedef std::string USVString;
 class Realm{};
 
@@ -39,6 +40,32 @@ std::vector<DOMString> SplitText(DOMString input, DOMString del){
         temp.push_back(input.substr(start, end-start));
         start = end + del.size();
     }
+    return temp;
+}
+
+std::vector<DOMString> SplitTextMultiple(DOMString input, std::vector<int> del){
+    std::vector<DOMString> temp = {};
+    unsigned int i = 0;
+    DOMString a = "";
+    bool notfound = true;
+    auto previt = input.begin();
+    for (auto it = input.begin();it<input.end();){
+        notfound = true;
+        previt = it;
+        i = utf8::next(it, input.end());
+        for (int j: del){
+            if (i==j){
+                notfound = false;
+                temp.push_back(a);
+                a = "";
+                break;
+            }
+        }
+        if (notfound){
+            a.append(previt, it);
+        }
+    }
+    temp.push_back(a);
     return temp;
 }
 

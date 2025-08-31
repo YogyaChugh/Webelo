@@ -181,7 +181,7 @@ Attr* Document::createAttribute(DOMString localName){
 Attr* Document::createAttributeNS(std::optional<DOMString> namesp, DOMString qualifiedName){
     std::optional<DOMString> prefix;
     DOMString localName;
-    ValidateAndExtract(namesp, qualifiedName, prefix, localName);
+    ValidateAndExtract(namesp, qualifiedName, "attribute",prefix, localName);
     Attr* temp = new Attr();
     temp->namespaceURI = namesp;
     temp->prefix = prefix;
@@ -302,7 +302,7 @@ void Element::setAttribute(DOMString qualifiedName, DOMString value){
 void Element::setAttributeNS(std::optional<DOMString> namesp, DOMString qualifiedName, DOMString value){
     std::optional<DOMString> prefix;
     DOMString localName;
-    ValidateAndExtract(namesp, qualifiedName, prefix, localName);
+    ValidateAndExtract(namesp, qualifiedName, "element", prefix, localName);
     SetAttributeValue(this, localName, value, prefix, namesp);
 }
 

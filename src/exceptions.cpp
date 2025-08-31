@@ -60,6 +60,18 @@ class NotFoundError : public exception {
 };
 
 
+class NamespaceError : public exception {
+    private:
+        string message;
+    public:
+        NamespaceError(const char* msg): message(msg){};
+
+        const char* what() const noexcept {
+            return message.c_str();
+        }
+};
+
+
 class AbortError: public exception {
     private:
         string message;
