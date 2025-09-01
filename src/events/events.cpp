@@ -144,11 +144,11 @@ void invoke(path_structs* struc, Event* event, DOMString phase, std::optional<bo
 }
 
 
-Event::Event(DOMString type, std::unique_ptr<EventInit> eventInitDict){
+Event::Event(DOMString type, EventInit eventInitDict){
     // run inner event creation steps !
     time_t timestamp;
     DOMHighResTimeStamp now = timestamp; //TODO: IMPROVE
-    this->inner_event_creation_steps(nullptr, now, std::move(eventInitDict));
+    this->inner_event_creation_steps(nullptr, now, eventInitDict);
     this->type = type;
 };
 
