@@ -1,10 +1,16 @@
-#pragma once
+#ifndef "WINDOW_DOM"
+#define "WINDOW_DOM"
 
 #include "events/events.hpp"
-#include <optional>
 
 class Window{
     //TODO: LATER DO IT FULL !
-    private:
-        Event event = Event("click"); //Replaceable
+    protected:
+        Event* event = nullptr; //Replaceable
+    public:
+        Event* getEvent(){
+            return this->event;
+        }
 };
+
+#endif

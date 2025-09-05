@@ -165,18 +165,18 @@ void Event::inner_event_creation_steps(Realm* realm, DOMHighResTimeStamp time, s
     }
 };
 
-void Event::stopPropagation(){
-    stop_propagation_flag = true;
+void Event::stopPropagation() inline{
+    this->stop_propagation_flag = true;
 };
 
 void Event::stopImmediatePropagation(){
-    stop_propagation_flag = true;
-    stop_immediate_propagation_flag = true;
+    this->stop_propagation_flag = true;
+    this->stop_immediate_propagation_flag = true;
 };
 
-void Event::set_canceled_flag(){
-    if (cancelable && !in_passive_listener_flag){
-        canceled_flag = true;
+void Event::set_canceled_flag() inline{
+    if (this->cancelable && !this->in_passive_listener_flag){
+        this->canceled_flag = true;
     }
 };
 
@@ -186,15 +186,15 @@ void Event::preventDefault(){
 };
 
 void Event::initEvent(DOMString &type, bool bubbles, bool cancelable){
-    if (dispatch_flag){
+    if (this->dispatch_flag){
         return;
     }
-    isTrusted = false;
-    initialized_flag = true;
-    stop_propagation_flag = false;
-    stop_immediate_propagation_flag = false;
-    canceled_flag = false;
-    target = nullptr;
+    this->isTrusted = false;
+    this->initialized_flag = true;
+    this->stop_propagation_flag = false;
+    this->stop_immediate_propagation_flag = false;
+    this->canceled_flag = false;
+    this->target = nullptr;
     this->type = type;
     this->bubbles = bubbles;
     this->cancelable = cancelable;
