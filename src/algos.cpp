@@ -154,6 +154,19 @@ void ValidateAndExtract(std::optional<DOMString> &namesp,DOMString qualifiedName
     if (context=="element" && !validElementLocalName(localName)){ throw InvalidCharacterError("Invalid chars !!"); }
     if (prefix != std::nullopt && namesp==std::nullopt){ throw NamespaceError("Namespace error !!"); }
     if (prefix != std::nullopt && prefix.value()=="xml" && namesp!="http://www.w3.org/XML/1998/namespace"){ throw NamespaceError("Namespace error !!"); }
-    if ((qualifiedName=="xmlns" ||(prefix!=std::nullopt && prefix.value()=="xmlns")) && namesp!="http://www.w3.org/2000/xmlns/"){ throw NamespaceError("Namespace error !!"); }
-    if (namesp!="http://www.w3.org/2000/xmlns/" && (qualifiedName!="xmlns" && (prefix==std::nullopt ||(prefix!=std::nullopt && prefix.value()!="xmlns")))){ throw NamespaceError("Namespace error !!"); }
+    if ((qualifiedName=="xmlns" ||(prefix!=std::nullopt && prefix.value()=="xmlns")) && (namesp==std::nullopt || namesp.value()!="http://www.w3.org/2000/xmlns/")){ throw NamespaceError("Namespace error !!"); }
+    if (namesp!=std::nullopt && namesp.value()=="http://www.w3.org/2000/xmlns/" && (qualifiedName!="xmlns" && (prefix==std::nullopt ||(prefix!=std::nullopt && prefix.value()!="xmlns")))){ throw NamespaceError("Namespace error !!"); }
+}
+
+
+
+//* EVENTS
+
+void inner_event_creation_steps(Event* event, Realm* realm, DOMHighResTimeStamp &time, bool bubbles = false, bool cancelable = false, bool composed = false){
+    event->initialized_flag = true;
+    event->timeStamp = time;
+    event->bubbles = dictionary->bubbles;
+    event->cancelable = dictionary->cancelable;
+    event->composed = dictionary->composed;
+    //NOTE: Later, special event constructing steps can be passed by specification !!
 }

@@ -3,6 +3,7 @@
 #include "../../include/window.hpp"
 #include "../../include/exceptions.hpp"
 #include "../../include/nodes/document.hpp"
+#include "../algos.cpp"
 #include <iostream>
 #include <map>
 #include <vector>
@@ -14,15 +15,137 @@
 
 
 
-EventTarget* retard(EventTarget* a, EventTarget* b){
-    //TODO: Implement B is a node and A's root is a shadow-including inclusive ancestor of B)
-    auto temp = dynamic_cast<Node*>(a);
-    if (!temp || (temp && !(dynamic_cast<ShadowRoot*>(temp->getRootNode()))) || ((dynamic_cast<Node*>(b)))){
-        return a;
-    }
-    //TODO: Set a to a's root's host
-    return a;
+Event::Event(DOMString const &type, bool bubbles = false, bool cancelable = false, bool composed = false){
+    time_t now = time(NULL);
+    inner_event_creation_steps(this, nullptr, now, bubbles, cancelable, composed);
+    this->type = type;
+};
+
+Event::Event(Event* temp){
+    time_t now = time(NULL);
+    inner_event_creation_steps(this, nullptr, now, temp->bubbles, temp->cancelable, temp->composed);
+    this->type = temp->type;
 }
+
+void Event::stopPropagation() inline{
+    this->stop_propagation_flag = true;
+};
+
+void Event::stopImmediatePropagation(){
+    this->stop_propagation_flag = true;
+    this->stop_immediate_propagation_flag = true;
+};
+
+void Event::set_canceled_flag() inline{
+    if (this->cancelable && !this->in_passive_listener_flag){
+        this->canceled_flag = true;
+    }
+};
+
+void Event::preventDefault(){
+    // *Cancels the event (if it is cancelable).
+    set_canceled_flag();
+};
+
+void Event::initEvent(DOMString &type, bool bubbles, bool cancelable){
+    if (this->dispatch_flag){
+        return;
+    }
+    this->isTrusted = false;
+    this->initialized_flag = true;
+    this->stop_propagation_flag = false;
+    this->stop_immediate_propagation_flag = false;
+    this->canceled_flag = false;
+    this->target = nullptr;
+    this->type = type;
+    this->bubbles = bubbles;
+    this->cancelable = cancelable;
+}
+
+std::vector<EventTarget*> Event::composedPath(){
+    std::vector<EventTarget*> composed_path;
+    if (path.empty()){
+        return composed_path;
+    }
+    assert(dynamic_cast<EventTarget*>(currentTarget));
+    composed_path.push_back(currentTarget);
+    int currentTargetIndex = 0;
+    int currentTargetHiddenSubtreeLevel = 0;
+    for (int index = path.size() - 1; index>=0; index--){
+        if (path[index]->root_of_closed_tree){
+            currentTargetHiddenSubtreeLevel++;
+        }
+        if (path[index]->invocation_target==currentTarget){
+            currentTargetIndex = index;
+            break;
+        }
+        if (path[index]->slot_in_closed_tree){
+            currentTargetHiddenSubtreeLevel--;
+        }
+    }
+    int currentHiddenLevel = currentTargetHiddenSubtreeLevel;
+    int maxHiddenLevel = currentTargetHiddenSubtreeLevel;
+    for (int index = currentTargetIndex - 1; index>=0; index--){
+        if (path[index]->root_of_closed_tree){
+            currentHiddenLevel++;
+        }
+        if (currentHiddenLevel<=maxHiddenLevel){
+            composed_path.insert(composed_path.begin(),path[index]->invocation_target);
+        }
+        if (path[index]->slot_in_closed_tree){
+            currentHiddenLevel--;
+            if (currentHiddenLevel<maxHiddenLevel){
+                maxHiddenLevel = currentHiddenLevel;
+            }
+        }
+    }
+    currentHiddenLevel = currentTargetHiddenSubtreeLevel;
+    maxHiddenLevel = currentTargetHiddenSubtreeLevel;
+    for (int index = currentTargetIndex + 1; index<path.size(); index++){
+        if (path[index]->slot_in_closed_tree){
+            currentHiddenLevel++;
+        }
+        if (currentHiddenLevel<=maxHiddenLevel){
+            composed_path.push_back(path[index]->invocation_target);
+        }
+        if (path[index]->root_of_closed_tree){
+            currentHiddenLevel--;
+            if (currentHiddenLevel<maxHiddenLevel){
+                maxHiddenLevel = currentHiddenLevel;
+            };
+        }
+    }
+    return composed_path;
+};
+
+
+
+
+
+
+
+
+CustomEvent::CustomEvent(DOMString &type, bool bubbles, bool cancelable, bool composed, std::any &detail): Event(type, bubbles, cancelable, composed){
+    this->detail = detail;
+}
+
+void CustomEvent::initCustomEvent(DOMString &type, bool bubbles, bool cancelable, std::any &detail){
+    if (this->dispatch_flag){
+        return;
+    }
+    this->initEvent(type, bubbles, cancelable);
+    this->detail = detail;
+}
+
+
+
+
+
+
+
+
+
+
 
 Event* create_event(Event* eventInterface, Realm* realm = nullptr){
     time_t timestamp;
@@ -144,138 +267,30 @@ void invoke(path_structs* struc, Event* event, DOMString phase, std::optional<bo
 }
 
 
-Event::Event(DOMString type, EventInit eventInitDict){
-    // run inner event creation steps !
-    time_t timestamp;
-    DOMHighResTimeStamp now = timestamp; //TODO: IMPROVE
-    this->inner_event_creation_steps(nullptr, now, eventInitDict);
-    this->type = type;
-};
 
 
 
-void Event::inner_event_creation_steps(Realm* realm, DOMHighResTimeStamp time, std::unique_ptr<EventInit> dictionary){
-    //TODO: do something with realm baby !
-    this->initialized_flag = true;
-    this->timeStamp = time;
-    if (dictionary){
-        this->bubbles = dictionary->bubbles;
-        this->cancelable = dictionary->cancelable;
-        this->composed = dictionary->composed;
+
+
+
+
+
+
+
+
+
+
+
+
+EventTarget* retard(EventTarget* a, EventTarget* b){
+    //TODO: Implement B is a node and A's root is a shadow-including inclusive ancestor of B)
+    auto temp = dynamic_cast<Node*>(a);
+    if (!temp || (temp && !(dynamic_cast<ShadowRoot*>(temp->getRootNode()))) || ((dynamic_cast<Node*>(b)))){
+        return a;
     }
-};
-
-void Event::stopPropagation() inline{
-    this->stop_propagation_flag = true;
-};
-
-void Event::stopImmediatePropagation(){
-    this->stop_propagation_flag = true;
-    this->stop_immediate_propagation_flag = true;
-};
-
-void Event::set_canceled_flag() inline{
-    if (this->cancelable && !this->in_passive_listener_flag){
-        this->canceled_flag = true;
-    }
-};
-
-void Event::preventDefault(){
-    // *Cancels the event (if it is cancelable).
-    set_canceled_flag();
-};
-
-void Event::initEvent(DOMString &type, bool bubbles, bool cancelable){
-    if (this->dispatch_flag){
-        return;
-    }
-    this->isTrusted = false;
-    this->initialized_flag = true;
-    this->stop_propagation_flag = false;
-    this->stop_immediate_propagation_flag = false;
-    this->canceled_flag = false;
-    this->target = nullptr;
-    this->type = type;
-    this->bubbles = bubbles;
-    this->cancelable = cancelable;
+    //TODO: Set a to a's root's host
+    return a;
 }
-
-std::vector<EventTarget*> Event::composedPath(){
-    std::vector<EventTarget*> composed_path;
-    if (path.empty()){
-        return composed_path;
-    }
-    assert(dynamic_cast<EventTarget*>(currentTarget));
-    composed_path.push_back(currentTarget);
-    int currentTargetIndex = 0;
-    int currentTargetHiddenSubtreeLevel = 0;
-    for (int index = path.size() - 1; index>=0; index--){
-        if (path[index]->root_of_closed_tree){
-            currentTargetHiddenSubtreeLevel++;
-        }
-        if (path[index]->invocation_target==currentTarget){
-            currentTargetIndex = index;
-            break;
-        }
-        if (path[index]->slot_in_closed_tree){
-            currentTargetHiddenSubtreeLevel--;
-        }
-    }
-    int currentHiddenLevel = currentTargetHiddenSubtreeLevel;
-    int maxHiddenLevel = currentTargetHiddenSubtreeLevel;
-    for (int index = currentTargetIndex - 1; index>=0; index--){
-        if (path[index]->root_of_closed_tree){
-            currentHiddenLevel++;
-        }
-        if (currentHiddenLevel<=maxHiddenLevel){
-            composed_path.insert(composed_path.begin(),path[index]->invocation_target);
-        }
-        if (path[index]->slot_in_closed_tree){
-            currentHiddenLevel--;
-            if (currentHiddenLevel<maxHiddenLevel){
-                maxHiddenLevel = currentHiddenLevel;
-            }
-        }
-    }
-    currentHiddenLevel = currentTargetHiddenSubtreeLevel;
-    maxHiddenLevel = currentTargetHiddenSubtreeLevel;
-    for (int index = currentTargetIndex + 1; index<path.size(); index++){
-        if (path[index]->slot_in_closed_tree){
-            currentHiddenLevel++;
-        }
-        if (currentHiddenLevel<=maxHiddenLevel){
-            composed_path.push_back(path[index]->invocation_target);
-        }
-        if (path[index]->root_of_closed_tree){
-            currentHiddenLevel--;
-            if (currentHiddenLevel<maxHiddenLevel){
-                maxHiddenLevel = currentHiddenLevel;
-            };
-        }
-    }
-    return composed_path;
-};
-
-
-
-// *Custom Event - Inherited from Event class
-
-CustomEvent::CustomEvent(DOMString type, std::unique_ptr<CustomEventInit> eventInitDict, std::optional<std::any> detail): Event(type, std::move(eventInitDict)){
-    /*
-        Have to implement the detail attribute separately even though it's present in eventInitDict because
-        base class constructor requires unique_ptr to be moved to Event class.
-    */
-    detail = eventInitDict->detail;
-}
-
-void CustomEvent::initCustomEvent(DOMString type, bool bubbles, bool cancelable, std::optional<std::any> detail){
-    if (dispatch_flag){
-        return;
-    }
-    this->detail = detail;
-    this->initEvent(type, bubbles, cancelable);
-}
-
 
 
 void EventTarget::addEventListener(DOMString type, EventListener* callback, std::variant<AddEventListenerOptions, bool> options){

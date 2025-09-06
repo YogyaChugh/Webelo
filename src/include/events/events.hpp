@@ -17,11 +17,9 @@ struct AddEventListenerOptions;
 class EventTarget;
 class AbortSignal;
 class AbortController;
-struct EventInit;
 struct path_structs;
 class Event;
 class MouseEvent;
-struct CustomEventInit;
 class CustomEvent;
 
 
@@ -171,18 +169,6 @@ enum event_phase: unsigned int{
 
 typedef double DOMHighResTimeStamp; //Should represent a time in milliseconds !
 
-struct EventInit{
-    bool bubbles;
-    bool cancelable;
-    bool composed;
-
-    EventInit(bool bubb = false, bool canc = false, bool comp = false){
-        bubbles = bubb;
-        cancelable = canc;
-        composed = comp;
-    }
-};
-
 
 // *Structs to be stored in path for Event !
 struct path_structs{
@@ -224,11 +210,8 @@ class Event{
     public:
 
         // Constructor
-        Event(DOMString const &type, EventInit* eventInitDict = nullptr);
-
-        Event* create_object() {
-            return new Event(type);
-        }
+        Event(DOMString const &type, bool bubbles = false, bool cancelable = false, bool composed = false);
+        Event(Event* temp);
 
         // FLAGS BRO !!
         bool stop_propagation_flag = false;
@@ -240,7 +223,7 @@ class Event{
         bool dispatch_flag = false;
 
         virtual Event* new_instance(){
-            return new Event(this->type, std::make_unique<EventInit>(this->bubbles,this->cancelable,this->composed));
+            return new Event(this->type, this->bubbles, this->cancelable, this->composed);
         };
 
         // See path_structs for more reference future me :) ! Also, this is 
@@ -254,8 +237,6 @@ class Event{
         void preventDefault();
         std::vector<EventTarget*> composedPath();
         void set_canceled_flag() inline;
-
-        void inner_event_creation_steps(Realm* realm, DOMHighResTimeStamp time, std::unique_ptr<EventInit> dictionary = nullptr);
 
         // *GETTER-SETTER METHODS
 
@@ -320,27 +301,19 @@ class Event{
 //*TEMPORARY AND SHOULD BE REPLACED !
 class MouseEvent: public Event{};
 
-struct CustomEventInit: public EventInit{
-    std::optional<std::any> detail; //will change later
-
-    CustomEventInit(bool bubb=false,bool canc=false,bool comp=false,std::optional<std::any> detail = std::nullopt): EventInit(bubb,canc,comp){
-        detail = detail;
-    }
-};
-
 class CustomEvent: public Event{
     protected:
-        std::optional<std::any> detail;
+        std::any detail = nullptr;
     public:
-        CustomEvent(DOMString &type, std::unique_ptr<CustomEventInit> eventInitDict = nullptr, std::optional<std::any> detail = std::nullopt);
-        void initCustomEvent(DOMString &type, bool bubbles = false, bool cancelable = false, std::optional<std::any> detail = std::nullopt); //legacy
+        CustomEvent(DOMString &type, bool bubbles = false, bool cancelable = false, bool composed = false, std::any &detail = nullptr);
+        void initCustomEvent(DOMString &type, bool bubbles = false, bool cancelable = false, std::any &detail = nullptr);
 
-        std::optional<std::any> getdetail(){
-            return detail;
+        std::any getdetail(){
+            return this->detail;
         }
 
         CustomEvent* new_instance() override{
-            return new CustomEvent(this->type, std::make_unique<CustomEventInit>(this->bubbles,this->cancelable,this->composed,this->detail),this->detail);
+            return new CustomEvent(this->type, this->bubbles, this->cancelable, this->composed, this->detail);
         };
 };
 

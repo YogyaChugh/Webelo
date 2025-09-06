@@ -1,19 +1,17 @@
 # EVENTS
 
-> EXPOSED :&emsp; *
-
 Events allow signalling something has occured and it can be anything from a simple user interaction to a website page loading !<br>
 For defining events, DOM Standard provides an IDL definition at [DOM Standard - Events](https://dom.spec.whatwg.org/#events).
 
 > Reference: https://developer.mozilla.org/en-US/docs/Web/API/Event
 
-## Our C++ Implementation
+# Our C++ Implementation
 
 Definition and meaning for all attributes & methods along with info for JS Binding.
 
 > Almost all attributes are private and can only be accessed by member functions<br> Therefore, getter and setter functions for easier access are being provided for both read-only and full-access attributes !
 
-### Flags
+## Flags
 
 `stop_propagation_flag`
 - Set to `true` for stopping propagation of current Event.
@@ -27,7 +25,7 @@ Not Much Info about what these do :-
 - initialized_flag
 - dispatch_flag
 
-### Read-only Attributes
+## Read-only Attributes
 
 `DOMString type`
 - Initially, "" (empty string)
@@ -74,7 +72,7 @@ Not Much Info about what these do :-
 
 > **bool defaultPrevented** is legacy only and is implemented as a getter function  for cacelable value. The defaultPrevented read-only property of the Event interface returns a boolean value indicating whether or not the call to Event.preventDefault() canceled the event.
 
-### Editable Values
+## Editable Values
 
 > **bool returnValue** is legacy only and returns whether default action for this event has been cancelled or not. Basically returning negation of `canceled flag`
 
@@ -84,7 +82,7 @@ The path where the elements will be stored in propagation from the element invok
 `std::vector<EventTarget> touch_target_list = {}`
 - Reserved for TouchEvent interface
 
-### Methods
+## Methods
 
 `std::vector<EventTarget> composedPath()`
 - Returns the event's path (an array of objects on which listeners will be invoked). This does not include nodes in shadow trees if the shadow root was created with its ShadowRoot.mode closed
@@ -121,7 +119,7 @@ The path where the elements will be stored in propagation from the element invok
 - unsets some flags and sets `bubbles`, `cancelable` and `composed` from the `eventInitDict`
 
 ---
-### Concept for shadow DOM
+## Concept for shadow DOM
 
 So, this was actually so confusing for me and that's why I am explaining this all.
 So when any event handler is attached and whenever event is provoked using user interaction or `dispatchEvent()`, this all happens.<br><br>
