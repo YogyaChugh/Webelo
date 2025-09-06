@@ -19,7 +19,6 @@ class AbortSignal;
 class AbortController;
 struct path_structs;
 class Event;
-class MouseEvent;
 class CustomEvent;
 
 
@@ -76,8 +75,8 @@ class EventTarget{
 
         EventTarget(){};
 
-        void addEventListener(DOMString type, EventListener* callback, std::variant<AddEventListenerOptions,bool> options);
-        void removeEventListener(DOMString& type, EventListener* callback, std::variant<AddEventListenerOptions,bool> &options);
+        void addEventListener(DOMString &type, EventListener* callback, std::variant<AddEventListenerOptions,bool> options);
+        void removeEventListener(DOMString &type, EventListener* callback, std::variant<AddEventListenerOptions,bool> &options);
         void removeAllEventListeners();
         bool dispatchEvent(Event* event);
 
@@ -167,18 +166,15 @@ enum event_phase: unsigned int{
     BUBBLING_PHASE //bottom to top again !
 };
 
-typedef double DOMHighResTimeStamp; //Should represent a time in milliseconds !
-
-
 // *Structs to be stored in path for Event !
 struct path_structs{
-    EventTarget* invocation_target; // the actual EventTarget object where a listener might run
-    bool invocation_target_in_shadow_tree; //true if this target is inside a shadow tree
-    EventTarget *shadow_adjusted_target; //Can be null - The visible target (may be host if shadow is closed)
-    EventTarget *related_target; //Can be null - Another relevant node (e.g. for mouseover/mouseout events)
-    std::vector<EventTarget*> touch_target_list = {}; //Touch-specific list of targets (for TouchEvents only)
-    bool root_of_closed_tree; // true if the target is the root of a closed shadow DOM
-    bool slot_in_closed_tree; // true if the node is a <slot> in a closed shadow DOM
+    EventTarget* invocation_target;
+    bool invocation_target_in_shadow_tree;
+    EventTarget *shadow_adjusted_target;
+    EventTarget *related_target;
+    std::vector<EventTarget*> touch_target_list = {};
+    bool root_of_closed_tree;
+    bool slot_in_closed_tree;
 
     path_structs(EventTarget *it, bool itst, EventTarget *sat, EventTarget *rt, std::vector<EventTarget*> ttl, bool rct, bool sct){
         invocation_target = it;
@@ -213,6 +209,8 @@ class Event{
         Event(DOMString const &type, bool bubbles = false, bool cancelable = false, bool composed = false);
         Event(Event* temp);
 
+        void inner_event_creation_steps(Event* event, Realm* realm, DOMHighResTimeStamp &time, bool bubbles = false, bool cancelable = false, bool composed = false);
+
         // FLAGS BRO !!
         bool stop_propagation_flag = false;
         bool stop_immediate_propagation_flag = false;
@@ -222,10 +220,6 @@ class Event{
         bool initialized_flag = false;
         bool dispatch_flag = false;
 
-        virtual Event* new_instance(){
-            return new Event(this->type, this->bubbles, this->cancelable, this->composed);
-        };
-
         // See path_structs for more reference future me :) ! Also, this is 
         std::vector<std::unique_ptr<path_structs>> path = {};
 
@@ -233,7 +227,7 @@ class Event{
 
         void initEvent(DOMString const &type, bool bubbles = false, bool cancelable = false); // legacy
         void stopPropagation() inline;
-        void stopImmediatePropagation();
+        void stopImmediatePropagation() inline;
         void preventDefault();
         std::vector<EventTarget*> composedPath();
         void set_canceled_flag() inline;
@@ -298,9 +292,6 @@ class Event{
 };
 
 
-//*TEMPORARY AND SHOULD BE REPLACED !
-class MouseEvent: public Event{};
-
 class CustomEvent: public Event{
     protected:
         std::any detail = nullptr;
@@ -312,8 +303,8 @@ class CustomEvent: public Event{
             return this->detail;
         }
 
-        CustomEvent* new_instance() override{
-            return new CustomEvent(this->type, this->bubbles, this->cancelable, this->composed, this->detail);
+        CustomEvent(CustomEvent* temp): Event(temp->type, temp->bubbles, temp->cancelable, temp->composed){
+            this->detail = temp->detail;
         };
 };
 

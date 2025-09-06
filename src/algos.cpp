@@ -1,3 +1,6 @@
+#ifndef "ALGOS_DOM"
+#define "ALGOS_DOM"
+
 #include "include/nodes/node.hpp"
 #include "include/nodes/document.hpp"
 #include "include/base.hpp" //
@@ -159,14 +162,4 @@ void ValidateAndExtract(std::optional<DOMString> &namesp,DOMString qualifiedName
 }
 
 
-
-//* EVENTS
-
-void inner_event_creation_steps(Event* event, Realm* realm, DOMHighResTimeStamp &time, bool bubbles = false, bool cancelable = false, bool composed = false){
-    event->initialized_flag = true;
-    event->timeStamp = time;
-    event->bubbles = dictionary->bubbles;
-    event->cancelable = dictionary->cancelable;
-    event->composed = dictionary->composed;
-    //NOTE: Later, special event constructing steps can be passed by specification !!
-}
+#endif

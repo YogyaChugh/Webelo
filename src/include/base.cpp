@@ -5,11 +5,13 @@
 #include <optional>
 #include <cstdarg>
 #include <vector>
+#include <ctime>
 #include "../utf8.h"
 
 
 typedef std::string DOMString;
 typedef std::string USVString;
+typedef time_t DOMHighResTimeStamp;
 class Realm{};
 
 class EventHandler{};

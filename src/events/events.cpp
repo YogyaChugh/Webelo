@@ -14,15 +14,24 @@
 #include <functional>
 
 
+void Event::inner_event_creation_steps(Event* event, Realm* realm, DOMHighResTimeStamp &time, bool bubbles, bool cancelable, bool composed){
+    event->initialized_flag = true;
+    event->timeStamp = time;
+    event->bubbles = dictionary->bubbles;
+    event->cancelable = dictionary->cancelable;
+    event->composed = dictionary->composed;
+    //NOTE: Later, special event constructing steps can be passed by specification !!
+}
 
-Event::Event(DOMString const &type, bool bubbles = false, bool cancelable = false, bool composed = false){
-    time_t now = time(NULL);
+
+Event::Event(DOMString const &type, bool bubbles, bool cancelable, bool composed){
+    DOMHighResTimeStamp now = time(NULL);
     inner_event_creation_steps(this, nullptr, now, bubbles, cancelable, composed);
     this->type = type;
 };
 
 Event::Event(Event* temp){
-    time_t now = time(NULL);
+    DOMHighResTimeStamp now = time(NULL);
     inner_event_creation_steps(this, nullptr, now, temp->bubbles, temp->cancelable, temp->composed);
     this->type = temp->type;
 }
@@ -31,7 +40,7 @@ void Event::stopPropagation() inline{
     this->stop_propagation_flag = true;
 };
 
-void Event::stopImmediatePropagation(){
+void Event::stopImmediatePropagation() inline{
     this->stop_propagation_flag = true;
     this->stop_immediate_propagation_flag = true;
 };
@@ -148,8 +157,7 @@ void CustomEvent::initCustomEvent(DOMString &type, bool bubbles, bool cancelable
 
 
 Event* create_event(Event* eventInterface, Realm* realm = nullptr){
-    time_t timestamp;
-    DOMHighResTimeStamp now = timestamp; //TODO: IMPROVE
+    DOMHighResTimeStamp now = time(NULL);
     eventInterface->inner_event_creation_steps(realm, now);
     eventInterface->isTrusted = true;
     return eventInterface;

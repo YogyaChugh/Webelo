@@ -8,5 +8,5 @@ int main(){
     std::cout<< ctime(&a);
     Sleep(4000);
     std::cout<< ctime(&a);
-    std::cout<<a;
+    std::cout<<typeid(ctime(&a)).name();
 }

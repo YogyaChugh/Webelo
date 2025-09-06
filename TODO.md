@@ -9,6 +9,10 @@
 - This setter/getter resolving !
 - There could be a problem in the future with null character cause it's \0 and also end of string ! So just noting it down !!
 
+## Personal Remember
+- Do check `events.md` currentTarget value explanation. Might need improv
+- Change reference to `shadow.md` in `events.md`
+
 ## Algorithms
 > Remember to check all calls to these algo's in-order to rectify arg issues !
 - ~~ParseOrderedSet~~
