@@ -1,9 +1,10 @@
-#ifndef "EVENTS_DOM"
-#define "EVENTS_DOM"
+#ifndef EVENTS_DOM
+#define EVENTS_DOM
 
 #include "../base.hpp"
 #include <vector>
 #include <variant>
+#include <algorithm>
 #include <optional>
 #include <any>
 #include <functional>
@@ -26,39 +27,49 @@ class CustomEvent;
 
 class EventListener{
     public:
-    void handleEvent(Event event);
+        void handleEvent(const Event* event);
 };
 
 struct event_listener{
     DOMString type;
-    EventListener *callback;
+    EventListener* callback = nullptr;
     bool capture = false;
     std::optional<bool> passive = std::nullopt;
     bool once = false;
-    AbortSignal *signal;
+    AbortSignal *signal = nullptr;
     bool removed = false;
 
+    event_listener(const DOMString &type, const EventListener* callback = nullptr, bool capture = false,const std::optional<bool> passive = std::nullopt, bool once = false, const AbortSignal *signal = nullptr, bool removed = false){
+        this->type = type;
+        this->callback = callback;
+        this->capture = capture;
+        this->passive = passive;
+        this->once = once;
+        this->signal = signal;
+        this->removed = removed;
+    }
+
     bool operator==(event_listener &ev) const{
-        return (type==ev.type && callback==ev.callback && capture==ev.capture && passive==ev.passive && once==ev.once && signal==ev.signal && removed==ev.removed);
+        return (this->type==ev.type && this->callback==ev.callback && this->capture==ev.capture && this->passive==ev.passive && this->once==ev.once && this->signal==ev.signal && this->removed==ev.removed);
     }
     bool operator!=(event_listener &ev) const{
-        return (type!=ev.type || callback!=ev.callback || capture!=ev.capture || passive!=ev.passive || once!=ev.once || signal!=ev.signal || removed!=ev.removed);
-    }
-    ~event_listener(){
-        callback = nullptr;
-        signal = nullptr;
+        return !(*this==ev);
     }
 };
 
 
-struct EventListenerOptions {
-    bool capture = false;
-};
-
-struct AddEventListenerOptions: EventListenerOptions{
+struct AddEventListenerOptions{
+    bool capture;
     bool passive;
     bool once = false;
     AbortSignal *signal;
+
+    AddEventListenerOptions(bool capture, bool passive, bool once,const AbortSignal* signal){
+        this->capture = capture;
+        this->passive = passive;
+        this->once = once;
+        this->signal = signal;
+    }
 };
 
 class EventTarget{
@@ -67,25 +78,27 @@ class EventTarget{
         bool has_legacy_canceled_activation_behavior = false;
         bool has_legacy_pre_activation_behavior = false;
 
-        std::function<void()> activation_behavior_algorithm;
-        std::function<void()> legacy_canceled_activation_behavior_algorithm;
-        std::function<void()> legacy_pre_activation_behavior_algorithm;
+        // These are kept for future use-cases for specific elements in HTML
+        std::function<void()> activation_behavior_algorithm = []() {};
+        std::function<void()> legacy_canceled_activation_behavior_algorithm = []() {};
+        std::function<void()> legacy_pre_activation_behavior_algorithm = []() {};
 
         std::vector<event_listener*> event_listener_list = {};
 
         EventTarget(){};
 
-        void addEventListener(DOMString &type, EventListener* callback, std::variant<AddEventListenerOptions,bool> options);
-        void removeEventListener(DOMString &type, EventListener* callback, std::variant<AddEventListenerOptions,bool> &options);
+        void addEventListener(const DOMString &type, const EventListener* callback, const std::variant<AddEventListenerOptions,bool> &options);
+        void removeEventListener(const DOMString &type, const EventListener* callback, bool capture);
         void removeAllEventListeners();
-        bool dispatchEvent(Event* event);
+        bool dispatchEvent(const Event* event);
 
         bool dispatch_an_event(Event* event, bool legacy_target_override_flag);
 
-        bool operator==(EventTarget a){
+        bool operator==(const EventTarget &a){
             if (event_listener_list.size()!=a.event_listener_list.size()){
                 return false;
             }
+
             for (size_t i=0; i<event_listener_list.size(); i++){
                 if (*(event_listener_list[i])!=*(a.event_listener_list[i])){
                     return false;
@@ -94,30 +107,7 @@ class EventTarget{
             return true;
         }
 
-        event_listener* flatten(DOMString type, EventListener *callback, std::variant<AddEventListenerOptions,bool> options){
-            event_listener* temp = new event_listener();
-            temp->type = type;
-            temp->callback = callback;
-            temp->once = false;
-            temp->passive = std::nullopt;
-            temp->signal = nullptr;
-            if (std::holds_alternative<bool>(options)){
-                temp->capture = std::get<bool>(options);
-            }
-            else if (std::holds_alternative<AddEventListenerOptions>(options)){
-                auto& opts = std::get<AddEventListenerOptions>(options);
-                temp->once = opts.once;
-                if (opts.passive){
-                    temp->passive = opts.passive;
-                }
-                if (opts.signal){
-                    temp->signal = opts.signal;
-                }
-            }
-            return temp;
-        }
-
-        virtual EventTarget* get_the_parent(Event* event){
+        virtual EventTarget* get_the_parent(const Event* event){
             return nullptr;
         }
 };
@@ -176,14 +166,14 @@ struct path_structs{
     bool root_of_closed_tree;
     bool slot_in_closed_tree;
 
-    path_structs(EventTarget *it, bool itst, EventTarget *sat, EventTarget *rt, std::vector<EventTarget*> ttl, bool rct, bool sct){
-        invocation_target = it;
-        invocation_target_in_shadow_tree = itst;
-        shadow_adjusted_target = sat;
-        related_target = rt;
-        touch_target_list = ttl;
-        root_of_closed_tree = rct;
-        slot_in_closed_tree = sct;
+    path_structs(const EventTarget *it, bool itst,const EventTarget *sat,const EventTarget *rt,const std::vector<EventTarget*> ttl, bool rct, bool sct){
+        this->invocation_target = it;
+        this->invocation_target_in_shadow_tree = itst;
+        this->shadow_adjusted_target = sat;
+        this->related_target = rt;
+        this->touch_target_list = ttl;
+        this->root_of_closed_tree = rct;
+        this->slot_in_closed_tree = sct;
     }
 };
 
@@ -196,9 +186,6 @@ class Event{
         enum event_phase eventPhase = NONE;
         bool bubbles;
         bool cancelable;
-
-        // ! Ommitted for function: bool defaultPrevented
-
         bool composed;
         bool isTrusted = false;
         DOMHighResTimeStamp timeStamp;
@@ -206,10 +193,10 @@ class Event{
     public:
 
         // Constructor
-        Event(DOMString const &type, bool bubbles = false, bool cancelable = false, bool composed = false);
-        Event(Event* temp);
+        Event(const DOMString &type, bool bubbles = false, bool cancelable = false, bool composed = false);
+        Event(const Event* temp);
 
-        void inner_event_creation_steps(Event* event, Realm* realm, DOMHighResTimeStamp &time, bool bubbles = false, bool cancelable = false, bool composed = false);
+        void inner_event_creation_steps(const Event* event,const Realm* realm,const DOMHighResTimeStamp &time, bool bubbles = false, bool cancelable = false, bool composed = false);
 
         // FLAGS BRO !!
         bool stop_propagation_flag = false;
@@ -222,7 +209,6 @@ class Event{
 
         // See path_structs for more reference future me :) ! Also, this is 
         std::vector<std::unique_ptr<path_structs>> path = {};
-
         std::vector<EventTarget*> touch_target_list = {}; //mostly no use until TouchEvent Interface
 
         void initEvent(DOMString const &type, bool bubbles = false, bool cancelable = false); // legacy
@@ -234,7 +220,6 @@ class Event{
 
         // *GETTER-SETTER METHODS
 
-        // Read-only !!
         DOMString gettype() const{
             return this->type;
         };
@@ -296,17 +281,21 @@ class CustomEvent: public Event{
     protected:
         std::any detail = nullptr;
     public:
-        CustomEvent(DOMString &type, bool bubbles = false, bool cancelable = false, bool composed = false, std::any &detail = nullptr);
-        void initCustomEvent(DOMString &type, bool bubbles = false, bool cancelable = false, std::any &detail = nullptr);
+        CustomEvent(DOMString const &type, bool bubbles = false, bool cancelable = false, bool composed = false, std::any &detail = nullptr);
+        void initCustomEvent(DOMString const &type, bool bubbles = false, bool cancelable = false, std::any &detail = nullptr);
 
-        std::any getdetail(){
+        std::any getdetail() const{
             return this->detail;
         }
 
-        CustomEvent(CustomEvent* temp): Event(temp->type, temp->bubbles, temp->cancelable, temp->composed){
+        CustomEvent(const CustomEvent* temp): Event(temp->type, temp->bubbles, temp->cancelable, temp->composed){
             this->detail = temp->detail;
         };
 };
+
+
+//Remember to remove when rewriting it
+class MouseEvent: public Event{};
 
 
 #endif

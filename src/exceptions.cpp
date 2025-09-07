@@ -1,4 +1,5 @@
-#pragma once
+#ifndef EXCEPTIONS_DOM
+#define EXCEPTIONS_DOM
 
 #include <string>
 
@@ -82,3 +83,5 @@ class AbortError: public exception {
             return message.c_str();
         }
 };
+
+#endif

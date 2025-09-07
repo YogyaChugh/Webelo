@@ -1,0 +1,1 @@
+In Events, I haven't added the remove_event_listener algo separately because it had a separate for loop which was overhead after the removeEventListener func's for loop.

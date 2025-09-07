@@ -119,16 +119,16 @@ Not Much Info about what these do :-
 - Not in documentation
 - It just checks if canceled is true and in_passive_listener_flag is false, and then sets the canceled_flag to true.
 
-`Event(DOMString const &type, bool bubbles = false, bool cancelable = false, bool composed = false)`
+`Event(const DOMString &type, bool bubbles = false, bool cancelable = false, bool composed = false)`
 - Initializes the event
 - Sets `type` for the `Event`
 - Calls `inner_event_creation_steps` with current time
 
-`Event::Event(Event* temp)`
+`Event::Event(const Event* temp)`
 - Copy constructor baby
 - Copied values: `bubbles`,`cancelable`,`composed`,`type`
 
-`void inner_event_creation_steps(Event* event, Realm* realm, DOMHighResTimeStamp &time, bool bubbles = false, bool cancelable = false, bool composed = false)`
+`void inner_event_creation_steps(const Event* event, const Realm* realm, const DOMHighResTimeStamp &time, bool bubbles = false, bool cancelable = false, bool composed = false)`
 - Just sets the `initialized_flag` & all the values passed.
 
 ---
@@ -164,14 +164,25 @@ It's a derived class of `Event` with an extra `detail` attribute to store inform
 
 ## Methods
 
-`CustomEvent(DOMString &type, bool bubbles = false, bool cancelable = false, bool composed = false, std::any &detail = nullptr)`
+`CustomEvent(DOMString const &type, bool bubbles = false, bool cancelable = false, bool composed = false, std::any &detail = nullptr)`
 - Just setting the `detail` attribute & calling the `Event` constructor
 
-`void initCustomEvent(DOMString &type, bool bubbles = false, bool cancelable = false, std::any &detail = nullptr)`
+`void initCustomEvent(DOMString const &type, bool bubbles = false, bool cancelable = false, std::any &detail = nullptr)`
 - Just sets the `detail` attribute & calls the `initEvent()` method.
 - Legacy too
 
-`CustomEvent(CustomEvent* temp)`
+`CustomEvent(const CustomEvent* temp)`
 - Copy constructor
 - Copied values: `detail`,
 > Refer copy constructor for `Event` for other values copied.
+
+
+---
+
+# EventTarget
+
+It's the base class for anything inside of the DOM like nodes, document, elements, etc...
+It sets the base layer so that event listeners can be added and also events can easily propagate through the multiple EventTargets.
+
+
+## Read-only Attributes

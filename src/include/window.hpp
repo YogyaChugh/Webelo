@@ -1,5 +1,5 @@
-#ifndef "WINDOW_DOM"
-#define "WINDOW_DOM"
+#ifndef WINDOW_DOM
+#define WINDOW_DOM
 
 #include "events/events.hpp"
 

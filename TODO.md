@@ -8,10 +8,19 @@
 - NewObject, SameObject
 - This setter/getter resolving !
 - There could be a problem in the future with null character cause it's \0 and also end of string ! So just noting it down !!
+- ServiceWorkerGlobalScope implementation in:
+    - add_event_listener
+    - removeEventListener
+    - removeAllEventListeners
+- Remember to remove MouseEvent from events.hpp when later rewriting & also adding to algos_events.cpp dispatch_event algo.
+
 
 ## Personal Remember
 - Do check `events.md` currentTarget value explanation. Might need improv
 - Change reference to `shadow.md` in `events.md`
+- Add `path_structs` in docs
+- DO NOT RUN THIS BEFORE HAVING THE FULL Windows OBJECT FROM HTML SPEC
+- DO CHECK dispatchEvent for associatedDocument of target before running
 
 ## Algorithms
 > Remember to check all calls to these algo's in-order to rectify arg issues !
@@ -67,10 +76,17 @@
 - SplitTextNode
 - StrictSplitText
 
-## Events
+## Event
 - Realm implementation in `inner_event_creation_steps` & `base.cpp`
 - Special event constructing steps for each specification in `inner_event_creation_steps` - **JUST A NOTE**
 - Implementation of `relative_high_resolution_coarse_time` in `inner_event_creation_steps`
+
+## CustomEvent
+
+## EventTarget
+- In algo for events, default_passive_value needs to be complete after HTML work done.
+- Add algo for add_event_listener
+- Set targetOverride to target's associatedDocument in dispatch_event
 
 ## Node
 - Meaningfull virtual func -> abstract class

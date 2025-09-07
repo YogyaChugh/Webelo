@@ -1,12 +1,23 @@
-#include <ctime>
+#include <optional>
 #include <iostream>
-#include <windows.h>
+#include <algorithm>
+#include <vector>
+#include <numeric>
 
+bool sum(std::vector<int> a){
+    std::accumulate(
+        a.begin(), a.end(), [](int c){
+            std::cout<<c;
+            if (c==4){
+                return false;
+            }
+            return true;
+        }
+    );
+    return false;
+}
 
 int main(){
-    time_t a = time(NULL);
-    std::cout<< ctime(&a);
-    Sleep(4000);
-    std::cout<< ctime(&a);
-    std::cout<<typeid(ctime(&a)).name();
+    std::vector c = {1,2,3,4,5,6};
+    std::cout<<sum(c);
 }

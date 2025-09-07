@@ -1,5 +1,5 @@
-#ifndef "ALGOS_DOM"
-#define "ALGOS_DOM"
+#ifndef ALGOS_BASE_DOM
+#define ALGOS_BASE_DOM
 
 #include "include/nodes/node.hpp"
 #include "include/nodes/document.hpp"
