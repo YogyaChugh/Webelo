@@ -1,6 +1,6 @@
 # WEBELO
 
-A crazy website builder that allows you to just drag & drop stuff , and it writes the code for you !
+A browser !!
 
 ## Current Implementation
 
