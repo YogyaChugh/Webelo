@@ -148,128 +148,12 @@ void CustomEvent::initCustomEvent(DOMString const &type, bool bubbles, bool canc
 
 
 
-
-
-
-
-
-
-
-
 Event* create_event(Event* eventInterface, Realm* realm = nullptr){
     DOMHighResTimeStamp now = time(NULL);
     eventInterface->inner_event_creation_steps(realm, now);
     eventInterface->isTrusted = true;
     return eventInterface;
 };
-
-
-bool fire_event(DOMString& e,EventTarget* target,Event* temporary_class = nullptr ,bool legacy_target_override_flag = false) {
-    //! MODIFY LATER FOR eventConstructor
-    //! AND MAKE CHANGES to signal_abort where it's called too!
-    Event* event;
-    if (!temporary_class){
-        event = new Event(e);
-    }
-    else {
-        event = temporary_class->create_object();
-    }
-    event = create_event(event);
-    event->type = e;
-    //! DO SOMETHING HERE
-    bool returning_val = target->dispatch_an_event(event, legacy_target_override_flag);
-    delete event;
-    return returning_val;
-};
-
-void append_to_event(Event* event, EventTarget* invocationTarget, EventTarget*  shadowAdjustedTarget, EventTarget* relatedTarget, std::vector<EventTarget*> &touchTargets, bool slot_in_closed_tree){
-    bool invocationTargetInShadowTree = false;
-    auto tempji = dynamic_cast<Node*>(invocationTarget);
-    if (tempji &&  dynamic_cast<ShadowRoot*>(tempji->getRootNode())){
-        invocationTargetInShadowTree = true;
-    }
-    bool root_of_closed_tree = false;
-    auto temp = dynamic_cast<ShadowRoot*>(invocationTarget);
-    if (temp && temp->mode==closed){
-        root_of_closed_tree = true;
-    }
-    event->path.push_back(std::make_unique<path_structs>(invocationTarget, invocationTargetInShadowTree, shadowAdjustedTarget, relatedTarget, touchTargets, root_of_closed_tree, slot_in_closed_tree));
-}
-
-bool inner_invoke(Event* event, std::vector<event_listener*> &listeners,DOMString &phase, bool invocationTargetInShadowTree, std::optional<bool> legacyOutputDidListenersThrowFlag = std::nullopt){
-    bool found = false;
-    for (auto listener: listeners) {
-        if (!(listener->removed)) {
-            if (event->type!=listener->type) {
-                continue;
-            }
-            found = true;
-            if ((phase=="capturing" && !(listener->capture)) || (phase=="bubbling" && listener->capture)) {
-                continue;
-            }
-            if (listener->once) {
-                remove_an_event_listener(event->currentTarget, listener);
-            }
-            //! IMPORTANT BEFORE PUBLISH
-            //! IMPLEMENT global OBJECT WORK HERE
-            //! TEMPORARILY!
-            if (listener->passive) {
-                event->in_passive_listener_flag = true;
-            }
-            //! again global here
-            event->in_passive_listener_flag = false;
-            if (event->stop_immediate_propagation_flag) {
-                break;
-            }
-        }
-    }
-    return found;
-}
-
-void invoke(path_structs* struc, Event* event, DOMString phase, std::optional<bool> legacyOutputDidListenersThrowFlag = std::nullopt) {
-    event->target = nullptr;
-    for (size_t i = event->path.size() - 1; i > -1; i--) {
-        if (event->path[i]->shadow_adjusted_target) {
-            event->target = event->path[i]->shadow_adjusted_target;
-            break;
-        }
-    }
-    event->relatedTarget = struc->related_target;
-    event->touch_target_list = struc->touch_target_list;
-    if (event->stop_propagation_flag){ return; }
-    event->currentTarget = struc->invocation_target;
-    std::vector<event_listener*> listeners = event->currentTarget->event_listener_list;
-
-    bool invocationTargetInShadowTree = struc->invocation_target_in_shadow_tree;
-    bool found = inner_invoke(event, listeners, phase, invocationTargetInShadowTree,legacyOutputDidListenersThrowFlag);
-
-    if (!found && event->isTrusted) {
-        DOMString originalEventType = event->type;
-        if (event->type=="animationend") {
-            event->type = "webkitAnimationEnd";
-        }
-        else if (event->type=="animationiteration") {
-            event->type = "webkitAnimationIteration";
-        }
-        else if (event->type=="animationstart") {
-            event->type = "webkitAnimationStart";
-        }
-        else if (event->type=="transitionend") {
-            event->type = "webkitTransitionEnd";
-        }
-        else{return;}
-        inner_invoke(event, listeners, phase, invocationTargetInShadowTree, legacyOutputDidListenersThrowFlag);
-        event->type = originalEventType;
-    }
-}
-
-
-
-
-
-
-
-
 
 
 

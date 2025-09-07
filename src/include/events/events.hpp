@@ -92,8 +92,6 @@ class EventTarget{
         void removeAllEventListeners();
         bool dispatchEvent(const Event* event);
 
-        bool dispatch_an_event(Event* event, bool legacy_target_override_flag);
-
         bool operator==(const EventTarget &a){
             if (event_listener_list.size()!=a.event_listener_list.size()){
                 return false;
@@ -208,7 +206,7 @@ class Event{
         bool dispatch_flag = false;
 
         // See path_structs for more reference future me :) ! Also, this is 
-        std::vector<std::unique_ptr<path_structs>> path = {};
+        std::vector<path_structs> path = {};
         std::vector<EventTarget*> touch_target_list = {}; //mostly no use until TouchEvent Interface
 
         void initEvent(DOMString const &type, bool bubbles = false, bool cancelable = false); // legacy

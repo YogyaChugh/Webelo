@@ -21,6 +21,10 @@
 - Add `path_structs` in docs
 - DO NOT RUN THIS BEFORE HAVING THE FULL Windows OBJECT FROM HTML SPEC
 - DO CHECK dispatchEvent for associatedDocument of target before running
+- add_abort_algo() for abortsignal
+- Do change slot in dispatch_event in case the name changes in Element & Text ! Also, it's implementation
+- Just logging a possible error: preceding struct check in invoke algo for events.
+- Could be later ! Add eventConstructor in fire_event
 
 ## Algorithms
 > Remember to check all calls to these algo's in-order to rectify arg issues !
@@ -84,9 +88,14 @@
 ## CustomEvent
 
 ## EventTarget
-- In algo for events, default_passive_value needs to be complete after HTML work done.
-- Add algo for add_event_listener
-- Set targetOverride to target's associatedDocument in dispatch_event
+- In algo for events, `default_passive_value` needs to be complete after HTML work done.
+- Add `algo` for `add_event_listener`
+- Set `targetOverride` to target's `associatedDocument` in `dispatch_event`
+- Assert for `slot` check in `dispatch_event` after implementation of Slot
+- Implement check for **shadow-including inclusive ancestor** in `dispatch_event`
+- After implementation of realm/global object, remember to complete `inner_invoke` func in `algos_events`
+- Relevant `realm` implementation with `eventConstructor` in `fire_event` in algos for events.
+- This `realm` boi implementation in `create_event` tooooo.
 
 ## Node
 - Meaningfull virtual func -> abstract class
@@ -105,14 +114,14 @@
 - Opaque Origin
 - `getTheParent` algo
 - `serialize` algo
-- Constructor work to set origin to origin of current global object's associated Doc #HTML
-- Resolve this in createProcessingInstruction for Document -> If target does not match the Name production
-- Step 3 in otherwise for importNode() in Document !! After CustomElementRegistry implementation :)
+- Constructor work to set origin to origin of current global object's `associated Doc` #HTML
+- Resolve this in `createProcessingInstruction` for `Document` -> If target does not match the Name production
+- Step 3 in otherwise for `importNode()` in `Document` !! After `CustomElementRegistry` implementation :)
 - Complete:
-    - createEvent()
-    - createRange()
-    - createNodeIterator()
-    - createTreeWalker()
+    - `createEvent()`
+    - `createRange()`
+    - `createNodeIterator()`
+    - `createTreeWalker()`
 
 
 ## DOMImplementation

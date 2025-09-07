@@ -77,108 +77,107 @@ bool dispatch_event(Event* event, EventTarget* target, std::optional<bool> legac
             touchTargets.push_back(retard(touchTarget,target));
         }
 
-        append_to_event(event,target,targetOverride,relatedTarget,touchTargets,false);
+        append_to_event_path(event,target,targetOverride,relatedTarget,touchTargets,false);
 
         bool isActivationEvent = false;
         if ((dynamic_cast<MouseEvent*>(event)) && event->type=="click"){
             isActivationEvent = true;
         }
      
-        if (isActivationEvent && this->has_activation_behavior){
-            activationTarget = this;
+        if (isActivationEvent && target->has_activation_behavior){
+            activationTarget = target;
         }
         EventTarget* slottable = nullptr;
-        //! CHECK LATER
-        auto temp = dynamic_cast<Element*>(this);
-        auto temp2 = dynamic_cast<Text*>(this);
-        if ((temp && !(temp->slot.empty())) || (temp2 && !(temp2->slot.empty()))){
-            slottable = this;
+        if ((dynamic_cast<Element*>(target) || dynamic_cast<Text*>(target)) && (target->slot!=nullptr)){
+            slottable = target;
         }
 
         bool slot_in_closed_tree = false;
-        EventTarget* parent = get_the_parent(event);
+        EventTarget* parent = target->get_the_parent(event);
         while (parent){
+            auto parentNode = dynamic_cast<Node*>(parent);
+            auto parentRoot = dynamic_cast<ShadowRoot*>(parentNode->getRootNode());
             if (slottable){
-                assert(4); //!COMPLETE
+                assert(4);
                 slottable = nullptr;
-                auto pakkatemp = dynamic_cast<Node*>(parent);
-                auto temporary = dynamic_cast<ShadowRoot*>(pakkatemp->getRootNode());
-                if (temporary && temporary->mode==closed){
+                if (parentRoot && parentRoot->mode==closed){
                     slot_in_closed_tree = true;
                 }
             }
-            auto temporary1 = dynamic_cast<Element*>(parent);
-            auto temporary2 = dynamic_cast<Text*>(parent);
-            if (( temporary1 && !(temporary2->slot.empty())) || (temporary2 && !(temporary2->slot.empty()))){
+            if ((dynamic_cast<Element*>(parent) || dynamic_cast<Text*>(parent)) && (parent->slot!=nullptr)){
                 slottable = parent;
             }
             relatedTarget = retard(event->relatedTarget,parent);
-            touchTargets = {};
-            for (auto a: event->touch_target_list){
-                touchTargets.push_back(retard(a,parent));
+            std::vector<EventTarget*>touchTargets = {};
+            for (const EventTarget* temp: event->touch_target_list){
+                touchTargets.push_back(retard(temp,parent));
             }
-            auto tempodabaccha = dynamic_cast<Node*>(parent);
-            if (dynamic_cast<Window*>(parent) || (tempodabaccha && tempodabaccha->getRootNode())){
+            if (dynamic_cast<Window*>(parent) || (parentNode && true)){
                 if (isActivationEvent && event->bubbles && !activationTarget && parent->has_activation_behavior){
                     activationTarget = parent;
                 }
-                append_to_event(event, parent, nullptr, relatedTarget, touchTargets, slot_in_closed_tree);
-            } //!COMPLETE
+                append_to_event_path(event, parent, nullptr, relatedTarget, touchTargets, slot_in_closed_tree);
+            }
             else if (parent==relatedTarget){
                 parent = nullptr;
             }
             else{
-                //!set target to parent
-                if (isActivationEvent && !activationTarget && this->has_activation_behavior){
-                    activationTarget = this;
+                target = parent;
+                if (isActivationEvent && !activationTarget && target->has_activation_behavior){
+                    activationTarget = target;
                 }
-                append_to_event(event, parent, this, relatedTarget, touchTargets, slot_in_closed_tree);
+                append_to_event_path(event, parent, target, relatedTarget, touchTargets, slot_in_closed_tree);
             }
-            
             if (parent){
                 parent = parent->get_the_parent(event);
             }
             slot_in_closed_tree = false;
         }
 
-        path_structs* clearTargetsStruct = nullptr;
-        for (auto& a: event->path){
-            if (a->shadow_adjusted_target){
-                clearTargetsStruct = a.get();
+        path_structs clearTargetsStruct = nullptr;
+        for (const path_structs& a: event->path){
+            if (a.shadow_adjusted_target){
+                clearTargetsStruct = a;
             }
         }
 
-        auto tempboi = dynamic_cast<Node*>(clearTargetsStruct->shadow_adjusted_target);
-        if (tempboi && dynamic_cast<ShadowRoot*>(tempboi->getRootNode())){
+        auto tempShadowAdjustedTarget = dynamic_cast<Node*>(clearTargetsStruct->shadow_adjusted_target);
+        if (tempboi && dynamic_cast<ShadowRoot*>(tempShadowAdjustedTarget->getRootNode())){
             clearTargets = true;
         }
-        auto tempboi2 = dynamic_cast<Node*>(clearTargetsStruct->related_target);
-        if (tempboi2 && dynamic_cast<ShadowRoot*>(tempboi2->getRootNode())){
-            clearTargets = true;
-        }
-        Node* tempgo;
-        for (auto a: clearTargetsStruct->touch_target_list){
-            tempgo = dynamic_cast<Node*>(a);
-            if (tempgo && dynamic_cast<ShadowRoot*>(tempgo->getRootNode())){
+        if (!clearTargets){
+            auto tempRelatedTarget = dynamic_cast<Node*>(clearTargetsStruct->related_target);
+            if (tempboi2 && dynamic_cast<ShadowRoot*>(tempRelatedTarget->getRootNode())){
                 clearTargets = true;
             }
+        }
+        if (!clearTargets){
+            Node* tempNode2;
+            for (const EventTarget* a: clearTargetsStruct->touch_target_list){
+                tempNode2 = dynamic_cast<Node*>(a);
+                if (tempNode2 && dynamic_cast<ShadowRoot*>(tempNode2->getRootNode())){
+                    clearTargets = true;
+                    break;
+                }
+            }   
         }
 
 
         if (activationTarget && activationTarget->has_legacy_pre_activation_behavior){
             activationTarget->legacy_pre_activation_behavior_algorithm();
         }
-        for (size_t i = event->path.size() - 1;i > -1; i--){
-            if (event->path[i]->shadow_adjusted_target){
+        std::vector<path_structs> rev_path = std::vector<path_structs>(event->path.rbegin(),event->path.rend());
+        for (const path_structs& a: rev_path){
+            if (a.shadow_adjusted_target){
                 event->eventPhase = AT_TARGET;
             }
             else{
                 event->eventPhase = CAPTURING_PHASE;
             }
-            invoke(event->path[i].get(),event,"capturing");
+            invoke(a,event,"capturing", legacy_output_did_listeners_throw_flag);
         }
-        for (auto& a: event->path){
-            if (a->shadow_adjusted_target){
+        for (const path_structs& a: event->path){
+            if (a.shadow_adjusted_target){
                 event->eventPhase = AT_TARGET;
             }
             else{
@@ -187,7 +186,7 @@ bool dispatch_event(Event* event, EventTarget* target, std::optional<bool> legac
                 }
                 event->eventPhase = BUBBLING_PHASE;
             }
-            invoke(a.get(),event,"bubbling");
+            invoke(a,event,"bubbling", legacy_output_did_listeners_throw_flag);
 
         }
     }
@@ -200,7 +199,7 @@ bool dispatch_event(Event* event, EventTarget* target, std::optional<bool> legac
     if (clearTargets){
         event->target = nullptr;
         event->relatedTarget = nullptr;
-        event->touch_target_list = {};
+        event->touch_target_list.clear();
     }
     if (activationTarget){
         if (!(event->canceled_flag)){
@@ -215,6 +214,106 @@ bool dispatch_event(Event* event, EventTarget* target, std::optional<bool> legac
     }
     return true;
 }
+
+
+void append_to_event_path(Event* event, EventTarget* invocationTarget, EventTarget*  shadowAdjustedTarget, EventTarget* relatedTarget, std::vector<EventTarget*> &touchTargets, bool slot_in_closed_tree){
+    bool invocationTargetInShadowTree = false;
+    auto tempNode = dynamic_cast<Node*>(invocationTarget);
+    if (tempNode &&  dynamic_cast<ShadowRoot*>(tempNode->getRootNode())){
+        invocationTargetInShadowTree = true;
+    }
+    bool root_of_closed_tree = false;
+    auto temp = dynamic_cast<ShadowRoot*>(invocationTarget);
+    if (temp && temp->mode==closed){
+        root_of_closed_tree = true;
+    }
+    event->path.push_back(path_structs(invocationTarget, invocationTargetInShadowTree, shadowAdjustedTarget, relatedTarget, touchTargets, root_of_closed_tree, slot_in_closed_tree));
+}
+
+bool inner_invoke(Event* event, std::vector<event_listener*> &listeners,DOMString &phase, bool invocationTargetInShadowTree, std::optional<bool> legacyOutputDidListenersThrowFlag = std::nullopt){
+    bool found = false;
+    for (const event_listener* listener: listeners) {
+        if (!(listener->removed)) {
+            continue;
+        }
+        if (event->type!=listener->type) {
+            continue;
+        }
+        found = true;
+        if ((phase=="capturing" && !(listener->capture)) || (phase=="bubbling" && listener->capture)) {
+            continue;
+        }
+        if (listener->once) {
+            remove_event_listener(event->currentTarget, listener);
+        }
+        //! IMPORTANT BEFORE PUBLISH
+        //! IMPLEMENT global OBJECT WORK HERE
+        //! TEMPORARILY!
+        Event* currentEvent = nullptr;
+        if (listener->passive) {
+            event->in_passive_listener_flag = true;
+        }
+        //! again global here
+        event->in_passive_listener_flag = false;
+        if (event->stop_immediate_propagation_flag) {
+            break;
+        }
+    }
+    return found;
+}
+
+
+void invoke(const path_structs &struc, Event* event, DOMString &phase, std::optional<bool> legacyOutputDidListenersThrowFlag = std::nullopt) {
+    event->target = nullptr;
+    std::vector<path_structs> revpath = std::vector<path_structs>(event->path.rbegin(), event->path.rend());
+    for (const path_structs a: revpath){
+        if (a.shadow_adjusted_target){
+            event->target = a;
+        }
+    }
+    event->relatedTarget = struc.related_target;
+    event->touch_target_list = struc.touch_target_list;
+    if (event->stop_propagation_flag){ return; }
+    event->currentTarget = struc.invocation_target;
+    std::vector<event_listener*> listeners = event->currentTarget->event_listener_list;
+
+    bool invocationTargetInShadowTree = struc.invocation_target_in_shadow_tree;
+    bool found = inner_invoke(event, listeners, phase, invocationTargetInShadowTree,legacyOutputDidListenersThrowFlag);
+
+    if (!found && event->isTrusted) {
+        DOMString originalEventType = event->type;
+        if (event->type=="animationend") {
+            event->type = "webkitAnimationEnd";
+        }
+        else if (event->type=="animationiteration") {
+            event->type = "webkitAnimationIteration";
+        }
+        else if (event->type=="animationstart") {
+            event->type = "webkitAnimationStart";
+        }
+        else if (event->type=="transitionend") {
+            event->type = "webkitTransitionEnd";
+        }
+        else{return;}
+        inner_invoke(event, listeners, phase, invocationTargetInShadowTree, legacyOutputDidListenersThrowFlag);
+        event->type = originalEventType;
+    }
+}
+
+bool fire_event(DOMString& e,EventTarget* target,Event* temporary_class = nullptr ,bool legacy_target_override_flag = false) {
+    //! MODIFY LATER FOR eventConstructor
+    //! AND MAKE CHANGES to signal_abort where it's called too!
+    Event* event;
+    if (!temporary_class){
+        event = new Event(e);
+    }
+    event->type = e;
+    //! DO SOMETHING HERE
+    bool returning_val = target->dispatch_event(event, target, legacy_target_override_flag);
+    delete event;
+    return returning_val;
+};
+
 
 
 #endif
