@@ -96,6 +96,20 @@
 - After implementation of realm/global object, remember to complete `inner_invoke` func in `algos_events`
 - Relevant `realm` implementation with `eventConstructor` in `fire_event` in algos for events.
 - This `realm` boi implementation in `create_event` tooooo.
+- Complete the `retard` function after shadow-inclusing ancestor.
+
+## AbortController
+
+## AbortSignal
+- Mf global object to trouble again !
+- Current realm implementation in `_any` method
+- The same thing above in the creating
+- `onabort` implementation after HTML
+
+## Mutation Algo's
+- `host-including inclusive ancestor` implementation, then for `ensure_pre_insert_validity`
+- Point 6 in `ensure_pre_insert_validity` after figuring out best way to find type of child.
+
 
 ## Node
 - Meaningfull virtual func -> abstract class

@@ -111,21 +111,22 @@ class EventTarget{
 };
 
 class AbortSignal: public EventTarget{
-    public:
+    protected:
         bool aborted;
-        std::optional<std::any> reason;
+        bool dependent = false;
+        std::any reason = nullptr;
+        EventHandler onabort; //TODO: event handler IDL attribute whose event handler event type is abort.
+    public:
 
         //NEW-OBJECT
-        static AbortSignal* abort(std::optional<std::any> reason);
-        //TODO: Expose to only Window and Worker
-        //TODO: EnforceRange
+        static AbortSignal* abort(std::any reason = nullptr);
         static AbortSignal* timeout(unsigned long long milliseconds);
         static AbortSignal* _any(std::vector<AbortSignal*> signals);
 
 
         void throwIfAborted();
-        EventHandler onabort; //TODO: event handler IDL attribute whose event handler evnet type is abort.
-        bool dependent = false;
+
+
         std::vector<AbortSignal*> source_signals = {};
         std::vector<AbortSignal*> dependent_signals = {};
 
@@ -134,13 +135,41 @@ class AbortSignal: public EventTarget{
         AbortSignal* create_object() {
             return new AbortSignal();
         }
+
+        bool getaborted(){
+            return this->aborted;
+        }
+        bool isaborted(){
+            try{
+                std::any_cast<std::nullptr_t>(this->reason);
+                return false;
+            }
+            catch(std::bad_any_cast){
+                return true;
+            }
+            return true;
+        }
+        bool getdependent(){
+            return this->dependent;
+        }
+        bool setdependent(bool dependent){
+            this->dependent = dependent;
+        }
+        std::any getreason(){
+            return this->reason;
+        }
 };
 
 class AbortController{
-    public:
+    protected:
         AbortSignal* signal;
+    public:
         AbortController();
-        void abort(std::optional<std::any> reason = std::nullopt) const;
+        void abort(std::any reason = nullptr) const;
+
+        AbortSignal* getsignal(){
+            return this->signal;
+        }
 };
 
 

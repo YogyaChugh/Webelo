@@ -73,35 +73,35 @@ void Event::initEvent(DOMString &type, bool bubbles, bool cancelable){
 
 std::vector<EventTarget*> Event::composedPath(){
     std::vector<EventTarget*> composed_path;
-    if (path.empty()){
+    if (this->path.empty()){
         return composed_path;
     }
-    assert(dynamic_cast<EventTarget*>(currentTarget));
-    composed_path.push_back(currentTarget);
+    assert(dynamic_cast<EventTarget*>(this->currentTarget));
+    composed_path.push_back(this->currentTarget);
     int currentTargetIndex = 0;
     int currentTargetHiddenSubtreeLevel = 0;
-    for (int index = path.size() - 1; index>=0; index--){
-        if (path[index]->root_of_closed_tree){
+    for (int index = this->path.size() - 1; index>=0; index--){
+        if (this->path[index]->root_of_closed_tree){
             currentTargetHiddenSubtreeLevel++;
         }
-        if (path[index]->invocation_target==currentTarget){
+        if (this->path[index]->invocation_target==this->currentTarget){
             currentTargetIndex = index;
             break;
         }
-        if (path[index]->slot_in_closed_tree){
+        if (this->path[index]->slot_in_closed_tree){
             currentTargetHiddenSubtreeLevel--;
         }
     }
     int currentHiddenLevel = currentTargetHiddenSubtreeLevel;
     int maxHiddenLevel = currentTargetHiddenSubtreeLevel;
     for (int index = currentTargetIndex - 1; index>=0; index--){
-        if (path[index]->root_of_closed_tree){
+        if (this->path[index]->root_of_closed_tree){
             currentHiddenLevel++;
         }
         if (currentHiddenLevel<=maxHiddenLevel){
-            composed_path.insert(composed_path.begin(),path[index]->invocation_target);
+            composed_path.insert(composed_path.begin(),this->path[index]->invocation_target);
         }
-        if (path[index]->slot_in_closed_tree){
+        if (this->path[index]->slot_in_closed_tree){
             currentHiddenLevel--;
             if (currentHiddenLevel<maxHiddenLevel){
                 maxHiddenLevel = currentHiddenLevel;
@@ -110,14 +110,14 @@ std::vector<EventTarget*> Event::composedPath(){
     }
     currentHiddenLevel = currentTargetHiddenSubtreeLevel;
     maxHiddenLevel = currentTargetHiddenSubtreeLevel;
-    for (int index = currentTargetIndex + 1; index<path.size(); index++){
-        if (path[index]->slot_in_closed_tree){
+    for (int index = currentTargetIndex + 1; index<this->path.size(); index++){
+        if (this->path[index]->slot_in_closed_tree){
             currentHiddenLevel++;
         }
         if (currentHiddenLevel<=maxHiddenLevel){
-            composed_path.push_back(path[index]->invocation_target);
+            composed_path.push_back(this->path[index]->invocation_target);
         }
-        if (path[index]->root_of_closed_tree){
+        if (this->path[index]->root_of_closed_tree){
             currentHiddenLevel--;
             if (currentHiddenLevel<maxHiddenLevel){
                 maxHiddenLevel = currentHiddenLevel;
@@ -146,8 +146,6 @@ void CustomEvent::initCustomEvent(DOMString const &type, bool bubbles, bool canc
     this->detail = detail;
 }
 
-
-
 Event* create_event(Event* eventInterface, Realm* realm = nullptr){
     DOMHighResTimeStamp now = time(NULL);
     eventInterface->inner_event_creation_steps(realm, now);
@@ -161,17 +159,6 @@ Event* create_event(Event* eventInterface, Realm* realm = nullptr){
 
 
 
-
-
-EventTarget* retard(EventTarget* a, EventTarget* b){
-    //TODO: Implement B is a node and A's root is a shadow-including inclusive ancestor of B)
-    auto temp = dynamic_cast<Node*>(a);
-    if (!temp || (temp && !(dynamic_cast<ShadowRoot*>(temp->getRootNode()))) || ((dynamic_cast<Node*>(b)))){
-        return a;
-    }
-    //TODO: Set a to a's root's host
-    return a;
-}
 
 
 void EventTarget::addEventListener(const DOMString &type, const EventListener* callback, const std::variant<AddEventListenerOptions,bool> &options){
@@ -218,75 +205,15 @@ bool EventTarget::dispatchEvent(Event* event) {
 
 
 
-
-
-void signal_abort(AbortSignal* signal, std::optional<std::any> reason = std::nullopt) {
-    if (signal->aborted) {
-        return;
-    }
-    if (reason.has_value()){ signal->reason = reason;}
-    else{ signal->reason = AbortError("Damn ! Abort error dude :)");}
-
-    std::vector<AbortSignal*> dependentSignalsToAbort = {};
-    for (auto dependentSignal: signal->dependent_signals) {
-        if (!(dependentSignal->aborted)) {
-            dependentSignal->reason = signal->reason;
-            dependentSignalsToAbort.push_back(dependentSignal);
-        }
-    }
-    for (auto &algo: signal->abort_algos){ algo(); }
-    signal->abort_algos.clear();
-    //fire event
-    for (const auto dependentSignal: dependentSignalsToAbort) {
-        for (auto &algo: dependentSignal->abort_algos) {
-            algo();
-        }
-        dependentSignal->abort_algos.clear();
-        //fire event
-    }
-}
-
-
 AbortController::AbortController(){
-    signal = new AbortSignal();
+    this->signal = new AbortSignal();
 }
 
-void AbortController::abort(std::optional<std::any> reason) const{
-    signal_abort(signal, reason);
+void AbortController::abort(std::any reason) const{
+    signal_abort(this->signal, reason);
 }
 
-AbortSignal* create_dependent_abort_signal(std::vector<AbortSignal*> signals, AbortSignal* signalInterface = nullptr, Realm* realm = nullptr) {
-    AbortSignal* resultSignal;
-    if (!signalInterface){
-        resultSignal = new AbortSignal();
-    }
-    else {
-        resultSignal = signalInterface->create_object();
-    }
-    for (auto a: signals) {
-        if (a->aborted) {
-            resultSignal->reason = a->reason;
-            return resultSignal;
-        }
-    }
-    resultSignal->dependent = true;
-    for (auto signal: signals) {
-        if (!(signal-> dependent)) {
-            resultSignal->dependent_signals.push_back(signal);
-            signal->dependent_signals.push_back(resultSignal);
-        }
-        else {
-            for (auto sourceSignal: signal->source_signals) {
-                assert(!(sourceSignal->aborted) && !(sourceSignal->dependent));
-                resultSignal->source_signals.push_back(sourceSignal);
-                sourceSignal->dependent_signals.push_back(resultSignal);
-            }
-        }
-    }
-    return resultSignal;
-}
-
-AbortSignal* AbortSignal::abort(std::optional<std::any> reason) {
+AbortSignal* AbortSignal::abort(std::any reason = nullptr) {
     AbortSignal* signal = new AbortSignal();
     if (reason.has_value()) {
         signal->reason = reason;
@@ -308,18 +235,7 @@ AbortSignal *AbortSignal::_any(std::vector<AbortSignal *> signals) {
 }
 
 void AbortSignal::throwIfAborted() {
-    if (aborted) {
-        reason = std::nullopt;
+    if (this->aborted) {
+        reason = nullptr;
     }
-}
-
-
-
-
-
-
-int main(){
-    EventInit a;
-    //Event b = Event("click",std::make_unique<EventInit>(a));
-    return 0;
 }

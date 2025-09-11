@@ -6,6 +6,15 @@
 #include "../include/window.hpp"
 
 
+EventTarget* retard(EventTarget* a, EventTarget* b){
+    //TODO: Implement B is a node and A's root is a shadow-including inclusive ancestor of B)
+    auto temp = dynamic_cast<Node*>(a);
+    if (!temp || (temp && !(dynamic_cast<ShadowRoot*>(temp->getRootNode()))) || ((dynamic_cast<Node*>(b)))){
+        return a;
+    }
+    //TODO: Set a to a's root's host
+    return a;
+}
 
 bool default_passive_value(const DOMString &type, const EventTarget* eventTarget){
     if (type=="touchstart" || type=="touchmove" || type=="wheel" || type=="mousewheel"){
@@ -16,7 +25,7 @@ bool default_passive_value(const DOMString &type, const EventTarget* eventTarget
 }
 
 void add_event_listener(const EventTarget* eventTarget, event_listener *listener){
-    if (listener->signal != nullptr && listener->signal->getaborted()){ return; }
+    if (listener->signal != nullptr && listener->signal->isaborted()){ return; }
     if (listener->callback == nullptr){ return; }
     if (listener->passive == std::nullopt){
         listener->passive = default_passive_value(listener->type, eventTarget);
@@ -313,6 +322,90 @@ bool fire_event(DOMString& e,EventTarget* target,Event* temporary_class = nullpt
     delete event;
     return returning_val;
 };
+
+
+
+
+
+
+
+
+
+void add_abort_algo(std::function<void()> algo, AbortSignal* signal){
+    if (signal->isaborted()){
+        return;
+    }
+    signal->abort_algos.push_back(algo);
+}
+
+void remove_abort_algo(std::function<void()> algo, AbortSignal* signal){
+    std::vector<std::function<void()>>::iterator it;
+    it = find(signal->abort_algos.begin(), signal->abort_algos.end(), algo);
+    signal->abort_algos.erase(it)
+}
+
+void run_abort_steps(AbortSignal* signal){
+    for (auto algo: signal->abort_algos){
+        algo();
+    }
+    signal->abort_algos.clear();
+    fire_event("abort", signal);
+}
+
+
+void signal_abort(AbortSignal* signal, std::any reason = nullptr) {
+    if (signal->isaborted()) {
+        return;
+    }
+    try{
+        std::any_cast<std::nullptr_t>(reason);
+        signal->reason = AbortError("Boi ! Abort Error");
+    }
+    catch(std::bad_any_cast){
+        signal->reason = reason;
+        if (!signal->reason.has_value()){
+            signal->reason = AbortError("Boi ! Abort Error");
+        }
+    }
+
+    std::vector<AbortSignal*> dependentSignalsToAbort = {};
+    for (auto &dependentSignal: signal->dependent_signals) {
+        if (!(dependentSignal->isaborted())) {
+            dependentSignal->reason = signal->reason;
+            dependentSignalsToAbort.push_back(dependentSignal);
+        }
+    }
+    run_abort_steps(signal);
+    for (const auto &dependentSignal: dependentSignalsToAbort) {
+        run_abort_steps(dependentSignal);
+    }
+}
+
+
+AbortSignal* create_dependent_abort_signal(std::vector<AbortSignal*> signals, AbortSignal* signalInterface = nullptr, Realm* realm = nullptr) {
+    AbortSignal* resultSignal = new AbortSignal();
+    for (const AbortSignal* signal: signals) {
+        if (signal->isaborted()) {
+            resultSignal->reason = signal->reason;
+            return resultSignal;
+        }
+    }
+    resultSignal->dependent = true;
+    for (const AbortSignal* signal: signals) {
+        if (!(signal-> dependent)) {
+            resultSignal->source_signals.push_back(signal);
+            signal->dependent_signals.push_back(resultSignal);
+        }
+        else {
+            for (AbortSignal* sourceSignal: signal->source_signals) {
+                assert(!(sourceSignal->isaborted()) && !(sourceSignal->dependent));
+                resultSignal->source_signals.push_back(sourceSignal);
+                sourceSignal->dependent_signals.push_back(resultSignal);
+            }
+        }
+    }
+    return resultSignal;
+}
 
 
 
