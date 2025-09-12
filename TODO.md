@@ -109,6 +109,9 @@
 ## Mutation Algo's
 - `host-including inclusive ancestor` implementation, then for `ensure_pre_insert_validity`
 - Point 6 in `ensure_pre_insert_validity` after figuring out best way to find type of child.
+- Next sibling stuff in `pre_insert_node`
+- Insert node addition after implementation in `pre_insert_node`
+
 
 
 ## Node

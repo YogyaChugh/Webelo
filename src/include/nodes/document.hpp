@@ -422,3 +422,30 @@ public:
     bool hasFeature();
 };
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+class NonElementParentNode: public Node{
+    public:
+        Element* getElementById(DOMString elementId);
+}
+
+class DocumentOrShadowRoot: public 

@@ -26,8 +26,32 @@ void ensure_pre_insert_validity(Node* node, Node* parent, Node* child){
     }
 }
 
-void pre_insert(Node* node, Node* parent, Node* child){
+Node* pre_insert_node(Node* node, Node* parent, Node* child){
     ensure_pre_insert_validity(node, parent, child);
     Node* referenceChild = child;
-    
+    if (referenceChild == node){
+        // set to node's next sibling
+    }
+    // Insert node implementation
+    return node;
+}
+
+void insert_node(Node* node, Node* parent, Node* child, bool suppress_observers = false){
+    NodeList* nodes;
+    if (dynamic_cast<DocumentFragment*>(node)){
+        nodes = &node->childNodes;
+    }
+    else{
+        nodes = new NodeList();
+        nodes->node_list.push_back(node);
+    }
+    int count = nodes->length();
+    if (count==0){ return; }
+    if (dynamic_cast<DocumentFragment*>(node)){
+        remove_node(node->childNodes, suppress_observers);
+        queue_tree_mutation_record(node, NodeList(), nodes, nullptr, nullptr);
+    }
+    if (child!=nullptr){
+        //TODO
+    }
 }

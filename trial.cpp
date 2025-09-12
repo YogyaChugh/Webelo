@@ -2,7 +2,11 @@
 #include <iostream>
 
 int main(){
-    std::any a = nullptr;
-    std::cout<< a.has_value();
-    std::cout<< std::any_cast<std::nullptr_t>(a);
+    if (true){
+        int a = 5;
+    }
+    else{
+        int a = 4;
+    }
+    std::cout<<a;
 }
