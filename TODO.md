@@ -79,6 +79,11 @@
 - DetermineNodeLength
 - SplitTextNode
 - StrictSplitText
+- replace_all
+- replace
+- remove_node
+- move_all
+- scope_match_selectors_string
 
 ## Event
 - Realm implementation in `inner_event_creation_steps` & `base.cpp`
@@ -113,6 +118,14 @@
 - Insert node addition after implementation in `pre_insert_node`
 
 
+
+## ParentNode
+- To write definition after selector stuff:
+    - Element* querySelector(DOMString selectors);
+    - NodeList querySelectorAll(DOMString selectors);
+
+## Slottable
+- Change type of `assignedSlot` from DOMString to `HTMLSlotElement` after HTML implementation.
 
 ## Node
 - Meaningfull virtual func -> abstract class

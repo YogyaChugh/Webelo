@@ -5,6 +5,7 @@
 #include <optional>
 #include <initializer_list>
 #include <stdexcept>
+#include <map>
 
 #include "../events/events.hpp"
 #include "../base.hpp"
@@ -42,6 +43,39 @@ const unsigned short START_TO_START = 0;
 const unsigned short START_TO_END = 1;
 const unsigned short END_TO_END = 2;
 const unsigned short END_TO_START = 3;
+
+Element* getElementById(const Element* element,const DOMString &elementId){
+    Element* currentElement = element;
+    std::map<Element*, int> temp = {{element, element->childNodes.length()-1}};
+    while (true){
+        if temp.empty(){ break; }
+        if (typeid(*currentElement)==typeid(Element)){
+            if (currentElement->id==elementId){
+                return currentElement;
+            }
+            if (currentElement->childNodes.length()!=0){
+                temp[currentElement] = currentElement->childNodes.length()-1;
+                currentElement = currentElement->firstChild();
+                continue;
+            }
+        }
+        else{
+            continue;
+        }
+        if (currentElement->parentElement && temp.at(currentElement->parentElement)){
+            if (temp[currentElement->parentElement]==0){
+                temp.erase(temp.end()-1);
+            }
+            else{
+                temp[currentElement->parentElement] = temp[currentElement->parentElement]-1;
+                currentElement = currentElement->nextSibling();
+            }
+        }
+        return nullptr;
+    }
+    
+    return nullptr;
+}
 
 //Exposed to window only
 class AbstractRange{
@@ -115,33 +149,30 @@ enum SlotAssignmentMode{ manual, named};
 
 
 class ParentNode: public Node {
-public:
-    HTMLCollection* children;
-    Element* firstElementChild() {
-        return children->element_list.at(0);
-    };
-    Element* lastElementChild() {
-        return children->element_list.back();
-    };
+    private:
+        HTMLCollection* children;
+    public:
+        Element* firstElementChild() {
+            return children->element_list.at(0);
+        };
+        Element* lastElementChild() {
+            return children->element_list.back();
+        };
 
-    unsigned long childElementCount(){
-        return children->length();
-    };
+        unsigned long childElementCount(){
+            return children->length();
+        };
 
-    //CEReactions
-    //Unscopable
-    void prepend(std::initializer_list<std::variant<Node,DOMString>> nodes);
-    void append(std::initializer_list<std::variant<Node,DOMString>> nodes);
-    void replaceChildren(std::initializer_list<std::variant<Node,DOMString>> nodes);
+        void prepend(std::vector<std::variant<Node*, DOMString>> nodes);
+        void append(std::vector<std::variant<Node*, DOMString>> nodes);
+        void replaceChildren(std::vector<std::variant<Node*, DOMString>> nodes);
 
-    //CEReactions
-    void moveBefore(Node node,Node* child);
+        void moveBefore(Node* node,Node* child);
 
-    Element* querySelector(DOMString selectors);
-
-    //New Object
-    NodeList querySelectorAll(DOMString selectors);
+        Element* querySelector(DOMString selectors);
+        NodeList querySelectorAll(DOMString selectors);
 };
+
 
 
 
@@ -171,6 +202,8 @@ class CharacterData: Node{
         void insertData(unsigned long offset, DOMString data);
         void deleteData(unsigned long offset, unsigned long count);
         void replaceData(unsigned long offset, unsigned long count, DOMString data);
+        Element* previousElementSibling();
+        Element* nextElementSibling();
 };
 
 
@@ -227,6 +260,7 @@ class DocumentType: Node{
 class DocumentFragment: Node{
     public:
         Element* associatedHost = nullptr;
+        friend Element* getElementById(const Element* element,const DOMString &elementId);
         DocumentFragment(){};
 };
 
@@ -312,7 +346,12 @@ class Element: Node{
         DOMString className;
         DOMString slot=""; //TODO-js: Unscopable
 
+        DOMString assignedSlot; // TODO: CHANGE TYPE AFTER HTML SPEC !!
+
         Element();
+
+        Element* previousElementSibling();
+        Element* nextElementSibling();
 
 
         void setAttribute(DOMString qualifiedName, DOMString value);
@@ -386,6 +425,7 @@ public:
         HTMLCollection getElementsByTagName(DOMString qualifiedName);
         HTMLCollection getElementsByTagNameNS(std::optional<DOMString> namesp, DOMString localname);
         HTMLCollection getElementsByClassName(DOMString classNames);
+        friend Element* getElementById(const DOMString &elementId);
 
 
         Element createElement(DOMString localName, std::variant<DOMString,ElementCreationOptions> options); //NOTE: Keep last argument as optional
@@ -421,31 +461,3 @@ public:
     Document createHTMLDocument(std::optional<DOMString> title);
     bool hasFeature();
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-class NonElementParentNode: public Node{
-    public:
-        Element* getElementById(DOMString elementId);
-}
-
-class DocumentOrShadowRoot: public 

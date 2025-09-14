@@ -5,29 +5,176 @@
 #include <optional>
 
 
-Node* convert_nodes_to_node(std::initializer_list<std::variant<Node,DOMString>> nodes, Document* ownerDocument) {
-    Node* node = nullptr;
-    for (size_t i = 0; i < nodes.size(); i++) {
-        if (dynamic_cast<DOMString*>(nodes[i])) {
-            nodes[i] = Text(nodes[i]);
-            nodes[i].ownerDocument = ownerDocument;
-        }
-        else {
-            node = &(nodes[0]);
-        }
+void ParentNode::prepend(std::vector<std::variant<Node*, DOMString>> nodes) {
+    Node* temp = convert_nodes_to_node(nodes, this->nodeDocument);
+    pre_insert_node(temp, this, this->firstChild());
+}
+
+void ParentNode::append(std::vector<std::variant<Node*, DOMString>> nodes){
+    Node* temp = convert_nodes_to_node(nodes, this->nodeDocument);
+    pre_insert_node(temp, this, nullptr);
+}
+
+void ParentNode::replaceChildren(std::vector<std::variant<Node*, DOMString>> nodes){
+    Node* temp = convert_nodes_to_node(nodes, this->nodeDocument);
+    ensure_pre_insert_validity(temp, this, nullptr);
+    replace_all(temp, this);
+}
+
+void ParentNode::moveBefore(Node* node, Node* child){
+    Node* referenceChild = child;
+    if (*referenceChild == *node){
+        referenceChild = node->nextSibling();
     }
-    if (!node) {
-        node = new DocumentFragment();
-        node->ownerDocument = ownerDocument;
-        for (auto a: nodes) {
-            node
-        }
-    }
+    move_node(node, this, referenceChild);
 }
 
 
-void ParentNode::prepend(std::initializer_list<std::variant<Node,DOMString>> nodes) {
-    convert_nodes_to_node(nodes, ownerDocument);
+
+
+
+
+Element* Element::previousElementSibling(){
+    Node* prev = this->previousSibling();
+    while (prev){
+        if (typeid(*prev)==typeid(Element*)){
+            return prev;
+        }
+        prev = prev->previousSibling();
+    }
+    return nullptr;
+}
+
+Element* Element::nextElementSibling(){
+    Node* next = this->nextSibling();
+    while (next){
+        if (typeid(*next)==typeid(Element*)){
+            return next;
+        }
+        next = next->nextSibling();
+    }
+    return nullptr;
+}
+
+Element* CharacterData::previousElementSibling(){
+    Node* prev = this->previousSibling();
+    while (prev){
+        if (typeid(*prev)==typeid(Element*)){
+            return prev;
+        }
+        prev = prev->previousSibling();
+    }
+    return nullptr;
+}
+
+Element* CharacterData::nextElementSibling(){
+    Node* next = this->nextSibling();
+    while (next){
+        if (typeid(*next)==typeid(Element*)){
+            return next;
+        }
+        next = next->nextSibling();
+    }
+    return nullptr;
+}
+
+
+
+
+
+void Element::before(std::vector<std::variant<Node*, DOMString>> nodes){
+    Node* parent = this->parentNode;
+    if (parent==nullptr){return;}
+    Node* viablePreviousSibling = nullptr;
+    Node* prev = this->previousSibling();
+    bool found = false;
+    while (prev){
+        for (auto a: nodes){
+            if (std::holds_alternative<Node*>(a)){
+                if (*(std::get<Node*>(a))==prev){
+                    found = true;
+                    break;
+                }
+            }
+        }
+        if (!found){
+            viablePreviousSibling = prev;
+            break;
+        }
+        prev = prev->previousSibling();
+        found = false;
+    }
+    Node* node = convert_nodes_to_node(nodes, this->nodeDocument);
+    if (viablePreviousSibling==nullptr){
+        viablePreviousSibling = parent->firstChild();
+    }
+    else{
+        viablePreviousSibling = viablePreviousSibling->nextSibling();
+    }
+    pre_insert_node(node, parent, viablePreviousSibling);
+}
+
+
+void Element::after(std::vector<std::variant<Node*, DOMString>> nodes){
+    Node* parent = this->parentNode;
+    if (parent==nullptr){return;}
+    Node* viableNextSibling = nullptr;
+    Node* next = this->nextSibling();
+    bool found = false;
+    while (next){
+        for (auto a: nodes){
+            if (std::holds_alternative<Node*>(a)){
+                if (*(std::get<Node*>(a))==next){
+                    found = true;
+                    break;
+                }
+            }
+        }
+        if (!found){
+            viableNextSibling = next;
+            break;
+        }
+        next = next->nextSibling();
+        found = false;
+    }
+    Node* node = convert_nodes_to_node(nodes, this->nodeDocument);
+    pre_insert_node(node, parent, viableNextSibling);
+}
+
+void replaceWith(std::vector<std::variant<Node*, DOMString>> nodes){
+    Node* parent = this->parentNode;
+    if (parent==nullptr){return;}
+    Node* viableNextSibling = nullptr;
+    Node* next = this->nextSibling();
+    bool found = false;
+    while (next){
+        for (auto a: nodes){
+            if (std::holds_alternative<Node*>(a)){
+                if (*(std::get<Node*>(a))==next){
+                    found = true;
+                    break;
+                }
+            }
+        }
+        if (!found){
+            viableNextSibling = next;
+            break;
+        }
+        next = next->nextSibling();
+        found = false;
+    }
+    Node* node = convert_nodes_to_node(nodes, this->nodeDocument);
+    if (*this->parent==*parent){
+        replace(this, node, parent);
+    }
+    else{
+        pre_insert_node(node, parent, viableNextSibling);
+    }
+}
+
+void Element::remove(){
+    if (this->parent==nullptr){return;}
+    remove_node(this);
 }
 
 
@@ -35,12 +182,18 @@ void ParentNode::prepend(std::initializer_list<std::variant<Node,DOMString>> nod
 
 
 
-// GOD KNOWS WHAT THIS DOES !!
-// Docment::get_the_parent(Event* event) override{
-//     if (event->type=="load"){
-//         return nullptr
-//     }
-// }
+
+
+
+
+
+
+
+
+
+
+
+
 
 Document::Document(): Node(DOCUMENT_NODE, "#document", nullptr, this, nullptr, nullptr){
     this->implementation->associated_doc = this;
