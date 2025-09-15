@@ -5,17 +5,17 @@
 #include <optional>
 
 
-void ParentNode::prepend(std::vector<std::variant<Node*, DOMString>> nodes) {
+void ParentNode::prepend(std::vector<std::variant<Node*, DOMString>> &nodes) {
     Node* temp = convert_nodes_to_node(nodes, this->nodeDocument);
     pre_insert_node(temp, this, this->firstChild());
 }
 
-void ParentNode::append(std::vector<std::variant<Node*, DOMString>> nodes){
+void ParentNode::append(std::vector<std::variant<Node*, DOMString>> &nodes){
     Node* temp = convert_nodes_to_node(nodes, this->nodeDocument);
     pre_insert_node(temp, this, nullptr);
 }
 
-void ParentNode::replaceChildren(std::vector<std::variant<Node*, DOMString>> nodes){
+void ParentNode::replaceChildren(std::vector<std::variant<Node*, DOMString>> &nodes){
     Node* temp = convert_nodes_to_node(nodes, this->nodeDocument);
     ensure_pre_insert_validity(temp, this, nullptr);
     replace_all(temp, this);
@@ -34,7 +34,7 @@ void ParentNode::moveBefore(Node* node, Node* child){
 
 
 
-Element* Element::previousElementSibling(){
+Element* Element::previousElementSibling() const{
     Node* prev = this->previousSibling();
     while (prev){
         if (typeid(*prev)==typeid(Element*)){
@@ -45,7 +45,7 @@ Element* Element::previousElementSibling(){
     return nullptr;
 }
 
-Element* Element::nextElementSibling(){
+Element* Element::nextElementSibling() const{
     Node* next = this->nextSibling();
     while (next){
         if (typeid(*next)==typeid(Element*)){
@@ -56,7 +56,7 @@ Element* Element::nextElementSibling(){
     return nullptr;
 }
 
-Element* CharacterData::previousElementSibling(){
+Element* CharacterData::previousElementSibling() const{
     Node* prev = this->previousSibling();
     while (prev){
         if (typeid(*prev)==typeid(Element*)){
@@ -67,7 +67,7 @@ Element* CharacterData::previousElementSibling(){
     return nullptr;
 }
 
-Element* CharacterData::nextElementSibling(){
+Element* CharacterData::nextElementSibling() const{
     Node* next = this->nextSibling();
     while (next){
         if (typeid(*next)==typeid(Element*)){
@@ -82,7 +82,7 @@ Element* CharacterData::nextElementSibling(){
 
 
 
-void Element::before(std::vector<std::variant<Node*, DOMString>> nodes){
+void before(std::vector<std::variant<Node*, DOMString>> &nodes, const Node* obj){
     Node* parent = this->parentNode;
     if (parent==nullptr){return;}
     Node* viablePreviousSibling = nullptr;
@@ -115,7 +115,7 @@ void Element::before(std::vector<std::variant<Node*, DOMString>> nodes){
 }
 
 
-void Element::after(std::vector<std::variant<Node*, DOMString>> nodes){
+void after(std::vector<std::variant<Node*, DOMString>>& nodes, const Node* obj){
     Node* parent = this->parentNode;
     if (parent==nullptr){return;}
     Node* viableNextSibling = nullptr;
@@ -141,7 +141,7 @@ void Element::after(std::vector<std::variant<Node*, DOMString>> nodes){
     pre_insert_node(node, parent, viableNextSibling);
 }
 
-void replaceWith(std::vector<std::variant<Node*, DOMString>> nodes){
+void replaceWith(std::vector<std::variant<Node*, DOMString>> &nodes, const Node* obj){
     Node* parent = this->parentNode;
     if (parent==nullptr){return;}
     Node* viableNextSibling = nullptr;
@@ -161,7 +161,7 @@ void replaceWith(std::vector<std::variant<Node*, DOMString>> nodes){
             break;
         }
         next = next->nextSibling();
-        found = false;
+        found = false;q 
     }
     Node* node = convert_nodes_to_node(nodes, this->nodeDocument);
     if (*this->parent==*parent){
@@ -172,9 +172,9 @@ void replaceWith(std::vector<std::variant<Node*, DOMString>> nodes){
     }
 }
 
-void Element::remove(){
-    if (this->parent==nullptr){return;}
-    remove_node(this);
+void remove(const Node* obj){
+    if (obj->parent==nullptr){return;}
+    remove_node(obj);
 }
 
 

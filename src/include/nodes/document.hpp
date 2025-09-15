@@ -44,9 +44,10 @@ const unsigned short START_TO_END = 1;
 const unsigned short END_TO_END = 2;
 const unsigned short END_TO_START = 3;
 
-Element* getElementById(const Element* element,const DOMString &elementId){
-    Element* currentElement = element;
-    std::map<Element*, int> temp = {{element, element->childNodes.length()-1}};
+Element* getElementById(const Node* node,const DOMString &elementId){
+    if (node->childNodes.length()==0){ return nullptr; }
+    Element* currentElement = node->childNodes[0];
+    std::map<Element*, int> temp = {{currentElement, currentElement->childNodes.length()-1}};
     while (true){
         if temp.empty(){ break; }
         if (typeid(*currentElement)==typeid(Element)){
@@ -79,7 +80,7 @@ Element* getElementById(const Element* element,const DOMString &elementId){
 
 //Exposed to window only
 class AbstractRange{
-    private:
+    protected:
         Node* startContainer;
         unsigned long startOffset;
         Node* endContainer;
@@ -108,7 +109,7 @@ class StaticRange: AbstractRange{
 
 
 class Range: AbstractRange{
-    private:
+    protected:
         Node* commonAncestorContainer;
     public:
         Range();
@@ -149,24 +150,31 @@ enum SlotAssignmentMode{ manual, named};
 
 
 class ParentNode: public Node {
-    private:
-        HTMLCollection* children;
+    protected:
+        HTMLCollection children;
     public:
-        Element* firstElementChild() {
-            return children->element_list.at(0);
+        Element* firstElementChild() const{
+            return children->item(0);
         };
-        Element* lastElementChild() {
+        Element* lastElementChild() const{
             return children->element_list.back();
         };
 
-        unsigned long childElementCount(){
+        unsigned long childElementCount() const{
             return children->length();
         };
 
-        void prepend(std::vector<std::variant<Node*, DOMString>> nodes);
-        void append(std::vector<std::variant<Node*, DOMString>> nodes);
-        void replaceChildren(std::vector<std::variant<Node*, DOMString>> nodes);
+        void evaluate_children(){
+            for (auto a: this->childNodes){
+                if (typeid(*a) == typeid(Element)){
+                    this->children.append(dynamic_cast<Element*>(a));
+                }
+            }
+        }
 
+        void prepend(std::vector<std::variant<Node*, DOMString>> &nodes);
+        void append(std::vector<std::variant<Node*, DOMString>> &nodes);
+        void replaceChildren(std::vector<std::variant<Node*, DOMString>> &nodes);
         void moveBefore(Node* node,Node* child);
 
         Element* querySelector(DOMString selectors);
@@ -202,8 +210,13 @@ class CharacterData: Node{
         void insertData(unsigned long offset, DOMString data);
         void deleteData(unsigned long offset, unsigned long count);
         void replaceData(unsigned long offset, unsigned long count, DOMString data);
-        Element* previousElementSibling();
-        Element* nextElementSibling();
+        Element* previousElementSibling() const;
+        Element* nextElementSibling() const;
+
+        friend void before(std::vector<std::variant<Node*, DOMString>> &nodes, const Node* obj = this);
+        friend void after(std::vector<std::variant<Node*, DOMString>> &nodes, const Node* obj = this);
+        friend void replaceWith(std::vector<std::variant<Node*, DOMString>> &nodes, constNode* obj = this);
+        friend void remove(const Node* obj = this);
 };
 
 
@@ -212,6 +225,8 @@ class Text: CharacterData{
     public:
         DOMString wholeText;
         DOMString slot=""; //! IMPORTANT SOMEWHERE in dispatch_event (slottable check)
+        DOMString assignedSlot;
+        
         Text(DOMString data = "");
         Text splitText(unsigned long offset); //NewObject
 };
@@ -236,11 +251,17 @@ class CDATASection: Text{};
 
 //Exposed to window only
 class DocumentType: Node{
-    private:
+    protected:
         DOMString name;
         DOMString publicId;
         DOMString systemId;
     public:
+    
+        friend void before(std::vector<std::variant<Node*, DOMString>> &nodes, const Node* obj = this);
+        friend void after(std::vector<std::variant<Node*, DOMString>> &nodes, const Node* obj = this);
+        friend void replaceWith(std::vector<std::variant<Node*, DOMString>> &nodes, const Node* obj = this);
+        friend void remove(const Node* obj = this);
+
         DocumentType(name, publicId="", systemId=""){
             this->name = name;
             this->publicId = publicId;
@@ -257,15 +278,17 @@ class DocumentType: Node{
         }
 };
 
-class DocumentFragment: Node{
+class DocumentFragment: ParentNode{
     public:
         Element* associatedHost = nullptr;
-        friend Element* getElementById(const Element* element,const DOMString &elementId);
+        friend Element* getElementById(const Node* node = this,const DOMString &elementId);
         DocumentFragment(){};
 };
 
 //Exposed to window only
 class ShadowRoot: DocumentFragment{
+    protected:
+        CustomElementRegistry* custom_element_registry = nullptr;
     public:
         ShadowRootMode mode;
         bool delegatesFocus = false;
@@ -277,8 +300,11 @@ class ShadowRoot: DocumentFragment{
         Element* host(){ return this->associatedHost };
         EventHandler onslotchange;
 
-        CustomElementRegistry* custom_element_registry = nullptr;
         bool keepCustomElementRegistryNull = false;
+
+        CustomElementRegistry* getcustom_element_registry() const{
+            return this->custom_element_registry;
+        }
 
         Element* get_the_parent(Event* event) override;
 };
@@ -330,7 +356,7 @@ enum class ElementState{
 }
 
 
-class Element: Node{
+class Element: ParentNode{
     public:
         std::optional<DOMString> namespaceURI;
         std::optional<DOMString> prefix;
@@ -350,8 +376,8 @@ class Element: Node{
 
         Element();
 
-        Element* previousElementSibling();
-        Element* nextElementSibling();
+        Element* previousElementSibling() const;
+        Element* nextElementSibling() const;
 
 
         void setAttribute(DOMString qualifiedName, DOMString value);
@@ -384,6 +410,11 @@ class Element: Node{
 
         std::optional<Element> insertAdjacentElement(DOMString where, Element element); //legacy
         void insertAdjacentText(DOMString where, DOMString data); //legacy
+
+        friend void before(std::vector<std::variant<Node*, DOMString>> &nodes, const Node* obj = this);
+        friend void after(std::vector<std::variant<Node*, DOMString>> &nodes, const Node* obj = this);
+        friend void replaceWith(std::vector<std::variant<Node*, DOMString>> &nodes, const Node* obj = this);
+        friend void remove(const Node* obj = this);
 };
 
 
@@ -399,8 +430,10 @@ enum class DocMode: DOMString{
     "limited-quirks"
 }
 
-class Document: public Node{
-public:
+class Document: public ParentNode{
+    protected:
+        CustomElementRegistry* custom_element_registry = nullptr;
+    public:
         DOMImplementation* implementation;
         USVString URL = "about:blank"; //!serialize
         USVString documentURI = URL; //!serialize
@@ -414,7 +447,6 @@ public:
         DOMString* origin = nullptr; //lateeeeeer
         DocMode mode = "no-quirks";
         bool allow_declarative_shodow_roots = false;
-        CustomElementRegistry* custom_element_registry = nullptr;
 
         Document();
 
@@ -425,7 +457,7 @@ public:
         HTMLCollection getElementsByTagName(DOMString qualifiedName);
         HTMLCollection getElementsByTagNameNS(std::optional<DOMString> namesp, DOMString localname);
         HTMLCollection getElementsByClassName(DOMString classNames);
-        friend Element* getElementById(const DOMString &elementId);
+        friend Element* getElementById(const Node* node = this, const DOMString &elementId);
 
 
         Element createElement(DOMString localName, std::variant<DOMString,ElementCreationOptions> options); //NOTE: Keep last argument as optional
@@ -445,6 +477,10 @@ public:
         Range* createRange();
         NodeIterator* createNodeIterator(Node* root, unsigned long whatToShow = 0xFFFFFFFF, NodeFilter* filter = nullptr);
         TreeWalker* createTreeWalker(Node* root, unsigned long whatToShow = 0xFFFFFFFF, NodeFilter* filter = nullptr);
+
+        CustomElementRegistry* get_custom_element_registry() const{
+            return this->custom_element_registry;
+        }
 };
 
 //Exposed to window only

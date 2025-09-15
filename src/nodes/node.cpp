@@ -4,7 +4,7 @@
 
 // NodeList
 
-Node* NodeList::item(unsigned long index){
+Node* NodeList::item(const unsigned long &index) const{
     try {
         return node_list.at(index);
     }
@@ -13,11 +13,11 @@ Node* NodeList::item(unsigned long index){
     }
 }
 
-unsigned long NodeList::length(){
+unsigned long NodeList::length() const{
     return node_list.size();
 }
 
-bool NodeList::operator==(NodeList* otherNodeList){
+bool NodeList::operator==(const NodeList* otherNodeList) const{
     if (this->length() != otherNodeList->length()){
         return false;
     }
@@ -42,7 +42,7 @@ NodeList::~NodeList(){
 
 // HTMLCollection
 
-Element* HTMLCollection::item(){
+Element* HTMLCollection::item(const unsigned long &index) const{
     try {
         return element_list.at(index);
     }
@@ -51,7 +51,7 @@ Element* HTMLCollection::item(){
     }
 }
 
-Element* HTMLCollection::namedItem(){
+Element* HTMLCollection::namedItem(const DOMString &name) const{
     if (name=="") {
         return nullptr;
     }
@@ -65,7 +65,7 @@ Element* HTMLCollection::namedItem(){
     return nullptr;
 }
 
-unsigned long HTMLCollection::length(){
+unsigned long HTMLCollection::length() const{
     return element_list.size();
 }
 
@@ -73,7 +73,7 @@ HTMLCollection::~HTMLCollection(){
     for (auto a: element_list) {
         delete a;
     }
-    element_list = {};
+    element_list.clear();
 }
 
 

@@ -30,22 +30,44 @@ Operators:
 
  */
 class NodeList{
-private:
-    std::vector<Node*> node_list = {};
-public:
+    protected:
+        std::vector<Node*> node_list = {};
+    public:
 
-    // Returns the Node ptr on the index provided !
-    Node* item(unsigned long index) const;
+        // Returns the Node ptr on the index provided !
+        Node* item(const unsigned long &index) const;
 
-    // Returns the Node ptr on the index provided !
-    Node* operator[](unsigned long index) const {
-        return this->item(index);
-    }
+        // Returns the Node ptr on the index provided !
+        Node* operator[](unsigned long &index) const {
+            return this->item(index);
+        }
 
-    // Returns the length of the list stored ! Must be stored in a variable.
-    [[nodiscard]] unsigned long length() const;
+        bool operator==(const NodeList* otherNodeList) const;
 
-    ~NodeList();
+        // Returns the length of the list stored ! Must be stored in a variable.
+        [[nodiscard]] unsigned long length() const;
+
+        void append(const Node* node){
+            this->node_list.push_back(node);
+        }
+
+        void insert(const Node* node, const unsigned long &index){
+            if (index<0){return;}
+            this->node_list.insert(this->node_list.begin()+index, node);
+        }
+
+        void remove(const Node* node){
+            unsigned int i = 0;
+            for (auto a: this->node_list){
+                if (*a == *node){
+                    this->node_list.erase(this->node_list.begin()+i);
+                    return;
+                }
+                i++;
+            }
+        }
+
+        ~NodeList();
 };
 
 
@@ -67,28 +89,48 @@ Operators:
     [DOMString name] - Operator using namedItem() method internally
  */
 class HTMLCollection{
-private:
-    std::vector<Element*> element_list = {};
-public:
+    protected:
+        std::vector<Element*> element_list = {};
+    public:
 
-    // Returns the Node ptr on the index provided !
-    Element* item(unsigned long index) const;
+        // Returns the Node ptr on the index provided !
+        Element* item(const unsigned long &index) const;
 
-    // Returns the Node ptr on the index provided !
-    Element* operator[](unsigned long index) const {
-        return this->item(index);
-    }
+        // Returns the Node ptr on the index provided !
+        Element* operator[](const unsigned long &index) const {
+            return this->item(index);
+        }
 
-    Element* namedItem(DOMString name) const;
+        Element* namedItem(const DOMString &name) const;
 
-    Element* operator[](DOMString name) const {
-        return this->namedItem(name);
-    }
+        Element* operator[](const DOMString &name) const{
+            return this->namedItem(name);
+        }
 
-    // Returns the length of the list stored ! Must be stored in a variable.
-    [[nodiscard]] unsigned long length() const;
+        // Returns the length of the list stored ! Must be stored in a variable.
+        [[nodiscard]] unsigned long length() const;
 
-    ~HTMLCollection();
+        void append(const Element* node){
+            this->element_list.push_back(node);
+        }
+
+        void insert(const Element* node, const unsigned long &index){
+            if (index<0){return;}
+            this->element_list.insert(this->element_list.begin()+index, node);
+        }
+
+        void remove(const Element* node){
+            unsigned int i = 0;
+            for (auto a: this->element_list){
+                if (*a == *node){
+                    this->element_list.erase(this->element_list.begin()+i);
+                    return;
+                }
+                i++;
+            }
+        }
+
+        ~HTMLCollection();
 };
 
 
@@ -114,7 +156,6 @@ enum class node_type: unsigned short{
 // The Mega Boss & almost everything in a DOM tree - Node object !! Abstract class
 class Node: public EventTarget{
 public:
-
     //Basic INFO.
     node_type nodeType;
     DOMString nodeName;
