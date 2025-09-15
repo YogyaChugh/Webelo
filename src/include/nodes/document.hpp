@@ -225,7 +225,7 @@ class Text: CharacterData{
     public:
         DOMString wholeText;
         DOMString slot=""; //! IMPORTANT SOMEWHERE in dispatch_event (slottable check)
-        DOMString assignedSlot;
+        DOMString* assignedSlot;
         
         Text(DOMString data = "");
         Text splitText(unsigned long offset); //NewObject
@@ -372,7 +372,7 @@ class Element: ParentNode{
         DOMString className;
         DOMString slot=""; //TODO-js: Unscopable
 
-        DOMString assignedSlot; // TODO: CHANGE TYPE AFTER HTML SPEC !!
+        DOMString* assignedSlot; // TODO: CHANGE TYPE AFTER HTML SPEC !!
 
         Element();
 

@@ -142,7 +142,19 @@ Node* Node::nextSibling(){
 }
 
 Node* Node::get_the_parent(Event* event){
-    return parentNode;
+    if (typeid(*this) == typeid(Element)){
+        Element* temp = dynamic_cast<Element*>(this);
+        if (temp->assignedSlot!=nullptr){
+            return temp->assignedSlot;
+        }
+    }
+    else if (typeid(*this) == typeid(Text)){
+        Text* temp = dynamic_cast<Text*>(this);
+        if (temp->assignedSlot!=nullptr){
+            return temp->assignedSlot;
+        }
+    }
+    return this->parentNode;
 }
 
 Node Node::cloneNode(bool subtree = false){

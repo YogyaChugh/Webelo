@@ -152,56 +152,56 @@ enum class node_type: unsigned short{
     NOTATION_NODE = 12
 };
 
-//! make this abstract
+
 // The Mega Boss & almost everything in a DOM tree - Node object !! Abstract class
 class Node: public EventTarget{
-public:
     //Basic INFO.
-    node_type nodeType;
-    DOMString nodeName;
-    USVString baseURI;
-    Document* ownerDocument;
-    Document* nodeDocument;
+    protected:
+        node_type nodeType;
+        DOMString nodeName;
+        USVString baseURI;
+        Document* ownerDocument;
+        Document* nodeDocument;
+        // Not necessary that parent is element ! could be some other type of node baby !
+        Node* parentNode;
+        Element* parentElement;
 
-    // Not necessary that parent is element ! could be some other type of node baby !
-    Node* parentNode;
-    Element* parentElement;
+    public:
+        bool isConnected();
 
-    bool isConnected();
+        //Babies !!! ( Children )
+        NodeList childNodes;
+        Node* firstChild();
+        Node* lastChild();
+        Node* previousSibling();
+        Node* nextSibling();
 
-    //Babies !!! ( Children )
-    NodeList childNodes;
-    Node* firstChild();
-    Node* lastChild();
-    Node* previousSibling();
-    Node* nextSibling();
+        bool hasChildNodes();
 
-    bool hasChildNodes();
+        Node* getRootNode(bool &composed = false) {};
 
-    Node* getRootNode(bool composed = false) {};
+        std::optional<DOMString> nodeValue = std::nullopt;
+        std::optional<DOMString> textContent = std::nullopt;
+        void normalize();
+        Node* cloneNode(bool &subtree = false);
 
-    std::optional<DOMString> nodeValue = nullptr;
-    std::optional<DOMString> textContent = nullptr;
-    void normalize();
-    Node cloneNode(bool subtree = false);
+        bool isEqualNode(const Node* otherNode);
+        bool isSameNode(const Node* otherNode);
 
-    bool isEqualNode(Node* otherNode);
-    bool isSameNode(Node* otherNode);
+        unsigned short compareDocumentPosition(Node* other);
+        bool contains(Node* other);
 
-    unsigned short compareDocumentPosition(Node* other);
-    bool contains(Node* other);
+        std::optional<DOMString> lookupPrefix(std::optional<DOMString> namesp);
+        std::optional<DOMString> lookupNamespaceURI(std::optional<DOMString> prefix);
 
-    std::optional<DOMString> lookupPrefix(std::optional<DOMString> namesp);
-    std::optional<DOMString> lookupNamespaceURI(std::optional<DOMString> prefix);
+        bool isDefaultNamespace(std::optional<DOMString> namesp);
 
-    bool isDefaultNamespace(std::optional<DOMString> namesp);
+        Node* insertBefore(Node* node, Node* child);
+        Node* appendChild(Node* node);
+        Node* replaceChild(Node* node, Node* child);
+        Node* removeChild(Node* child);
 
-    Node insertBefore(Node* node, Node* child);
-    Node appendChild(Node* node);
-    Node replaceChild(Node* node, Node* child);
-    Node removeChild(Node* child);
-
-    Node* get_the_parent(Event* event) override;
+        Node* get_the_parent(Event* event) override;
 };
 
 
