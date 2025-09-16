@@ -25,14 +25,16 @@
 - Do change slot in dispatch_event in case the name changes in Element & Text ! Also, it's implementation
 - Just logging a possible error: preceding struct check in invoke algo for events.
 - Could be later ! Add eventConstructor in fire_event
+- the getnodeValue() && gettextContent() method in Node class returns a "" rather than nullptr
+- Can add later (special cloning steps in other specifications) for `clone_node` in algos_node.cpp
 
 ## Algorithms
 > Remember to check all calls to these algo's in-order to rectify arg issues !
 - ~~ParseOrderedSet~~
 - ~~SerializeOrderedSet~~
 - ScopeMatchSelectorString
-- cloneANode
-- cloneSingleNode
+- clone_node
+- clone_a_single_node
 - equalAlgo
 - locateNamespacePrefix
 - locateNamespace
@@ -84,6 +86,7 @@
 - remove_node
 - move_all
 - scope_match_selectors_string
+- ~nodequals~
 
 ## Event
 - Realm implementation in `inner_event_creation_steps` & `base.cpp`
@@ -134,11 +137,18 @@
 - `registered_observer_list` implementation
 - `serialize` algo
 - `baseURI`
-- `normalize()`
+- `normalize()` - This is fucking tough !
 - `cloneNode()`
 - JS Work for equalAlgo - isEqualNode()
 - `compareDocumentPosition()`
 - tolower() to be made especially for ASCII
+- Rewrites:
+    - nodeType: all kids
+    - nodeName: all kids
+    - nodeValue: Attr, CharacteData
+    - textContent: Attr, CharacterData, Element, DocumentFragment
+    - cloneNode(): ShadowRoot
+- In `clone_node` algo,, check for global custom element registry
 
 ## Document
 - Opaque Origin

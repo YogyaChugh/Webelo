@@ -156,17 +156,14 @@ enum class node_type: unsigned short{
 // The Mega Boss & almost everything in a DOM tree - Node object !! Abstract class
 class Node: public EventTarget{
     //Basic INFO.
-    protected:
+    public:
         node_type nodeType;
         DOMString nodeName;
         USVString baseURI;
         Document* ownerDocument;
-        Document* nodeDocument;
         // Not necessary that parent is element ! could be some other type of node baby !
         Node* parentNode;
-        Element* parentElement;
-
-    public:
+        Element* parentElement = nullptr;
         bool isConnected();
 
         //Babies !!! ( Children )
@@ -180,10 +177,21 @@ class Node: public EventTarget{
 
         Node* getRootNode(bool &composed = false) {};
 
-        std::optional<DOMString> nodeValue = std::nullopt;
-        std::optional<DOMString> textContent = std::nullopt;
+        DOMString nodeValue;
+        DOMString textContent;
         void normalize();
         Node* cloneNode(bool &subtree = false);
+
+        unsigned long length() const{
+            if (dynamic_cast<DocumentType*>(this) || dynamic_cast<Attr*>(this)){
+                return 0;
+            }
+            CharacterData* temp = dynamic_cast<CharacterData*>(this);
+            if (temp){
+                return temp->data.length();
+            }
+            return this->childNodes.length();
+        }
 
         bool isEqualNode(const Node* otherNode);
         bool isSameNode(const Node* otherNode);
@@ -201,7 +209,18 @@ class Node: public EventTarget{
         Node* replaceChild(Node* node, Node* child);
         Node* removeChild(Node* child);
 
-        Node* get_the_parent(Event* event) override;
+        virtual Node* get_the_parent(Event* event) override;
+
+        virtual DOMString getnodeValue(){
+            return "";
+        }
+        virtual void setnodeValue(DOMString &val){};
+        virtual DOMString gettextContent(){
+            return ""
+        }
+        virtual void settextContent(DOMString  &val){};
+
+        virtual void making_it_abstract() = 0;
 };
 
 

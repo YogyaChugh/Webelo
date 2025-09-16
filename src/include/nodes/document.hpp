@@ -48,9 +48,8 @@ Element* getElementById(const Node* node,const DOMString &elementId){
     if (node->childNodes.length()==0){ return nullptr; }
     Element* currentElement = node->childNodes[0];
     std::map<Element*, int> temp = {{currentElement, currentElement->childNodes.length()-1}};
-    while (true){
-        if temp.empty(){ break; }
-        if (typeid(*currentElement)==typeid(Element)){
+    while (!temp.empty()){
+        if (dynamic_cast<Element*>(currentElement)){
             if (currentElement->id==elementId){
                 return currentElement;
             }
@@ -63,16 +62,11 @@ Element* getElementById(const Node* node,const DOMString &elementId){
         else{
             continue;
         }
-        if (currentElement->parentElement && temp.at(currentElement->parentElement)){
-            if (temp[currentElement->parentElement]==0){
-                temp.erase(temp.end()-1);
-            }
-            else{
-                temp[currentElement->parentElement] = temp[currentElement->parentElement]-1;
-                currentElement = currentElement->nextSibling();
-            }
+        currentElement = currentElement->nextSibling();
+        while (currentElement==nullptr && !temp.empty()){
+            currentElement = (*(temp.end() -1))->nextSibling();
+            temp.erase(temp.end()-1);
         }
-        return nullptr;
     }
     
     return nullptr;
@@ -166,7 +160,7 @@ class ParentNode: public Node {
 
         void evaluate_children(){
             for (auto a: this->childNodes){
-                if (typeid(*a) == typeid(Element)){
+                if (dynamic_cast<Element*>(a)){
                     this->children.append(dynamic_cast<Element*>(a));
                 }
             }
@@ -287,9 +281,8 @@ class DocumentFragment: ParentNode{
 
 //Exposed to window only
 class ShadowRoot: DocumentFragment{
-    protected:
-        CustomElementRegistry* custom_element_registry = nullptr;
     public:
+        CustomElementRegistry* custom_element_registry = nullptr;
         ShadowRootMode mode;
         bool delegatesFocus = false;
         bool availableToElementInternals = false;

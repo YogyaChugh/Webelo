@@ -37,7 +37,7 @@ void ParentNode::moveBefore(Node* node, Node* child){
 Element* Element::previousElementSibling() const{
     Node* prev = this->previousSibling();
     while (prev){
-        if (typeid(*prev)==typeid(Element*)){
+        if (dynamic_cast<Element*>(prev)){
             return prev;
         }
         prev = prev->previousSibling();
@@ -48,7 +48,7 @@ Element* Element::previousElementSibling() const{
 Element* Element::nextElementSibling() const{
     Node* next = this->nextSibling();
     while (next){
-        if (typeid(*next)==typeid(Element*)){
+        if (dynamic_cast<Element*>(next)){
             return next;
         }
         next = next->nextSibling();
@@ -59,7 +59,7 @@ Element* Element::nextElementSibling() const{
 Element* CharacterData::previousElementSibling() const{
     Node* prev = this->previousSibling();
     while (prev){
-        if (typeid(*prev)==typeid(Element*)){
+        if (dynamic_cast<Element*>(prev)){
             return prev;
         }
         prev = prev->previousSibling();
@@ -70,7 +70,7 @@ Element* CharacterData::previousElementSibling() const{
 Element* CharacterData::nextElementSibling() const{
     Node* next = this->nextSibling();
     while (next){
-        if (typeid(*next)==typeid(Element*)){
+        if (dynamic_cast<Element*>(next)){
             return next;
         }
         next = next->nextSibling();
