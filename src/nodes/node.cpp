@@ -5,6 +5,15 @@
 #include "../algos/algos_node.cpp"
 
 
+#define DOCUMENT_POSITION_DISCONNECTED 1
+#define DOCUMENT_POSITION_PRECEDING 2
+#define DOCUMENT_POSITION_FOLLOWING 4
+#define DOCUMENT_POSITION_CONTAINS 8
+#define DOCUMENT_POSITION_CONTAINED_BY 16
+#define DOCUMENT_POSITION_IMPLEMENTATION_SPECIFIC 32
+
+
+
 // NodeList
 
 Node* NodeList::item(const unsigned long &index) const{
@@ -206,25 +215,32 @@ unsigned short Node::compareDocumentPosition(Node* other){
         if (attr2!=nullptr && node1!=nullptr && node2->isSameNode(node1)){
             for (auto attr: temp3->attributes.attribute_list){
                 if (attr == attr1){
-                    return 34;
+                    return DOCUMENT_POSITION_IMPLEMENTATION_SPECIFIC + DOCUMENT_POSITION_PRECEDING;
                 }
                 if (attr == attr2){
-                    return 36;
+                    return DOCUMENT_POSITION_IMPLEMENTATION_SPECIFIC + DOCUMENT_POSITION_FOLLOWING;
                 }
             }
         }
     }
+    if (node1==nullptr || node2==nullptr || get_node_root(node1)->isSameNode(get_node_root(node2))){
+        return DOCUMENT_POSITION_DISCONNECTED + DOCUMENT_POSITION_IMPLEMENTATION_SPECIFIC + DOCUMENT_POSITION_PRECEDING;
+    }
+    if ((check_ancestor(node2->ownerDocument, node2, node1) && attr1==nullptr) || (node1->isSameNode(node2) && attr2!=nullptr)){
+        return DOCUMENT_POSITION_CONTAINS + DOCUMENT_POSITION_PRECEDING;
+    }
+    if ((check_descendant(node2, node1) && attr2==nullptr) || (node1==node2 && attr1!=nullptr)){
+        return DOCUMENT_POSITION_CONTAINED_BY + DOCUMENT_POSITION_FOLLOWING;
+    }
+    if (check_node_precedes(node2->ownerDocument, node2, node1)){
+        return DOCUMENT_POSITION_PRECEDING;
+    }
+    return DOCUMENT_POSITION_FOLLOWING;
 }
 
 bool Node::contains(Node* other){
-    if (other==nullptr){ return false; }
-    if (this->isSameNode(other)){ return true; }
-    for (size_t i=0; i<this->childNodes.length(); i++){
-        if (this->childNodes.item(i)->isSameNode(other)){
-            return true;
-        }
-    }
-    return false;
+    if (other==nullptr){return false;}
+    return check_descendant(this, other, true);
 }
 
 std::optional<DOMString> Node::lookupPrefix(std::optional<DOMString> namesp){

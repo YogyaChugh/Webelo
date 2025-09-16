@@ -98,7 +98,7 @@ bool nodequals(Node* first, Node* second){
     return true;
 }
 
-string_replace_all(std::string &str, Node* parent){
+void string_replace_all(std::string &str, Node* parent){
     Node* node = nullptr;
     if (str!=""){
         node = new Text(str);
@@ -106,3 +106,4 @@ string_replace_all(std::string &str, Node* parent){
     }
     replace_all(node, parent);
 }
+

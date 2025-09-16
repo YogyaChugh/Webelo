@@ -27,6 +27,7 @@
 - Could be later ! Add eventConstructor in fire_event
 - the getnodeValue() && gettextContent() method in Node class returns a "" rather than nullptr
 - Can add later (special cloning steps in other specifications) for `clone_node` in algos_node.cpp
+- Could be error in node.cpp compareDocumentPosition
 
 ## Algorithms
 > Remember to check all calls to these algo's in-order to rectify arg issues !
@@ -131,7 +132,7 @@
 - Change type of `assignedSlot` from DOMString to `HTMLSlotElement` after HTML implementation.
 
 ## Node
-- Meaningfull virtual func -> abstract class
+- ~Meaningfull virtual func -> abstract class~
 - Implementing `adopt` algo
 - ~~`getTheParent` algo~~
 - `registered_observer_list` implementation
@@ -139,8 +140,8 @@
 - `baseURI`
 - `normalize()` - This is fucking tough !
 - `cloneNode()`
-- JS Work for equalAlgo - isEqualNode()
-- `compareDocumentPosition()`
+- ~JS Work for equalAlgo - isEqualNode()~
+- ~`compareDocumentPosition()`~
 - tolower() to be made especially for ASCII
 - Rewrites:
     - nodeType: all kids
