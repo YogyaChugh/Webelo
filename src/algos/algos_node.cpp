@@ -114,14 +114,14 @@ std::optional<DOMString> locate_a_namespace(Node* node, std::optional<DOMString>
         if (prefix!=std::nullopt && prefix.value()=="xml"){
             return"http://www.w3.org/XML/1998/namespace"
         }
-        if (prefix=="xmlns"){
+        if (prefix!=std::nullopt && prefix.value()=="xmlns"){
             return "http://www.w3.org/2000/xmlns/"
         }
-        if (temp->namespaceURI!=std::nullopt && temp->prefix!=std::nullopt && temp->prefix.value()==prefix){
+        if (temp->namespaceURI!=std::nullopt && temp->prefix!=std::nullopt && prefix!=std::nullopt && temp->prefix.value()==prefix.value()){
             return temp->namespaceURI;
         }
         for (auto attr: temp->attributes.attribute_list){
-            if ((attr->namespaceURI=="http://www.w3.org/2000/xmlns/" && attr->prefix=="xmlns" && attr->localName==prefix) || (prefix))
+            if ((attr->namespaceURI=="http://www.w3.org/2000/xmlns/" && attr->prefix!=std::nullopt && attr-> attr->prefix.value()=="xmlns" && attr->localName==prefix) || (prefix))
         }
         if (temp->parentElement==nullptr){ return std::nullopt; }
         return locate_a_namespace(temp->parentElement, prefix);
