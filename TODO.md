@@ -37,8 +37,8 @@
 - clone_node
 - clone_a_single_node
 - equalAlgo
-- locateNamespacePrefix
-- locateNamespace
+- locate_a_namespace_prefix
+- locate_a_namespace
 - preInsertNode
 - replaceNode
 - preRemoveNode

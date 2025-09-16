@@ -98,7 +98,7 @@ bool nodequals(Node* first, Node* second){
     return true;
 }
 
-void string_replace_all(std::string &str, Node* parent){
+voidstring_replace_all(std::string &str, Node* parent){
     Node* node = nullptr;
     if (str!=""){
         node = new Text(str);
@@ -107,3 +107,50 @@ void string_replace_all(std::string &str, Node* parent){
     replace_all(node, parent);
 }
 
+
+std::optional<DOMString> locate_a_namespace(Node* node, std::optional<DOMString> prefix){
+    Element* temp = dynamic_cast<Element*>(node);
+    if (temp){
+        if (prefix!=std::nullopt && prefix.value()=="xml"){
+            return"http://www.w3.org/XML/1998/namespace"
+        }
+        if (prefix=="xmlns"){
+            return "http://www.w3.org/2000/xmlns/"
+        }
+        if (temp->namespaceURI!=std::nullopt && temp->prefix!=std::nullopt && temp->prefix.value()==prefix){
+            return temp->namespaceURI;
+        }
+        for (auto attr: temp->attributes.attribute_list){
+            if ((attr->namespaceURI=="http://www.w3.org/2000/xmlns/" && attr->prefix=="xmlns" && attr->localName==prefix) || (prefix))
+        }
+        if (temp->parentElement==nullptr){ return std::nullopt; }
+        return locate_a_namespace(temp->parentElement, prefix);
+    }
+    else{
+        Document* temp = dynamic_cast<Document*>(node);
+        if (temp){
+            return locate_a_namespace(, prefix);
+        }
+        else{
+            DocumentType* temp = dynamic_cast<DocumentType*>(node);
+            if (temp){}
+            else{
+                DocumentFragment* temp = dynamic_cast<DocumentFragment*>(node);
+                if (temp){
+                    return std::nullopt;
+                }
+                else{
+                    Attr* temp = dynamic_cast<Attr*>(node);
+                    if (temp){
+                        if (temp->ownerElement==nullptr){ return nullptr; }
+                        return locate_a_namespace(temp->ownerElement, prefix);
+                    }
+                    else{
+                        if (node->parentElement==nullptr){ return std::nullopt; }
+                        return locate_a_namespace(node->parentElement, prefix);
+                    }
+                }
+            }
+        }
+    }
+}
