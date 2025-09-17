@@ -2,17 +2,17 @@
 #include <vector>
 #include <variant>
 #include <string>
+#include <optional>
 
-class A{};
-
-class B: public A{};
 
 int main(){
-    A* temp = new B();
-    if (typeid(*temp) == typeid(B)){
-        std::cout<<"hi1";
+    std::optional<int> a = 10;
+    std::optional<int> b = std::nullopt;
+    if (a==10){
+        std::cout<<"hi";
     }
-    if (typeid(*temp) == typeid(A)){
-        std::cout<<"hi2";
+    else{
+        std::cout<<"hello";
     }
+    std::cout<< b.has_value();
 }

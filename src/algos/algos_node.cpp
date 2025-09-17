@@ -7,14 +7,14 @@ void clone_node(Node* node, Document* document = nullptr, bool subtree = false, 
     if (document==nullptr){
         document = node->ownerDocument;
     }
-    assert(!dynamic_cast<Document*>(node) || *(dynamic_cast<Document*>(node))==*document);
+    assert(!dynamic_cast<Document*>(node) || dynamic_cast<Document*>(node)==document);
     Node* copy = clone_a_single_node(node, document, fallbackRegistry);
     // Can add later
     if (parent != nullptr){
         append_node(copy, parent);
     }
     if (subtree){
-        for (auto child: node->>childNodes){
+        for (auto child: node->childNodes){
             clone_node(child, document, subtree, copy, fallbackRegistry);
         }
     }
@@ -111,17 +111,20 @@ voidstring_replace_all(std::string &str, Node* parent){
 std::optional<DOMString> locate_a_namespace(Node* node, std::optional<DOMString> prefix){
     Element* temp = dynamic_cast<Element*>(node);
     if (temp){
-        if (prefix!=std::nullopt && prefix.value()=="xml"){
+        if (prefix=="xml"){
             return"http://www.w3.org/XML/1998/namespace"
         }
-        if (prefix!=std::nullopt && prefix.value()=="xmlns"){
+        if (prefix=="xmlns"){
             return "http://www.w3.org/2000/xmlns/"
         }
-        if (temp->namespaceURI!=std::nullopt && temp->prefix!=std::nullopt && prefix!=std::nullopt && temp->prefix.value()==prefix.value()){
+        if (temp->namespaceURI.has_value() && temp->prefix==prefix){
             return temp->namespaceURI;
         }
         for (auto attr: temp->attributes.attribute_list){
-            if ((attr->namespaceURI=="http://www.w3.org/2000/xmlns/" && attr->prefix!=std::nullopt && attr-> attr->prefix.value()=="xmlns" && attr->localName==prefix) || (prefix))
+            if ((attr->namespaceURI=="http://www.w3.org/2000/xmlns/" && attr->prefix=="xmlns" && attr->localName==prefix) || (!prefix.has_value() && attr->namespaceURI=="http://www.w3.org/2000/xmlns/" && !attr->prefix.has_value() && attr->localName=="xmlns")){
+                if (atr->value==""){ return std::nullopt; }
+                return attr->value;
+            }
         }
         if (temp->parentElement==nullptr){ return std::nullopt; }
         return locate_a_namespace(temp->parentElement, prefix);
@@ -129,7 +132,8 @@ std::optional<DOMString> locate_a_namespace(Node* node, std::optional<DOMString>
     else{
         Document* temp = dynamic_cast<Document*>(node);
         if (temp){
-            return locate_a_namespace(, prefix);
+            if (temp->documentElement()){ return locate_a_namespace(temp->documentElement(), prefix); }
+            return std::nullopt;
         }
         else{
             DocumentType* temp = dynamic_cast<DocumentType*>(node);
@@ -153,4 +157,19 @@ std::optional<DOMString> locate_a_namespace(Node* node, std::optional<DOMString>
             }
         }
     }
+}
+
+std::optional<DOMString> locate_a_namespace_prefix(Element* element, std::optional<DOMString> namespace){
+    if (element->namespaceURI==namespace && element->prefix.has_value()){
+        return element->prefix;
+    }
+    for (auto attr: element->attributes.attribute_list){
+        if (attr->prefix=="xmlns" && attr->value==namespace){
+            return attr->localName;
+        }
+    }
+    if (element->parentElement!=nullptr){
+        return locate_a_namespace_prefix(element, namespace);
+    }
+    retun std::nullopt;
 }

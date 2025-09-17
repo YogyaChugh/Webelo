@@ -28,6 +28,7 @@
 - the getnodeValue() && gettextContent() method in Node class returns a "" rather than nullptr
 - Can add later (special cloning steps in other specifications) for `clone_node` in algos_node.cpp
 - Could be error in node.cpp compareDocumentPosition
+- Node's node document can be changed using the adopt algo
 
 ## Algorithms
 > Remember to check all calls to these algo's in-order to rectify arg issues !
@@ -37,8 +38,8 @@
 - clone_node
 - clone_a_single_node
 - equalAlgo
-- locate_a_namespace_prefix
-- locate_a_namespace
+- ~locate_a_namespace_prefix~
+- ~locate_a_namespace~
 - preInsertNode
 - replaceNode
 - preRemoveNode
@@ -132,16 +133,15 @@
 - Change type of `assignedSlot` from DOMString to `HTMLSlotElement` after HTML implementation.
 
 ## Node
-- ~Meaningfull virtual func -> abstract class~
-- Implementing `adopt` algo
+- ~~Meaningfull virtual func -> abstract class~~
 - ~~`getTheParent` algo~~
 - `registered_observer_list` implementation
 - `serialize` algo
 - `baseURI`
 - `normalize()` - This is fucking tough !
 - `cloneNode()`
-- ~JS Work for equalAlgo - isEqualNode()~
-- ~`compareDocumentPosition()`~
+- ~~JS Work for equalAlgo - isEqualNode()~~
+- ~~`compareDocumentPosition()`~~
 - tolower() to be made especially for ASCII
 - Rewrites:
     - nodeType: all kids
@@ -149,6 +149,7 @@
     - nodeValue: Attr, CharacteData
     - textContent: Attr, CharacterData, Element, DocumentFragment
     - cloneNode(): ShadowRoot
+    - lookupPrefix(): all kids
 - In `clone_node` algo,, check for global custom element registry
 
 ## Document

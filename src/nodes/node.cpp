@@ -244,37 +244,37 @@ bool Node::contains(Node* other){
 }
 
 std::optional<DOMString> Node::lookupPrefix(std::optional<DOMString> namesp){
-    if (namesp==std::nullopt || namesp.value==""){ return std::nullopt; }
+    if (namesp==std::nullopt || namesp==""){ return std::nullopt; }
     if (this->parentElement==nullptr){ return std::nullopt; }
-    return locate_a_namespace_prefix(this->parentElement, namesp); //algo incomplete
+    return locate_a_namespace_prefix(this->parentElement, namesp);
 }
 
-std::optional<DOMString> Node::lookupNamespaceURI(std::optional<DOMString> prefix){
-    if (prefix.value == ""){ prefix=std::nullopt; }
+std::optional<DOMString> Node::lookupNamespaceURI(std::optional<DOMString> &prefix){
+    if (prefix==""){ prefix=std::nullopt; }
     return locate_a_namespace(this, prefix);
 }
 
-bool Node::isDefaultNamespace(std::optional<DOMString> namesp){
-    if (namesp.value==""){ namesp=std::nullopt; }
-    std::optional<DOMString> defaultNamespace = locate_a_namespace(this, nullptr);
+bool Node::isDefaultNamespace(std::optional<DOMString> &namesp){
+    if (namesp==""){ namesp=std::nullopt; }
+    std::optional<DOMString> defaultNamespace = locate_a_namespace(this, std::nullopt);
     if (defaultNamespace==namesp){ return true; }
     return false;
 }
 
 Node Node::insertBefore(Node* node, Node* child){
-    return preInsertNode(this, node, child);
+    return pre_insert_node(node, this, child);
 }
 
 Node Node::appendChild(Node* node){
-    return preInsertNode(this, node, nullptr);
+    return pre_insert_node(node, this, nullptr);
 }
 
 Node Node::replaceChild(Node* node, Node* child){
-    return replaceNode(this, node, child);
+    return replace_node(node, this, child);
 }
 
 Node Node::removeChild(Node* child){
-    return preRemoveNode(this, child);
+    return pre_remove_node(child, this);
 }
 
 
