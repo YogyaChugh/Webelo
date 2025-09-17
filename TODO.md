@@ -35,11 +35,11 @@
 - ~~ParseOrderedSet~~
 - ~~SerializeOrderedSet~~
 - ScopeMatchSelectorString
-- clone_node
+- ~~clone_node~~
 - clone_a_single_node
 - equalAlgo
-- ~locate_a_namespace_prefix~
-- ~locate_a_namespace~
+- ~~locate_a_namespace_prefix~~
+- ~~locate_a_namespace~~
 - preInsertNode
 - replaceNode
 - preRemoveNode
@@ -49,7 +49,7 @@
 - ~~ValidAttributeLocalName~~
 - ~~ValidDocTypeName~~
 - flattenElementCreationOptions
-- CreateElement
+- create_element
 - InternalCreateElementNS
 - AdoptAlgo
 - ~~ValidateAndExtract~~
@@ -60,7 +60,7 @@
 - CreateElementInternal
 - HandleAttributeChanges
 - ChangeAttributeValue
-- AppendAttributeToElement
+- append_attribute_to_element
 - RemoveAttribute
 - ReplaceAttribute
 - FetchAttributeByName
@@ -72,7 +72,7 @@
 - RemoveAttributeByNamespaceAndLocalName
 - AttributeChangeSteps
 - HTMLUpperCasedQualifiedName
-- AttachShadowRoot
+- attach_shadow_root
 - listElementsWithQualifiedName
 - listElementsWithNamespaceAndLocalName
 - listElementsWithClassNames
@@ -83,12 +83,14 @@
 - DetermineNodeLength
 - SplitTextNode
 - StrictSplitText
+- ~~string_replace_all~~
 - replace_all
 - replace
 - remove_node
 - move_all
+- append_node
 - scope_match_selectors_string
-- ~nodequals~
+- ~~nodequals~~
 
 ## Event
 - Realm implementation in `inner_event_creation_steps` & `base.cpp`
@@ -137,12 +139,12 @@
 - ~~`getTheParent` algo~~
 - `registered_observer_list` implementation
 - `serialize` algo
-- `baseURI`
+- `baseURI` after node document's document base URI sorted after HTML implementation.
 - `normalize()` - This is fucking tough !
-- `cloneNode()`
+- ~~`cloneNode()`~~
 - ~~JS Work for equalAlgo - isEqualNode()~~
 - ~~`compareDocumentPosition()`~~
-- tolower() to be made especially for ASCII
+- ~~tolower() to be made especially for ASCII~~
 - Rewrites:
     - nodeType: all kids
     - nodeName: all kids
@@ -150,7 +152,7 @@
     - textContent: Attr, CharacterData, Element, DocumentFragment
     - cloneNode(): ShadowRoot
     - lookupPrefix(): all kids
-- In `clone_node` algo,, check for global custom element registry
+- In `clone_a_single_node` algo,, check for global custom element registry
 
 ## Document
 - Opaque Origin

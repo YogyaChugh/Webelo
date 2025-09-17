@@ -111,11 +111,3 @@ bool check_node_precedes(Document* doc, Node* node, Node* target){
     }
     return false;
 }
-
-Node* get_node_root(Node* node){
-    Node* parent = node;
-    while (parent->parentNode!=nullptr){
-        parent = parent->parentNode;
-    }
-    return parent;
-}

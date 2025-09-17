@@ -5,14 +5,6 @@
 #include "../algos/algos_node.cpp"
 
 
-#define DOCUMENT_POSITION_DISCONNECTED 1
-#define DOCUMENT_POSITION_PRECEDING 2
-#define DOCUMENT_POSITION_FOLLOWING 4
-#define DOCUMENT_POSITION_CONTAINS 8
-#define DOCUMENT_POSITION_CONTAINED_BY 16
-#define DOCUMENT_POSITION_IMPLEMENTATION_SPECIFIC 32
-
-
 
 // NodeList
 
@@ -104,14 +96,14 @@ Node::Node(node_type nodeType, DOMString nodeName, Document* ownerDocument, Node
 }
 
 
-bool Node::isConnected(){
+bool Node::isConnected() const inline{
     if (dynamic_cast<Document*>(this->getRootNode(true))){
         return true;
     }
     return false;
 }
 
-Node* Node::getRootNode(bool composed) {
+Node* Node::getRootNode(bool &composed) const{
     if (composed){
         auto temp = dynamic_cast<ShadowRoot*>(this);
         if (temp){
@@ -124,37 +116,37 @@ Node* Node::getRootNode(bool composed) {
     return this;
 }
 
-bool Node::hasChildNodes(){
+bool Node::hasChildNodes() const inline{
     if (this->childNodes.length()==0){ return false; }
     return true;
 }
 
-Node* Node::firstChild(){
+Node* Node::firstChild() const inline{
     return childNodes[0];
 }
-Node* Node::lastChild(){
+Node* Node::lastChild() const inline{
     return childNodes.node_list.back();
 }
-Node* Node::previousSibling(){
+Node* Node::previousSibling() const{
     if (this->parentNode){
         auto vect = this->parentNode->childNodes->node_list;
         auto it = std::find(vect.begin(), vect.end(), this) - 1;
-        if (it==vect.begin() + 1){ return nullptr; };
+        if (it==vect.begin()){ return nullptr; };
         return *it;
     }
     return nullptr;
 }
-Node* Node::nextSibling(){
+Node* Node::nextSibling() const{
     if (this->parentNode){
         auto vect = this->parentNode->childNodes->node_list;
         auto it = std::find(vect.begin(), vect.end(), this) + 1;
-        if (it==vect.end() - 1){ return nullptr; };
+        if (it==vect.end()){ return nullptr; };
         return *it;
     }
     return nullptr;
 }
 
-Node* Node::get_the_parent(Event* event){
+virtual Node* Node::get_the_parent(const Event* event){
     Element* temp = dynamic_cast<Element*>(this);
     if (temp){
         if (temp->assignedSlot!=nullptr){
@@ -176,7 +168,7 @@ Node* Node::cloneNode(bool &subtree){
     //TODO
 }
 
-bool Node::isEqualNode(Node* otherNode){
+bool Node::isEqualNode(const Node* otherNode) const{
     if (otherNode==nullptr){ return false; }
     if (nodequals(this, otherNode)){
         return true;
@@ -184,14 +176,14 @@ bool Node::isEqualNode(Node* otherNode){
     return false;
 }
 
-bool Node::isSameNode(Node* otherNode){
+bool Node::isSameNode(const Node* otherNode) const{
     if (otherNode==this){
         return true;
     }
     return false;
 }
 
-unsigned short Node::compareDocumentPosition(Node* other){
+unsigned short Node::compareDocumentPosition(Node* other) const{
     if (this->isSameNode(other)){
         return 0;
     }
@@ -204,29 +196,28 @@ unsigned short Node::compareDocumentPosition(Node* other){
     if (temp){
         attr1 = temp;
         node1 = attr1->ownerElement;
-        temp3 = attr1->ownerElement;
+        temp2 = attr1->ownerElement;
     }
     temp = dynamic_cast<Attr*>(node2);
-    Element* temp3;
     if (temp){
         attr2 = temp;
         node2 = attr2->ownerElement;
-        temp3 = attr2->ownerElement;
-        if (attr2!=nullptr && node1!=nullptr && node2->isSameNode(node1)){
-            for (auto attr: temp3->attributes.attribute_list){
-                if (attr == attr1){
+        temp2 = attr2->ownerElement;
+        if (attr2!=nullptr && node1!=nullptr && node2==node1){
+            for (Attr* attr: temp2->attributes.attribute_list){
+                if (nodequals(attr, attr1)){
                     return DOCUMENT_POSITION_IMPLEMENTATION_SPECIFIC + DOCUMENT_POSITION_PRECEDING;
                 }
-                if (attr == attr2){
+                if (nodequals(attr, attr2)){
                     return DOCUMENT_POSITION_IMPLEMENTATION_SPECIFIC + DOCUMENT_POSITION_FOLLOWING;
                 }
             }
         }
     }
-    if (node1==nullptr || node2==nullptr || get_node_root(node1)->isSameNode(get_node_root(node2))){
+    if (node1==nullptr || node2==nullptr || node1->getRootNode()!=node2->getRootNode()){
         return DOCUMENT_POSITION_DISCONNECTED + DOCUMENT_POSITION_IMPLEMENTATION_SPECIFIC + DOCUMENT_POSITION_PRECEDING;
     }
-    if ((check_ancestor(node2->ownerDocument, node2, node1) && attr1==nullptr) || (node1->isSameNode(node2) && attr2!=nullptr)){
+    if ((check_ancestor(node2->ownerDocument, node2, node1) && attr1==nullptr) || (node1==node2 && attr2!=nullptr)){
         return DOCUMENT_POSITION_CONTAINS + DOCUMENT_POSITION_PRECEDING;
     }
     if ((check_descendant(node2, node1) && attr2==nullptr) || (node1==node2 && attr1!=nullptr)){
@@ -238,23 +229,23 @@ unsigned short Node::compareDocumentPosition(Node* other){
     return DOCUMENT_POSITION_FOLLOWING;
 }
 
-bool Node::contains(Node* other){
+bool Node::contains(const Node* other) const{
     if (other==nullptr){return false;}
     return check_descendant(this, other, true);
 }
 
-std::optional<DOMString> Node::lookupPrefix(std::optional<DOMString> namesp){
+std::optional<DOMString> Node::lookupPrefix(std::optional<DOMString> &namesp) const{
     if (namesp==std::nullopt || namesp==""){ return std::nullopt; }
     if (this->parentElement==nullptr){ return std::nullopt; }
     return locate_a_namespace_prefix(this->parentElement, namesp);
 }
 
-std::optional<DOMString> Node::lookupNamespaceURI(std::optional<DOMString> &prefix){
+std::optional<DOMString> Node::lookupNamespaceURI(std::optional<DOMString> &prefix) const{
     if (prefix==""){ prefix=std::nullopt; }
     return locate_a_namespace(this, prefix);
 }
 
-bool Node::isDefaultNamespace(std::optional<DOMString> &namesp){
+bool Node::isDefaultNamespace(std::optional<DOMString> &namesp) const{
     if (namesp==""){ namesp=std::nullopt; }
     std::optional<DOMString> defaultNamespace = locate_a_namespace(this, std::nullopt);
     if (defaultNamespace==namesp){ return true; }

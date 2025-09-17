@@ -9,9 +9,13 @@ class Document;
 class Element;
 
 
-struct GetRootNodeOptions{
-    bool composed = false;
-};
+
+#define DOCUMENT_POSITION_DISCONNECTED 0x01
+#define DOCUMENT_POSITION_PRECEDING 0x02
+#define DOCUMENT_POSITION_FOLLOWING 0x04
+#define DOCUMENT_POSITION_CONTAINS 0x08
+#define DOCUMENT_POSITION_CONTAINED_BY 0x10
+#define DOCUMENT_POSITION_IMPLEMENTATION_SPECIFIC 0x20
 
 
 
@@ -160,22 +164,22 @@ class Node: public EventTarget{
         node_type nodeType;
         DOMString nodeName;
         USVString baseURI;
-        Document* ownerDocument;
+        Document* ownerDocument; // it is referenced as nodeDocument in the DOM at lots of places
         // Not necessary that parent is element ! could be some other type of node baby !
         Node* parentNode;
         Element* parentElement = nullptr;
-        bool isConnected();
+        bool isConnected() const inline;
 
         //Babies !!! ( Children )
         NodeList childNodes;
-        Node* firstChild();
-        Node* lastChild();
-        Node* previousSibling();
-        Node* nextSibling();
+        Node* firstChild() const inline;
+        Node* lastChild() const inline;
+        Node* previousSibling() const;
+        Node* nextSibling() const;
 
-        bool hasChildNodes();
+        bool hasChildNodes() const inline;
 
-        Node* getRootNode(bool &composed = false) {};
+        Node* getRootNode(bool &composed = false) const;
 
         DOMString nodeValue;
         DOMString textContent;
@@ -193,16 +197,16 @@ class Node: public EventTarget{
             return this->childNodes.length();
         }
 
-        bool isEqualNode(const Node* otherNode);
-        bool isSameNode(const Node* otherNode);
+        bool isEqualNode(const Node* otherNode) const;
+        bool isSameNode(const Node* otherNode) const;
 
-        unsigned short compareDocumentPosition(Node* other);
-        bool contains(Node* other);
+        unsigned short compareDocumentPosition(Node* other) const;
+        bool contains(const Node* other) const;
 
-        std::optional<DOMString> lookupPrefix(std::optional<DOMString> namesp);
-        std::optional<DOMString> lookupNamespaceURI(std::optional<DOMString> prefix);
+        std::optional<DOMString> lookupPrefix(std::optional<DOMString> &namesp) const;
+        std::optional<DOMString> lookupNamespaceURI(std::optional<DOMString> &prefix) const;
 
-        bool isDefaultNamespace(std::optional<DOMString> namesp);
+        bool isDefaultNamespace(std::optional<DOMString> &namesp) const;
 
         Node* insertBefore(Node* node, Node* child);
         Node* appendChild(Node* node);
@@ -211,16 +215,18 @@ class Node: public EventTarget{
 
         virtual Node* get_the_parent(Event* event) override;
 
-        virtual DOMString getnodeValue(){
-            return "";
+        virtual std::optional<DOMString> getnodeValue(){
+            return std::nullopt;
         }
         virtual void setnodeValue(DOMString &val){};
-        virtual DOMString gettextContent(){
-            return ""
+        virtual std::optional<DOMString> gettextContent(){
+            return std::nullopt;
         }
         virtual void settextContent(DOMString  &val){};
 
         virtual void making_it_abstract() = 0;
+
+        bool operator==(Node* other){ return this->isEqualNode(other); }
 };
 
 

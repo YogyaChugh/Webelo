@@ -1,15 +1,15 @@
 #include "../include/nodes/node.hpp"
 #include "../include/nodes/document.hpp"
-#include "../algos/mutation_algos.cpp"
+#include "mutation_algos.cpp"
+#include "algos_shadow.cpp"
 #include <string>
 
-void clone_node(Node* node, Document* document = nullptr, bool subtree = false, Node* parent = nullptr, CustomElementRegistry* fallbackRegistry = nullptr){
+Node* clone_node(Node* node, Document* document = nullptr, bool subtree = false, Node* parent = nullptr, CustomElementRegistry* fallbackRegistry = nullptr){
     if (document==nullptr){
         document = node->ownerDocument;
     }
     assert(!dynamic_cast<Document*>(node) || dynamic_cast<Document*>(node)==document);
     Node* copy = clone_a_single_node(node, document, fallbackRegistry);
-    // Can add later
     if (parent != nullptr){
         append_node(copy, parent);
     }
@@ -23,8 +23,35 @@ void clone_node(Node* node, Document* document = nullptr, bool subtree = false, 
         Element* temp2 = dynamic_cast<Element*>(copy);
         assert(temp2->shadow_root==nullptr);
         CustomElementRegistry* shadowRootRegistry = temp->shadow_root->custom_element_registry;
+        attach_shadow_root(temp2, temp->shadow_root->mode, true, temp->shadow_root->serializable, temp->shadow_root->delegatesFocus, temp->shadow_root->slotAssignment, shadowRootRegistry);
+        temp2->shadow_root->declarative = temp->shadow_root->declarative;
+        for (auto child: temp->shadow_root->childNodes){
+            clone_node(child, document, subtree, temp2->shadow_root);
+        }
+    }
+    return copy;
+}
+
+
+Node* clone_a_single_node(Node* node, Document* document, CustomElementRegistry* fallbackRegistry){
+    Node* copy = nullptr;
+    Element* temp = dynamic_cast<Element*>(node);
+    if (temp){
+        CustomElementRegistry* registry = temp->customElementRegistry;
+        if (!registry){ registry = fallbackRegistry; }
+        copy = create_element(document, temp->localName, temp->namespaceURI, temp->prefix, false, registry);
+        for (auto attr: temp->attributes.attribute_list){
+            Node* copyAttribute = clone_a_single_node(attr, document, nullptr);
+            append_attribute_to_element(copyAttribute, dynamic_cast<Element*>(copy));
+        }
+    }
+    else{
 
     }
+    assert(dynamic_cast<Node*>(copy));
+    if (dynamic_cast<Document*>(node)){ document = dynamic_cast<Document*>(copy); }
+    copy->ownerDocument = document;
+    return copy;
 }
 
 bool nodequals(Node* first, Node* second){
@@ -98,7 +125,7 @@ bool nodequals(Node* first, Node* second){
     return true;
 }
 
-voidstring_replace_all(std::string &str, Node* parent){
+void string_replace_all(std::string &str, Node* parent){
     Node* node = nullptr;
     if (str!=""){
         node = new Text(str);

@@ -6,13 +6,5 @@
 
 
 int main(){
-    std::optional<int> a = 10;
-    std::optional<int> b = std::nullopt;
-    if (a==10){
-        std::cout<<"hi";
-    }
-    else{
-        std::cout<<"hello";
-    }
-    std::cout<< b.has_value();
+    std::cout<< 0x10 + 0x01;
 }
