@@ -29,6 +29,7 @@
 - Can add later (special cloning steps in other specifications) for `clone_node` in algos_node.cpp
 - Could be error in node.cpp compareDocumentPosition
 - Node's node document can be changed using the adopt algo
+- Encoding sort for Document object
 
 ## Algorithms
 > Remember to check all calls to these algo's in-order to rectify arg issues !
@@ -36,7 +37,7 @@
 - ~~SerializeOrderedSet~~
 - ScopeMatchSelectorString
 - ~~clone_node~~
-- clone_a_single_node
+- ~~clone_a_single_node~~
 - equalAlgo
 - ~~locate_a_namespace_prefix~~
 - ~~locate_a_namespace~~
@@ -152,7 +153,8 @@
     - textContent: Attr, CharacterData, Element, DocumentFragment
     - cloneNode(): ShadowRoot
     - lookupPrefix(): all kids
-- In `clone_a_single_node` algo,, check for global custom element registry
+- In `clone_a_single_node` algo, check for global custom element registry
+- In `clone_a_single_node` algo, complete the custom element registry #HTML
 
 ## Document
 - Opaque Origin

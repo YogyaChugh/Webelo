@@ -424,9 +424,8 @@ enum class DocMode: DOMString{
 }
 
 class Document: public ParentNode{
-    protected:
-        CustomElementRegistry* custom_element_registry = nullptr;
     public:
+        CustomElementRegistry* custom_element_registry = nullptr;
         DOMImplementation* implementation;
         USVString URL = "about:blank"; //!serialize
         USVString documentURI = URL; //!serialize
@@ -436,6 +435,7 @@ class Document: public ParentNode{
         DocumentType* doctype();
         Element* documentElement();
 
+        DOMString encoding = "utf-8";
         DocType type = "xml";
         DOMString* origin = nullptr; //lateeeeeer
         DocMode mode = "no-quirks";

@@ -1,5 +1,6 @@
 #include "../include/nodes/node.hpp"
 #include "../include/nodes/document.hpp"
+#include "algos_base.cpp"
 #include "mutation_algos.cpp"
 #include "algos_shadow.cpp"
 #include <string>
@@ -46,7 +47,61 @@ Node* clone_a_single_node(Node* node, Document* document, CustomElementRegistry*
         }
     }
     else{
-
+        Document* temp = dynamic_cast<Document*>(node);
+        if (temp){
+            Document* temp2 = new Document();
+            temp2->encoding = temp->encoding;
+            temp2->contentType = temp->contentType;
+            temp2->URL = temp->URL;
+            temp2->origin = temp->origin;
+            temp2->type = temp->type;
+            temp2->mode = temp->mode;
+            temp2->allow_declarative_shodow_roots = temp->allow_declarative_shodow_roots;
+            // step for custom element registry is scoped
+            temp2->custom_element_registry = temp->custom_element_registry;
+            copy = temp2;
+        }
+        else{
+            DocumentType* temp = dynamic_cast<DocumentType*>(node);
+            if (temp){
+                DocumentType* temp2 = new DocumentType();
+                temp2->name = temp->name;
+                temp2->publicId = temp->publicId;
+                temp2->systemId = temp->systemId;
+                copy = temp2;
+            }
+            else{
+                Attr* temp = dynamic_cast<Attr*>(node);
+                if (temp){
+                    Attr* temp2 = new Attr();
+                    temp2->namespaceURI = temp->namespaceURI;
+                    temp2->prefix = temp->prefix;
+                    temp2->localName = temp->localName;
+                    temp2->value = temp->value;
+                    copy = temp2;
+                }
+                else{
+                    Text* temp = dynamic_cast<Text*>(node);
+                    if (temp){}
+                    else{
+                        Comment* temp = dynamic_cast<Comment*>(node);
+                        if (temp){
+                            Comment* temp2 = new Comment();
+                            temp2->data = temp->data;
+                            copy = temp2;
+                        }
+                        else{
+                            ProcessingInstruction* temp = dynamic_cast<ProcessingInstruction*>(node);
+                            if (temp){
+                                ProcessingInstruction* temp2 = new ProcessingInstruction();
+                                temp2->target = temp->target;
+                                temp2->data = temp->data;
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
     assert(dynamic_cast<Node*>(copy));
     if (dynamic_cast<Document*>(node)){ document = dynamic_cast<Document*>(copy); }
@@ -199,4 +254,18 @@ std::optional<DOMString> locate_a_namespace_prefix(Element* element, std::option
         return locate_a_namespace_prefix(element, namespace);
     }
     retun std::nullopt;
+}
+
+HTMLCollection list_of_elements(std::optional<DOMString> namespace, DOMString localName, Node* root){
+    if (namespace==""){ namespace = std::nullopt; }
+    if (namespace=="*" && localName=="*"){}
+    if (namespace=="*"){}
+    if (localName=="*"){}
+}
+
+HTMLCollection list_of_elements(std::vector<DOMString> &classNames,   Node* root){
+    std::vector<DOMString> classes;
+    for (auto class: classes){
+        class = ParseOrderedSet(class);
+    }
 }

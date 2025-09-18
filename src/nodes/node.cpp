@@ -280,6 +280,7 @@ void Node::normalize(){
                 remove_node(currentNode);
             }
             else{
+                
             }
         }
         if (currentNode->childNodes.length()!=0){
