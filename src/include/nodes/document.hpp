@@ -144,9 +144,8 @@ enum SlotAssignmentMode{ manual, named};
 
 
 class ParentNode: public Node {
-    protected:
-        HTMLCollection children;
     public:
+        HTMLCollection children;
         Element* firstElementChild() const{
             return children->item(0);
         };
@@ -173,6 +172,8 @@ class ParentNode: public Node {
 
         Element* querySelector(DOMString selectors);
         NodeList querySelectorAll(DOMString selectors);
+
+        virtual making_it_abstract() override = 0;
 };
 
 

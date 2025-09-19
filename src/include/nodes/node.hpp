@@ -1,14 +1,11 @@
 #ifndef NODE_DOM
 #define NODE_DOM
 
-#include "../base.hpp"
+#include "../../base.cpp"
 #include "../events/events.hpp"
+#include "document.hpp"
 
 class Node;
-class Document;
-class Element;
-
-
 
 #define DOCUMENT_POSITION_DISCONNECTED 0x01
 #define DOCUMENT_POSITION_PRECEDING 0x02
@@ -34,9 +31,8 @@ Operators:
 
  */
 class NodeList{
-    protected:
-        std::vector<Node*> node_list = {};
     public:
+        std::vector<Node*> node_list = {};
 
         // Returns the Node ptr on the index provided !
         Node* item(const unsigned long &index) const;
@@ -93,9 +89,8 @@ Operators:
     [DOMString name] - Operator using namedItem() method internally
  */
 class HTMLCollection{
-    protected:
-        std::vector<Element*> element_list = {};
     public:
+        std::vector<Element*> element_list = {};
 
         // Returns the Node ptr on the index provided !
         Element* item(const unsigned long &index) const;
@@ -197,13 +192,13 @@ class Node: public EventTarget{
             return this->childNodes.length();
         }
 
-        bool isEqualNode(const Node* otherNode) const;
-        bool isSameNode(const Node* otherNode) const;
+        virtual bool isEqualNode(const Node* otherNode) const;
+        virtual bool isSameNode(const Node* otherNode) const;
 
         unsigned short compareDocumentPosition(Node* other) const;
         bool contains(const Node* other) const;
 
-        std::optional<DOMString> lookupPrefix(std::optional<DOMString> &namesp) const;
+        virtual std::optional<DOMString> lookupPrefix(std::optional<DOMString> &namesp) const;
         std::optional<DOMString> lookupNamespaceURI(std::optional<DOMString> &prefix) const;
 
         bool isDefaultNamespace(std::optional<DOMString> &namesp) const;

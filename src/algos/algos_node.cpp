@@ -256,6 +256,11 @@ std::optional<DOMString> locate_a_namespace_prefix(Element* element, std::option
     retun std::nullopt;
 }
 
+HTMLCollection list_of_elements(DOMString qualifiedName, Node* root){
+    if (qualifiedName=="*"){}
+    if (root->ownerDocument->type!="xml"){}
+}
+
 HTMLCollection list_of_elements(std::optional<DOMString> namespace, DOMString localName, Node* root){
     if (namespace==""){ namespace = std::nullopt; }
     if (namespace=="*" && localName=="*"){}
