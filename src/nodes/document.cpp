@@ -437,8 +437,8 @@ bool DOMImplementation::hasFeature(){ return true; }
 
 
 
-Element* ShadowRoot::get_the_parent(Event* event) override{
-    if (!event->composed_flag && event->path.at(0)!=event->path.end() && this==event->path.at(0)->invocation_target){
+Element* ShadowRoot::get_the_parent(Event* event){
+    if (!event->composed_flag && !event->path.empty() && this == event->path.at(0).invocation_target){
         return nullptr;
     }
     return this->associatedHost;

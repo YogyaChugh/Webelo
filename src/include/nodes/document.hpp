@@ -291,7 +291,7 @@ class DocumentFragment: public ParentNode{
         friend Element* getElementById(Node* node ,const DOMString &elementId);
         DocumentFragment(Document* ownerdoc = nullptr, Node* parentnode = nullptr): ParentNode(DOCUMENT_FRAGMENT_NODE, "#document-fragment", ownerdoc, parentnode){};
 
-        virtual void making_it_abstract(){};
+        virtual void making_it_abstract() override{};
 };
 
 //Exposed to window only
@@ -305,16 +305,12 @@ class ShadowRoot: public DocumentFragment{
         SlotAssignmentMode slotAssignment;
         bool clonable = false;
         bool serializable = false;
-        Element* host(){ return this->associatedHost };
+        Element* host(){ return this->associatedHost; }
         EventHandler onslotchange;
 
         bool keepCustomElementRegistryNull = false;
 
-        CustomElementRegistry* getcustom_element_registry() const{
-            return this->custom_element_registry;
-        }
-
-        Element* get_the_parent(Event* event) override;
+        virtual Element* get_the_parent(Event* event) override;
 };
 
 

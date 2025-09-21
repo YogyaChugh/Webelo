@@ -111,3 +111,21 @@ bool check_node_precedes(Document* doc, Node* node, Node* target){
     }
     return false;
 }
+
+Node* find_root(Node* node, bool shadow_inclusive = false){
+    if (node==nullptr){ return node; }
+    Node* currentNode = node;
+    Node* temporary = node->parentNode;
+    while (temporary!=nullptr){
+        currentNode = temporary;
+        if (shadow_inclusive){
+            ShadowRoot* temp = dynamic_cast<ShadowRoot*>(currentNode);
+            while (temp){
+                currentNode = dynamic_cast<Node*>(temp->host());
+                temp = dynamic_cast<ShadowRoot*>(currentNode);
+            }
+        }
+        temporary = currentNode->parentNode;
+    }
+    return currentNode;
+}
