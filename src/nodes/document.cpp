@@ -1,6 +1,9 @@
-#include "../../include/nodes/document.hpp"
-#include "../../include/base.hpp"
-#include "../include/exceptions.hpp"
+#include "base.cpp"
+#include "nodes/document.hpp"
+#include "exceptions.cpp"
+#include "algos_node.cpp"
+#include "algos_docs.cpp"
+#include "algos_base.cpp"
 #include <bits/stdc++.h>
 #include <optional>
 
@@ -172,8 +175,8 @@ void replaceWith(std::vector<std::variant<Node*, DOMString>> &nodes, const Node*
     }
 }
 
-void remove(const Node* obj){
-    if (obj->parent==nullptr){return;}
+void remove(Node* obj){
+    if (obj->parentNode==nullptr){return;}
     remove_node(obj);
 }
 
@@ -195,20 +198,20 @@ void remove(const Node* obj){
 
 
 
-Document::Document(): Node(DOCUMENT_NODE, "#document", nullptr, this, nullptr, nullptr){
+Document::Document(Document* ownerdoc = nullptr, Node* parentnode = nullptr): ParentNode(DOCUMENT_NODE, "#document", ownerdoc, parentnode){
     this->implementation->associated_doc = this;
 };
 
 
 std::optional<DOMString> Document::lookupPrefix(std::optional<DOMString> namesp){
-    if (namesp==std::nullopt || namesp.value==""){ return std::nullopt; }
+    if (namesp==std::nullopt || namesp.value()==""){ return std::nullopt; }
     if (this->documentElement()==nullptr){ return std::nullopt; }
-    return locateNamespacePrefix(this->documentElement() , namesp);
+    return locate_a_namespace_prefix(this->documentElement() , namesp);
 }
 
 
 DOMString Document::compatMode(){
-    if (mode=="quirks"){
+    if (this->mode==QUIRKS){
         return "BackCompat"
     }
     return "CSS1Compat"
@@ -216,80 +219,94 @@ DOMString Document::compatMode(){
 
 DocumentType* Document::doctype(){
     for (size_t i=0;  i<this->childNodes.length(); i++){
-        if (dynamic_cast<DocumentType*>(this->childNodes.item(i))){
-            return this->childNodes.item(i);
+        DocumentType* temp = dynamic_cast<DocumentType*>(this->childNodes[i]);
+        if (temp){
+            return temp;
         }
     }
     return nullptr;
 }
 
+Element* Document::documentElement(){
+    for (size_t i=0;  i<this->childNodes.length(); i++){
+        Element* temp = dynamic_cast<Element*>(this->childNodes[i]);
+        if (temp){
+            return temp;
+        }
+    }
+    return nullptr;
+}
+
+
+
 HTMLCollection Document::getElementsByTagName(DOMString qualifiedName){
-    return listElementsWithQualifiedName(this);
+    return list_of_elements(qualifiedName, this);
 }
 
 HTMLCollection Document::getElementsByTagNameNS(std::optional<DOMString> namesp, DOMString localname){
-    return listElementsWithNamespaceAndLocalName(this);
+    return list_of_elements(namesp, localname, this);
 }
 
-HTMLCollection Document::getElementsByClassName(DOMString classNames){
-    return listElementsWithClassNames(this);
+HTMLCollection Document::getElementsByClassName(std::vector<DOMString> &classNames){
+    return list_of_elements(classNames, this);
 }
 
-Element Document::createElement(DOMString localName, std::variant<DOMString,ElementCreationOptions> options){
-    if (!validElementLocalName(localName)){ throw InvalidCharacterError("Character Name invalid !!" + localName); }
-    if (this->type!="xml"){
-        std::transform(localName.begin(), localName.end(), localName.begin(), ::tolower());
+Element* Document::createElement(DOMString localName, std::variant<DOMString,ElementCreationOptions> options){
+    if (!validElementLocalName(localName)){ throw InvalidCharacterError("Character Name invalid !!"); }
+    if (this->type!=XML){
+        std::transform(localName.begin(), localName.end(), localName.begin(), [](unsigned char c){ return std::tolower(c); });
     }
-    CustomElementRegistry registry;
-    DOMString is;
+    CustomElementRegistry* registry;
+    std::optional<DOMString> is;
     std::optional<DOMString> namesp;
-    flattenElementCreationOptions(options, this, registry, is);
-    if (this->type!="xml" || this->contentType=="application/xhtml+xml"){
+    flatten_element_creation_options(options, this, registry, is);
+    if (this->type!=XML || this->contentType=="application/xhtml+xml"){
         namesp = "http://www.w3.org/1999/xhtml"
     }
     else{
         namesp = std::nullopt;
     }
-    return CreateElement(this, localName, namesp, nullptr, is, true, registry);
+    return create_element(this, localName, namesp, nullptr, is, true, registry);
 }
 
-Element Document::createElementNS(std::optional<DOMString> namesp, DOMString qualifiedName, std::variant<DOMString,ElementCreationOptions> options){
-    return InternalCreateElementNS(this, namesp, qualifiedName, options);
+Element* Document::createElementNS(std::optional<DOMString> namesp, DOMString qualifiedName, std::variant<DOMString,ElementCreationOptions> options){
+    return internal_create_element_ns(this, namesp, qualifiedName, options);
 }
 
 DocumentFragment* Document::createDocumentFragment(){
     DocumentFragment* temp = new DocumentFragment();
-    temp->nodeDocument = this;
+    temp->ownerDocument = this;
     return temp;
 }
 
 Text* Document::createTextNode(DOMString data){
     Text* temp = new Text(data);
-    temp->nodeDocument = this;
+    temp->ownerDocument = this;
     return temp;
 }
 
 CDATASection* Document::createCDATASection(DOMString data){
-    if (this->type!="xml"){ return NotSupportedError("Html Doc ain't supported !"); }
+    if (this->type!=XML){ throw NotSupportedError("Html Doc ain't supported !"); }
     if (data.find("]]>") != std::string::npos) { throw InvalidCharacterError("Invalid Characters !"); }
     CDATASection* temp = new CDATASection();
     temp->data = data;
-    temp->nodeDocument = this;
+    temp->ownerDocument = this;
+    return temp;
 }
 
 Comment* Document::createComment(DOMString data){
     Comment* temp = new Comment(data);
-    temp->nodeDocument = this;
+    temp->ownerDocument = this;
     return temp;
 }
 
 ProcessingInstruction* Document::createProcessingInstruction(DOMString target, DOMString data){
-    //TODO
+    // If target doesn't match some Name production, throw InvalidCharacterError exception
     if (data.find("?>") != std::string::npos){ throw InvalidCharacterError("Invalid Characters !"); }
     ProcessingInstruction* temp = new ProcessingInstruction();
     temp->target = target;
     temp->data = data;
-    temp->nodeDocument = this;
+    temp->ownerDocument = this;
     return temp;
 }
 
@@ -297,37 +314,34 @@ Node* Document::importNode(Node* node, std::variant<bool,ImportNodeOptions> opti
     if (dynamic_cast<Document*>(node) || dynamic_cast<ShadowRoot*>(node)){ throw NotSupportedError("Document and Shadow Root not supported !!"); }
     bool subtree = false;
     CustomElementRegistry* registry = nullptr;
-    if (std::holds_alternative<bool>(options)){ subtree = options; }
+    if (std::holds_alternative<bool>(options)){ subtree = std::get<bool>(options); }
     else{
-        subtree = !options.selfOnly;
-        if (options.customElementRegistry!=nullptr){ registry = options.customElementRegistry; }
-        if (registry && registry->isscoped)
+        ImportNodeOptions temp = std::get<ImportNodeOptions>(options);
+        subtree = !temp.selfOnly;
+        if (temp.customElementRegistry!=nullptr){ registry = temp.customElementRegistry; }
+        if (registry && registry!=this->custom_element_registry){ throw NotSupportedError("NOT SUPPORTED :) !"); }
     }
-    // if (registry == nullptr){
-    //     registry = 
-    // }
-    //TODO: AFTER HTML STANDARD IMPLEMENTATION !!
-    return cloneANode(node, this, subtree, registry);
+    return clone_node(node, this, subtree, nullptr, registry);
 }
 
 Node* Document::adoptNode(Node* node){
     if (dynamic_cast<Document*>(node)){ throw NotSupportedError("Document ain't supported !"); }
     if (dynamic_cast<ShadowRoot*>(node)){ throw HeirarchyRequestError("IDK WHY THIS !!"); }
-    if (dynamic_cast<DocumentFragment*>(node) && node->host!=nullptr){
+    DocumentFragment* temp = dynamic_cast<DocumentFragment*>(node);
+    if (temp && temp->associatedHost!=nullptr){
         return nullptr;
     }
-    AdoptAlgo(node, this);
+    adopt(node, this);
     return node;
 }
 
 Attr* Document::createAttribute(DOMString localName){
-    if (!validAttributeLocalName(localName)){ throw InvalidCharacterError("Invalid Attribute Name"); }
-    if (this->type!="xml"){
-        std::transform(localName.begin(), localName.end(), localName.begin(), ::tolower());
+    if (!ValidAttributeLocalName(localName)){ throw InvalidCharacterError("Invalid Attribute Name"); }
+    if (this->type!=XML){
+        std::transform(localName.begin(), localName.end(), localName.begin(), [](unsigned char c){ return std::tolower(c); });
     }
-    Attr* temp = new Attr();
-    temp->localName = localName;
-    temp->nodeDocument = this;
+    Attr* temp = new Attr(localName);
+    temp->ownerDocument = this;
     return temp;
 }
 
@@ -335,65 +349,84 @@ Attr* Document::createAttributeNS(std::optional<DOMString> namesp, DOMString qua
     std::optional<DOMString> prefix;
     DOMString localName;
     ValidateAndExtract(namesp, qualifiedName, "attribute",prefix, localName);
-    Attr* temp = new Attr();
+    Attr* temp = new Attr(localName);
     temp->namespaceURI = namesp;
     temp->prefix = prefix;
-    temp->nodeDocument = this;
+    temp->ownerDocument = this;
     return temp;
 }
 
-
-
-
-
-
-DocumentType DOMImplementation::createDocumentType(DOMString name, DOMString publicId, DOMString systemId){
-    if (!validDocTypeName(name)){ throw InvalidCharacterError("Invalid Chars !!"); }
-    DocumentType* temp = new DocumentType(name, publicId, systemId);
-    temp->nodeDocument = this->associated_doc;
-    return temp
+Event* Document::createEvent(DOMString interface){
+    Event* constructor = nullptr;
+    if (constructor==nullptr){
+        throw NotSupportedError("Not supported :)) !!");
+    }
 }
 
-XMLDocument DOMImplementation::createDocument(std::optional<DOMString> namesp, DOMString qualifiedName, std::optional<DocumentType> doctype = std::nullopt){
+Range* createRange(){
+    Range* temp = new Range();
+    return temp;
+}
+
+NodeIterator* createNodeIterator(Node* root, unsigned long whatToShow, NodeFilter* filter){
+    NodeIterator* iterator = new NodeIterator();
+    return iterator;
+}
+
+TreeWalker* createTreeWalker(Node* root, unsigned long whatToShow, NodeFilter* filter){
+    TreeWalker* walker = new TreeWalker();
+    return walker;
+}
+
+
+
+DocumentType* DOMImplementation::createDocumentType(DOMString name, DOMString publicId, DOMString systemId){
+    if (!validDocTypeName(name)){ throw InvalidCharacterError("Invalid Chars !!"); }
+    DocumentType* temp = new DocumentType(name, publicId, systemId);
+    temp->ownerDocument = this->associated_doc;
+    return temp;
+}
+
+XMLDocument* DOMImplementation::createDocument(std::optional<DOMString> namesp, DOMString qualifiedName, std::optional<DocumentType> doctype = std::nullopt){
     XMLDocument* document = new XMLDocument();
     Element* element = nullptr;
     if (qualifiedName!=""){
-        element = InternalCreateElementNS(document, namesp, qualifiedName, {});
+        element = internal_create_element_ns(dynamic_cast<Document*>(document), namesp, qualifiedName, ElementCreationOptions());
     }
-    if (doctype!=std::nullopt){ preInsertNode(document, doctype, nullptr); }
-    if (element!=nullptr){ preInsertNode(document, element, nullptr); }
+    if (doctype.has_value()){ pre_insert_node(document, dynamic_cast<Node*>(doctype.value()), nullptr); }
+    if (element!=nullptr){ pre_insert_node(document, element, nullptr); }
     document->origin=this->associated_doc->origin;
-    if (namesp.value=="http://www.w3.org/1999/xhtml"){
+    if (namesp.value()=="http://www.w3.org/1999/xhtml"){
         document->contentType = "application/xhtml+xml";
     }
-    elif (namesp.value=="http://www.w3.org/2000/svg"){
+    else if (namesp.value()=="http://www.w3.org/2000/svg"){
         document->contentType = "image/svg+xml";
     }
     else{
-        document->contentType = "application/xml"
+        document->contentType = "application/xml";
     }
     return document;
 }
 
-Document DOMImplementation::createHTMLDocument(std::optional<DOMString> title){
+Document* DOMImplementation::createHTMLDocument(std::optional<DOMString> title){
     Document* document = new Document();
-    document->type = "html";
-    document->contentType = "text/html"
+    document->type = HTML;
+    document->contentType = "text/html";
     DocumentType* doct = new DocumentType("html");
-    doct->nodeDocument = document;
-    preInsertNode(document, doct, nullptr);
-    Element* htmlElement = CreateElement(document, "html", "http://www.w3.org/1999/xhtml");
-    preInsertNode(document, htmlElement, nullptr);
-    Element* headElement = CreateElement(document, "head", "http://www.w3.org/1999/xhtml");
-    preInsertNode(htmlElement, headElement, nullptr);
+    doct->ownerDocument = document;
+    pre_insert_node(document, doct, nullptr);
+    Element* htmlElement = create_element(document, "html", "http://www.w3.org/1999/xhtml");
+    pre_insert_node(document, htmlElement, nullptr);
+    Element* headElement = create_element(document, "head", "http://www.w3.org/1999/xhtml");
+    pre_insert_node(htmlElement, headElement, nullptr);
     if (title!=std::nullopt){
-        Element* titleElement = CreateElement(document, "title", "http://www.w3.org/1999/xhtml");
-        preInsertNode(headElement, titleElement, nullptr);
-        Text* text = new Text(title.value);
-        text->nodeDocument = document;
-        preInsertNode(titleElement, text, nullptr);
+        Element* titleElement = create_element(document, "title", "http://www.w3.org/1999/xhtml");
+        pre_insert_node(headElement, titleElement, nullptr);
+        Text* text = new Text(title.value());
+        text->ownerDocument = document;
+        pre_insert_node(titleElement, text, nullptr);
     }
-    preInsertNode(htmlElement, CreateElement(document, "body", "http://www.w3.org/1999/xhtml"));
+    pre_insert_node(htmlElement, create_element(document, "body", "http://www.w3.org/1999/xhtml"));
     document->origin = this->associated_doc->origin;
     return document;
 }

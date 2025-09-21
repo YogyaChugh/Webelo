@@ -1,9 +1,9 @@
-#include "../../include/events/events.hpp"
-#include "../../include/base.hpp"
-#include "../../include/window.hpp"
-#include "../../include/exceptions.hpp"
-#include "../../include/nodes/document.hpp"
-#include "../algos/algos_base.cpp"
+#include "events/events.hpp"
+#include "base.cpp"
+#include "window.hpp"
+#include "exceptions.cpp"
+#include "nodes/document.hpp"
+#include "algos_base.cpp"
 #include <iostream>
 #include <map>
 #include <vector>

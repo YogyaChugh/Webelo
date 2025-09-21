@@ -1,7 +1,7 @@
 #ifndef EVENTS_DOM
 #define EVENTS_DOM
 
-#include "../base.hpp"
+#include "base.cpp"
 #include <vector>
 #include <variant>
 #include <algorithm>
@@ -39,7 +39,7 @@ struct event_listener{
     AbortSignal *signal = nullptr;
     bool removed = false;
 
-    event_listener(const DOMString &type, const EventListener* callback = nullptr, bool capture = false,const std::optional<bool> passive = std::nullopt, bool once = false, const AbortSignal *signal = nullptr, bool removed = false){
+    event_listener(const DOMString &type, EventListener* callback = nullptr, bool capture = false,const std::optional<bool> passive = std::nullopt, bool once = false, AbortSignal *signal = nullptr, bool removed = false){
         this->type = type;
         this->callback = callback;
         this->capture = capture;
@@ -64,7 +64,7 @@ struct AddEventListenerOptions{
     bool once = false;
     AbortSignal *signal;
 
-    AddEventListenerOptions(bool capture, bool passive, bool once,const AbortSignal* signal){
+    AddEventListenerOptions(bool capture, bool passive, bool once, AbortSignal* signal){
         this->capture = capture;
         this->passive = passive;
         this->once = once;
@@ -193,7 +193,7 @@ struct path_structs{
     bool root_of_closed_tree;
     bool slot_in_closed_tree;
 
-    path_structs(const EventTarget *it, bool itst,const EventTarget *sat,const EventTarget *rt,const std::vector<EventTarget*> ttl, bool rct, bool sct){
+    path_structs(EventTarget *it, bool itst, EventTarget *sat, EventTarget *rt, std::vector<EventTarget*> ttl, bool rct, bool sct){
         this->invocation_target = it;
         this->invocation_target_in_shadow_tree = itst;
         this->shadow_adjusted_target = sat;
@@ -239,11 +239,11 @@ class Event{
         std::vector<EventTarget*> touch_target_list = {}; //mostly no use until TouchEvent Interface
 
         void initEvent(DOMString const &type, bool bubbles = false, bool cancelable = false); // legacy
-        void stopPropagation() inline;
-        void stopImmediatePropagation() inline;
+        void stopPropagation();
+        void stopImmediatePropagation();
         void preventDefault();
         std::vector<EventTarget*> composedPath();
-        void set_canceled_flag() inline;
+        void set_canceled_flag();
 
         // *GETTER-SETTER METHODS
 
@@ -308,8 +308,8 @@ class CustomEvent: public Event{
     protected:
         std::any detail = nullptr;
     public:
-        CustomEvent(DOMString const &type, bool bubbles = false, bool cancelable = false, bool composed = false, std::any &detail = nullptr);
-        void initCustomEvent(DOMString const &type, bool bubbles = false, bool cancelable = false, std::any &detail = nullptr);
+        CustomEvent(DOMString const &type, bool bubbles = false, bool cancelable = false, bool composed = false, std::any detail = nullptr);
+        void initCustomEvent(DOMString const &type, bool bubbles = false, bool cancelable = false, std::any detail = nullptr);
 
         std::any getdetail() const{
             return this->detail;

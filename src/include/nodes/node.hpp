@@ -1,11 +1,9 @@
 #ifndef NODE_DOM
 #define NODE_DOM
 
-#include "../../base.cpp"
-#include "../events/events.hpp"
+#include "base.cpp"
+#include "events/events.hpp"
 #include "document.hpp"
-
-class Node;
 
 #define DOCUMENT_POSITION_DISCONNECTED 0x01
 #define DOCUMENT_POSITION_PRECEDING 0x02
@@ -35,10 +33,10 @@ class NodeList{
         std::vector<Node*> node_list = {};
 
         // Returns the Node ptr on the index provided !
-        Node* item(const unsigned long &index) const;
+        Node* item(const unsigned long index) const;
 
         // Returns the Node ptr on the index provided !
-        Node* operator[](unsigned long &index) const {
+        Node* operator[](unsigned long index) const {
             return this->item(index);
         }
 
@@ -47,19 +45,19 @@ class NodeList{
         // Returns the length of the list stored ! Must be stored in a variable.
         [[nodiscard]] unsigned long length() const;
 
-        void append(const Node* node){
+        void append(Node* node){
             this->node_list.push_back(node);
         }
 
-        void insert(const Node* node, const unsigned long &index){
+        void insert(Node* node, const unsigned long &index){
             if (index<0){return;}
             this->node_list.insert(this->node_list.begin()+index, node);
         }
 
-        void remove(const Node* node){
+        void remove(Node* node){
             unsigned int i = 0;
             for (auto a: this->node_list){
-                if (*a == *node){
+                if (*a == node){
                     this->node_list.erase(this->node_list.begin()+i);
                     return;
                 }
@@ -109,19 +107,19 @@ class HTMLCollection{
         // Returns the length of the list stored ! Must be stored in a variable.
         [[nodiscard]] unsigned long length() const;
 
-        void append(const Element* node){
+        void append(Element* node){
             this->element_list.push_back(node);
         }
 
-        void insert(const Element* node, const unsigned long &index){
+        void insert(Element* node, const unsigned long &index){
             if (index<0){return;}
             this->element_list.insert(this->element_list.begin()+index, node);
         }
 
-        void remove(const Element* node){
+        void remove(Element* node){
             unsigned int i = 0;
             for (auto a: this->element_list){
-                if (*a == *node){
+                if (*a == node){
                     this->element_list.erase(this->element_list.begin()+i);
                     return;
                 }
@@ -136,7 +134,7 @@ class HTMLCollection{
 
 
 // Types of Node objects possible !!
-enum class node_type: unsigned short{
+enum node_type{
     ELEMENT_NODE = 1,
     ATTRIBUTE_NODE = 2,
     TEXT_NODE = 3,
@@ -163,25 +161,28 @@ class Node: public EventTarget{
         // Not necessary that parent is element ! could be some other type of node baby !
         Node* parentNode;
         Element* parentElement = nullptr;
-        bool isConnected() const inline;
+        bool isConnected();
 
         //Babies !!! ( Children )
         NodeList childNodes;
-        Node* firstChild() const inline;
-        Node* lastChild() const inline;
-        Node* previousSibling() const;
-        Node* nextSibling() const;
+        Node* firstChild();
+        Node* lastChild();
+        Node* previousSibling();
+        Node* nextSibling();
 
-        bool hasChildNodes() const inline;
+        bool hasChildNodes() const;
 
-        Node* getRootNode(bool &composed = false) const;
+        Node* getRootNode(bool composed = false);
 
         DOMString nodeValue;
         DOMString textContent;
         void normalize();
-        Node* cloneNode(bool &subtree = false);
+        Node* cloneNode(bool subtree);
 
-        unsigned long length() const{
+
+        Node(node_type nodeType, DOMString nodeName, Document* ownerDocument, Node* parentNode);
+
+        unsigned long length(){
             if (dynamic_cast<DocumentType*>(this) || dynamic_cast<Attr*>(this)){
                 return 0;
             }
@@ -192,23 +193,23 @@ class Node: public EventTarget{
             return this->childNodes.length();
         }
 
-        virtual bool isEqualNode(const Node* otherNode) const;
-        virtual bool isSameNode(const Node* otherNode) const;
+        bool isEqualNode(Node* otherNode);
+        bool isSameNode(Node* otherNode);
 
-        unsigned short compareDocumentPosition(Node* other) const;
-        bool contains(const Node* other) const;
+        unsigned short compareDocumentPosition(Node* other);
+        bool contains(Node* other);
 
-        virtual std::optional<DOMString> lookupPrefix(std::optional<DOMString> &namesp) const;
-        std::optional<DOMString> lookupNamespaceURI(std::optional<DOMString> &prefix) const;
+        virtual std::optional<DOMString> lookupPrefix(std::optional<DOMString> &namesp);
+        std::optional<DOMString> lookupNamespaceURI(std::optional<DOMString> &prefix);
 
-        bool isDefaultNamespace(std::optional<DOMString> &namesp) const;
+        bool isDefaultNamespace(std::optional<DOMString> &namesp);
 
         Node* insertBefore(Node* node, Node* child);
         Node* appendChild(Node* node);
         Node* replaceChild(Node* node, Node* child);
         Node* removeChild(Node* child);
 
-        virtual Node* get_the_parent(Event* event) override;
+        virtual Node* get_the_parent(Event* event);
 
         virtual std::optional<DOMString> getnodeValue(){
             return std::nullopt;

@@ -30,6 +30,8 @@
 - Could be error in node.cpp compareDocumentPosition
 - Node's node document can be changed using the adopt algo
 - Encoding sort for Document object
+- Doctype and mode check eveywhere ! all functions change
+- Controversial ownerDocument vs nodeDocument
 
 ## Algorithms
 > Remember to check all calls to these algo's in-order to rectify arg issues !
@@ -38,7 +40,6 @@
 - ScopeMatchSelectorString
 - ~~clone_node~~
 - ~~clone_a_single_node~~
-- equalAlgo
 - ~~locate_a_namespace_prefix~~
 - ~~locate_a_namespace~~
 - preInsertNode
@@ -49,12 +50,12 @@
     - ~~Very Important ! Just 2 steps left !!~~
 - ~~ValidAttributeLocalName~~
 - ~~ValidDocTypeName~~
-- flattenElementCreationOptions
+- ~~flatten_element_creation_options~~
 - create_element
-- InternalCreateElementNS
-- AdoptAlgo
+- ~~internal_create_element_ns~~
+- adopt
 - ~~ValidateAndExtract~~
-    - ~~Check for namespace XML, XMLNS~~
+    - ~~Check for namespace XML,d XMLNS~~
 - CheckHostIncludingInclusiveAncestor
 - ClosedShadowHidden
 - ReTarget
@@ -131,6 +132,7 @@
 - To write definition after selector stuff:
     - Element* querySelector(DOMString selectors);
     - NodeList querySelectorAll(DOMString selectors);
+- Constructor required boi
 
 ## Slottable
 - Change type of `assignedSlot` from DOMString to `HTMLSlotElement` after HTML implementation.
@@ -157,17 +159,18 @@
 - In `clone_a_single_node` algo, complete the custom element registry #HTML
 
 ## Document
-- Opaque Origin
-- `getTheParent` algo
+- Opaque Origin #HTML
+- `getTheParent` algo incomplete: browsing context & relevant global object
 - `serialize` algo
 - Constructor work to set origin to origin of current global object's `associated Doc` #HTML
 - Resolve this in `createProcessingInstruction` for `Document` -> If target does not match the Name production
-- Step 3 in otherwise for `importNode()` in `Document` !! After `CustomElementRegistry` implementation :)
 - Complete:
-    - `createEvent()`
-    - `createRange()`
-    - `createNodeIterator()`
-    - `createTreeWalker()`
+    - `createEvent()` #HTML
+    - `createRange()` # After Range implementation
+    - `createNodeIterator()` # After NodeIterator implementation
+    - `createTreeWalker()` # After TreeWalker implementation
+- is_scoped var in `flatten_element_creation_options` and in `importNode` #HTML
+- looking up a custom element registry for `flatten_element_creation_options` and in `importNode` #HTML
 
 
 ## DOMImplementation

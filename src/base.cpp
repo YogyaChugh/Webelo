@@ -6,7 +6,7 @@
 #include <cstdarg>
 #include <vector>
 #include <ctime>
-#include "../utf8.h"
+#include "utf8.h"
 
 
 typedef std::string DOMString;

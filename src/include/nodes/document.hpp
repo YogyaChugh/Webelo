@@ -7,8 +7,8 @@
 #include <stdexcept>
 #include <map>
 
-#include "../events/events.hpp"
-#include "../base.hpp"
+#include "events/events.hpp"
+#include "base.cpp"
 #include "node.hpp"
 
 class Attr;
@@ -24,10 +24,8 @@ struct ElementCreationOptions;
 struct ImportNodeOptions;
 struct ShadowRootInit;
 class NamedNodeMap;
-class Element;
 class XMLDocument;
 class DOMImplementation;
-class Node;
 class NodeList;
 class HTMLCollection;
 class Document;
@@ -44,9 +42,9 @@ const unsigned short START_TO_END = 1;
 const unsigned short END_TO_END = 2;
 const unsigned short END_TO_START = 3;
 
-Element* getElementById(const Node* node,const DOMString &elementId){
+Element* getElementById(Node* node,const DOMString &elementId){
     if (node->childNodes.length()==0){ return nullptr; }
-    Element* currentElement = node->childNodes[0];
+    Element* currentElement = dynamic_cast<Element*>(node->childNodes[0]);
     std::map<Element*, int> temp = {{currentElement, currentElement->childNodes.length()-1}};
     while (!temp.empty()){
         if (dynamic_cast<Element*>(currentElement)){
@@ -62,7 +60,7 @@ Element* getElementById(const Node* node,const DOMString &elementId){
         else{
             continue;
         }
-        currentElement = currentElement->nextSibling();
+        currentElement = dynamic_cast<Element*>(currentElement->nextSibling());
         while (currentElement==nullptr && !temp.empty()){
             currentElement = (*(temp.end() -1))->nextSibling();
             temp.erase(temp.end()-1);
@@ -71,6 +69,11 @@ Element* getElementById(const Node* node,const DOMString &elementId){
     
     return nullptr;
 }
+
+class NodeIterator{
+    public:
+        NodeIterator(){};
+};
 
 //Exposed to window only
 class AbstractRange{
@@ -147,18 +150,18 @@ class ParentNode: public Node {
     public:
         HTMLCollection children;
         Element* firstElementChild() const{
-            return children->item(0);
+            return children.item(0);
         };
         Element* lastElementChild() const{
-            return children->element_list.back();
+            return children.element_list.back();
         };
 
         unsigned long childElementCount() const{
-            return children->length();
+            return children.length();
         };
 
         void evaluate_children(){
-            for (auto a: this->childNodes){
+            for (auto a: this->childNodes.node_list){
                 if (dynamic_cast<Element*>(a)){
                     this->children.append(dynamic_cast<Element*>(a));
                 }
@@ -173,7 +176,9 @@ class ParentNode: public Node {
         Element* querySelector(DOMString selectors);
         NodeList querySelectorAll(DOMString selectors);
 
-        virtual making_it_abstract() override = 0;
+        virtual void making_it_abstract() override = 0;
+
+        ParentNode(node_type nodeType, DOMString nodeName, Document* ownerDocument, Node* parentNode): Node(nodeType, nodeName, ownerDocument, parentNode){};
 };
 
 
@@ -193,10 +198,12 @@ class Attr: public Node{
         DOMString qualifiedName();
 
         Attr(DOMString localName);
+
+        virtual void making_it_abstract() override {};
 };
 
 //Exposed to window only
-class CharacterData: Node{
+class CharacterData: public Node{
     public:
         unsigned long length();
         DOMString data; //TODO: LegacyNullToEmptyString
@@ -211,12 +218,14 @@ class CharacterData: Node{
         friend void before(std::vector<std::variant<Node*, DOMString>> &nodes, const Node* obj = this);
         friend void after(std::vector<std::variant<Node*, DOMString>> &nodes, const Node* obj = this);
         friend void replaceWith(std::vector<std::variant<Node*, DOMString>> &nodes, constNode* obj = this);
-        friend void remove(const Node* obj = this);
+        friend void remove(Node* obj = this);
+
+        virtual void making_it_abstract() override{};
 };
 
 
 //Exposed to window only
-class Text: CharacterData{
+class Text: public CharacterData{
     public:
         DOMString wholeText;
         DOMString slot=""; //! IMPORTANT SOMEWHERE in dispatch_event (slottable check)
@@ -227,37 +236,38 @@ class Text: CharacterData{
 };
 
 //Exposed to window only
-class ProcessingInstruction: CharacterData{
+class ProcessingInstruction: public CharacterData{
     public:
         DOMString target;
+
+        ProcessingInstruction(){};
 };
 
 
 //Exposed to window only
-class Comment: CharacterData{
+class Comment: public CharacterData{
     public:
         Comment(DOMString data = "");
 };
 
 //Exposed to window only
-class CDATASection: Text{};
+class CDATASection: public Text{};
 
 
 
 //Exposed to window only
-class DocumentType: Node{
-    protected:
+class DocumentType: public Node{
+    public:
         DOMString name;
         DOMString publicId;
         DOMString systemId;
-    public:
     
         friend void before(std::vector<std::variant<Node*, DOMString>> &nodes, const Node* obj = this);
         friend void after(std::vector<std::variant<Node*, DOMString>> &nodes, const Node* obj = this);
         friend void replaceWith(std::vector<std::variant<Node*, DOMString>> &nodes, const Node* obj = this);
-        friend void remove(const Node* obj = this);
+        friend void remove(Node* obj = this);
 
-        DocumentType(name, publicId="", systemId=""){
+        DocumentType(DOMString name,DOMString publicId="",DOMString systemId="",Document* ownerdoc = nullptr, Node* parentnode = nullptr): Node(DOCUMENT_TYPE_NODE, name, ownerdoc, parentnode){
             this->name = name;
             this->publicId = publicId;
             this->systemId = systemId;
@@ -271,17 +281,21 @@ class DocumentType: Node{
         DOMString getsystemId(){
             return systemId;
         }
+
+        virtual void making_it_abstract() override {};
 };
 
-class DocumentFragment: ParentNode{
+class DocumentFragment: public ParentNode{
     public:
         Element* associatedHost = nullptr;
-        friend Element* getElementById(const Node* node = this,const DOMString &elementId);
-        DocumentFragment(){};
+        friend Element* getElementById(Node* node ,const DOMString &elementId);
+        DocumentFragment(Document* ownerdoc = nullptr, Node* parentnode = nullptr): ParentNode(DOCUMENT_FRAGMENT_NODE, "#document-fragment", ownerdoc, parentnode){};
+
+        virtual void making_it_abstract(){};
 };
 
 //Exposed to window only
-class ShadowRoot: DocumentFragment{
+class ShadowRoot: public DocumentFragment{
     public:
         CustomElementRegistry* custom_element_registry = nullptr;
         ShadowRootMode mode;
@@ -305,8 +319,10 @@ class ShadowRoot: DocumentFragment{
 
 
 struct ElementCreationOptions{
-    CustomElementRegistry CustomElementRegistry;
-    DOMString is;
+    CustomElementRegistry* CustomElementRegistry = nullptr;
+    std::optional<DOMString> is = std::nullopt;
+
+    ElementCreationOptions(){};
 };
 
 struct ImportNodeOptions{
@@ -347,10 +363,10 @@ class NamedNodeMap{
 
 enum class ElementState{
     UNDEFINED, FAILED, UNCUSTOMIZED, PRECUSTOMIZED, CUSTOM
-}
+};
 
 
-class Element: ParentNode{
+class Element: public ParentNode{
     public:
         std::optional<DOMString> namespaceURI;
         std::optional<DOMString> prefix;
@@ -408,21 +424,25 @@ class Element: ParentNode{
         friend void before(std::vector<std::variant<Node*, DOMString>> &nodes, const Node* obj = this);
         friend void after(std::vector<std::variant<Node*, DOMString>> &nodes, const Node* obj = this);
         friend void replaceWith(std::vector<std::variant<Node*, DOMString>> &nodes, const Node* obj = this);
-        friend void remove(const Node* obj = this);
+        friend void remove(Node* obj = this);
+
+        bool operator==(Element* other){ return this->isEqualNode(other); }
+
+        virtual void making_it_abstract(){};
 };
 
 
-enum class DocType: DOMString{
-    "xml",
-    "html",
-    "xml+xhtml"
-}
+enum DocType{
+    XML,
+    HTML,
+    XML_XHTML
+};
 
-enum class DocMode: DOMString{
-    "no-quirks",
-    "quirks",
-    "limited-quirks"
-}
+enum DocMode{
+    NO_QUIRKS,
+    QUIRKS,
+    LIMITED_QUIRKS
+};
 
 class Document: public ParentNode{
     public:
@@ -437,12 +457,12 @@ class Document: public ParentNode{
         Element* documentElement();
 
         DOMString encoding = "utf-8";
-        DocType type = "xml";
+        DocType type = XML;
         DOMString* origin = nullptr; //lateeeeeer
-        DocMode mode = "no-quirks";
+        DocMode mode = NO_QUIRKS;
         bool allow_declarative_shodow_roots = false;
 
-        Document();
+        Document(Document* ownerdoc = nullptr, Node* parentnode = nullptr);
 
         DOMString compatMode();
 
@@ -450,12 +470,12 @@ class Document: public ParentNode{
 
         HTMLCollection getElementsByTagName(DOMString qualifiedName);
         HTMLCollection getElementsByTagNameNS(std::optional<DOMString> namesp, DOMString localname);
-        HTMLCollection getElementsByClassName(DOMString classNames);
-        friend Element* getElementById(const Node* node = this, const DOMString &elementId);
+        HTMLCollection getElementsByClassName(std::vector<DOMString> &classNames);
+        friend Element* getElementById(Node* node, const DOMString &elementId);
 
 
-        Element createElement(DOMString localName, std::variant<DOMString,ElementCreationOptions> options); //NOTE: Keep last argument as optional
-        Element createElementNS(std::optional<DOMString> namesp, DOMString qualifiedName, std::variant<DOMString,ElementCreationOptions> options); //NOTE: Keep last argument as optional
+        Element* createElement(DOMString localName, std::variant<DOMString,ElementCreationOptions> options); //NOTE: Keep last argument as optional
+        Element* createElementNS(std::optional<DOMString> namesp, DOMString qualifiedName, std::variant<DOMString,ElementCreationOptions> options); //NOTE: Keep last argument as optional
         Node* importNode(Node* node, std::variant<bool,ImportNodeOptions> options = false);
         Node* adoptNode(Node* node); //no NewObject
 
@@ -475,19 +495,28 @@ class Document: public ParentNode{
         CustomElementRegistry* get_custom_element_registry() const{
             return this->custom_element_registry;
         }
+
+        virtual Node* get_the_parent(Event* event){
+            if (event->gettype()=="load"){
+                return nullptr;
+            }
+            return nullptr;
+        }
+
+        virtual void making_it_abstract(){};
 };
 
 //Exposed to window only
-class XMLDocument: Document{};
+class XMLDocument: public Document{};
 
 
 class DOMImplementation{
-public:
-    Document* associated_doc = nullptr;
-    //NewObject
-    DocumentType createDocumentType(DOMString name, DOMString publicId, DOMString systemId);
-    XMLDocument createDocument(std::optional<DOMString> namesp, DOMString qualifiedName, std::optional<DocumentType> doctype = std::nullopt);
-    //qualifiedName is LegacyNullToEmptyString
-    Document createHTMLDocument(std::optional<DOMString> title);
-    bool hasFeature();
+    public:
+        Document* associated_doc = nullptr;
+        //NewObject
+        DocumentType* createDocumentType(DOMString name, DOMString publicId, DOMString systemId);
+        XMLDocument* createDocument(std::optional<DOMString> namesp, DOMString qualifiedName, std::optional<DocumentType> doctype = std::nullopt);
+        //qualifiedName is LegacyNullToEmptyString
+        Document* createHTMLDocument(std::optional<DOMString> title);
+        bool hasFeature();
 };

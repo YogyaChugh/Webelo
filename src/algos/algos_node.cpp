@@ -244,7 +244,7 @@ std::optional<DOMString> locate_a_namespace(Node* node, std::optional<DOMString>
 std::optional<DOMString> locate_a_namespace_prefix(Element* element, std::optional<DOMString> namespace){
     if (element->namespaceURI==namespace && element->prefix.has_value()){
         return element->prefix;
-    }
+    }virtual void making_it_abstract(){};
     for (auto attr: element->attributes.attribute_list){
         if (attr->prefix=="xmlns" && attr->value==namespace){
             return attr->localName;
@@ -268,7 +268,7 @@ HTMLCollection list_of_elements(std::optional<DOMString> namespace, DOMString lo
     if (localName=="*"){}
 }
 
-HTMLCollection list_of_elements(std::vector<DOMString> &classNames,   Node* root){
+HTMLCollection list_of_elements(std::vector<DOMString> &classNames, Node* root){
     std::vector<DOMString> classes;
     for (auto class: classes){
         class = ParseOrderedSet(class);

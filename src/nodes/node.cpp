@@ -1,14 +1,15 @@
-#include "../include/nodes/node.hpp"
-#include "../include/nodes/document.hpp"
-#include "../algos/algos_base.cpp"
-#include "../algos/mutation_algos.cpp"
-#include "../algos/algos_node.cpp"
+#include "nodes/node.hpp"
+#include "nodes/document.hpp"
+#include "algos_base.cpp"
+#include "mutation_algos.cpp"
+#include "algos_node.cpp"
+#include "basic.cpp"
 
 
 
 // NodeList
 
-Node* NodeList::item(const unsigned long &index) const{
+Node* NodeList::item(const unsigned long index) const{
     try {
         return node_list.at(index);
     }
@@ -96,14 +97,14 @@ Node::Node(node_type nodeType, DOMString nodeName, Document* ownerDocument, Node
 }
 
 
-bool Node::isConnected() const inline{
+bool inline Node::isConnected(){
     if (dynamic_cast<Document*>(this->getRootNode(true))){
         return true;
     }
     return false;
 }
 
-Node* Node::getRootNode(bool &composed) const{
+Node* Node::getRootNode(bool composed = false){
     if (composed){
         auto temp = dynamic_cast<ShadowRoot*>(this);
         if (temp){
@@ -116,29 +117,29 @@ Node* Node::getRootNode(bool &composed) const{
     return this;
 }
 
-bool Node::hasChildNodes() const inline{
+inline bool Node::hasChildNodes() const{
     if (this->childNodes.length()==0){ return false; }
     return true;
 }
 
-Node* Node::firstChild() const inline{
-    return childNodes[0];
+inline Node* Node::firstChild(){
+    return this->childNodes[0];
 }
-Node* Node::lastChild() const inline{
-    return childNodes.node_list.back();
+inline Node* Node::lastChild(){
+    return this->childNodes.node_list.back();
 }
-Node* Node::previousSibling() const{
+Node* Node::previousSibling(){
     if (this->parentNode){
-        auto vect = this->parentNode->childNodes->node_list;
+        auto vect = this->parentNode->childNodes.node_list;
         auto it = std::find(vect.begin(), vect.end(), this) - 1;
         if (it==vect.begin()){ return nullptr; };
         return *it;
     }
     return nullptr;
 }
-Node* Node::nextSibling() const{
+Node* Node::nextSibling(){
     if (this->parentNode){
-        auto vect = this->parentNode->childNodes->node_list;
+        auto vect = this->parentNode->childNodes.node_list;
         auto it = std::find(vect.begin(), vect.end(), this) + 1;
         if (it==vect.end()){ return nullptr; };
         return *it;
@@ -146,7 +147,7 @@ Node* Node::nextSibling() const{
     return nullptr;
 }
 
-virtual Node* Node::get_the_parent(const Event* event){
+Node* Node::get_the_parent(Event* event){
     Element* temp = dynamic_cast<Element*>(this);
     if (temp){
         if (temp->assignedSlot!=nullptr){
@@ -162,13 +163,13 @@ virtual Node* Node::get_the_parent(const Event* event){
     return this->parentNode;
 }
 
-Node* Node::cloneNode(bool &subtree){
+Node* Node::cloneNode(bool subtree){
     // node is self, document is nodeDocument, subtree is arg, parent is null, fallbackRegistry is null
-    return clone_node(this, subtree=subtree);
+    return clone_node(this,nullptr, subtree);
     //TODO
 }
 
-bool Node::isEqualNode(const Node* otherNode) const{
+bool Node::isEqualNode(Node* otherNode){
     if (otherNode==nullptr){ return false; }
     if (nodequals(this, otherNode)){
         return true;
@@ -176,14 +177,14 @@ bool Node::isEqualNode(const Node* otherNode) const{
     return false;
 }
 
-bool Node::isSameNode(const Node* otherNode) const{
+bool Node::isSameNode(Node* otherNode){
     if (otherNode==this){
         return true;
     }
     return false;
 }
 
-unsigned short Node::compareDocumentPosition(Node* other) const{
+unsigned short Node::compareDocumentPosition(Node* other){
     if (this->isSameNode(other)){
         return 0;
     }
@@ -195,14 +196,14 @@ unsigned short Node::compareDocumentPosition(Node* other) const{
     Element* temp2;
     if (temp){
         attr1 = temp;
-        node1 = attr1->ownerElement;
-        temp2 = attr1->ownerElement;
+        node1 = dynamic_cast<Node*>(attr1->ownerElement);
+        temp2 = dynamic_cast<Element*>(attr1->ownerElement);
     }
     temp = dynamic_cast<Attr*>(node2);
     if (temp){
         attr2 = temp;
-        node2 = attr2->ownerElement;
-        temp2 = attr2->ownerElement;
+        node2 = dynamic_cast<Node*>(attr2->ownerElement);
+        temp2 = dynamic_cast<Element*>(attr2->ownerElement);
         if (attr2!=nullptr && node1!=nullptr && node2==node1){
             for (Attr* attr: temp2->attributes.attribute_list){
                 if (nodequals(attr, attr1)){
@@ -217,7 +218,7 @@ unsigned short Node::compareDocumentPosition(Node* other) const{
     if (node1==nullptr || node2==nullptr || node1->getRootNode()!=node2->getRootNode()){
         return DOCUMENT_POSITION_DISCONNECTED + DOCUMENT_POSITION_IMPLEMENTATION_SPECIFIC + DOCUMENT_POSITION_PRECEDING;
     }
-    if ((check_ancestor(node2->ownerDocument, node2, node1) && attr1==nullptr) || (node1==node2 && attr2!=nullptr)){
+    if ((check_ancestor(dynamic_cast<Node*>(node2->ownerDocument), node2, node1) && attr1==nullptr) || (node1==node2 && attr2!=nullptr)){
         return DOCUMENT_POSITION_CONTAINS + DOCUMENT_POSITION_PRECEDING;
     }
     if ((check_descendant(node2, node1) && attr2==nullptr) || (node1==node2 && attr1!=nullptr)){
@@ -229,49 +230,49 @@ unsigned short Node::compareDocumentPosition(Node* other) const{
     return DOCUMENT_POSITION_FOLLOWING;
 }
 
-bool Node::contains(const Node* other) const{
+bool Node::contains(Node* other){
     if (other==nullptr){return false;}
     return check_descendant(this, other, true);
 }
 
-std::optional<DOMString> Node::lookupPrefix(std::optional<DOMString> &namesp) const{
+std::optional<DOMString> Node::lookupPrefix(std::optional<DOMString> &namesp){
     if (namesp==std::nullopt || namesp==""){ return std::nullopt; }
     if (this->parentElement==nullptr){ return std::nullopt; }
     return locate_a_namespace_prefix(this->parentElement, namesp);
 }
 
-std::optional<DOMString> Node::lookupNamespaceURI(std::optional<DOMString> &prefix) const{
+std::optional<DOMString> Node::lookupNamespaceURI(std::optional<DOMString> &prefix){
     if (prefix==""){ prefix=std::nullopt; }
     return locate_a_namespace(this, prefix);
 }
 
-bool Node::isDefaultNamespace(std::optional<DOMString> &namesp) const{
+bool Node::isDefaultNamespace(std::optional<DOMString> &namesp){
     if (namesp==""){ namesp=std::nullopt; }
     std::optional<DOMString> defaultNamespace = locate_a_namespace(this, std::nullopt);
     if (defaultNamespace==namesp){ return true; }
     return false;
 }
 
-Node Node::insertBefore(Node* node, Node* child){
+Node* Node::insertBefore(Node* node, Node* child){
     return pre_insert_node(node, this, child);
 }
 
-Node Node::appendChild(Node* node){
+Node* Node::appendChild(Node* node){
     return pre_insert_node(node, this, nullptr);
 }
 
-Node Node::replaceChild(Node* node, Node* child){
+Node* Node::replaceChild(Node* node, Node* child){
     return replace_node(node, this, child);
 }
 
-Node Node::removeChild(Node* child){
+Node* Node::removeChild(Node* child){
     return pre_remove_node(child, this);
 }
 
 
 void Node::normalize(){
-    if (node->childNodes.length()==0){ return; }
-    Element* currentNode = node->childNodes[0];
+    if (this->childNodes.length()==0){ return; }
+    Element* currentNode = dynamic_cast<Element*>(this->childNodes[0]);
     std::vector<Element*> temp = {currentNode};
     while (currentNode!=nullptr){
         if (dynamic_cast<Text*>(currentNode) && !dynamic_cast<CDATASection*>(currentNode)){

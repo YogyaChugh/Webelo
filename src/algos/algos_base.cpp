@@ -1,14 +1,14 @@
 #ifndef ALGOS_BASE_DOM
 #define ALGOS_BASE_DOM
 
-#include "include/nodes/node.hpp"
-#include "include/nodes/document.hpp"
-#include "include/base.hpp" //
-#include "include/exceptions.hpp"
-#include <set> //
-#include <string> //
-#include <vector> //
-#include "utf8.h" //
+#include "nodes/node.hpp"
+#include "nodes/document.hpp"
+#include "base.cpp"
+#include "exceptions.cpp"
+#include <set>
+#include <string>
+#include <vector>
+#include "utf8.h"
 
 // Returns a set of strings. It separates all the substrings based on ASCII whitespace in the input !!
 std::set<DOMString> ParseOrderedSet(DOMString input){
