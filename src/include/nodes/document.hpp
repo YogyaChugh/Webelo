@@ -8,6 +8,7 @@
 #include <map>
 
 #include "events/events.hpp"
+#include "algos_docs.cpp"
 #include "base.cpp"
 #include "node.hpp"
 
@@ -187,26 +188,32 @@ class ParentNode: public Node {
 //Exposed to window only
 class Attr: public Node{
     public:
-        std::optional<DOMString> namespaceURI;
-        std::optional<DOMString> prefix;
+        std::optional<DOMString> namespaceURI = std::nullopt;
+        std::optional<DOMString> prefix = std::nullopt;
         DOMString localName;
         DOMString name;
-        Element* ownerElement;
+        Element* ownerElement = nullptr;
         bool specified = true;
         //CEReactions
-        DOMString value;
+        DOMString value = "";
         DOMString qualifiedName();
 
         Attr(DOMString localName);
 
         virtual void making_it_abstract() override {};
+
+        DOMString setvalue(DOMString value){
+            if (this->ownerElement==nullptr){ this->value = value; }
+            else{ change_attribute_value(this, value); }
+        }
 };
 
 //Exposed to window only
 class CharacterData: public Node{
+    protected:
+        DOMString data;
     public:
         unsigned long length();
-        DOMString data; //TODO: LegacyNullToEmptyString
         DOMString substringData(unsigned long offset, unsigned long count);
         void appendData(DOMString data);
         void insertData(unsigned long offset, DOMString data);
@@ -220,7 +227,10 @@ class CharacterData: public Node{
         friend void replaceWith(std::vector<std::variant<Node*, DOMString>> &nodes, constNode* obj = this);
         friend void remove(Node* obj = this);
 
-        virtual void making_it_abstract() override{};
+        DOMString getdata(){ return this->data; }
+        DOMString setdata(DOMString data){
+            replace_data(this, 0, this->length())
+        }
 };
 
 
@@ -345,16 +355,16 @@ class NamedNodeMap{
         std::vector<Attr*> attribute_list = {};
         Element* associatedElement;
         unsigned long length();
-        std::optional<Attr> item(unsigned long index);
-        std::optional<Attr> getNamedItem(DOMString qualifiedName);
+        Attr* item(unsigned long index);
+        Attr* getNamedItem(DOMString qualifiedName);
 
-        std::optional<Attr> getNamedItemNS(std::optional<DOMString> namesp, DOMString localName);
+        Attr* getNamedItemNS(std::optional<DOMString> namesp, DOMString localName);
 
         //CEReactions
-        std::optional<Attr> setNamedItem(Attr attr);
-        std::optional<Attr> setNamedItemNS(Attr attr);
-        Attr removeNamedItem(DOMString qualifiedName);
-        Attr removeNamedItemNS(std::optional<DOMString> namesp, DOMString localName);
+        Attr* setNamedItem(Attr attr);
+        Attr* setNamedItemNS(Attr attr);
+        Attr* removeNamedItem(DOMString qualifiedName);
+        Attr* removeNamedItemNS(std::optional<DOMString> namesp, DOMString localName);
 };
 
 enum ElementState{
@@ -367,7 +377,6 @@ class Element: public ParentNode{
         std::optional<DOMString> namespaceURI;
         std::optional<DOMString> prefix;
         DOMString localName;
-        DOMString tagName;
         DOMTokenList classList;
         NamedNodeMap attributes;
         ShadowRoot* shadow_root = nullptr;
@@ -377,6 +386,7 @@ class Element: public ParentNode{
         DOMString id;
         DOMString className;
         DOMString slot="";
+        std::optional<DOMString> is;
 
         DOMString* assignedSlot; // TODO: CHANGE TYPE AFTER HTML SPEC !!
 
@@ -401,15 +411,19 @@ class Element: public ParentNode{
         Element* previousElementSibling() const;
         Element* nextElementSibling() const;
 
+        DOMString tagName(){
+            return html_uppercased_qualified_name();
+        };
+
 
         void setAttribute(DOMString qualifiedName, DOMString value);
         void setAttributeNS(std::optional<DOMString> namesp, DOMString qualifiedName, DOMString value);
         void removeAttribute(DOMString qualifiedName);
         void removeAttributeNS(std::optional<DOMString> namesp, DOMString localName);
-        bool toggleAttribute(DOMString qualifiedName, bool force); //force is optional
-        std::optional<Attr> setAttributeNode(Attr attr);
-        std::optional<Attr> setAttributeNodeNS(Attr attr);
-        Attr removeAttributeNode(Attr attr);
+        bool toggleAttribute(DOMString qualifiedName, std::optional<bool> force); //force is optional
+        Attr* setAttributeNode(Attr* attr);
+        Attr* setAttributeNodeNS(Attr* attr);
+        Attr* removeAttributeNode(Attr* attr);
         
         bool hasAttributes();
         std::vector<DOMString> getAttributeNames();
@@ -418,8 +432,8 @@ class Element: public ParentNode{
         bool hasAttribute(DOMString qualifiedName);
         bool hasAttributeNS(std::optional<DOMString> namesp, DOMString localname);
 
-        std::optional<Attr> getAttributeNode(DOMString qualifiedName);
-        std::optional<Attr> getAttributeNodeNS(std::optional<DOMString> namesp, DOMString localName);
+        Attr* getAttributeNode(DOMString qualifiedName);
+        Attr* getAttributeNodeNS(std::optional<DOMString> namesp, DOMString localName);
 
         ShadowRoot* attachShadow(ShadowRootInit init);
         std::optional<Element> closest(DOMString selectors);
@@ -440,6 +454,34 @@ class Element: public ParentNode{
         bool operator==(Element* other){ return this->isEqualNode(other); }
 
         virtual void making_it_abstract(){};
+
+
+        //Getter Setters
+        DOMString getid(){
+            return fetch_attribute(this, "id");
+        }
+        void setid(DOMString value){
+            set_attribute_value(this, "id", value);
+        }
+
+        DOMString getclassName(){
+            return fetch_attribute(this, "class");
+        }
+        void setclassName(DOMString value){
+            set_attribute_value(this, "class", value);
+        }
+
+        DOMString getslot(){
+            return fetch_attribute(this, "slot");
+        }
+        void setslot(DOMString value){
+            set_attribute_value(this, "slot", value);
+        }
+
+        ShadowRoot* getshadow_root(){
+            if (this->shadow_root==nullptr || this->shadow_root->mode==closed){ return nullptr; }
+            return this->shadow_root;
+        }
 };
 
 
@@ -530,4 +572,20 @@ class DOMImplementation{
         //qualifiedName is LegacyNullToEmptyString
         Document* createHTMLDocument(std::optional<DOMString> title);
         bool hasFeature();
+};
+
+
+class DOMTokenList{
+    public:
+        std::optional<DOMString> item(unsigned long index);
+        bool contains(DOMString token);
+
+        //CEReactions
+        void add(...);
+        void remove(...);
+        bool toggle(DOMString token, DOMString newToken);
+        DOMString value; //TODO: Implement stringifier
+        
+        bool supports(DOMString token);
+        std::vector<DOMString> list;
 };

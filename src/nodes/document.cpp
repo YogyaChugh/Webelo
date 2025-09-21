@@ -461,59 +461,133 @@ bool Element::hasAttributes(){
 std::vector<DOMString> Element::getAttributeNames(){
     std::vector<DOMString> attribute_qualified_names = {};
     for (auto a: this->attributes.attribute_list){
-        attribute_qualified_names.push_back(a->qualifiedName());
+        if (a->prefix==std::nullopt){
+            attribute_qualified_names.push_back(a->localName);
+        }
+        else{
+            attribute_qualified_names.push_back(a->prefix.value() + ":" + a->localName);
+        }
     }
     return attribute_qualified_names;
 }
 
 
 std::optional<DOMString> Element::getAttribute(DOMString qualifiedName){
-    Attr* attr = FetchAttributeByName(qualifiedName, this);
-    if (attr==nullptr){ return nullptr; }
+    Attr* attr = fetch_attribute(qualifiedName, this);
+    if (attr==nullptr){ return std::nullopt; }
     return attr->value;
 }
 
 std::optional<DOMString> Element::getAttributeNS(std::optional<DOMString> namesp, DOMString localName){
-    Attr* attr = FetchAttributeByNamespaceAndLocalName(namesp, localName, this);
-    if (attr==nullptr){ return nullptr; }
+    Attr* attr = fetch_attribute(namesp, localName, this);
+    if (attr==nullptr){ return std::nullopt; }
     return attr->value;
 }
 
 
 void Element::setAttribute(DOMString qualifiedName, DOMString value){
-    if (!validAttributeLocalName(qualifiedName)){ throw InvalidCharacterError("Invalid name for attribute !!"); }
+    if (!ValidAttributeLocalName(qualifiedName)){ throw InvalidCharacterError("Invalid name for attribute !!"); }
     //later !
+    if (this->ownerDocument->type!=XML){
+        std::transform(qualifiedName.begin(), qualifiedName.end(), qualifiedName.begin(), [](unsigned char c){ return std::tolower(c); });
+    }
+    Attr* attribute = nullptr;
+    for (auto attr: this->attributes.attribute_list){
+        DOMString qualif;
+        if (attr->prefix == std::nullopt){
+            qualif = attr->localName;
+        }
+        else{
+            qualif = attr->prefix.value() + ":" + attr->localName;
+        }
+        if (qualif==qualifiedName){
+            attribute = attr;
+            break;
+        }
+    }
+    if (attribute==nullptr){
+        Attr* temp = new Attr(qualifiedName);
+        temp->value = value;
+        temp->ownerDocument = this->ownerDocument;
+        append_attribute(temp, this);
+        return;
+    }
+    change_attribute_value(attribute, value);
 }
 
 void Element::setAttributeNS(std::optional<DOMString> namesp, DOMString qualifiedName, DOMString value){
     std::optional<DOMString> prefix;
     DOMString localName;
     ValidateAndExtract(namesp, qualifiedName, "element", prefix, localName);
-    SetAttributeValue(this, localName, value, prefix, namesp);
+    set_attribute_value(this, localName, value, prefix, namesp);
 }
 
 void Element::removeAttribute(DOMString qualifiedName){
-    RemoveAttributeByName(qualifiedName, this);
+    remove_attribute_by_name(qualifiedName, this);
 }
 
 void Element::removeAttributeNS(std::optional<DOMString> namesp, DOMString localName){
-    RemoveAttributeByNamespaceAndLocalName(namesp, localName, this);
+    remove_attribute_by_namespace(namesp, localName, this);
 }
 
 bool Element::hasAttribute(DOMString qualifiedName){
-    //TODO
+    if (this->ownerDocument->type!=XML){
+        std::transform(qualifiedName.begin(), qualifiedName.end(), qualifiedName.begin(), [](unsigned char c){ return std::tolower(c); });
+    }
+    for (auto attr: this->attributes.attribute_list){
+        DOMString qualif;
+        if (attr->prefix == std::nullopt){
+            qualif = attr->localName;
+        }
+        else{
+            qualif = attr->prefix.value() + ":" + attr->localName;
+        }
+        if (qualif==qualifiedName){
+            return true;
+        }
+    }
     return false;
 }
 
-bool Element::toggleAttribute(DOMString qualifiedName, bool force){
-    if (!validAttributeLocalName(qualifiedName)){ throw InvalidCharacterError("Invalid Attribute Name boi !"); }
-    //TODO
+bool Element::toggleAttribute(DOMString qualifiedName, std::optional<bool> force){
+    if (!ValidAttributeLocalName(qualifiedName)){ throw InvalidCharacterError("Invalid Attribute Name boi !"); }
+    if (this->ownerDocument->type!=XML){
+        std::transform(qualifiedName.begin(), qualifiedName.end(), qualifiedName.begin(), [](unsigned char c){ return std::tolower(c); });
+    }
+    Attr* attribute = nullptr;
+    for (auto attr: this->attributes.attribute_list){
+        DOMString qualif;
+        if (attr->prefix == std::nullopt){
+            qualif = attr->localName;
+        }
+        else{
+            qualif = attr->prefix.value() + ":" + attr->localName;
+        }
+        if (qualif==qualifiedName){
+            attribute = attr;
+            break;
+        }
+    }
+    if (attribute==nullptr){
+        if (!force.has_value() || (force.has_value() && force.value()==true)){
+            Attr* temp = new Attr(qualifiedName);
+            temp->value = "";
+            temp->ownerDocument = this->ownerDocument;
+            append_attribute(temp, this);
+            return true;
+        }
+        return false;
+    }
+    if (!force.has_value() || (force.has_value() && force.value()==false)){
+        remove_attribute_by_name(qualifiedName, this);
+        return false;
+    }
     return true;
 }
 
 bool Element::hasAttributeNS(std::optional<DOMString> namesp, DOMString localname){
-    if (namesp.value==""){ namesp = std::nullopt; }
-    for (auto a: attributes->attribute_list){
+    if (namesp.has_value() && namesp.value()==""){ namesp = std::nullopt; }
+    for (auto a: this->attributes.attribute_list){
         if (a->namespaceURI==namesp && a->localName==localName){
             return true;
         }
@@ -522,29 +596,29 @@ bool Element::hasAttributeNS(std::optional<DOMString> namesp, DOMString localnam
 }
 
 
-std::optional<Attr> Element::getAttributeNode(DOMString qualifiedName){
-    return FetchAttributeByName(qualifiedName, this);
+Attr* Element::getAttributeNode(DOMString qualifiedName){
+    return fetch_attribute(qualifiedName, this);
 }
 
-std::optional<Attr> Element::getAttributeNodeNS(std::optional<DOMString> namesp, DOMString localName){
-    return FetchAttributeByNamespaceAndLocalName(namesp, localName, this);
+Attr* Element::getAttributeNodeNS(std::optional<DOMString> namesp, DOMString localName){
+    return fetch_attribute(namesp, localName, this);
 }
 
-std::optional<Attr> Element::setAttributeNode(Attr attr){
-    return SetAttribute(attr, this);
+Attr* Element::setAttributeNode(Attr* attr){
+    return set_attribute(attr, this);
 }
 
-std::optional<Attr> Element::setAttributeNodeNS(Attr attr){
-    return SetAttribute(attr, this);
+Attr* Element::setAttributeNodeNS(Attr* attr){
+    return set_attribute(attr, this);
 }
 
-Attr Element::removeAttributeNode(Attr attr){
+Attr* Element::removeAttributeNode(Attr* attr){
     bool found = false;
-    for (auto a: this->attributes->attribute_list){
-        if (*a==attr){ found = true; }
+    for (auto a: this->attributes.attribute_list){
+        if (a==attr){ found = true; }
     }
     if (!found){ throw NotFoundError("Attribute Not Found !"); }
-    RemoveAttribute(attr);
+    remove_attribute(attr);
     return attr;
 }
 
@@ -553,26 +627,38 @@ ShadowRoot* Element::attachShadow(ShadowRootInit init){
     CustomElementRegistry* registry = this->customElementRegistry;
     if (init.customElementRegistry!=nullptr){
         registry = init.customElementRegistry;
-        if (registry.is_scoped==false && registry!=this->nodeDocument->customElementRegistry){ throw NotSupportedError("This ain't supported !"); }
+        if (registry!=this->ownerDocument->custom_element_registry){ throw NotSupportedError("This ain't supported !"); }
     }
-    AttachShadowRoot(this, init.mode, init.clonable, init.serializable, init.delegatesFocus, init.slotAssignment, registry);
-    return this->shadow_root;
+    attach_shadow_root(this, init.mode, init.clonable, init.serializable, init.delegatesFocus, init.slotAssignment, *registry);
+    return this->getshadow_root();
 }
 
 
 std::optional<Element> Element::insertAdjacentElement(DOMString where, Element element){
-    return InsertAdjacent(this, where, element);
+    return insert_adjacent(this, where, dynamic_cast<Node*>(element));
 }
 
 void Element::insertAdjacentText(DOMString where, DOMString data){
     Text* text = new Text(data);
-    text->nodeDocument = this->nodeDocument;
-    InsertAdjacent(this, where, text);
+    text->ownerDocument = this->ownerDocument;
+    insert_adjacent(this, where, text);
+}
+
+HTMLCollection Element::getElementsByTagName(DOMString qualifiedName){
+    return list_of_elements(qualifiedName, dynamic_cast<Node*>(this));
+}
+
+HTMLCollection Element::getElementsByTagNameNS(std::optional<DOMString> namesp, DOMString localName){
+    return list_of_elements(namesp, localName, dynamic_cast<Node*>(this));
+}
+
+HTMLCollection Element::getElementsByClassName(DOMString classNames){
+    return list_of_elements(classNames, dynamic_cast<Node*>(this));
 }
 
 
 
-std::optional<Attr> NamedNodeMap::item(unsigned long index){
+Attr* NamedNodeMap::item(unsigned long index){
     try {
         return attribute_list.at(index);
     }
@@ -586,30 +672,30 @@ unsigned long NamedNodeMap::length(){
     return attribute_list.size();
 }
 
-std::optional<Attr> NamedNodeMap::getNamedItem(DOMString qualifiedName){
-    return FetchAttributeByName(qualifiedName, associatedElement);
+Attr* NamedNodeMap::getNamedItem(DOMString qualifiedName){
+    return fetch_attribute(qualifiedName, this->associatedElement);
 }
 
-std::optional<Attr> NamedNodeMap::getNamedItemNS(std::optional<DOMString> namesp, DOMString localName){
-    return FetchAttributeByNamespaceAndLocalName(namesp, localName, associatedElement);
+Attr* NamedNodeMap::getNamedItemNS(std::optional<DOMString> namesp, DOMString localName){
+    return fetch_attribute(namesp, localName, this->associatedElement);
 }
 
 std::optional<Attr> NamedNodeMap::setNamedItem(Attr attr){
-    return SetAttribute(attr, associatedElement);
+    return set_attribute(attr, this->associatedElement);
 }
 
 std::optional<Attr> NamedNodeMap::setNamedItemNS(Attr attr){
-    return SetAttribute(attr, associatedElement);
+    return set_attribute(attr, this->associatedElement);
 }
 
-Attr NamedNodeMap::removeNamedItem(DOMString qualifiedName){
-    Attr* attr = RemoveAttributeByName(qualifiedName, associatedElement);
+Attr* NamedNodeMap::removeNamedItem(DOMString qualifiedName){
+    Attr* attr = remove_attribute_by_name(qualifiedName, this->associatedElement);
     if (attr==nullptr){ throw NotFoundError("Attribute not found !!"); }
     return attr;
 }
 
-Attr removeNamedItemNS(std::optional<DOMString> namesp, DOMString localName){
-    Attr* attr = RemoveAttributeByNamespaceAndLocalName(namesp, localName, associatedElement);
+Attr* removeNamedItemNS(std::optional<DOMString> namesp, DOMString localName){
+    Attr* attr = remove_attribute_by_namespace(namesp, localName, this->associatedElement);
     if (attr==nullptr){ throw NotFoundError("Attribute not found !!"); }
     return attr;
 }
@@ -621,12 +707,11 @@ DOMString Attr::qualifiedName(){
     if (this->prefix==std::nullopt){
         return this->localName;
     }
-    return this->prefix + ":" + this->localName;
+    return this->prefix.value() + ":" + this->localName;
 }
 
 Attr::Attr(DOMString localName){
     this->localName = localName;
-    this->name = this->qualifiedName();
 }
 
 

@@ -148,3 +148,71 @@ Attr* remove_attribute_by_namespace(std::optional<DOMString> namesp, DOMString l
     }
     return attr;
 }
+
+void attach_shadow_root(Element* element, ShadowRootMode mode, bool clonable, bool serializable, bool delegatesFocus, SlotAssignmentMode slotAssignment, std::optional<CustomElementRegistry> registry){
+    if (element->namespaceURI!="http://www.w3.org/1999/xhtml"){ throw NotSupportedError("nope not supported"); }
+    if (!ValidShadowHostName(element->localName)){ throw NotSupportedError("nope not supported boi !!"); }
+    if (ValidCustomElementName(element->localName) || element->is!=std::nullopt){}
+    if (element->getshadow_root()!=nullptr){
+        ShadowRoot* currentShadowRoot = element->getshadow_root();
+        if (!currentShadowRoot->declarative || currentShadowRoot->mode!=mode){ throw NotSupportedError("nope not supporting :) !"); }
+        else{
+            for (auto child: currentShadowRoot->childNodes){
+                remove_node(child);
+            }
+            currentShadowRoot->declarative = false;
+            return;
+        }
+    }
+    ShadowRoot* shadow = new ShadowRoot();
+    shadow->ownerDocument = element->ownerDocument;
+    shadow->associatedHost = element;
+    shadow->mode = mode;
+    shadow->delegatesFocus = delegatesFocus;
+    if (element->customElementState==PRECUSTOMIZED && element->customElementState==CUSTOM){
+        shadow->availableToElementInternals = true;
+    }
+    shadow->slotAssignment = slotAssignment;
+    shadow->declarative = false;
+    shadow->clonable = clonable;
+    shadow->serializable = serializable;
+    shadow->custom_element_registry = &registry.value();
+    element->shadow_root = shadow;
+}
+
+Node* insert_adjacent(Element* element, DOMString where, Node* node){
+    std::transform(where.begin(), where.end(), where.begin(), [](unsigned char c){ return std::tolower(c); } );
+    if (where=="beforebegin"){
+        if (element->parentNode==nullptr){ return nullptr; }
+        return pre_insert_node(node, element->parentNode, element);
+    }
+    else if (where=="afterbegin"){
+        return pre_insert_node(node, element, element->firstChild());
+    }
+    else if (where=="beforeend"){
+        return pre_insert_node(node, element, nullptr);
+    }
+    else if (where="afterend"){
+        if (element->parentNode==nullptr){ return nullptr; }
+        return pre_insert_node(node, element->parentNode, element->nextSibling());
+    }
+    else{
+        throw SyntaxError("syntax errrrrror boi !!")
+    }
+}
+
+DOMString replace_data(Node* node, unsigned int offset, unsigned int count, DOMString data){
+    unsigned length = node->length();
+    if (offset>length){ throw IndexSizeError("greater than error !!"); }
+    if ((offset+count)>length){ count = length-offset; }
+    // queue mutation record
+}
+
+
+DOMString substring_data(Node* node, unsigned int offset, unsigned int count){
+    unsigned length = node->length();
+    if (offset>length){ throw IndexSizeError("greater than error !!"); }
+    CharacterData* temp = dynamic_cast<CharacterData>(node);
+    if ((offset+count)>length){ return temp->data.substr(offset); }
+    return temp->data.substr(offset, count);
+}

@@ -261,10 +261,10 @@ HTMLCollection list_of_elements(DOMString qualifiedName, Node* root){
     if (root->ownerDocument->type!="xml"){}
 }
 
-HTMLCollection list_of_elements(std::optional<DOMString> namespace, DOMString localName, Node* root){
-    if (namespace==""){ namespace = std::nullopt; }
-    if (namespace=="*" && localName=="*"){}
-    if (namespace=="*"){}
+HTMLCollection list_of_elements(std::optional<DOMString> namesp, DOMString localName, Node* root){
+    if (namesp==""){ namesp = std::nullopt; }
+    if (namesp=="*" && localName=="*"){}
+    if (namesp=="*"){}
     if (localName=="*"){}
 }
 

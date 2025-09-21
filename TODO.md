@@ -73,16 +73,15 @@
 - ~~set_attribute_value~~
 - ~~remove_attribute_by_name~~
 - ~~remove_attribute_by_namespace~~
-- AttributeChangeSteps
-- HTMLUpperCasedQualifiedName
+- ~~html_uppercased_qualified_name~~
 - attach_shadow_root
 - listElementsWithQualifiedName
 - listElementsWithNamespaceAndLocalName
 - listElementsWithClassNames
 - InsertAdjacent
 - SetExistingAttributeValue
-- ReplaceDataNode
-- SubstringData
+- replace_data
+- ~~SubstringData~~
 - DetermineNodeLength
 - SplitTextNode
 - StrictSplitText
@@ -187,28 +186,30 @@
 
 ## Element
 - customElementDefinition implementation #HTML
-- is value implementation #HTML
-- validCustomElementName #HTML
-- tagName getter steps with HTMLUpperCasedQualifiedName
-- If something is in the HTML namespace
+- ~~is value implementation #HTML~~
+- ~~validCustomElementName #HTML~~
+- ~~tagName getter steps with HTMLUpperCasedQualifiedName~~
 - Complete CustomElementRegistry class !
 - shadowRoot resolve with getter steps !
 - Implement
-    - setAttribute()
-    - hasAttribute()
-    - toggleAttribute()
-    - closest()
-    - matches()
-    - webkitMatchesSelector()
-- Implement `refect`
+    - ~~setAttribute()~~
+    - ~~hasAttribute()~~
+    - ~~toggleAttribute()~~
+    - closest() #CSS
+    - matches() #CSS
+    - webkitMatchesSelector() #CSS
+- ~~Implement `refect`~~
 - create_element algo with #HTML
 - `fetch_attribute` in HTML namespace #HTML
+- getter method for classList after `DOMTokenList`
+- HTML namespace check in `setAttribute` & `hasAttribute` && `toggleAttribute` #HTML
+- is_scoped in `attachShadow` #HTML
+- Custom stuff in `attach_shadow_root` algo in algos_docs.cpp #HTML
 
 ## NamedNodeMap
 - supported property names
 
 ## Attr
-- ownerElement & value
 
 ## CharacterData
 - Setter steps for data

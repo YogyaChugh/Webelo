@@ -138,6 +138,32 @@ bool validDocTypeName(DOMString input){
     return true;
 }
 
+// From the HTML Specification
+bool ValidCustomElementName(DOMString name){
+    if (!validElementLocalName(name)){ return false; }
+    int a = name.at(0);
+    if (a<97 && a>122){ return false; }
+    bool contains_hyphen = false;
+    for (auto ch: name){
+        if (ch=='-'){ contains_hyphen = true; }
+        int c = ch;
+        if (c>=65 && c<=90){ return false; }
+    }
+    if (!contains_hyphen){ return false; }
+    if (name=="annotation-xml" || name=="color-profile" || name=="font-face" || name=="font-face-src" || name=="font-face-uri" || name=="font-face-format" || name=="font-face-name" || name=="missing-glyph"){
+        return false;
+    }
+    return true;
+}
+
+bool ValidShadowHostName(DOMString name){
+    if (!ValidCustomElementName(name)){ return false; }
+    if (name!="article" && name!="aside" && name!="blockquote" && name!="body" && name!="div" && name!="footer" && name!="h1" && name!="h2" && name!="h3" && name!="h4" && name!="h5" && name!="h6" && name!="header" && name!="main" && name!="nav" && name!="p" && name!="section" && name!="span"){
+        return false;
+    }
+    return true;
+}
+
 /*
 God knows what this does ! Just followed the documentation: 
 https://dom.spec.whatwg.org/#validate-and-extract
