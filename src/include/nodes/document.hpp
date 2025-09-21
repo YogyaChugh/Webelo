@@ -357,7 +357,7 @@ class NamedNodeMap{
         Attr removeNamedItemNS(std::optional<DOMString> namesp, DOMString localName);
 };
 
-enum class ElementState{
+enum ElementState{
     UNDEFINED, FAILED, UNCUSTOMIZED, PRECUSTOMIZED, CUSTOM
 };
 
@@ -368,7 +368,7 @@ class Element: public ParentNode{
         std::optional<DOMString> prefix;
         DOMString localName;
         DOMString tagName;
-        DOMTokenList classList; //TODO-js: Sameobject & PutForwards=value
+        DOMTokenList classList;
         NamedNodeMap attributes;
         ShadowRoot* shadow_root = nullptr;
         CustomElementRegistry* customElementRegistry;
@@ -376,11 +376,27 @@ class Element: public ParentNode{
         //CEReactions
         DOMString id;
         DOMString className;
-        DOMString slot=""; //TODO-js: Unscopable
+        DOMString slot="";
 
         DOMString* assignedSlot; // TODO: CHANGE TYPE AFTER HTML SPEC !!
 
-        Element();
+        DOMString html_uppercased_qualified_name(){
+            DOMString qualified_name;
+            if (this->prefix==std::nullopt){ qualified_name = this->localName; }
+            else{ qualified_name = this->prefix.value() + ":" + this->localName; }
+            if (this->ownerDocument->type != XML){
+                std::transform(qualified_name.begin(), qualified_name.end(), qualified_name.begin(), [](unsigned char c){ return std::toupper(c); });
+            }
+            return qualified_name;
+        }
+
+        Element(std::optional<DOMString> namesp, std::optional<DOMString> prefix, DOMString localName, CustomElementRegistry* customElementRegistry, ElementState customElementState, Document* ownerdoc = nullptr, Node* parentnode = nullptr): ParentNode(ELEMENT_NODE, this->html_uppercased_qualified_name(), ownerdoc, parentnode){
+            this->namespaceURI = namesp;
+            this->prefix = prefix;
+            this->localName = localName;
+            this->customElementRegistry = customElementRegistry;
+            this->customElementState = customElementState;
+        }
 
         Element* previousElementSibling() const;
         Element* nextElementSibling() const;
@@ -408,7 +424,6 @@ class Element: public ParentNode{
         ShadowRoot* attachShadow(ShadowRootInit init);
         std::optional<Element> closest(DOMString selectors);
         bool matches(DOMString selectors);
-        bool webkitMatchesSelectors(DOMString selectors); //legacy .matches
 
         HTMLCollection getElementsByTagName(DOMString qualifiedName);
         HTMLCollection getElementsByTagNameNS(std::optional<DOMString> namesp, DOMString localName);

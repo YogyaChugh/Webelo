@@ -112,30 +112,13 @@ bool check_node_precedes(Document* doc, Node* node, Node* target){
     return false;
 }
 
-Node* find_root(Node* node, bool shadow_inclusive = false){
-    if (node==nullptr){ return node; }
-    Node* currentNode = node;
-    Node* temporary = node->parentNode;
-    while (temporary!=nullptr){
-        currentNode = temporary;
-        if (shadow_inclusive){
-            ShadowRoot* temp = dynamic_cast<ShadowRoot*>(currentNode);
-            while (temp){
-                currentNode = dynamic_cast<Node*>(temp->host());
-                temp = dynamic_cast<ShadowRoot*>(currentNode);
-            }
-        }
-        temporary = currentNode->parentNode;
-    }
-    return currentNode;
-}
 
 bool check_shadow_including_descendant(Node* node, Node* target, bool inclusive = false){
     if (node==nullptr || target==nullptr){
         return false;
     }
     if (check_descendant(node, target, inclusive)){ return true; }
-    ShadowRoot* temp = dynamic_cast<ShadowRoot*>(find_root(target));
+    ShadowRoot* temp = dynamic_cast<ShadowRoot*>(target->getRootNode());
     if (temp){
         return check_shadow_including_descendant(node, dynamic_cast<Node*>(temp->host()));
     }
@@ -144,7 +127,7 @@ bool check_shadow_including_descendant(Node* node, Node* target, bool inclusive 
 
 
 bool is_closed_shadow_hidden(Node* A, Node* B){
-    ShadowRoot* temp = dynamic_cast<ShadowRoot*>(find_root(A));
+    ShadowRoot* temp = dynamic_cast<ShadowRoot*>(A->getRootNode());
     if (temp){
         if (!check_shadow_including_descendant(dynamic_cast<Node*>(temp), B, true)){
             if (temp->mode==closed || is_closed_shadow_hidden(dynamic_cast<Node*>(temp->host()), B)){
@@ -158,7 +141,7 @@ bool is_closed_shadow_hidden(Node* A, Node* B){
 Node* retarget(Node* A, Node* B){
     Node* temp;
     while (true){
-        temp = find_root(A);
+        temp = A->getRootNode();
         if (!dynamic_cast<Node*>(A) || !dynamic_cast<ShadowRoot*>(temp) || (dynamic_cast<Node*>(B) && check_shadow_including_descendant(B, temp))){
             return A;
         }

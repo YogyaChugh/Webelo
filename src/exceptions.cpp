@@ -84,4 +84,16 @@ class AbortError: public exception {
         }
 };
 
+
+class InUseAttributeError: public exception {
+    private:
+        string message;
+    public:
+        InUseAttributeError(const char* msg): message(msg){};
+
+        const char* what() const noexcept {
+            return message.c_str();
+        }
+};
+
 #endif

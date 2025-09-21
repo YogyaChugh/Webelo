@@ -60,19 +60,19 @@
 - ~~find_root~~
 - ~~is_closed_shadow_hidden~~
 - ~~retarget~~
-- CreateElementInternal
-- HandleAttributeChanges
-- ChangeAttributeValue
-- append_attribute_to_element
-- RemoveAttribute
-- ReplaceAttribute
-- FetchAttributeByName
-- FetchAttributeByNamespaceAndLocalName
-- FetchAttributeValue
-- SetAttribute
-- SetAttributeValue
-- RemoveAttributeByName
-- RemoveAttributeByNamespaceAndLocalName
+- create_element_internal
+- handle_attribute_changes
+- ~~change_attribute_value~~
+- ~~append_attribute~~
+- ~~remove_attribute~~
+- ~~replace_attribute~~
+- ~~FetchAttributeByName~~
+- ~~FetchAttributeByNamespaceAndLocalName~~
+- ~~FetchAttributeValue~~
+- ~~set_attribute~~
+- ~~set_attribute_value~~
+- ~~remove_attribute_by_name~~
+- ~~remove_attribute_by_namespace~~
 - AttributeChangeSteps
 - HTMLUpperCasedQualifiedName
 - attach_shadow_root
@@ -186,8 +186,8 @@
 - onslotchange attribute event handler
 
 ## Element
-- customElementDefinition implementation
-- is value
+- customElementDefinition implementation #HTML
+- is value implementation #HTML
 - validCustomElementName #HTML
 - tagName getter steps with HTMLUpperCasedQualifiedName
 - If something is in the HTML namespace
@@ -201,6 +201,8 @@
     - matches()
     - webkitMatchesSelector()
 - Implement `refect`
+- create_element algo with #HTML
+- `fetch_attribute` in HTML namespace #HTML
 
 ## NamedNodeMap
 - supported property names
