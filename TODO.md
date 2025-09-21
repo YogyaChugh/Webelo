@@ -56,9 +56,10 @@
 - adopt
 - ~~ValidateAndExtract~~
     - ~~Check for namespace XML,d XMLNS~~
-- CheckHostIncludingInclusiveAncestor
-- ClosedShadowHidden
-- ReTarget
+- ~~check_shadow_including_descendant~~
+- ~~find_root~~
+- ~~is_closed_shadow_hidden~~
+- ~~retarget~~
 - CreateElementInternal
 - HandleAttributeChanges
 - ChangeAttributeValue

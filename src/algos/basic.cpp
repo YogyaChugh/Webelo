@@ -129,3 +129,39 @@ Node* find_root(Node* node, bool shadow_inclusive = false){
     }
     return currentNode;
 }
+
+bool check_shadow_including_descendant(Node* node, Node* target, bool inclusive = false){
+    if (node==nullptr || target==nullptr){
+        return false;
+    }
+    if (check_descendant(node, target, inclusive)){ return true; }
+    ShadowRoot* temp = dynamic_cast<ShadowRoot*>(find_root(target));
+    if (temp){
+        return check_shadow_including_descendant(node, dynamic_cast<Node*>(temp->host()));
+    }
+    return false;
+}
+
+
+bool is_closed_shadow_hidden(Node* A, Node* B){
+    ShadowRoot* temp = dynamic_cast<ShadowRoot*>(find_root(A));
+    if (temp){
+        if (!check_shadow_including_descendant(dynamic_cast<Node*>(temp), B, true)){
+            if (temp->mode==closed || is_closed_shadow_hidden(dynamic_cast<Node*>(temp->host()), B)){
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+Node* retarget(Node* A, Node* B){
+    Node* temp;
+    while (true){
+        temp = find_root(A);
+        if (!dynamic_cast<Node*>(A) || !dynamic_cast<ShadowRoot*>(temp) || (dynamic_cast<Node*>(B) && check_shadow_including_descendant(B, temp))){
+            return A;
+        }
+        A = dynamic_cast<Node*>(dynamic_cast<ShadowRoot*>(temp)->host());
+    }
+}
