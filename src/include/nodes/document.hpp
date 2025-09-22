@@ -222,14 +222,14 @@ class CharacterData: public Node{
         Element* previousElementSibling() const;
         Element* nextElementSibling() const;
 
-        friend void before(std::vector<std::variant<Node*, DOMString>> &nodes, const Node* obj = this);
-        friend void after(std::vector<std::variant<Node*, DOMString>> &nodes, const Node* obj = this);
-        friend void replaceWith(std::vector<std::variant<Node*, DOMString>> &nodes, constNode* obj = this);
-        friend void remove(Node* obj = this);
+        friend void before(std::vector<std::variant<Node*, DOMString>> &nodes, const Node* obj);
+        friend void after(std::vector<std::variant<Node*, DOMString>> &nodes, const Node* obj);
+        friend void replaceWith(std::vector<std::variant<Node*, DOMString>> &nodes, const Node* obj);
+        friend void remove(Node* obj);
 
         DOMString getdata(){ return this->data; }
         DOMString setdata(DOMString data){
-            replace_data(this, 0, this->length())
+            replace_data(this, 0, this->length(),data);
         }
 };
 
@@ -243,6 +243,8 @@ class Text: public CharacterData{
         
         Text(DOMString data = "");
         Text splitText(unsigned long offset); //NewObject
+
+        virtual void making_it_abstract() override{};
 };
 
 //Exposed to window only
@@ -272,10 +274,10 @@ class DocumentType: public Node{
         DOMString publicId;
         DOMString systemId;
     
-        friend void before(std::vector<std::variant<Node*, DOMString>> &nodes, const Node* obj = this);
-        friend void after(std::vector<std::variant<Node*, DOMString>> &nodes, const Node* obj = this);
-        friend void replaceWith(std::vector<std::variant<Node*, DOMString>> &nodes, const Node* obj = this);
-        friend void remove(Node* obj = this);
+        friend void before(std::vector<std::variant<Node*, DOMString>> &nodes, const Node* obj);
+        friend void after(std::vector<std::variant<Node*, DOMString>> &nodes, const Node* obj);
+        friend void replaceWith(std::vector<std::variant<Node*, DOMString>> &nodes, const Node* obj);
+        friend void remove(Node* obj);
 
         DocumentType(DOMString name,DOMString publicId="",DOMString systemId="",Document* ownerdoc = nullptr, Node* parentnode = nullptr): Node(DOCUMENT_TYPE_NODE, name, ownerdoc, parentnode){
             this->name = name;
@@ -446,10 +448,10 @@ class Element: public ParentNode{
         std::optional<Element> insertAdjacentElement(DOMString where, Element element); //legacy
         void insertAdjacentText(DOMString where, DOMString data); //legacy
 
-        friend void before(std::vector<std::variant<Node*, DOMString>> &nodes, const Node* obj = this);
-        friend void after(std::vector<std::variant<Node*, DOMString>> &nodes, const Node* obj = this);
-        friend void replaceWith(std::vector<std::variant<Node*, DOMString>> &nodes, const Node* obj = this);
-        friend void remove(Node* obj = this);
+        friend void before(std::vector<std::variant<Node*, DOMString>> &nodes, const Node* obj);
+        friend void after(std::vector<std::variant<Node*, DOMString>> &nodes, const Node* obj);
+        friend void replaceWith(std::vector<std::variant<Node*, DOMString>> &nodes, const Node* obj);
+        friend void remove(Node* obj);
 
         bool operator==(Element* other){ return this->isEqualNode(other); }
 

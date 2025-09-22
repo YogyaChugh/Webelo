@@ -215,7 +215,7 @@
 - Setter steps for data
 
 ## Text
-- Constructor after figuring out current global object from Realm
+- Constructor after figuring out current global object from Realm #HTML
 - wholeText() implementation later after learning tree structure implementation
 
 ## ProcessingInstruction

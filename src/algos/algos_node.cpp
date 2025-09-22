@@ -9,13 +9,13 @@ Node* clone_node(Node* node, Document* document = nullptr, bool subtree = false,
     if (document==nullptr){
         document = node->ownerDocument;
     }
-    assert(!dynamic_cast<Document*>(node) || dynamic_cast<Document*>(node)==document);
+    std::assert(!dynamic_cast<Document*>(node) || dynamic_cast<Document*>(node)==document);
     Node* copy = clone_a_single_node(node, document, fallbackRegistry);
     if (parent != nullptr){
         append_node(copy, parent);
     }
     if (subtree){
-        for (auto child: node->childNodes){
+        for (auto child: node->childNodes.node_list){
             clone_node(child, document, subtree, copy, fallbackRegistry);
         }
     }

@@ -1,5 +1,6 @@
 #include "nodes/document.hpp"
 #include "algos_base.cpp"
+#include "mutation_algos.cpp"
 #include "base.cpp"
 #include <algorithm>
 #include "exceptions.cpp"
@@ -157,7 +158,7 @@ void attach_shadow_root(Element* element, ShadowRootMode mode, bool clonable, bo
         ShadowRoot* currentShadowRoot = element->getshadow_root();
         if (!currentShadowRoot->declarative || currentShadowRoot->mode!=mode){ throw NotSupportedError("nope not supporting :) !"); }
         else{
-            for (auto child: currentShadowRoot->childNodes){
+            for (auto child: currentShadowRoot->childNodes.node_list){
                 remove_node(child);
             }
             currentShadowRoot->declarative = false;
@@ -192,7 +193,7 @@ Node* insert_adjacent(Element* element, DOMString where, Node* node){
     else if (where=="beforeend"){
         return pre_insert_node(node, element, nullptr);
     }
-    else if (where="afterend"){
+    else if (where=="afterend"){
         if (element->parentNode==nullptr){ return nullptr; }
         return pre_insert_node(node, element->parentNode, element->nextSibling());
     }
@@ -212,7 +213,95 @@ DOMString replace_data(Node* node, unsigned int offset, unsigned int count, DOMS
 DOMString substring_data(Node* node, unsigned int offset, unsigned int count){
     unsigned length = node->length();
     if (offset>length){ throw IndexSizeError("greater than error !!"); }
-    CharacterData* temp = dynamic_cast<CharacterData>(node);
-    if ((offset+count)>length){ return temp->data.substr(offset); }
-    return temp->data.substr(offset, count);
+    CharacterData* temp = dynamic_cast<CharacterData*>(node);
+    if ((offset+count)>length){ return temp->getdata().substr(offset); }
+    return temp->getdata().substr(offset, count);
+}
+
+
+bool check_exclusive_text_node(Text* node){
+    if (dynamic_cast<CDATASection*>(node)){ return false; }
+    return true;
+}
+
+std::vector<Node*> contiguous_text_nodes(Node* node){
+    std::vector<Node*> temp = {node};
+    Node* currentNode = node->previousSibling();
+    while (dynamic_cast<Text*>(currentNode)){
+        temp.insert(temp.begin(), currentNode);
+        currentNode = currentNode->previousSibling();
+    }
+    currentNode = node->nextSibling();
+    while (dynamic_cast<Text*>(currentNode)){
+        temp.push_back(currentNode);
+        currentNode = currentNode->nextSibling();
+    }
+    return temp;
+}
+
+std::vector<Node*> contiguous_exclusive_text_nodes(Node* node){
+    std::vector<Node*> temp = {node};
+    Node* currentNode = node->previousSibling();
+    while (dynamic_cast<Text*>(currentNode) && !dynamic_cast<CDATASection*>(currentNode)){
+        temp.insert(temp.begin(), currentNode);
+        currentNode = currentNode->previousSibling();
+    }
+    currentNode = node->nextSibling();
+    while (dynamic_cast<Text*>(currentNode) && !dynamic_cast<CDATASection*>(currentNode)){
+        temp.push_back(currentNode);
+        currentNode = currentNode->nextSibling();
+    }
+    return temp;
+}
+
+
+
+
+DOMString child_text_content(Node* node){
+    DOMString temp = "";
+    for (auto a: node->childNodes.node_list){
+        Text* temp2 = dynamic_cast<Text*>(a);
+        if (temp2){ temp+= temp2->getdata(); }
+    }
+    return temp;
+}
+
+DOMString descendant_text_content(Node* node){
+    Node* currentNode = node->childNodes[0];
+    std::vector<Node*> temp = {currentNode};
+    Text* temp2;
+    DOMString data = "";
+    while (currentNode!=nullptr){
+        temp2 = dynamic_cast<Text*>(currentNode);
+        if (temp2){
+            data += temp2->getdata();
+        }
+        if (currentNode->childNodes.length()!=0){
+            temp.push_back(currentNode);
+            currentNode = currentNode->firstChild();
+            continue;
+        }
+        currentNode = currentNode->nextSibling();
+        while (currentNode==nullptr && !temp.empty()){
+            currentNode = (*(temp.end() -1))->nextSibling();
+            temp.erase(temp.end()-1);
+        }
+    }
+    return data;
+}
+
+
+Node* split_text_node(Text* node, unsigned int offset){
+    unsigned int length = node->length();
+    if (offset>length){ throw IndexSizeError("size issues ! You are fat :) "); }
+    unsigned int count = length - offset;
+
+    DOMString data = substring_data(node, offset, count);
+    Text* new_node = new Text(data);
+    new_node->ownerDocument = node->ownerDocument;
+
+    Node* parent = node->parentNode;
+    if (parent!=nullptr){}
+    replace_data(node, offset, count, "");
+    return new_node;
 }

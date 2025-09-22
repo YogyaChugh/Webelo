@@ -721,26 +721,30 @@ unsigned long CharacterData::length(){
 }
 
 DOMString CharacterData::substringData(unsigned long offset, unsigned long count){
-    return SubstringData(this, offset, count);
+    return substring_data(this, offset, count);
 }
 
 void CharacterData::appendData(DOMString data){
-    return ReplaceDataNode(this, this->length(), 0, data);
+    replace_data(this, this->length(), 0, data);
 }
 
 void CharacterData::insertData(unsigned long offset, DOMString data){
-    return ReplaceDataNode(this, offset, 0, data);
+    replace_data(this, offset, 0, data);
 }
 
 void CharacterData::deleteData(unsigned long offset, unsigned long count){
-    return ReplaceDataNode(this, offset, count, "");
+    replace_data(this, offset, count, "");
 }
 
 void CharacterData::replaceData(unsigned long offset, unsigned long count, DOMString data){
-    return ReplaceDatNode(this, offset, count, data);
+    replace_data(this, offset, count, data);
 }
 
 
+
+Text::Text(DOMString data = ""){
+    this->setdata(data);
+}
 
 
 Text splitText(unsigned long offset){
