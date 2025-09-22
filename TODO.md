@@ -99,7 +99,10 @@
 - scope_match_selectors_string
 - ~~nodequals~~
 - ~~position~~
-- static_range_valid
+- ~~static_range_valid~~
+- ~~contained_in_range~~
+- ~~partially_contained_in_range~~
+- pre_remove_range - live range pre-remove steps
 
 ## Event
 - Realm implementation in `inner_event_creation_steps` & `base.cpp`
@@ -229,4 +232,12 @@
 ## ProcessingInstruction
 
 ## Comment
+- Constructor after figuring out dude about current global object ! #HTML
+
+## AbstractRange
+
+## StaticRange
+
+## Range
+- Wtf is this `stringifier` ! check definition boi
 - Constructor after figuring out dude about current global object ! #HTML

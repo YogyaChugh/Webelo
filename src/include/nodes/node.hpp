@@ -245,6 +245,11 @@ class Node: public EventTarget{
             }
             return false;
         }
+
+        unsigned long index(){
+            auto a = std::find(this->childNodes.node_list.begin(), this->childNodes.node_list.end(), this);
+            return a - this->childNodes.node_list.begin();
+        }
 };
 
 

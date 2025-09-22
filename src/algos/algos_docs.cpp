@@ -2,8 +2,10 @@
 #include "algos_base.cpp"
 #include "mutation_algos.cpp"
 #include "base.cpp"
+#include "basic.cpp"
 #include <algorithm>
 #include "exceptions.cpp"
+#include "assert.h"
 
 void flatten_element_creation_options(std::variant<DOMString,ElementCreationOptions> options, Document* document, CustomElementRegistry* registry, std::optional<DOMString> &is){
     if (std::holds_alternative<ElementCreationOptions>(options)){
@@ -202,7 +204,7 @@ Node* insert_adjacent(Element* element, DOMString where, Node* node){
     }
 }
 
-DOMString replace_data(Node* node, unsigned int offset, unsigned int count, DOMString data){
+DOMString replace_data(Node* node, unsigned long offset, unsigned long count, DOMString data){
     unsigned length = node->length();
     if (offset>length){ throw IndexSizeError("greater than error !!"); }
     if ((offset+count)>length){ count = length-offset; }
@@ -210,7 +212,7 @@ DOMString replace_data(Node* node, unsigned int offset, unsigned int count, DOMS
 }
 
 
-DOMString substring_data(Node* node, unsigned int offset, unsigned int count){
+DOMString substring_data(Node* node, unsigned long offset, unsigned long count){
     unsigned length = node->length();
     if (offset>length){ throw IndexSizeError("greater than error !!"); }
     CharacterData* temp = dynamic_cast<CharacterData*>(node);
@@ -291,10 +293,10 @@ DOMString descendant_text_content(Node* node){
 }
 
 
-Text* split_text_node(Text* node, unsigned int offset){
-    unsigned int length = node->length();
+Text* split_text_node(Text* node, unsigned long offset){
+    unsigned long length = node->length();
     if (offset>length){ throw IndexSizeError("size issues ! You are fat :) "); }
-    unsigned int count = length - offset;
+    unsigned long count = length - offset;
 
     DOMString data = substring_data(node, offset, count);
     Text* new_node = new Text(data);
@@ -358,4 +360,66 @@ bool static_range_valid(StaticRange* range){
         return false;
     }
     return true;
+}
+
+bool contained_in_range(Node* node, Range* range){
+    if (node->getRootNode()!=range->startContainer->getRootNode()){
+        return false;
+    }
+    int temp = position(node, 0, range->startContainer, range->startOffset);
+    if (temp==0 || temp==-1){
+        return false;
+    }
+    temp = position(node, node->length(), range->endContainer, range->endOffset);
+    if (temp==0 || temp==1){
+        return false;
+    }
+    return true;
+}
+
+bool partially_contained_in_range(Node* node, Range* range){
+    bool one = check_ancestor(range->startContainer, node, true);
+    bool two = check_ancestor(range->endContainer, node, true);
+    if ((one && !two) || (!one && two)){
+        return true;
+    }
+    return false;
+}
+
+void pre_remove_range(Node* node){
+    Node* parent = node->parentNode;
+    assert(parent!=nullptr);
+    unsigned long index = node->index();
+}
+
+void set_start_end(Range* range, Node* node, unsigned long offset, bool start = true){
+    if (dynamic_cast<DocumentType*>(node)){ throw InvalidNodeTypeError("invalid node type !!!!!"); }
+    if (offset>node->length()){ throw IndexSizeError("size issues, fatty !!"); }
+    if (start){
+        if ((range->startContainer->getRootNode()!=node->getRootNode()) || position(node, offset, range->endContainer, range->endOffset)==1){
+            range->endContainer = node;
+            range->endOffset = offset;
+        }
+        range->startContainer = node;
+        range->startOffset = offset;
+    }
+    else{
+        if ((range->startContainer->getRootNode()!=node->getRootNode()) || position(node, offset, range->startContainer, range->startOffset)==-1){
+            range->startContainer = node;
+            range->startOffset = offset;
+        }
+        range->endContainer = node;
+        range->endOffset = offset;
+    }
+
+}
+
+void select_node_within_range(Node* node, Range* range){
+    Node* parent = node->parentNode;
+    if (parent==nullptr){ throw InvalidNodeTypeError("invalid node type dummy !"); }
+    unsigned long index = node->index();
+    range->startContainer = parent;
+    range->startOffset = index;
+    range->endContainer = parent;
+    range->endOffset = index + 1;
 }

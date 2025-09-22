@@ -785,3 +785,116 @@ StaticRange::StaticRange(StaticRangeInit init){
     this->endContainer = init.endContainer;
     this->endOffset = init.endOffset;
 }
+
+Range::Range(){};
+
+Node* Range::commonAncestorContainer(){
+    Node* container = this->startContainer;
+    while (!check_ancestor(this->endContainer, container, true)){
+        container = container->parentNode;
+    }
+    return container;
+}
+
+
+void Range::setStart(Node* node, unsigned long offset){
+    set_start_end(this, node, offset);
+}
+
+void Range::setEnd(Node* node, unsigned long offset){
+    set_start_end(this, node, offset, false);
+}
+
+void Range::setStartBefore(Node* node){
+    Node* parent = node->parentNode;
+    if (parent==nullptr){ throw InvalidNodeTypeError("invalid node type dummy !"); }
+    set_start_end(this, parent, node->index());
+}
+
+void Range::setStartAfter(Node* node){
+    Node* parent = node->parentNode;
+    if (parent==nullptr){ throw InvalidNodeTypeError("invalid node type dummy !"); }
+    set_start_end(this, parent, node->index()+1);
+}
+
+void Range::setEndBefore(Node* node){
+    Node* parent = node->parentNode;
+    if (parent==nullptr){ throw InvalidNodeTypeError("invalid node type dummy !"); }
+    set_start_end(this, parent, node->index(), false);
+}
+
+void Range::setEndAfter(Node* node){
+    Node* parent = node->parentNode;
+    if (parent==nullptr){ throw InvalidNodeTypeError("invalid node type dummy !"); }
+    set_start_end(this, parent, node->index()+1, false);
+}
+
+void Range::collapse(bool toStart = false){
+    if (toStart){
+        this->endContainer = this->startContainer;
+        this->endOffset = this->startOffset;
+    }
+    else{
+        this->startContainer = this->endContainer;
+        this->startOffset = this->endOffset;
+    }
+}
+
+void Range::selectNode(Node* node){
+    select_node_within_range(node, this);
+}
+
+void Range::selectNodeContents(Node* node){
+    if (dynamic_cast<DocumentType*>(node)){ throw InvalidNodeTypeError("invalid node type boi !!!"); }
+    unsigned long length = node->length();
+    this->startContainer = node;
+    this->startOffset = 0;
+    this->endContainer = node;
+    this->endOffset = length;
+}
+
+short Range::compareBoundaryPoints(unsigned short how, Range* sourceRange){
+    if (how!=START_TO_START && how!=START_TO_END && how!=END_TO_END && how!=END_TO_START){
+        throw NotSupportedError("not supported this start end whatever !");
+    }
+    if (this->startContainer->getRootNode()!=sourceRange->startContainer->getRootNode()){
+        throw WrongDocumentError("wrong document ! read it u sick boi !!")
+    }
+    Node* thisnode;
+    unsigned long thisoffset;
+    Node* othernode;
+    unsigned long otheroffset;
+    if (how==START_TO_START){
+        thisnode = this->startContainer;
+        thisoffset = this->startOffset;
+        othernode = sourceRange->startContainer;
+        otheroffset = sourceRange->startOffset;
+    }
+    else if (how==START_TO_END){
+        thisnode = this->endContainer;
+        thisoffset = this->endOffset;
+        othernode = sourceRange->startContainer;
+        otheroffset = sourceRange->startOffset;
+    }
+    else if (how==END_TO_END){
+        thisnode = this->endContainer;
+        thisoffset = this->endOffset;
+        othernode = sourceRange->endContainer;
+        otheroffset = sourceRange->endOffset;
+    }
+    else if (how==END_TO_START){
+        thisnode = this->startContainer;
+        thisoffset = this->startOffset;
+        othernode = sourceRange->endContainer;
+        otheroffset = sourceRange->endOffset;
+    }
+    return position(thisnode, thisoffset, othernode, otheroffset);
+}
+
+
+void Range::deleteContents(){
+    if (this->collapsed()){
+        return;
+    }
+    
+}

@@ -1,5 +1,10 @@
 #pragma once
 
+#define START_TO_START 0;
+#define START_TO_END 1;
+#define END_TO_END 2;
+#define END_TO_START 3;
+
 #include <variant>
 #include <vector>
 #include <optional>
@@ -37,11 +42,6 @@ class AbstractRange;
 struct StaticRangeInit;
 class StaticRange;
 class Range;
-
-const unsigned short START_TO_START = 0;
-const unsigned short START_TO_END = 1;
-const unsigned short END_TO_END = 2;
-const unsigned short END_TO_START = 3;
 
 Element* getElementById(Node* node,const DOMString &elementId){
     if (node->childNodes.length()==0){ return nullptr; }
@@ -108,9 +108,8 @@ class StaticRange: AbstractRange{
 
 
 class Range: AbstractRange{
-    protected:
-        Node* commonAncestorContainer;
     public:
+        Node* commonAncestorContainer();
         Range();
 
         void setStart(Node* node, unsigned long offset);
@@ -127,8 +126,8 @@ class Range: AbstractRange{
 
         //CEReactions
         void deleteContents();
-        DocumentFragment extraContents(); //NewObject
-        DocumentFragment cloneContents(); //NewObject
+        DocumentFragment* extraContents(); //NewObject
+        DocumentFragment* cloneContents(); //NewObject
         void insertNode(Node* node);
         void surroundContents(Node* newParent);
 

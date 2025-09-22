@@ -130,4 +130,14 @@ class InvalidNodeTypeError: public exception {
 };
 
 
+class WrongDocumentError: public exception {
+    private:
+        string message;
+    public:
+        WrongDocumentError(const char* msg): message(msg){};
+
+        const char* what() const noexcept {
+            return message.c_str();
+        }
+};
 #endif
