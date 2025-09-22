@@ -1037,3 +1037,135 @@ DOMString Range::stringification_behavior(){
     }
     return s;
 }
+
+
+
+DOMString NodeIterator::filter_node(Node* node){
+    //!Later
+
+    // if (this->active){ throw InvalidStateError("INVALID STATE ! HAHA"); }
+    // int n = node->nodeType - 1;
+    // if (this->filter==nullptr){
+    //     return FILTER_ACCEPT;
+    // }
+    // this->active = true;
+    // //some work
+    // this->active = false;
+    // return result;
+}
+
+DOMString TreeWalker::filter_node(Node* node){
+    //!Later
+
+    // if (this->active){ throw InvalidStateError("INVALID STATE ! HAHA"); }
+    // int n = node->nodeType - 1;
+    // if (this->filter==nullptr){
+    //     return FILTER_ACCEPT;
+    // }
+    // this->active = true;
+    // //some work
+    // this->active = false;
+    // return result;
+}
+
+
+
+Node* NodeIterator::nextNode(){
+    return traverse(this, 1);
+}
+
+Node* NodeIterator::previousNode(){
+    return traverse(this, -1);
+}
+
+Node* TreeWalker::parentNode(){
+    Node* node = this->currentNode;
+    while (node!=nullptr && node!=this->root){
+        node = node->parentNode;
+        if (node!=nullptr && this->filter_node(node)=="FILTER_ACCEPT"){
+            this->currentNode = node;
+            return node;
+        }
+    }
+    return nullptr;
+}
+
+Node* TreeWalker::firstChild(){
+    return traverse_children(this, 1);
+}
+
+Node* TreeWalker::lastChild(){
+    return traverse_children(this, -1);
+}
+
+
+Node* TreeWalker::nextSibling(){
+    return traverse_sibling(this, 1);
+}
+
+Node* TreeWalker::previousSibling(){
+    return traverse_sibling(this, -1);
+}
+
+Node* TreeWalker::previousNode(){
+    Node* node = this->currentNode;
+    while (node!=this->root){
+        Node* sibling = node->previousSibling();
+        while (sibling!=nullptr){
+            node = sibling;
+            DOMString result = this->filter_node(node);
+            while (result!="FILTER_REJECT" && node->hasChildNodes()){
+                node = node->lastChild();
+                result = this->filter_node(node);
+            }
+            if (result=="FILTER_ACCEPT"){
+                this->currentNode = node;
+                return node;
+            }
+            sibling = node->previousSibling();
+        }
+        if (node==this->root || node->parentNode==nullptr){
+            return nullptr;
+        }
+        node = node->parentNode();
+        if (this->filter_node(node)=="FILTER_ACCEPT"){
+            this->currentNode = node;
+            return node;
+        }
+    }
+    return nullptr;
+}
+
+
+Node* TreeWalker::nextNode(){
+    Node* node = this->currentNode;
+    DOMString result = "FILTER_ACCEPT"
+    while (true){
+        while (result!="FILTER_REJECT" && node->hasChildNodes()){
+            node = node->firstChild();
+            result = this->filter_node(node);
+            if (result == "FILTER_ACCEPT"){
+                this->currentNode = node;
+                return node;
+            }
+        }
+        Node* sibling = nullptr;
+        Node* temporary = node;
+        while (temporary!=nullptr){
+            if (temporary==this->root){
+                return nullptr;
+            }
+            sibling = temporary->nextSibling();
+            if (sibling!=nullptr){
+                node = sibling;
+                break;
+            }
+            temporary = temporary->parentNode;
+        }
+        result = this->filter_node(node);
+        if (result=="FILTER_ACCEPT"){
+            this->currentNode = node;
+            return node;
+        }
+    }
+}

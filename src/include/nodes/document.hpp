@@ -73,8 +73,44 @@ Element* getElementById(Node* node,const DOMString &elementId){
 
 class NodeIterator{
     public:
+        Node* root;
+        Node* referenceNode;
+        bool pointerBeforeReferenceNode;
+        unsigned long whatToShow;
+        NodeFilter* filter;
+
+        bool active = false;
+
+        Node* nextNode();
+        Node* previousNode();
+
+        void detach(){};
+
+        DOMString filter_node(Node* node);
+
         NodeIterator(){};
 };
+
+class TreeWalker{
+    Node* root;
+    unsigned long whatToShow;
+    NodeFilter* filter;
+    Node* currentNode;
+
+    bool active = false;
+
+    TreeWalker(){};
+
+    DOMString filter_node(Node* node);
+
+    Node* parentNode();
+    Node* firstChild();
+    Node* lastChild();
+    Node* previousSibling();
+    Node* nextSibling();
+    Node* previousNode();
+    Node* nextNode();
+}
 
 
 //Exposed to window only
@@ -140,6 +176,7 @@ class Range: AbstractRange{
         //TODO: stringifier;
         DOMString stringification_behavior();
 };
+
 
 enum ShadowRootMode{ open, closed};
 enum SlotAssignmentMode{ manual, named};
