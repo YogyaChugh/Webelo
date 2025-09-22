@@ -896,5 +896,144 @@ void Range::deleteContents(){
     if (this->collapsed()){
         return;
     }
+    Node* original_startnode = this->startContainer;
+    unsigned long original_startoffset = this->startOffset;
+    Node* original_endnode = this->endContainer;
+    unsigned long original_endoffset = this->endOffset;
     
+    if (original_startnode==original_endnode && dynamic_cast<CharacterData*>(original_startnode)){
+        replace_data(original_startnode, original_startoffset, original_endoffset - original_startoffset, "");
+        return;
+    }
+    std::vector<Node*> nodes_to_remove = {};
+    Node* new_node;
+    unsigned long new_offset;
+    if (check_ancestor(original_endnode, original_startnode, true)){
+        new_node = original_startnode;
+        new_offset = original_startoffset;
+    }
+    else{
+        Node* reference_node = original_startnode;
+        while(reference_node->parentNode!=nullptr && !check_ancestor(original_endnode, reference_node, true)){
+            reference_node = reference_node->parentNode;
+        }
+        new_node = reference_node->parentNode;
+        new_offset = reference_node->index() + 1;
+    }
+    if (dynamic_cast<CharacterData*>(original_startnode)){
+        replace_data(original_startnode, original_startoffset, original_startnode->length() - original_startoffset, "");
+    }
+    for (auto node: nodes_to_remove){
+        remove_node(node);
+    }
+    if (dynamic_cast<CharacterData*>(original_endnode)){
+        replace_data(original_endnode, 0, original_endoffset, "");
+    }
+    this->startContainer = new_node;
+    this->startOffset = new_offset;
+    this->endContainer = new_node;
+    this->endOffset = new_offset;
+}
+
+DocumentFragment* Range::extraContents(){
+    return extract_range(this);
+}
+
+DocumentFragment* Range::cloneContents(){
+    return clone_contents(this);
+}
+
+void Range::insertNode(Node* node){
+    insert_node_in_range(node, this);
+}
+
+void Range::surroundContents(Node* newParent){
+    if (dynamic_cast<Document*>(newParent) || dynamic_cast<DocumentType*>(newParent) || dynamic_cast<DocumentFragment*>(newParent)){
+        throw InvalidNodeTypeError("invalid node type baby !!");
+    }
+    DocumentFragment* fragment = extract_range(this);
+    if (newParent->hasChildNodes()){
+        replace_all(nullptr, newParent);
+    }
+    insert_node_in_range(newParent, this);
+    pre_insert_node(fragment, newParent, nullptr);
+    select_node_within_range(newParent, this);
+}
+
+
+Range* Range::cloneRange(){
+    Range* temp = new Range();
+    temp->startContainer = this->startContainer;
+    temp->startOffset = this->startOffset;
+    temp->endContainer = this->endContainer;
+    temp->endOffset = this->endOffset;
+    return temp;
+}
+
+bool Range::isPointInRange(Node* node, unsigned long offset){
+    if (node->getRootNode()!=this->startContainer->getRootNode()){
+        return false;
+    }
+    if (dynamic_cast<DocumentType*>(node)){
+        throw InvalidNodeTypeError("u got from the name !");
+    }
+    if (offset>node->length()){
+        throw IndexSizeError("index is not fit !!");
+    }
+    if (position(node, offset, this->startContainer, this->startOffset)==-1 || position(node, offset, this->endContainer, this->endOffset)==1){
+        return false;
+    }
+    return true;
+}
+
+
+short Range::comparePoint(Node* node, unsigned long offset){
+    if (node->getRootNode()!=this->startContainer->getRootNode()){
+        throw WrongDocumentError("Wrong document !!");
+    }
+    if (dynamic_cast<DocumentType*>(node)){
+        throw InvalidNodeTypeError("invalid node type !!");
+    }
+    if (offset>node->length()){
+        throw IndexSizeError("index size issue !!");
+    }
+    if (position(node, offset, this->startContainer, this->startOffset)==-1){
+        return -1;
+    }
+    if (position(node, offset, this->endContainer, this->endOffset)==1){
+        return 1;
+    }
+    return 0;
+}
+
+
+bool Range::intersectsNode(Node* node){
+    if (node->getRootNode()!=this->startContainer->getRootNode()){
+        return false;
+    }
+    Node* parent = node->parentNode;
+    if (parent==nullptr){
+        return true;
+    }
+    unsigned long offset = node->index();
+    if (position(parent, offset, this->endContainer, this->endOffset)==-1 && position(parent, offset+1, this->startContainer, this->startOffset)==1){
+        return true;
+    }
+    return false;
+}
+
+DOMString Range::stringification_behavior(){
+    DOMString s = "";
+    Text* temp = dynamic_cast<Text*>(this->startContainer);
+    if (this->startContainer==this->endContainer && temp){
+        return temp->getdata().substr(this->startOffset, this->endOffset - this->startOffset);
+    }
+    if (temp){
+        s += temp->getdata().substr(this->startOffset);
+    }
+    temp = dynamic_cast<Text*>(this->endContainer);
+    if (temp){
+        s += temp->getdata().substr(0, this->endOffset);
+    }
+    return s;
 }

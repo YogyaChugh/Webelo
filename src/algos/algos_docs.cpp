@@ -5,6 +5,7 @@
 #include "basic.cpp"
 #include <algorithm>
 #include "exceptions.cpp"
+#include "algos_node.cpp"
 #include "assert.h"
 
 void flatten_element_creation_options(std::variant<DOMString,ElementCreationOptions> options, Document* document, CustomElementRegistry* registry, std::optional<DOMString> &is){
@@ -422,4 +423,272 @@ void select_node_within_range(Node* node, Range* range){
     range->startOffset = index;
     range->endContainer = parent;
     range->endOffset = index + 1;
+}
+
+
+DocumentFragment* extract_range(Range* range){
+    DocumentFragment* fragment = new DocumentFragment();
+    fragment->ownerDocument = range->startContainer->ownerDocument;
+    if (range->collapsed()){
+        return fragment;
+    }
+    Node* original_startnode = range->startContainer;
+    unsigned long original_startoffset = range->startOffset;
+    Node* original_endnode = range->endContainer;
+    unsigned long original_endoffset = range->endOffset;
+    
+    if (original_startnode==original_endnode && dynamic_cast<CharacterData*>(original_startnode)){
+        Node* temp = clone_node(original_startnode);
+        CharacterData* clone = dynamic_cast<CharacterData*>(temp);
+        clone->setdata(substring_data(original_startnode, original_startoffset, original_endoffset - original_startoffset));
+        pre_insert_node(clone, fragment, nullptr);
+        replace_data(original_startnode, original_startoffset, original_endoffset - original_startoffset, "");
+        return fragment;
+    }
+    Node* common_ancestor = original_startnode;
+    while (!check_ancestor(original_endnode, common_ancestor, true)){
+        common_ancestor = common_ancestor->parentNode;
+    }
+    Node* first_partially_contained_child = nullptr;
+    if (!check_ancestor(original_endnode, original_startnode, true)){
+        for (auto a: common_ancestor->childNodes.node_list){
+            if (partially_contained_in_range(a, range)){
+                first_partially_contained_child = a;
+                break;
+            }
+        }
+    }
+    Node* last_partially_contained_child = nullptr;
+    if (!check_ancestor(original_startnode, original_endnode, true)){
+        for (auto a: common_ancestor->childNodes.node_list){
+            if (partially_contained_in_range(a, range)){
+                last_partially_contained_child = a;
+            }
+        }
+    }
+    std::vector<Node*> contained_children = {};
+    for (auto a: common_ancestor->childNodes.node_list){
+        if (contained_in_range(a, range)){
+            contained_children.push_back(a);
+            if (dynamic_cast<DocumentType*>(a)){
+                throw HeirarchyRequestError("hierarchy issue dude !!");
+            }
+        }
+    }
+    Node* new_node;
+    unsigned long new_offset;
+    if (check_ancestor(original_endnode, original_startnode, true)){
+        new_node = original_startnode;
+        new_offset = original_startoffset;
+    }
+    else{
+        Node* referenceNode = original_startnode;
+        Node* parent = referenceNode->parentNode;
+        while (parent!=nullptr && !check_ancestor(original_endnode, parent, true)){
+            referenceNode = parent;
+            parent = referenceNode->parentNode;
+        }
+        new_node = referenceNode->parentNode;
+        new_offset = referenceNode->index() + 1;
+    }
+    if (dynamic_cast<CharacterData*>(first_partially_contained_child)){
+        Node* temp = clone_node(original_startnode);
+        CharacterData* clone = dynamic_cast<CharacterData*>(temp);
+        clone->setdata(substring_data(original_startnode, original_startoffset, original_startnode->length() - original_startoffset));
+        pre_insert_node(clone, fragment, nullptr);
+        replace_data(original_startnode, original_startoffset, original_startnode->length() - original_startoffset, "");
+    }
+    else if (first_partially_contained_child!=nullptr){
+        Node* temp = clone_node(first_partially_contained_child);
+        CharacterData* clone = dynamic_cast<CharacterData*>(temp);
+        pre_insert_node(clone, fragment, nullptr);
+        Range* subrange = new Range();
+        subrange->startContainer = original_startnode;
+        subrange->startOffset = original_startoffset;
+        subrange->endContainer = first_partially_contained_child;
+        subrange->endOffset = first_partially_contained_child->length();
+        DocumentFragment* subfragment = extract_range(subrange);
+        pre_insert_node(subfragment, clone, nullptr);   
+    }
+    for (auto child: contained_children){
+        pre_insert_node(child, fragment, nullptr);
+    }
+    if (dynamic_cast<CharacterData*>(last_partially_contained_child)){
+        Node* temp = clone_node(original_endnode);
+        CharacterData* clone = dynamic_cast<CharacterData*>(temp);
+        clone->setdata(substring_data(original_endnode, 0, original_endoffset));
+        pre_insert_node(clone, fragment, nullptr);
+        replace_data(original_endnode, 0, original_endoffset, "");
+    }
+    else if (first_partially_contained_child!=nullptr){
+        Node* temp = clone_node(last_partially_contained_child);
+        CharacterData* clone = dynamic_cast<CharacterData*>(temp);
+        pre_insert_node(clone, fragment, nullptr);
+        Range* subrange = new Range();
+        subrange->startContainer = last_partially_contained_child;
+        subrange->startOffset = 0;
+        subrange->endContainer = original_endnode;
+        subrange->endOffset = original_endoffset;
+        DocumentFragment* subfragment = extract_range(subrange);
+        pre_insert_node(subfragment, clone, nullptr);   
+    }
+    range->startContainer = new_node;
+    range->endContainer = new_node;
+    range->startOffset = new_offset;
+    range->endOffset = new_offset;
+    return fragment;
+}
+
+
+
+DocumentFragment* clone_contents(Range* range){
+    DocumentFragment* fragment = new DocumentFragment();
+    fragment->ownerDocument = range->startContainer->ownerDocument;
+    if (range->collapsed()){
+        return fragment;
+    }
+    Node* original_startnode = range->startContainer;
+    unsigned long original_startoffset = range->startOffset;
+    Node* original_endnode = range->endContainer;
+    unsigned long original_endoffset = range->endOffset;
+    
+    if (original_startnode==original_endnode && dynamic_cast<CharacterData*>(original_startnode)){
+        Node* temp = clone_node(original_startnode);
+        CharacterData* clone = dynamic_cast<CharacterData*>(temp);
+        clone->setdata(substring_data(original_startnode, original_startoffset, original_endoffset - original_startoffset));
+        pre_insert_node(clone, fragment, nullptr);
+        return fragment;
+    }
+    Node* common_ancestor = original_startnode;
+    while (!check_ancestor(original_endnode, common_ancestor, true)){
+        common_ancestor = common_ancestor->parentNode;
+    }
+    Node* first_partially_contained_child = nullptr;
+    if (!check_ancestor(original_endnode, original_startnode, true)){
+        for (auto a: common_ancestor->childNodes.node_list){
+            if (partially_contained_in_range(a, range)){
+                first_partially_contained_child = a;
+                break;
+            }
+        }
+    }
+    Node* last_partially_contained_child = nullptr;
+    if (!check_ancestor(original_startnode, original_endnode, true)){
+        for (auto a: common_ancestor->childNodes.node_list){
+            if (partially_contained_in_range(a, range)){
+                last_partially_contained_child = a;
+            }
+        }
+    }
+
+    std::vector<Node*> contained_children = {};
+    for (auto a: common_ancestor->childNodes.node_list){
+        if (contained_in_range(a, range)){
+            contained_children.push_back(a);
+            if (dynamic_cast<DocumentType*>(a)){
+                throw HeirarchyRequestError("hierarchy issue dude !!");
+            }
+        }
+    }
+
+    if (dynamic_cast<CharacterData*>(first_partially_contained_child)){
+        Node* temp = clone_node(original_startnode);
+        CharacterData* clone = dynamic_cast<CharacterData*>(temp);
+        clone->setdata(substring_data(original_startnode, original_startoffset, original_startnode->length() - original_startoffset));
+        pre_insert_node(clone, fragment, nullptr);
+    }
+    else if (first_partially_contained_child!=nullptr){
+        Node* temp = clone_node(first_partially_contained_child);
+        CharacterData* clone = dynamic_cast<CharacterData*>(temp);
+        pre_insert_node(clone, fragment, nullptr);
+        Range* subrange = new Range();
+        subrange->startContainer = original_startnode;
+        subrange->startOffset = original_startoffset;
+        subrange->endContainer = first_partially_contained_child;
+        subrange->endOffset = first_partially_contained_child->length();
+        DocumentFragment* subfragment = cloen_contents(subrange);
+        pre_insert_node(subfragment, clone, nullptr);  
+    }
+    for (auto child: contained_children){
+        Node* clone = clone_node(child);
+        pre_insert_node(clone, fragment, nullptr);
+    }
+
+    if (dynamic_cast<CharacterData*>(last_partially_contained_child)){
+        Node* temp = clone_node(original_endnode);
+        CharacterData* clone = dynamic_cast<CharacterData*>(temp);
+        clone->setdata(substring_data(original_endnode, 0, original_endoffset));
+        pre_insert_node(clone, fragment, nullptr);
+    }
+    else if (first_partially_contained_child!=nullptr){
+        Node* temp = clone_node(last_partially_contained_child);
+        CharacterData* clone = dynamic_cast<CharacterData*>(temp);
+        pre_insert_node(clone, fragment, nullptr);
+        Range* subrange = new Range();
+        subrange->startContainer = last_partially_contained_child;
+        subrange->startOffset = 0;
+        subrange->endContainer = original_endnode;
+        subrange->endOffset = original_endoffset;
+        DocumentFragment* subfragment = clone_contents(subrange);
+        pre_insert_node(subfragment, clone, nullptr);  
+    }
+    return fragment;
+}
+
+
+void insert_node_in_range(Node* node, Range* range){
+    if (dynamic_cast<ProcessingInstruction*>(range->startContainer) || dynamic_cast<Comment*>(range->startContainer) ||(dynamic_cast<Text*>(range->startContainer) && range->startContainer->parentNode==nullptr) || range->startContainer==node){
+        throw HeirarchyRequestError("hierarchy ! spelling issues :) ");
+    }
+    Node* referenceNode = nullptr;
+    if (dynamic_cast<Text*>(range->startContainer)){
+        referenceNode = range->startContainer;
+    }
+    else{
+        for (auto a: range->startContainer->childNodes.node_list){
+            if (a->index()==range->startOffset){
+                referenceNode = a;
+                break;
+            }
+        }
+    }
+    Node* parent;
+    if (!referenceNode){
+        parent = range->startContainer;
+    }
+    else{
+        parent = referenceNode->parentNode;
+    }
+    ensure_pre_insert_validity(node, parent, referenceNode);
+    Text* tempji = dynamic_cast<Text*>(range->startContainer);
+    if (tempji){
+        referenceNode = dynamic_cast<Node*>(split_text_node(tempji, range->startOffset));
+    }
+    if (node==referenceNode){
+        referenceNode = referenceNode->nextSibling();
+    }
+    if (node->parentNode!=nullptr){
+        remove_node(node);
+    }
+
+    unsigned long newOffset;
+    if (referenceNode==nullptr){
+        newOffset = parent->length();
+    }
+    else{
+        newOffset = referenceNode->index();
+    }
+
+    if (dynamic_cast<DocumentFragment*>(node)){
+        newOffset += node->length();
+    }
+    else{
+        newOffset++;
+    }
+
+    pre_insert_node(node, parent, referenceNode);
+    if (range->collapsed()){
+        range->endContainer = parent;
+        range->endOffset = newOffset;
+    }
 }

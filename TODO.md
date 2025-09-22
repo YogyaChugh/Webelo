@@ -103,6 +103,8 @@
 - ~~contained_in_range~~
 - ~~partially_contained_in_range~~
 - pre_remove_range - live range pre-remove steps
+- ~~extract_range~~
+- ~~insert_node_in_range~~
 
 ## Event
 - Realm implementation in `inner_event_creation_steps` & `base.cpp`
@@ -241,3 +243,7 @@
 ## Range
 - Wtf is this `stringifier` ! check definition boi
 - Constructor after figuring out dude about current global object ! #HTML
+- `deleteContents()` - Implementation of nodes_to_remove
+- clone children flag in `clone_contents` algo
+- Text nodes contained in this range in tree order in `stringification_behavior`
+- non-Text node is partially contained in range in `surroundContents` method

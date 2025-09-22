@@ -131,13 +131,14 @@ class Range: AbstractRange{
         void insertNode(Node* node);
         void surroundContents(Node* newParent);
 
-        Range cloneRange(); //NewObject
-        void detach();
+        Range* cloneRange(); //NewObject
+        void detach(){};
         bool isPointInRange(Node* node, unsigned long offset);
         short comparePoint(Node* node, unsigned long offset);
         bool intersectsNode(Node* node);
 
         //TODO: stringifier;
+        DOMString stringification_behavior();
 };
 
 enum ShadowRootMode{ open, closed};
