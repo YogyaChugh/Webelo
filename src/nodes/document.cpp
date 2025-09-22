@@ -747,6 +747,19 @@ Text::Text(DOMString data = ""){
 }
 
 
-Text splitText(unsigned long offset){
-    return SplitTextNode(this, offset);
+Text* Text::splitText(unsigned long offset){
+    return split_text_node(this, offset);
+}
+
+DOMString Text::wholeText(){
+    DOMString data = "";
+    for (auto a: contiguous_text_nodes(this)){
+        data += a->getdata();
+    }
+    return data;
+}
+
+
+Comment::Comment(DOMString data = ""){
+    this->setdata(data);
 }

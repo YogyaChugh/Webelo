@@ -83,7 +83,7 @@
 - replace_data
 - ~~SubstringData~~
 - DetermineNodeLength
-- SplitTextNode
+- ~~split_text_node~~
 - StrictSplitText
 - ~~string_replace_all~~
 - replace_all
@@ -216,9 +216,10 @@
 
 ## Text
 - Constructor after figuring out current global object from Realm #HTML
+- In `split_text_node`, complete after completing `Range`
 - wholeText() implementation later after learning tree structure implementation
 
 ## ProcessingInstruction
 
 ## Comment
-- Constructor after figuring out dude about curreng global object !
+- Constructor after figuring out dude about current global object ! #HTML

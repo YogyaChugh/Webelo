@@ -237,12 +237,12 @@ class CharacterData: public Node{
 //Exposed to window only
 class Text: public CharacterData{
     public:
-        DOMString wholeText;
+        DOMString wholeText();
         DOMString slot=""; //! IMPORTANT SOMEWHERE in dispatch_event (slottable check)
         DOMString* assignedSlot;
         
         Text(DOMString data = "");
-        Text splitText(unsigned long offset); //NewObject
+        Text* splitText(unsigned long offset); //NewObject
 
         virtual void making_it_abstract() override{};
 };

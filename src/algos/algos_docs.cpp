@@ -224,32 +224,32 @@ bool check_exclusive_text_node(Text* node){
     return true;
 }
 
-std::vector<Node*> contiguous_text_nodes(Node* node){
-    std::vector<Node*> temp = {node};
-    Node* currentNode = node->previousSibling();
-    while (dynamic_cast<Text*>(currentNode)){
+std::vector<Text*> contiguous_text_nodes(Text* node){
+    std::vector<Text*> temp = {node};
+    Text* currentNode = dynamic_cast<Text*>(node->previousSibling());
+    while (currentNode){
         temp.insert(temp.begin(), currentNode);
-        currentNode = currentNode->previousSibling();
+        currentNode = dynamic_cast<Text*>(currentNode->previousSibling());
     }
-    currentNode = node->nextSibling();
-    while (dynamic_cast<Text*>(currentNode)){
+    currentNode = dynamic_cast<Text*>(node->nextSibling());
+    while (currentNode){
         temp.push_back(currentNode);
-        currentNode = currentNode->nextSibling();
+        currentNode = dynamic_cast<Text*>(currentNode->nextSibling());
     }
     return temp;
 }
 
-std::vector<Node*> contiguous_exclusive_text_nodes(Node* node){
-    std::vector<Node*> temp = {node};
-    Node* currentNode = node->previousSibling();
-    while (dynamic_cast<Text*>(currentNode) && !dynamic_cast<CDATASection*>(currentNode)){
+std::vector<Text*> contiguous_exclusive_text_nodes(Text* node){
+    std::vector<Text*> temp = {node};
+    Text* currentNode = dynamic_cast<Text*>(node->previousSibling());
+    while (currentNode && !dynamic_cast<CDATASection*>(currentNode)){
         temp.insert(temp.begin(), currentNode);
-        currentNode = currentNode->previousSibling();
+        currentNode = dynamic_cast<Text*>(currentNode->previousSibling());
     }
-    currentNode = node->nextSibling();
-    while (dynamic_cast<Text*>(currentNode) && !dynamic_cast<CDATASection*>(currentNode)){
+    currentNode = dynamic_cast<Text*>(node->nextSibling());
+    while (currentNode && !dynamic_cast<CDATASection*>(currentNode)){
         temp.push_back(currentNode);
-        currentNode = currentNode->nextSibling();
+        currentNode = dynamic_cast<Text*>(currentNode->nextSibling());
     }
     return temp;
 }
@@ -291,7 +291,7 @@ DOMString descendant_text_content(Node* node){
 }
 
 
-Node* split_text_node(Text* node, unsigned int offset){
+Text* split_text_node(Text* node, unsigned int offset){
     unsigned int length = node->length();
     if (offset>length){ throw IndexSizeError("size issues ! You are fat :) "); }
     unsigned int count = length - offset;
@@ -301,7 +301,9 @@ Node* split_text_node(Text* node, unsigned int offset){
     new_node->ownerDocument = node->ownerDocument;
 
     Node* parent = node->parentNode;
-    if (parent!=nullptr){}
+    if (parent!=nullptr){
+        insert_node(new_node, parent, node->nextSibling());
+    }
     replace_data(node, offset, count, "");
     return new_node;
 }
