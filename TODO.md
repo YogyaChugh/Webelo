@@ -74,16 +74,21 @@
 - ~~remove_attribute_by_name~~
 - ~~remove_attribute_by_namespace~~
 - ~~html_uppercased_qualified_name~~
-- attach_shadow_root
+- ~~attach_shadow_root~~
 - listElementsWithQualifiedName
 - listElementsWithNamespaceAndLocalName
 - listElementsWithClassNames
-- InsertAdjacent
+- ~~insert_adjacent~~
 - SetExistingAttributeValue
 - replace_data
-- ~~SubstringData~~
+- ~~substring_data~~
 - DetermineNodeLength
 - ~~split_text_node~~
+- ~~descendant_text_node~~
+- ~~child_text_content~~
+- ~~contiguous_exclusive_text_nodes~~
+- ~~contiguous_text_nodes~~
+- ~~check_exclusive_text_node~~
 - StrictSplitText
 - ~~string_replace_all~~
 - replace_all
@@ -93,6 +98,8 @@
 - append_node
 - scope_match_selectors_string
 - ~~nodequals~~
+- ~~position~~
+- static_range_valid
 
 ## Event
 - Realm implementation in `inner_event_creation_steps` & `base.cpp`
@@ -135,7 +142,7 @@
 - Constructor required boi
 
 ## Slottable
-- Change type of `assignedSlot` from DOMString to `HTMLSlotElement` after HTML implementation.
+- Change type of `assignedSlot` from DOMString to `HTMLSlotElement` after HTML implementation. #HTML
 
 ## Node
 - ~~Meaningfull virtual func -> abstract class~~

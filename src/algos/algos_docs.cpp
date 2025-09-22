@@ -198,7 +198,7 @@ Node* insert_adjacent(Element* element, DOMString where, Node* node){
         return pre_insert_node(node, element->parentNode, element->nextSibling());
     }
     else{
-        throw SyntaxError("syntax errrrrror boi !!")
+        throw SyntaxError("syntax errrrrror boi !!");
     }
 }
 
@@ -306,4 +306,56 @@ Text* split_text_node(Text* node, unsigned int offset){
     }
     replace_data(node, offset, count, "");
     return new_node;
+}
+
+
+int position(Node* nodeA, unsigned long offsetA, Node* nodeB, unsigned long offsetB){
+    assert(nodeA->getRootNode()==nodeB->getRootNode());
+    if (nodeA==nodeB){
+        if (offsetA==offsetB){ return 0; }
+        if (offsetA<offsetB){ return -1; }
+        return 1;
+    }
+    if (*nodeA^nodeB){
+        int a = position(nodeB, offsetB, nodeA, offsetA);
+        if (a==-1){ return 1; }
+        if (a==1){ return -1; }
+    }
+    if (check_ancestor(nodeB, nodeA)){
+        Node* child = nodeB;
+        bool ischild = false;
+        int index;
+        while (!ischild){
+            index = 0;
+            for (auto a: nodeA->childNodes.node_list){
+                if (a==child){ ischild = true; break; }
+                index++;
+            }
+            if (!ischild){
+                child = child->parentNode;
+            }
+        }
+        if (index<offsetA){
+            return 1;
+        }
+    }
+    return -1;
+}
+
+
+bool static_range_valid(StaticRange* range){
+    if (range->startContainer->getRootNode(true)!=range->endContainer->getRootNode(true)){
+        return false;
+    }
+    if (range->startOffset<0 || range->startOffset>range->startContainer->length()){
+        return false;
+    }
+    if (range->endOffset<0 || range->endOffset>range->endContainer->length()){
+        return false;
+    }
+    int temp = position(range->startContainer, range->startOffset, range->endContainer, range->endOffset);
+    if (temp==1){
+        return false;
+    }
+    return true;
 }

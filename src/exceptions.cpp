@@ -118,6 +118,16 @@ class IndexSizeError: public exception {
         }
 };
 
+class InvalidNodeTypeError: public exception {
+    private:
+        string message;
+    public:
+        InvalidNodeTypeError(const char* msg): message(msg){};
+
+        const char* what() const noexcept {
+            return message.c_str();
+        }
+};
 
 
 #endif

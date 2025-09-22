@@ -223,6 +223,28 @@ class Node: public EventTarget{
         virtual void making_it_abstract() = 0;
 
         bool operator==(Node* other){ return this->isEqualNode(other); }
+
+        // Based on the follows algorithm !!
+        bool operator^(Node* other){
+            Node* currentNode = other->childNodes[0];
+            std::vector<Node*> temp = {currentNode};
+            while (currentNode!=nullptr){
+                if (currentNode == this){
+                    return true;
+                }
+                if (currentNode->childNodes.length()!=0){
+                    temp.push_back(currentNode);
+                    currentNode = currentNode->firstChild();
+                    continue;
+                }
+                currentNode = currentNode->nextSibling();
+                while (currentNode==nullptr && !temp.empty()){
+                    currentNode = (*(temp.end() -1))->nextSibling();
+                    temp.erase(temp.end()-1);
+                }
+            }
+            return false;
+        }
 };
 
 

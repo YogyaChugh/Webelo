@@ -4,6 +4,7 @@
 #include "algos_node.cpp"
 #include "algos_docs.cpp"
 #include "algos_base.cpp"
+#include "basic.cpp"
 #include <bits/stdc++.h>
 #include <optional>
 
@@ -762,4 +763,25 @@ DOMString Text::wholeText(){
 
 Comment::Comment(DOMString data = ""){
     this->setdata(data);
+}
+
+
+
+
+bool AbstractRange::collapsed(){
+    if (this->startContainer==this->endContainer && this->startOffset==this->endOffset){
+        return true;
+    }
+    return false;
+}
+
+
+StaticRange::StaticRange(StaticRangeInit init){
+    if (dynamic_cast<DocumentType*>(init.startContainer) || dynamic_cast<Attr*>(init.startContainer) || dynamic_cast<DocumentType*>(init.endContainer) || dynamic_cast<Attr*>(init.endContainer) ){
+        throw InvalidNodeTypeError("invalid node type baby !!");
+    }
+    this->startContainer = init.startContainer;
+    this->startOffset = init.startOffset;
+    this->endContainer = init.endContainer;
+    this->endOffset = init.endOffset;
 }

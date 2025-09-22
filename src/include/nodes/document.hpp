@@ -76,14 +76,15 @@ class NodeIterator{
         NodeIterator(){};
 };
 
+
 //Exposed to window only
 class AbstractRange{
-    protected:
+    public:
         Node* startContainer;
         unsigned long startOffset;
         Node* endContainer;
         unsigned long endOffset;
-        bool collapsed;
+        bool collapsed();
 };
 
 struct StaticRangeInit{
