@@ -30,6 +30,8 @@
 #include <initializer_list>
 #include <stdexcept>
 #include <map>
+#include <set>
+#include <algorithm>
 
 #include "events/events.hpp"
 #include "algos_docs.cpp"
@@ -135,7 +137,7 @@ class TreeWalker{
 
 class NodeFilter{
     public:
-        unsigned short acceptNode(Node* node);
+        unsigned short acceptNode(Node* node){};
 };
 
 
@@ -646,15 +648,70 @@ class DOMImplementation{
 
 class DOMTokenList{
     public:
-        std::optional<DOMString> item(unsigned long index);
-        bool contains(DOMString token);
+        std::optional<DOMString> item(unsigned long index){
+            if (index>=this->length()){
+                return std::nullopt;
+            }
+            return this->list[index];
+        };
+        bool contains(DOMString token){
+            auto a = this->list.find(token);
+            if (a == this->list.end()){
+                return false;
+            }
+            return true;
+        };
 
         //CEReactions
-        void add(...);
-        void remove(...);
-        bool toggle(DOMString token, DOMString newToken);
-        DOMString value; //TODO: Implement stringifier
-        
+        void add(std::vector<DOMString> tokens);
+        void remove(std::vector<DOMString> tokens);
+        bool toggle(DOMString token, std::optional<bool> force);
+        bool replace(DOMString token, DOMString newToken);
+        DOMString getvalue(){
+            return this->serialize();
+        }
+        void setvalue(DOMString value){
+            set_attribute_value(this->associatedElement, this->associatedAttribute->localName, value);
+        }
+
+
         bool supports(DOMString token);
-        std::vector<DOMString> list;
+        std::set<DOMString> list = {};
+
+        Element* associatedElement = nullptr;
+        Attr* associatedAttribute = nullptr;
+
+        unsigned long length(){
+            return this->list.size();
+        }
+
+        bool validate(DOMString token){
+            DOMString ltoken = std::copy(token.begin(),token.begin(), token.end());
+            std::transform(ltoken.begin(), ltoken.end(), ltoken.begin(), [](unsigned char c){ return std::tolower(c); });
+            return false;
+        }
+
+        void update(){
+            if (!this->associatedAttribute && list=={}){
+                return;
+            }
+            set_attribute_value(associatedElement, associatedAttribute->localName, SerializeOrderedSet(this->list));
+        }
+
+        DOMString serialize(){
+            return fetch_attribute(this->associatedElement, this->associatedAttribute->localName);
+        }
+
+
+        DOMTokenList(Element* element, Attr* attribute){
+            this->associatedElement = element;
+            this->associatedAttribute = attribute;
+            this->setvalue(fetch_attribute(element, attribute->localName));
+            if (this->getvalue()==""){
+                list.clear();
+            }
+            else{
+                this->list = ParseOrderedSet(this->getvalue());
+            }
+        }
 };

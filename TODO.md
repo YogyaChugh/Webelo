@@ -258,3 +258,8 @@
 
 ## TreeWalker
 - `filter_node` method complete later
+
+## NodeFilter
+
+## DOMTokenList
+- Supported tokens resolve based on specifications in `validate()`

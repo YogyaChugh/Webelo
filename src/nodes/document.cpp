@@ -1169,3 +1169,63 @@ Node* TreeWalker::nextNode(){
         }
     }
 }
+
+
+
+void DOMTokenList::add(std::vector<DOMString> tokens){
+    for (auto token: tokens){
+        if (token==""){ throw SyntaxError("sytaxxxxxx"); }
+        if (token.find(" ")!=std::string::npos){ throw InvalidCharacterError("uk !"); }
+    }
+    for (auto token: tokens){
+        this->list.insert(token);
+    }
+    this->update();
+}
+
+
+void DOMTokenList::remove(std::vector<DOMString> tokens){
+    for (auto token: tokens){
+        if (token==""){ throw SyntaxError("sytaxxxxxx"); }
+        if (token.find(" ")!=std::string::npos){ throw InvalidCharacterError("uk !"); }
+    }
+    for (auto token: tokens){
+        this->list.erase(token);
+    }
+    this->update();
+}
+
+bool DOMTokenList::toggle(DOMString token, std::optional<bool> force){
+    if (token==""){ throw SyntaxError("sytaxxxxxx"); }
+    if (token.find(" ")!=std::string::npos){ throw InvalidCharacterError("uk !"); }
+    if (this->list.find(token)!=this->list.end()){
+        if (!force.has_value() || !force.value()){
+            this->list.erase(token);
+            this->update();
+            return true;
+        }
+    }
+    else{
+        if (!force.has_value() || force){
+            this->list.insert(token);
+            this->update()
+            return true;
+        }
+    }
+    return false;
+}
+
+bool DOMTokenList::replace(DOMString token, DOMString newToken){
+    if (token=="" || newToken==""){ throw SyntaxError("sytaxxxxxx"); }
+    if (token.find(" ")!=std::string::npos || newToken.find(" ")!=std::string::npos){ throw InvalidCharacterError("uk !"); }
+    if (this->list.find(token)==this->list.end()){ return false; }
+    this->list.erase(token);
+    this->list.insert(newToken);
+    this->update();
+    return true;
+}
+
+
+bool DOMString::supports(DOMString token){
+    return this->validate(token);
+}
