@@ -733,8 +733,8 @@ Node* traverse(NodeIterator* iterator, unsigned long direction){
             }
             if (!beforeNode){ beforeNode = true; }
         }
-        DOMString result = iterator->filter_node(node);
-        if (result=="FILTER_ACCEPT"){
+        unsigned short result = iterator->filter_node(node);
+        if (result==FILTER_ACCEPT){
             break;
         }
     }
@@ -754,12 +754,12 @@ Node* traverse_children(TreeWalker* walker, unsigned long type){
         node = node->lastChild();
     }
     while (node!=nullptr){
-        DOMString result = walker->filter_node(node);
-        if (result=="FILTER_ACCEPT"){
+        unsigned short result = walker->filter_node(node);
+        if (result==FILTER_ACCEPT){
             walker->currentNode = node;
             return node;
         }
-        else if (result == "FILTER_SKIP"){
+        else if (result == FILTER_SKIP){
             if (tyepe==1){ child = node->firstChild(); }
             else if (type==-1){ child = node->lastChild(); }
         }
@@ -802,9 +802,9 @@ Node* traverse_sibling(TreeWalker* walker, unsigned long type){
         }
         while (sibling!=nullptr){
             node = sibling;
-            DOMString result = walker->filter_node(node);
+            unsigned short result = walker->filter_node(node);
 
-            if (result=="FILTER_ACCEPT"){
+            if (result==FILTER_ACCEPT){
                 walker->currentNode = node;
                 return node;
             }
@@ -816,7 +816,7 @@ Node* traverse_sibling(TreeWalker* walker, unsigned long type){
                 sibling = node->lastChild();
             }
 
-            if (result=="FILTER_REJECT" || sibling==nullptr){
+            if (result==FILTER_REJECT || sibling==nullptr){
                 if (type==1){
                     sibling = node->nextSibling();
                 }
@@ -829,7 +829,7 @@ Node* traverse_sibling(TreeWalker* walker, unsigned long type){
         if (node==nullptr || node==walker->root){
             return nullptr;
         }
-        if (walker->filter_node(node)=="FILTER_ACCEPT"){
+        if (walker->filter_node(node)==FILTER_ACCEPT){
             return nullptr;
         }
     }

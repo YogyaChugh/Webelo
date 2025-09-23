@@ -1040,7 +1040,7 @@ DOMString Range::stringification_behavior(){
 
 
 
-DOMString NodeIterator::filter_node(Node* node){
+unsigned short NodeIterator::filter_node(Node* node){
     //!Later
 
     // if (this->active){ throw InvalidStateError("INVALID STATE ! HAHA"); }
@@ -1054,7 +1054,7 @@ DOMString NodeIterator::filter_node(Node* node){
     // return result;
 }
 
-DOMString TreeWalker::filter_node(Node* node){
+unsigned short TreeWalker::filter_node(Node* node){
     //!Later
 
     // if (this->active){ throw InvalidStateError("INVALID STATE ! HAHA"); }
@@ -1082,7 +1082,7 @@ Node* TreeWalker::parentNode(){
     Node* node = this->currentNode;
     while (node!=nullptr && node!=this->root){
         node = node->parentNode;
-        if (node!=nullptr && this->filter_node(node)=="FILTER_ACCEPT"){
+        if (node!=nullptr && this->filter_node(node)==FILTER_ACCEPT){
             this->currentNode = node;
             return node;
         }
@@ -1113,12 +1113,12 @@ Node* TreeWalker::previousNode(){
         Node* sibling = node->previousSibling();
         while (sibling!=nullptr){
             node = sibling;
-            DOMString result = this->filter_node(node);
+            unsigned short result = this->filter_node(node);
             while (result!="FILTER_REJECT" && node->hasChildNodes()){
                 node = node->lastChild();
                 result = this->filter_node(node);
             }
-            if (result=="FILTER_ACCEPT"){
+            if (result==FILTER_ACCEPT){
                 this->currentNode = node;
                 return node;
             }
@@ -1128,7 +1128,7 @@ Node* TreeWalker::previousNode(){
             return nullptr;
         }
         node = node->parentNode();
-        if (this->filter_node(node)=="FILTER_ACCEPT"){
+        if (this->filter_node(node)==FILTER_ACCEPT){
             this->currentNode = node;
             return node;
         }
@@ -1139,12 +1139,12 @@ Node* TreeWalker::previousNode(){
 
 Node* TreeWalker::nextNode(){
     Node* node = this->currentNode;
-    DOMString result = "FILTER_ACCEPT"
+    unsigned short result = FILTER_ACCEPT;
     while (true){
-        while (result!="FILTER_REJECT" && node->hasChildNodes()){
+        while (result!=FILTER_REJECT && node->hasChildNodes()){
             node = node->firstChild();
             result = this->filter_node(node);
-            if (result == "FILTER_ACCEPT"){
+            if (result == FILTER_ACCEPT){
                 this->currentNode = node;
                 return node;
             }
@@ -1163,7 +1163,7 @@ Node* TreeWalker::nextNode(){
             temporary = temporary->parentNode;
         }
         result = this->filter_node(node);
-        if (result=="FILTER_ACCEPT"){
+        if (result==FILTER_ACCEPT){
             this->currentNode = node;
             return node;
         }

@@ -5,6 +5,25 @@
 #define END_TO_END 2;
 #define END_TO_START 3;
 
+#define FILTER_ACCEPT 1
+#define FILTER_REJECT 2
+#define FILTER_SKIP 3
+
+#define SHOW_ALL 0xFFFFFFFF
+#define SHOW_ELEMENT 0x1
+#define SHOW_ATTRIBUTE 0x2
+#define SHOW_TEXT 0x4
+#define SHOW_CDATA_SECTION 0x8
+#define SHOW_ENTITY_REFERENCE 0x10
+#define SHOW_ENTITY 0x20
+#define SHOW_PROCESSING_INSTRUCTION 0x40
+#define SHOW_COMMENT 0x80
+#define SHOW_DOCUMENT 0x100
+#define SHOW_DOCUMENT_TYPE 0x200
+#define SHOW_DOCUMENT_FRAGMENT 0x400
+#define SHOW_NOTATION 0x800
+
+
 #include <variant>
 #include <vector>
 #include <optional>
@@ -86,31 +105,41 @@ class NodeIterator{
 
         void detach(){};
 
-        DOMString filter_node(Node* node);
+        unsigned short filter_node(Node* node);
 
         NodeIterator(){};
 };
 
 class TreeWalker{
-    Node* root;
-    unsigned long whatToShow;
-    NodeFilter* filter;
-    Node* currentNode;
+    public:
+        Node* root;
+        unsigned long whatToShow;
+        NodeFilter* filter;
+        Node* currentNode;
 
-    bool active = false;
+        bool active = false;
 
-    TreeWalker(){};
+        TreeWalker(){};
 
-    DOMString filter_node(Node* node);
+        unsigned short filter_node(Node* node);
 
-    Node* parentNode();
-    Node* firstChild();
-    Node* lastChild();
-    Node* previousSibling();
-    Node* nextSibling();
-    Node* previousNode();
-    Node* nextNode();
-}
+        Node* parentNode();
+        Node* firstChild();
+        Node* lastChild();
+        Node* previousSibling();
+        Node* nextSibling();
+        Node* previousNode();
+        Node* nextNode();
+};
+
+
+class NodeFilter{
+    public:
+        unsigned short acceptNode(Node* node);
+};
+
+
+
 
 
 //Exposed to window only
