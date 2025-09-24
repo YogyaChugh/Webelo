@@ -238,7 +238,7 @@ class Event{
         std::vector<path_structs> path = {};
         std::vector<EventTarget*> touch_target_list = {}; //mostly no use until TouchEvent Interface
 
-        void initEvent(DOMString const &type, bool bubbles = false, bool cancelable = false); // legacy
+        void initEvent(DOMString &type, bool bubbles = false, bool cancelable = false); // legacy
         void stopPropagation();
         void stopImmediatePropagation();
         void preventDefault();

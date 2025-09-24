@@ -36,16 +36,16 @@ Event::Event(const Event* temp){
     this->type = temp->type;
 }
 
-void Event::stopPropagation() inline{
+inline void Event::stopPropagation(){
     this->stop_propagation_flag = true;
 };
 
-void Event::stopImmediatePropagation() inline{
+inline void Event::stopImmediatePropagation(){
     this->stop_propagation_flag = true;
     this->stop_immediate_propagation_flag = true;
 };
 
-void Event::set_canceled_flag() inline{
+inline void Event::set_canceled_flag(){
     if (this->cancelable && !this->in_passive_listener_flag){
         this->canceled_flag = true;
     }
@@ -53,7 +53,7 @@ void Event::set_canceled_flag() inline{
 
 void Event::preventDefault(){
     // *Cancels the event (if it is cancelable).
-    set_canceled_flag();
+    this->set_canceled_flag();
 };
 
 void Event::initEvent(DOMString &type, bool bubbles, bool cancelable){
@@ -72,7 +72,7 @@ void Event::initEvent(DOMString &type, bool bubbles, bool cancelable){
 }
 
 std::vector<EventTarget*> Event::composedPath(){
-    std::vector<EventTarget*> composed_path;
+    std::vector<EventTarget*> composed_path = {};
     if (this->path.empty()){
         return composed_path;
     }
@@ -81,27 +81,27 @@ std::vector<EventTarget*> Event::composedPath(){
     int currentTargetIndex = 0;
     int currentTargetHiddenSubtreeLevel = 0;
     for (int index = this->path.size() - 1; index>=0; index--){
-        if (this->path[index]->root_of_closed_tree){
+        if (this->path[index].root_of_closed_tree){
             currentTargetHiddenSubtreeLevel++;
         }
-        if (this->path[index]->invocation_target==this->currentTarget){
+        if (this->path[index].invocation_target==this->currentTarget){
             currentTargetIndex = index;
             break;
         }
-        if (this->path[index]->slot_in_closed_tree){
+        if (this->path[index].slot_in_closed_tree){
             currentTargetHiddenSubtreeLevel--;
         }
     }
     int currentHiddenLevel = currentTargetHiddenSubtreeLevel;
     int maxHiddenLevel = currentTargetHiddenSubtreeLevel;
     for (int index = currentTargetIndex - 1; index>=0; index--){
-        if (this->path[index]->root_of_closed_tree){
+        if (this->path[index].root_of_closed_tree){
             currentHiddenLevel++;
         }
         if (currentHiddenLevel<=maxHiddenLevel){
-            composed_path.insert(composed_path.begin(),this->path[index]->invocation_target);
+            composed_path.insert(composed_path.begin(),this->path[index].invocation_target);
         }
-        if (this->path[index]->slot_in_closed_tree){
+        if (this->path[index].slot_in_closed_tree){
             currentHiddenLevel--;
             if (currentHiddenLevel<maxHiddenLevel){
                 maxHiddenLevel = currentHiddenLevel;
@@ -111,13 +111,13 @@ std::vector<EventTarget*> Event::composedPath(){
     currentHiddenLevel = currentTargetHiddenSubtreeLevel;
     maxHiddenLevel = currentTargetHiddenSubtreeLevel;
     for (int index = currentTargetIndex + 1; index<this->path.size(); index++){
-        if (this->path[index]->slot_in_closed_tree){
+        if (this->path[index].slot_in_closed_tree){
             currentHiddenLevel++;
         }
         if (currentHiddenLevel<=maxHiddenLevel){
-            composed_path.push_back(this->path[index]->invocation_target);
+            composed_path.push_back(this->path[index].invocation_target);
         }
-        if (this->path[index]->root_of_closed_tree){
+        if (this->path[index].root_of_closed_tree){
             currentHiddenLevel--;
             if (currentHiddenLevel<maxHiddenLevel){
                 maxHiddenLevel = currentHiddenLevel;
