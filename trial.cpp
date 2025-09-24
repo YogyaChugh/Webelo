@@ -1,14 +1,14 @@
 #include<iostream>
 #include<vector>
 #include<set>
+#include "src/base.cpp"
 
 using namespace std;
-int main()
-{  
-	set<int> a = {1,2,3};
-	auto b = a.find(2);
-	b = 5;
-	for (auto c: a){
-		cout<<c;
+
+
+int main(){
+	vector<int> temp = {97};
+	for (auto a: split_text_multiple("maggi is love",temp)){
+		cout<< a <<endl;
 	}
 }

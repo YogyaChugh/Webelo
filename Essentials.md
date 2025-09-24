@@ -10,3 +10,6 @@
 # Optimizations
 - `const` has been used wherever possible as some compilers do optimizations for them & also it's good as it prevents unintended changes.
 - `inline` for small methods/functions.
+
+# Notes
+- `base.cpp` contains the important functions doing basic functionality (not an algo) whereas, the `algos_base.cpp` file contains the basic algos which sometimes use the functions from `base.cpp`.

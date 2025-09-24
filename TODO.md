@@ -32,12 +32,13 @@
 - Encoding sort for Document object
 - Doctype and mode check eveywhere ! all functions change
 - Controversial ownerDocument vs nodeDocument
+- Running normal split instead strict split `base_algos.cpp`
 
 ## Algorithms
 > Remember to check all calls to these algo's in-order to rectify arg issues !
-- ~~ParseOrderedSet~~
-- ~~SerializeOrderedSet~~
-- ScopeMatchSelectorString
+- ~~parse_ordered_set~~
+- ~~serialize_ordered_set~~
+- scope_match_selectors_string
 - ~~clone_node~~
 - ~~clone_a_single_node~~
 - ~~locate_a_namespace_prefix~~

@@ -19,7 +19,7 @@ class CustomElementRegistry{};
 
 
 
-std::vector<DOMString> SplitText(DOMString input, DOMString del){
+std::vector<DOMString> split_text(DOMString input, DOMString del){
     std::vector<DOMString> temp = {};
     int end = 0; int start = 0;
     while (end!=-1){
@@ -30,29 +30,30 @@ std::vector<DOMString> SplitText(DOMString input, DOMString del){
     return temp;
 }
 
-std::vector<DOMString> SplitTextMultiple(DOMString input, std::vector<int> del){
+// From the INFRA Standard
+std::vector<DOMString> split_text_multiple(DOMString input, std::vector<int> del){
     std::vector<DOMString> temp = {};
     unsigned int i = 0;
-    DOMString a = "";
-    bool notfound = true;
+    DOMString tempText = "";
+    bool notFound = true;
     auto previt = input.begin();
-    for (auto it = input.begin();it<input.end();){
-        notfound = true;
+    for (auto it = input.begin();it!=input.end();){
+        notFound = true;
         previt = it;
         i = utf8::next(it, input.end());
         for (int j: del){
             if (i==j){
-                notfound = false;
-                temp.push_back(a);
-                a = "";
+                notFound = false;
+                temp.push_back(tempText);
+                tempText = "";
                 break;
             }
         }
-        if (notfound){
-            a.append(previt, it);
+        if (notFound){
+            tempText.append(previt, it);
         }
     }
-    temp.push_back(a);
+    temp.push_back(tempText);
     return temp;
 }
 
