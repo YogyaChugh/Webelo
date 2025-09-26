@@ -14,13 +14,12 @@
 #include <functional>
 
 
-void Event::inner_event_creation_steps(const Event* event, const Realm* realm, const DOMHighResTimeStamp &time, bool bubbles, bool cancelable, bool composed){
+void Event::inner_event_creation_steps(Event* event, Realm* realm, DOMHighResTimeStamp &time, bool bubbles, bool cancelable, bool composed){
     event->initialized_flag = true;
     event->timeStamp = time;
-    event->bubbles = dictionary->bubbles;
-    event->cancelable = dictionary->cancelable;
-    event->composed = dictionary->composed;
-    //NOTE: Later, special event constructing steps can be passed by specification !!
+    event->bubbles = bubbles;
+    event->cancelable = cancelable;
+    event->composed = composed;
 }
 
 
@@ -56,7 +55,7 @@ void Event::preventDefault(){
     this->set_canceled_flag();
 };
 
-void Event::initEvent(DOMString &type, bool bubbles, bool cancelable){
+void Event::initEvent(DOMString type, bool bubbles, bool cancelable){
     if (this->dispatch_flag){
         return;
     }
@@ -134,11 +133,11 @@ std::vector<EventTarget*> Event::composedPath(){
 
 
 
-CustomEvent::CustomEvent(DOMString const &type, bool bubbles, bool cancelable, bool composed, std::any &detail): Event(type, bubbles, cancelable, composed){
+CustomEvent::CustomEvent(DOMString const type, bool bubbles, bool cancelable, bool composed, std::any &detail): Event(type, bubbles, cancelable, composed){
     this->detail = detail;
 }
 
-void CustomEvent::initCustomEvent(DOMString const &type, bool bubbles, bool cancelable, std::any &detail){
+void CustomEvent::initCustomEvent(DOMString const type, bool bubbles, bool cancelable, std::any detail){
     if (this->dispatch_flag){
         return;
     }
@@ -146,9 +145,10 @@ void CustomEvent::initCustomEvent(DOMString const &type, bool bubbles, bool canc
     this->detail = detail;
 }
 
+
 Event* create_event(Event* eventInterface, Realm* realm = nullptr){
     DOMHighResTimeStamp now = time(NULL);
-    eventInterface->inner_event_creation_steps(realm, now);
+    eventInterface->inner_event_creation_steps(eventInterface, realm, now);
     eventInterface->isTrusted = true;
     return eventInterface;
 };

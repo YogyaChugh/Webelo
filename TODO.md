@@ -110,9 +110,9 @@
 - ~~traverse_children~~
 
 ## Event
-- Realm implementation in `inner_event_creation_steps` & `base.cpp`
-- Special event constructing steps for each specification in `inner_event_creation_steps` - **JUST A NOTE**
-- Implementation of `relative_high_resolution_coarse_time` in `inner_event_creation_steps`
+- Realm implementation in `inner_event_creation_steps` & `base.cpp` #JS
+- Special event constructing steps for each specification in `inner_event_creation_steps` - **JUST A NOTE** #JS
+- ~~Implementation of `relative_high_resolution_coarse_time` in `inner_event_creation_steps`~~
 
 ## CustomEvent
 

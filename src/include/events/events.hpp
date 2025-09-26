@@ -214,16 +214,17 @@ class Event{
         bool bubbles;
         bool cancelable;
         bool composed;
-        bool isTrusted = false;
         DOMHighResTimeStamp timeStamp;
 
     public:
+    
+        bool isTrusted = false;
 
         // Constructor
         Event(const DOMString &type, bool bubbles = false, bool cancelable = false, bool composed = false);
         Event(const Event* temp);
 
-        void inner_event_creation_steps(const Event* event,const Realm* realm,const DOMHighResTimeStamp &time, bool bubbles = false, bool cancelable = false, bool composed = false);
+        void inner_event_creation_steps(Event* event, Realm* realm, DOMHighResTimeStamp &time, bool bubbles = false, bool cancelable = false, bool composed = false);
 
         // FLAGS BRO !!
         bool stop_propagation_flag = false;
@@ -238,7 +239,7 @@ class Event{
         std::vector<path_structs> path = {};
         std::vector<EventTarget*> touch_target_list = {}; //mostly no use until TouchEvent Interface
 
-        void initEvent(DOMString &type, bool bubbles = false, bool cancelable = false); // legacy
+        void initEvent(DOMString type, bool bubbles = false, bool cancelable = false); // legacy
         void stopPropagation();
         void stopImmediatePropagation();
         void preventDefault();
@@ -305,11 +306,10 @@ class Event{
 
 
 class CustomEvent: public Event{
-    protected:
-        std::any detail = nullptr;
     public:
-        CustomEvent(DOMString const &type, bool bubbles = false, bool cancelable = false, bool composed = false, std::any detail = nullptr);
-        void initCustomEvent(DOMString const &type, bool bubbles = false, bool cancelable = false, std::any detail = nullptr);
+        std::any detail = nullptr;
+        CustomEvent(DOMString const type, bool bubbles = false, bool cancelable = false, bool composed = false, std::any &detail = nullptr);
+        void initCustomEvent(DOMString const type, bool bubbles = false, bool cancelable = false, std::any detail = nullptr);
 
         std::any getdetail() const{
             return this->detail;
