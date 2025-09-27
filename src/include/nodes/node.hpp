@@ -188,7 +188,7 @@ class Node: public EventTarget{
             }
             CharacterData* temp = dynamic_cast<CharacterData*>(this);
             if (temp){
-                return temp->data.length();
+                return temp->getdata().length();
             }
             return this->childNodes.length();
         }

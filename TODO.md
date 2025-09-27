@@ -33,6 +33,9 @@
 - Doctype and mode check eveywhere ! all functions change
 - Controversial ownerDocument vs nodeDocument
 - Running normal split instead strict split `base_algos.cpp`
+- Replace seteventPhase() #Later
+- Always have a newObject func in new Event derived clases
+- Work on onabort attribute in `AbortSignal` object !
 
 ## Algorithms
 > Remember to check all calls to these algo's in-order to rectify arg issues !
@@ -43,6 +46,8 @@
 - ~~clone_a_single_node~~
 - ~~locate_a_namespace_prefix~~
 - ~~locate_a_namespace~~
+- ~~add_event_listener~~
+- ~~remove_event_listener~~
 - preInsertNode
 - replaceNode
 - preRemoveNode
@@ -108,6 +113,8 @@
 - ~~insert_node_in_range~~
 - ~~traverse_sibling~~
 - ~~traverse_children~~
+- ~~default_passive_value~~
+- ~~retard~~
 
 ## Event
 - Realm implementation in `inner_event_creation_steps` & `base.cpp` #JS
@@ -117,23 +124,26 @@
 ## CustomEvent
 
 ## EventTarget
-- In algo for events, `default_passive_value` needs to be complete after HTML work done.
-- Add `algo` for `add_event_listener`
-- Set `targetOverride` to target's `associatedDocument` in `dispatch_event`
-- Assert for `slot` check in `dispatch_event` after implementation of Slot
-- Implement check for **shadow-including inclusive ancestor** in `dispatch_event`
-- After implementation of realm/global object, remember to complete `inner_invoke` func in `algos_events`
-- Relevant `realm` implementation with `eventConstructor` in `fire_event` in algos for events.
-- This `realm` boi implementation in `create_event` tooooo.
-- Complete the `retard` function after shadow-inclusing ancestor.
+- In algo for events, `default_passive_value` body element check after HTML work done. #HTML
+- ~~Add `algo` for `add_event_listener`~~
+- Service Worker Global Scope: #JS
+    - add_event_listener
+    - remove_event_listener
+- Set `targetOverride` to target's `associatedDocument` in `dispatch_event` #HTML
+- ~~Assert for `slot` check in `dispatch_event` after implementation of Slot~~
+- ~~Implement check for **shadow-including inclusive ancestor** in `dispatch_event`~~
+- After implementation of realm/global object, remember to complete `inner_invoke` func in `algos_events` #JS
+- Relevant `realm` implementation with `eventConstructor` in `fire_event` in algos for events. #JS
+- This `realm` boi implementation in `create_event` tooooo. #JS
+- ~~Complete the `retard` function after shadow-inclusing ancestor.~~
 
 ## AbortController
 
 ## AbortSignal
-- Mf global object to trouble again !
-- Current realm implementation in `_any` method
-- The same thing above in the creating
-- `onabort` implementation after HTML
+- Mf global object to trouble again ! #HTML
+- Current realm implementation in `_any` method #JS
+- The same thing above in the creating #JS
+- `onabort` implementation after HTML #HTML
 
 ## Mutation Algo's
 - `host-including inclusive ancestor` implementation, then for `ensure_pre_insert_validity`

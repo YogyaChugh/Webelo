@@ -60,11 +60,11 @@ struct event_listener{
 
 struct AddEventListenerOptions{
     bool capture;
-    bool passive;
+    std::optional<bool> passive = std::nullopt;
     bool once = false;
     AbortSignal *signal;
 
-    AddEventListenerOptions(bool capture, bool passive, bool once, AbortSignal* signal){
+    AddEventListenerOptions(bool capture, std::optional<bool> passive, bool once, AbortSignal* signal = nullptr){
         this->capture = capture;
         this->passive = passive;
         this->once = once;
@@ -79,7 +79,7 @@ class EventTarget{
         bool has_legacy_pre_activation_behavior = false;
 
         // These are kept for future use-cases for specific elements in HTML
-        std::function<void()> activation_behavior_algorithm = []() {};
+        std::function<void(Event* event)> activation_behavior_algorithm = [](Event* event) {};
         std::function<void()> legacy_canceled_activation_behavior_algorithm = []() {};
         std::function<void()> legacy_pre_activation_behavior_algorithm = []() {};
 
@@ -87,22 +87,26 @@ class EventTarget{
 
         EventTarget(){};
 
-        void addEventListener(const DOMString &type, const EventListener* callback, const std::variant<AddEventListenerOptions,bool> &options);
-        void removeEventListener(const DOMString &type, const EventListener* callback, bool capture);
+        void addEventListener(DOMString &type, EventListener* callback, std::variant<AddEventListenerOptions,bool> &options);
+        void removeEventListener(DOMString &type, EventListener* callback, bool capture);
         void removeAllEventListeners();
-        bool dispatchEvent(const Event* event);
+        bool dispatchEvent(Event* event);
 
         bool operator==(const EventTarget &a){
-            if (event_listener_list.size()!=a.event_listener_list.size()){
+            if (this->event_listener_list.size()!=a.event_listener_list.size()){
                 return false;
             }
 
-            for (size_t i=0; i<event_listener_list.size(); i++){
-                if (*(event_listener_list[i])!=*(a.event_listener_list[i])){
+            for (size_t i=0; i<this->event_listener_list.size(); i++){
+                if (*(this->event_listener_list[i])!=*(a.event_listener_list[i])){
                     return false;
                 }
             }
             return true;
+        }
+
+        bool operator!=(const EventTarget &a){
+            return !(*this==a);
         }
 
         virtual EventTarget* get_the_parent(const Event* event){
@@ -111,12 +115,11 @@ class EventTarget{
 };
 
 class AbortSignal: public EventTarget{
-    protected:
+    public:
         bool aborted;
         bool dependent = false;
         std::any reason = nullptr;
         EventHandler onabort; //TODO: event handler IDL attribute whose event handler event type is abort.
-    public:
 
         //NEW-OBJECT
         static AbortSignal* abort(std::any reason = nullptr);
@@ -137,17 +140,19 @@ class AbortSignal: public EventTarget{
         }
 
         bool getaborted(){
-            return this->aborted;
+            return this->isaborted();
         }
         bool isaborted(){
-            try{
-                std::any_cast<std::nullptr_t>(this->reason);
-                return false;
+            if (this->reason.has_value()){
+                try{
+                    std::any_cast<std::nullptr_t>(this->reason);
+                    return false;
+                }
+                catch(std::bad_any_cast){
+                    return true;
+                }
             }
-            catch(std::bad_any_cast){
-                return true;
-            }
-            return true;
+            return false;
         }
         bool getdependent(){
             return this->dependent;
@@ -161,15 +166,10 @@ class AbortSignal: public EventTarget{
 };
 
 class AbortController{
-    protected:
-        AbortSignal* signal;
     public:
+        AbortSignal* signal;
         AbortController();
         void abort(std::any reason = nullptr) const;
-
-        AbortSignal* getsignal(){
-            return this->signal;
-        }
 };
 
 
@@ -193,7 +193,7 @@ struct path_structs{
     bool root_of_closed_tree;
     bool slot_in_closed_tree;
 
-    path_structs(EventTarget *it, bool itst, EventTarget *sat, EventTarget *rt, std::vector<EventTarget*> ttl, bool rct, bool sct){
+    path_structs(EventTarget *it = nullptr, bool itst = false, EventTarget *sat = nullptr, EventTarget *rt = nullptr, std::vector<EventTarget*> ttl = {}, bool rct = false, bool sct = false){
         this->invocation_target = it;
         this->invocation_target_in_shadow_tree = itst;
         this->shadow_adjusted_target = sat;
@@ -205,7 +205,7 @@ struct path_structs{
 };
 
 class Event{
-    protected:
+    public:
         DOMString type = "";
         EventTarget *target = nullptr;
         EventTarget *relatedTarget = nullptr;
@@ -215,8 +215,6 @@ class Event{
         bool cancelable;
         bool composed;
         DOMHighResTimeStamp timeStamp;
-
-    public:
     
         bool isTrusted = false;
 
@@ -266,6 +264,9 @@ class Event{
         enum event_phase geteventPhase() const{
             return this->eventPhase;
         };
+        void seteventPhase(enum event_phase temp){
+            this->eventPhase = temp;
+        }
         bool getbubbles() const{
             return this->bubbles;
         };
@@ -302,6 +303,18 @@ class Event{
                 this->set_canceled_flag();
             }
         };
+
+
+        virtual bool operator==(Event* ev){
+            if (this->type == ev->gettype() && this->target == ev->gettarget() && this->timeStamp == ev->gettimeStamp()){
+                return true;
+            }
+            return false;
+        }
+
+        virtual Event* newObject(){
+            return new Event(this->type);
+        }
 };
 
 

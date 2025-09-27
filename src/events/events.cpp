@@ -4,6 +4,7 @@
 #include "exceptions.cpp"
 #include "nodes/document.hpp"
 #include "algos_base.cpp"
+#include "algos_events.cpp"
 #include <iostream>
 #include <map>
 #include <vector>
@@ -161,20 +162,17 @@ Event* create_event(Event* eventInterface, Realm* realm = nullptr){
 
 
 
-void EventTarget::addEventListener(const DOMString &type, const EventListener* callback, const std::variant<AddEventListenerOptions,bool> &options){
+void EventTarget::addEventListener(DOMString &type, EventListener* callback, std::variant<AddEventListenerOptions,bool> &options){
     event_listener* temp = flatten(type, callback, options);
     add_event_listener(this, temp);
 }
 
-void EventTarget::removeEventListener(const DOMString &type, const EventListener* callback, bool capture){
+void EventTarget::removeEventListener(DOMString &type, EventListener* callback, bool capture){
     int i = 0;
-    event_listener el = event_listener(type, callback, capture);
+    event_listener* el = new event_listener(type, callback, capture);
     for (event_listener* ev: this->event_listener_list){
-        if (*ev == el){
-            ev->removed = true;
-            delete ev;
-            eventTarget->event_listener_list.erase(eventTarget->event_listener_list.begin() + i);
-            return;
+        if (*ev == *el){
+            remove_event_listener(this, el);
         }
         i++;
     }
@@ -213,7 +211,7 @@ void AbortController::abort(std::any reason) const{
     signal_abort(this->signal, reason);
 }
 
-AbortSignal* AbortSignal::abort(std::any reason = nullptr) {
+AbortSignal* AbortSignal::abort(std::any reason) {
     AbortSignal* signal = new AbortSignal();
     if (reason.has_value()) {
         signal->reason = reason;
@@ -227,6 +225,7 @@ AbortSignal* AbortSignal::abort(std::any reason = nullptr) {
 AbortSignal* AbortSignal::timeout(unsigned long long milliseconds) {
     AbortSignal* signal = new AbortSignal();
     //! MF GLOBAL OBJECT AGAIN HERE
+    // HTML stuff here againnnnnnnnnnnnnnn
     return signal;
 }
 
@@ -235,7 +234,7 @@ AbortSignal *AbortSignal::_any(std::vector<AbortSignal *> signals) {
 }
 
 void AbortSignal::throwIfAborted() {
-    if (this->aborted) {
+    if (this->isaborted()) {
         reason = nullptr;
     }
 }

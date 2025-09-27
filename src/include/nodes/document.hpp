@@ -553,6 +553,17 @@ class Element: public ParentNode{
             if (this->shadow_root==nullptr || this->shadow_root->mode==closed){ return nullptr; }
             return this->shadow_root;
         }
+
+        void update_slot_name(DOMString name, std::optional<DOMString> namespaceURI = nullptr){
+            try{
+                auto temp = dynamic_cast<ShadowRoot*>(this->getRootNode());
+                if (!temp->host()){ return; }
+                if (this->localName==name)
+            }
+            catch{
+                return;
+            }
+        }
 };
 
 
