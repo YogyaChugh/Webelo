@@ -459,8 +459,6 @@ class Element: public ParentNode{
         DOMString slot="";
         std::optional<DOMString> is;
 
-        DOMString* assignedSlot; // TODO: CHANGE TYPE AFTER HTML SPEC !!
-
         DOMString html_uppercased_qualified_name(){
             DOMString qualified_name;
             if (this->prefix==std::nullopt){ qualified_name = this->localName; }
@@ -554,17 +552,21 @@ class Element: public ParentNode{
             return this->shadow_root;
         }
 
-        void update_slot_name(DOMString name, std::optional<DOMString> namespaceURI = nullptr){
-            try{
-                auto temp = dynamic_cast<ShadowRoot*>(this->getRootNode());
-                if (!temp->host()){ return; }
-                if (this->localName==name)
+        void update_slot_name(DOMString name, std::optional<DOMString> oldvalue, std::optional<DOMString> value){
+            if (value == oldvalue){ return; }
+            if (!value.has_value() && oldvalue.has_value() && oldvalue.value()==""){ return; }
+            if (value.has_value() && value.value()=="" && !oldvalue.has_value()){ return; }
+            if (!value.has_value() || value.value()==""){
+                this->localName = "";
             }
-            catch{
-                return;
+            else{
+                this->localName = value.value();
             }
+            assign_slottables_for_tree(this->getRootNode())
         }
+
 };
+
 
 
 enum DocType{

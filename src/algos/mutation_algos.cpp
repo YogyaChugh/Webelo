@@ -1,13 +1,29 @@
-#include "../exceptions.cpp"
-#include "../include/nodes/node.hpp"
-#include "../include/nodes/document.hpp"
+#include "exceptions.cpp"
+#include "nodes/node.hpp"
+#include "nodes/document.hpp"
+#include "algos/basic.cpp"
+#include "algos/algos_docs.cpp"
+
+bool host_including_inclusive_ancestor(Node* A, Node* B){
+    if (check_ancestor(B, A, true)){
+        return true;
+    }
+    auto temp = dynamic_cast<ShadowRoot*>(B);
+    if (temp && temp->getRootNode()->host() && host_including_inclusive_ancestor(A, B->getRootNode()->host())){}
+    return false;
+}
+
 
 void ensure_pre_insert_validity(Node* node, Node* parent, Node* child){
     if (!(dynamic_cast<Document*>(parent)) && !(dynamic_cast<DocumentFragment*>(parent)) && !(dynamic_cast<Element*>(parent))){
         throw HeirarchyRequestError("Shit boi !");
     }
-    // 1 step
-    if (child != nullptr && child->parentNode != parent){
+
+    if (host_including_inclusive_ancestor(node, parent)){
+        throw HeirarchyRequestError("Shit boi !");
+    }
+
+    if (child && child->parentNode != parent){
         throw NotFoundError("Not found fudge !");
     }
     if (!(dynamic_cast<DocumentFragment*>(node)) && !(dynamic_cast<DocumentType*>(node)) && !(dynamic_cast<Element*>(node)) && !(dynamic_cast<CharacterData*>(node))){
@@ -17,11 +33,40 @@ void ensure_pre_insert_validity(Node* node, Node* parent, Node* child){
         throw HeirarchyRequestError("Shit boi !");
     }
     if (dynamic_cast<Document*>(parent)){
+        bool element_count = 0;
+        bool doctype_count = 0;
+        for (auto a: parent->childNodes.node_list){
+            if (dynamic_cast<Element*>(a)){ element_count++; }
+            else if (dynamic_cast<DocumentType*>(a)){ doctype_count++; }
+        }
         if (dynamic_cast<DocumentFragment*>(node)){
+            int count = 0;
+            bool has = false;
+            for (auto a: node->childNodes.node_list){
+                if (dynamic_cast<Element*>(a)){ count++; }
+                if (dynamic_cast<Text*>(a)){ has = true; }
+            }
+            if (count>1 || has){
+                throw HeirarchyRequestError("Shit boi !");
+            }
+            if (count==1){
+                if (element_count>0 && dynamic_cast<DocumentType*>(child)){
+                    throw HeirarchyRequestError("Shit boi !");
+                }
+            }
         }
-        elif (dynamic_cast<Element*>(node)){
+        else if (dynamic_cast<Element*>(node)){
+            if (element_count>0 && dynamic_cast<DocumentType*>(child)){
+                throw HeirarchyRequestError("Shit boi !");
+            }
         }
-        elif (dynamic_cast<DocumentType*>(node)){
+        else if (dynamic_cast<DocumentType*>(node)){
+            if (doctype_count>0 && child){
+                throw HeirarchyRequestError("Shit boi !");
+            }
+            if (!child && element_count){
+                throw HeirarchyRequestError("Shit boi !");
+            }
         }
     }
 }
@@ -30,9 +75,9 @@ Node* pre_insert_node(Node* node, Node* parent, Node* child){
     ensure_pre_insert_validity(node, parent, child);
     Node* referenceChild = child;
     if (referenceChild == node){
-        // set to node's next sibling
+        referenceChild = node->nextSibling();
     }
-    // Insert node implementation
+    insert_node(node, parent, referenceChild);
     return node;
 }
 
@@ -49,9 +94,30 @@ void insert_node(Node* node, Node* parent, Node* child, bool suppress_observers 
     if (count==0){ return; }
     if (dynamic_cast<DocumentFragment*>(node)){
         remove_node(node->childNodes, suppress_observers);
-        queue_tree_mutation_record(node, NodeList(), nodes, nullptr, nullptr);
+        queue_tree_mutation_record(node, new NodeList(), nodes, nullptr, nullptr);
     }
-    if (child!=nullptr){
+    if (child){
         //TODO
+    }
+    Node* previousSibling;
+    if (child){
+        previousSibling = child->previousSibling();
+    }
+    else{
+        previousSibling = parent->lastChild();
+    }
+    for (auto tempnode: nodes->node_list){
+        adopt(tempnode, parent->ownerDocument);
+        if (!child){
+            parent->childNodes.append(tempnode);
+        }
+        else{
+            auto gg = std::find(parent->childNodes.node_list.begin(), parent->childNodes.node_list.end(), child);
+            if (gg!=parent->childNodes.node_list.end()){
+                parent->childNodes.node_list.insert(parent->childNodes.node_list.begin()+index, node);
+            }
+        }
+        auto bro = dynamic_cast<ShadowRoot*>(parent);
+        if (bro )
     }
 }
