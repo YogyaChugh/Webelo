@@ -1,9 +1,21 @@
+#ifndef NODE_ALGOS
+#define NODE_ALGOS
+
 #include "../include/nodes/node.hpp"
 #include "../include/nodes/document.hpp"
 #include "algos_base.cpp"
 #include "mutation_algos.cpp"
 #include "algos_shadow.cpp"
 #include <string>
+
+class Document;
+Node* clone_a_single_node(Node* node, Document* document, CustomElementRegistry* fallbackRegistry);
+// Node* create_element(Document* document, DOMString name, std::optional<DOMString> namespaceURI, std::optional<DOMString> prefix, bool gtem, CustomElementRegistry*istry){
+//     return dynamic_cast<Node*>(new Element(namespaceURI, prefix, name));
+// };
+Element* create_element(Document* document, DOMString localName, std::optional<DOMString> namesp, std::optional<DOMString> prefix = std::nullopt, std::optional<DOMString> is = std::nullopt, bool synchronousCustomElements = false, std::variant<DOMString,std::nullptr_t,CustomElementRegistry> registry = "default"){
+    return new Element("global","e","k",new CustomElementRegistry(), UNDEFINED);
+}
 
 Node* clone_node(Node* node, Document* document = nullptr, bool subtree = false, Node* parent = nullptr, CustomElementRegistry* fallbackRegistry = nullptr){
     if (document==nullptr){
@@ -12,7 +24,7 @@ Node* clone_node(Node* node, Document* document = nullptr, bool subtree = false,
     std::assert(!dynamic_cast<Document*>(node) || dynamic_cast<Document*>(node)==document);
     Node* copy = clone_a_single_node(node, document, fallbackRegistry);
     if (parent != nullptr){
-        append_node(copy, parent);
+        pre_insert_node(copy, parent, nullptr);
     }
     if (subtree){
         for (auto child: node->childNodes.node_list){
@@ -73,7 +85,7 @@ Node* clone_a_single_node(Node* node, Document* document, CustomElementRegistry*
             else{
                 Attr* temp = dynamic_cast<Attr*>(node);
                 if (temp){
-                    Attr* temp2 = new Attr();
+                    Attr* temp2 = new Attr("something");
                     temp2->namespaceURI = temp->namespaceURI;
                     temp2->prefix = temp->prefix;
                     temp2->localName = temp->localName;
@@ -194,10 +206,10 @@ std::optional<DOMString> locate_a_namespace(Node* node, std::optional<DOMString>
     Element* temp = dynamic_cast<Element*>(node);
     if (temp){
         if (prefix=="xml"){
-            return"http://www.w3.org/XML/1998/namespace"
+            return"http://www.w3.org/XML/1998/namespace";
         }
         if (prefix=="xmlns"){
-            return "http://www.w3.org/2000/xmlns/"
+            return "http://www.w3.org/2000/xmlns/";
         }
         if (temp->namespaceURI.has_value() && temp->prefix==prefix){
             return temp->namespaceURI;
@@ -241,19 +253,19 @@ std::optional<DOMString> locate_a_namespace(Node* node, std::optional<DOMString>
     }
 }
 
-std::optional<DOMString> locate_a_namespace_prefix(Element* element, std::optional<DOMString> namespace){
-    if (element->namespaceURI==namespace && element->prefix.has_value()){
-        return element->prefix;
-    }virtual void making_it_abstract(){};
+std::optional<DOMString> locate_a_namespace_prefix(Element* element, std::optional<DOMString> namesp){
+    // if (element->namespaceURI==namespace && element->prefix.has_value()){
+    //     return element->prefix;
+    // }
     for (auto attr: element->attributes.attribute_list){
-        if (attr->prefix=="xmlns" && attr->value==namespace){
+        if (attr->prefix=="xmlns" && attr->value==namesp){
             return attr->localName;
         }
     }
     if (element->parentElement!=nullptr){
-        return locate_a_namespace_prefix(element, namespace);
+        return locate_a_namespace_prefix(element, namesp);
     }
-    retun std::nullopt;
+    return std::nullopt;
 }
 
 HTMLCollection list_of_elements(DOMString qualifiedName, Node* root){
@@ -269,8 +281,13 @@ HTMLCollection list_of_elements(std::optional<DOMString> namesp, DOMString local
 }
 
 HTMLCollection list_of_elements(std::vector<DOMString> &classNames, Node* root){
-    std::vector<DOMString> classes;
-    for (auto class: classes){
-        class = ParseOrderedSet(class);
-    }
+    // std::vector<DOMString> classes;
+    // for (auto class: classes){
+    //     auto something = ParseOrderedSet(class);
+    // }
+    return new HTMLCollection();
 }
+
+
+
+#endif

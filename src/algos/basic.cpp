@@ -1,3 +1,6 @@
+#ifndef BASIC_ALGOS
+#define BASIC_ALGOS
+
 #include <variant>
 #include "../include/nodes/node.hpp"
 #include "../include/nodes/document.hpp"
@@ -148,3 +151,7 @@ Node* retarget(Node* A, Node* B){
         A = dynamic_cast<Node*>(dynamic_cast<ShadowRoot*>(temp)->host());
     }
 }
+
+
+
+#endif

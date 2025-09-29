@@ -1,8 +1,12 @@
-#include "exceptions.cpp"
-#include "nodes/node.hpp"
-#include "nodes/document.hpp"
-#include "algos/basic.cpp"
-#include "algos/algos_docs.cpp"
+#ifndef MUTATION_ALGOS
+#define MUTATION_ALGOS
+
+
+#include "../exceptions.cpp"
+#include "../include/nodes/node.hpp"
+#include "../include/nodes/document.hpp"
+#include "basic.cpp"
+#include "algos_docs.cpp"
 
 bool host_including_inclusive_ancestor(Node* A, Node* B){
     if (check_ancestor(B, A, true)){
@@ -71,6 +75,10 @@ void ensure_pre_insert_validity(Node* node, Node* parent, Node* child){
     }
 }
 
+void ensure_pre_insert_validity(Node* temp,Node* node,Node* child){};
+void move_node(Node* node,Node* node2,Node* Child){};
+void replace(Node* obj, Node* node, Node* parent){};
+
 Node* pre_insert_node(Node* node, Node* parent, Node* child){
     ensure_pre_insert_validity(node, parent, child);
     Node* referenceChild = child;
@@ -121,6 +129,11 @@ void insert_node(Node* node, Node* parent, Node* child, bool suppress_observers 
         if (bro->shadow_root && bro->shadow_root->slotAssignment==named && (dynamic_cast<Element*>(node) || dynamic_cast<Node*>(node))){
             assign_slot(node);
         }
-        
+        assign_slottables_for_tree(node->getRootNode());
     }
 }
+
+
+void remove_node(Node* node){}
+
+#endif

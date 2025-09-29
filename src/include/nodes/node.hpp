@@ -1,8 +1,8 @@
 #ifndef NODE_DOM
 #define NODE_DOM
 
-#include "base.cpp"
-#include "events/events.hpp"
+#include "../../base.cpp"
+#include "../events/events.hpp"
 #include "document.hpp"
 
 #define DOCUMENT_POSITION_DISCONNECTED 0x01
@@ -12,7 +12,7 @@
 #define DOCUMENT_POSITION_CONTAINED_BY 0x10
 #define DOCUMENT_POSITION_IMPLEMENTATION_SPECIFIC 0x20
 
-
+class Node;
 
 /*
 Collection of Node objects
@@ -54,16 +54,7 @@ class NodeList{
             this->node_list.insert(this->node_list.begin()+index, node);
         }
 
-        void remove(Node* node){
-            unsigned int i = 0;
-            for (auto a: this->node_list){
-                if (*a == node){
-                    this->node_list.erase(this->node_list.begin()+i);
-                    return;
-                }
-                i++;
-            }
-        }
+        void remove(Node* node);
 
         ~NodeList();
 };
@@ -119,7 +110,7 @@ class HTMLCollection{
         void remove(Element* node){
             unsigned int i = 0;
             for (auto a: this->element_list){
-                if (*a == node){
+                if (a->isEqualNode(node)){
                     this->element_list.erase(this->element_list.begin()+i);
                     return;
                 }
@@ -183,14 +174,15 @@ class Node: public EventTarget{
         Node(node_type nodeType, DOMString nodeName, Document* ownerDocument, Node* parentNode);
 
         unsigned long length(){
-            if (dynamic_cast<DocumentType*>(this) || dynamic_cast<Attr*>(this)){
-                return 0;
-            }
-            CharacterData* temp = dynamic_cast<CharacterData*>(this);
-            if (temp){
-                return temp->getdata().length();
-            }
-            return this->childNodes.length();
+            //if (dynamic_cast<DocumentType*>(this) || dynamic_cast<Attr*>(this)){
+            //    return 0;
+            //}
+            //CharacterData* temp = dynamic_cast<CharacterData*>(this);
+            //if (temp){
+            //    return temp->getdata().length();
+            //}
+            //return this->childNodes.length();
+            return 0;
         }
 
         bool isEqualNode(Node* otherNode);
@@ -222,7 +214,7 @@ class Node: public EventTarget{
 
         virtual void making_it_abstract() = 0;
 
-        bool operator==(Node* other){ return this->isEqualNode(other); }
+        bool operator==(Node& other){ return this->isEqualNode(&other); }
 
         // Based on the follows algorithm !!
         bool operator^(Node* other){

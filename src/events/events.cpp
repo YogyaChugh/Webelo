@@ -1,10 +1,10 @@
-#include "events/events.hpp"
-#include "base.cpp"
-#include "window.hpp"
-#include "exceptions.cpp"
-#include "nodes/document.hpp"
-#include "algos_base.cpp"
-#include "algos_events.cpp"
+#include "../include/events/events.hpp"
+#include "../base.cpp"
+#include "../include/window.hpp"
+#include "../exceptions.cpp"
+#include "../include/nodes/document.hpp"
+#include "../algos/algos_base.cpp"
+#include "../algos/algos_events.cpp"
 #include <iostream>
 #include <map>
 #include <vector>
@@ -134,7 +134,7 @@ std::vector<EventTarget*> Event::composedPath(){
 
 
 
-CustomEvent::CustomEvent(DOMString const type, bool bubbles, bool cancelable, bool composed, std::any &detail): Event(type, bubbles, cancelable, composed){
+CustomEvent::CustomEvent(DOMString const type, std::any &detail, bool bubbles, bool cancelable, bool composed): Event(type, bubbles, cancelable, composed){
     this->detail = detail;
 }
 

@@ -1,10 +1,10 @@
 #ifndef ALGOS_EVENTS_DOM
 #define ALGOS_EVENTS_DOM
 
-#include "events/events.hpp"
-#include "base.cpp"
-#include "window.hpp"
-#include "nodes/node.hpp"
+#include "../include/events/events.hpp"
+#include "../base.cpp"
+#include "../include/window.hpp"
+#include "../include/nodes/node.hpp"
 #include "basic.cpp"
 
 

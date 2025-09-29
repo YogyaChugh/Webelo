@@ -1,14 +1,15 @@
 #ifndef ALGOS_BASE_DOM
 #define ALGOS_BASE_DOM
 
-#include "nodes/node.hpp"
-#include "nodes/document.hpp"
-#include "base.cpp"
-#include "exceptions.cpp"
+#include "../include/nodes/node.hpp"
+#include "../include/nodes/document.hpp"
+#include "../base.cpp"
+#include "../exceptions.cpp"
 #include <set>
 #include <string>
 #include <vector>
-#include "utf8.h"
+#include <assert.h>
+#include "../utf8.h"
 
 // Returns a set of strings. It separates all the substrings based on ASCII whitespace in the input !!
 std::set<DOMString> parse_ordered_set(DOMString input){
@@ -26,7 +27,7 @@ DOMString serialize_ordered_set(std::set<DOMString> input){
     DOMString str = "";
     int i=0;
     for (auto a: input){
-        str.append(a);
+        (void)str.append(a);
         if (i!=(input.size()-1)){
             str.append(" ");
         }
@@ -185,7 +186,7 @@ void validate_and_extract(std::optional<DOMString> &namesp,DOMString qualifiedNa
         localName = splitResult[1];
         if (!valid_namespace_prefix(prefix.value())){ throw InvalidCharacterError("The prefix aka 'text before colon (:)' in the qualifiedName (2nd arg) should be a valid namespace prefix !"); }
     }
-    assert(!prefix.has_value() || valid_namespace_prefix(prefix.value()));
+    std::assert(!prefix.has_value() || valid_namespace_prefix(prefix.value()));
     if (context=="attribute" && !valid_attribute_local_name(localName)){ throw InvalidCharacterError("qualified name (sometimes, text after colon (:)) isn't a valid attribute name !"); }
     if (context=="element" && !valid_element_local_name(localName)){ throw InvalidCharacterError("qualified name (sometimes, text after colon (:)) isn't a valid element name !"); }
     if (!prefix.has_value() && !namesp.has_value()){ throw NamespaceError("Namespace error !! Namespace &  Namespace Prefix are both null !"); }

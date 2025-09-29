@@ -1,7 +1,7 @@
 #ifndef EVENTS_DOM
 #define EVENTS_DOM
 
-#include "base.cpp"
+#include "../../base.cpp"
 #include <vector>
 #include <variant>
 #include <algorithm>
@@ -157,7 +157,7 @@ class AbortSignal: public EventTarget{
         bool getdependent(){
             return this->dependent;
         }
-        bool setdependent(bool dependent){
+        void setdependent(bool dependent){
             this->dependent = dependent;
         }
         std::any getreason(){
@@ -321,7 +321,7 @@ class Event{
 class CustomEvent: public Event{
     public:
         std::any detail = nullptr;
-        CustomEvent(DOMString const type, bool bubbles = false, bool cancelable = false, bool composed = false, std::any &detail = nullptr);
+        CustomEvent(DOMString const type, std::any &detail, bool bubbles = false, bool cancelable = false, bool composed = false);
         void initCustomEvent(DOMString const type, bool bubbles = false, bool cancelable = false, std::any detail = nullptr);
 
         std::any getdetail() const{

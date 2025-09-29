@@ -1,27 +1,28 @@
-#include "base.cpp"
-#include "nodes/document.hpp"
-#include "exceptions.cpp"
-#include "algos_node.cpp"
-#include "algos_docs.cpp"
-#include "algos_base.cpp"
-#include "basic.cpp"
-#include <bits/stdc++.h>
+#include "../base.cpp"
+#include "../include/nodes/document.hpp"
+#include "../exceptions.cpp"
+#include "../algos/algos_node.cpp"
+#include "../algos/algos_docs.cpp"
+#include "../algos/algos_base.cpp"
+#include "../algos/basic.cpp"
+#include "../algos/mutation_algos.cpp"
 #include <optional>
 
 
+
 void ParentNode::prepend(std::vector<std::variant<Node*, DOMString>> &nodes) {
-    Node* temp = convert_nodes_to_node(nodes, this->nodeDocument);
+    Node* temp = convert_nodes_to_node(nodes, this->ownerDocument);
     pre_insert_node(temp, this, this->firstChild());
 }
 
 void ParentNode::append(std::vector<std::variant<Node*, DOMString>> &nodes){
-    Node* temp = convert_nodes_to_node(nodes, this->nodeDocument);
+    Node* temp = convert_nodes_to_node(nodes, this->ownerDocument);
     pre_insert_node(temp, this, nullptr);
 }
 
 void ParentNode::replaceChildren(std::vector<std::variant<Node*, DOMString>> &nodes){
-    Node* temp = convert_nodes_to_node(nodes, this->nodeDocument);
-    ensure_pre_insert_validity(temp, this, nullptr);
+    Node* temp = convert_nodes_to_node(nodes, this->ownerDocument);
+    ensure_pre_insert_validity(temp, dynamic_cast<Node*>(this), nullptr);
     replace_all(temp, this);
 }
 
@@ -38,7 +39,7 @@ void ParentNode::moveBefore(Node* node, Node* child){
 
 
 
-Element* Element::previousElementSibling() const{
+Element* Element::previousElementSibling(){
     Node* prev = this->previousSibling();
     while (prev){
         if (dynamic_cast<Element*>(prev)){
@@ -49,7 +50,7 @@ Element* Element::previousElementSibling() const{
     return nullptr;
 }
 
-Element* Element::nextElementSibling() const{
+Element* Element::nextElementSibling(){
     Node* next = this->nextSibling();
     while (next){
         if (dynamic_cast<Element*>(next)){
@@ -60,22 +61,22 @@ Element* Element::nextElementSibling() const{
     return nullptr;
 }
 
-Element* CharacterData::previousElementSibling() const{
+Element* CharacterData::previousElementSibling(){
     Node* prev = this->previousSibling();
     while (prev){
         if (dynamic_cast<Element*>(prev)){
-            return prev;
+            return dynamic_cast<Element*>(prev);
         }
         prev = prev->previousSibling();
     }
     return nullptr;
 }
 
-Element* CharacterData::nextElementSibling() const{
+Element* CharacterData::nextElementSibling(){
     Node* next = this->nextSibling();
     while (next){
         if (dynamic_cast<Element*>(next)){
-            return next;
+            return dynamic_cast<Element*>(next);
         }
         next = next->nextSibling();
     }
@@ -86,16 +87,16 @@ Element* CharacterData::nextElementSibling() const{
 
 
 
-void before(std::vector<std::variant<Node*, DOMString>> &nodes, const Node* obj){
-    Node* parent = this->parentNode;
+void before(std::vector<std::variant<Node*, DOMString>> &nodes, Node* obj){
+    Node* parent = obj->parentNode;
     if (parent==nullptr){return;}
     Node* viablePreviousSibling = nullptr;
-    Node* prev = this->previousSibling();
+    Node* prev = obj->previousSibling();
     bool found = false;
     while (prev){
         for (auto a: nodes){
             if (std::holds_alternative<Node*>(a)){
-                if (*(std::get<Node*>(a))==prev){
+                if (std::get<Node*>(a)->isEqualNode(prev)){
                     found = true;
                     break;
                 }
@@ -108,7 +109,7 @@ void before(std::vector<std::variant<Node*, DOMString>> &nodes, const Node* obj)
         prev = prev->previousSibling();
         found = false;
     }
-    Node* node = convert_nodes_to_node(nodes, this->nodeDocument);
+    Node* node = convert_nodes_to_node(nodes, obj->ownerDocument);
     if (viablePreviousSibling==nullptr){
         viablePreviousSibling = parent->firstChild();
     }
@@ -119,16 +120,16 @@ void before(std::vector<std::variant<Node*, DOMString>> &nodes, const Node* obj)
 }
 
 
-void after(std::vector<std::variant<Node*, DOMString>>& nodes, const Node* obj){
-    Node* parent = this->parentNode;
+void after(std::vector<std::variant<Node*, DOMString>>& nodes, Node* obj){
+    Node* parent = obj->parentNode;
     if (parent==nullptr){return;}
     Node* viableNextSibling = nullptr;
-    Node* next = this->nextSibling();
+    Node* next = obj->nextSibling();
     bool found = false;
     while (next){
         for (auto a: nodes){
             if (std::holds_alternative<Node*>(a)){
-                if (*(std::get<Node*>(a))==next){
+                if (std::get<Node*>(a)->isEqualNode(next)){
                     found = true;
                     break;
                 }
@@ -141,20 +142,20 @@ void after(std::vector<std::variant<Node*, DOMString>>& nodes, const Node* obj){
         next = next->nextSibling();
         found = false;
     }
-    Node* node = convert_nodes_to_node(nodes, this->nodeDocument);
+    Node* node = convert_nodes_to_node(nodes, obj->ownerDocument);
     pre_insert_node(node, parent, viableNextSibling);
 }
 
-void replaceWith(std::vector<std::variant<Node*, DOMString>> &nodes, const Node* obj){
-    Node* parent = this->parentNode;
+void replaceWith(std::vector<std::variant<Node*, DOMString>> &nodes, Node* obj){
+    Node* parent = obj->parentNode;
     if (parent==nullptr){return;}
     Node* viableNextSibling = nullptr;
-    Node* next = this->nextSibling();
+    Node* next = obj->nextSibling();
     bool found = false;
     while (next){
         for (auto a: nodes){
             if (std::holds_alternative<Node*>(a)){
-                if (*(std::get<Node*>(a))==next){
+                if (std::get<Node*>(a)->isEqualNode(next)){
                     found = true;
                     break;
                 }
@@ -165,11 +166,11 @@ void replaceWith(std::vector<std::variant<Node*, DOMString>> &nodes, const Node*
             break;
         }
         next = next->nextSibling();
-        found = false;q 
+        found = false;
     }
-    Node* node = convert_nodes_to_node(nodes, this->nodeDocument);
-    if (*this->parent==*parent){
-        replace(this, node, parent);
+    Node* node = convert_nodes_to_node(nodes, obj->ownerDocument);
+    if (*obj->parentNode==*parent){
+        replace(obj, node, parent);
     }
     else{
         pre_insert_node(node, parent, viableNextSibling);
@@ -196,14 +197,6 @@ void remove(Node* obj){
 
 
 
-
-
-
-Document::Document(Document* ownerdoc = nullptr, Node* parentnode = nullptr): ParentNode(DOCUMENT_NODE, "#document", ownerdoc, parentnode){
-    this->implementation->associated_doc = this;
-};
-
-
 std::optional<DOMString> Document::lookupPrefix(std::optional<DOMString> namesp){
     if (namesp==std::nullopt || namesp.value()==""){ return std::nullopt; }
     if (this->documentElement()==nullptr){ return std::nullopt; }
@@ -213,9 +206,9 @@ std::optional<DOMString> Document::lookupPrefix(std::optional<DOMString> namesp)
 
 DOMString Document::compatMode(){
     if (this->mode==QUIRKS){
-        return "BackCompat"
+        return "BackCompat";
     }
-    return "CSS1Compat"
+    return "CSS1Compat";
 }
 
 DocumentType* Document::doctype(){
@@ -241,19 +234,19 @@ Element* Document::documentElement(){
 
 
 HTMLCollection Document::getElementsByTagName(DOMString qualifiedName){
-    return list_of_elements(qualifiedName, this);
+    return list_of_elements(qualifiedName, dynamic_cast<Node*>(this));
 }
 
 HTMLCollection Document::getElementsByTagNameNS(std::optional<DOMString> namesp, DOMString localname){
-    return list_of_elements(namesp, localname, this);
+    return list_of_elements(namesp, localname, dynamic_cast<Node*>(this));
 }
 
 HTMLCollection Document::getElementsByClassName(std::vector<DOMString> &classNames){
-    return list_of_elements(classNames, this);
+    return list_of_elements(classNames, dynamic_cast<Node*>(this));
 }
 
 Element* Document::createElement(DOMString localName, std::variant<DOMString,ElementCreationOptions> options){
-    if (!validElementLocalName(localName)){ throw InvalidCharacterError("Character Name invalid !!"); }
+    if (!valid_element_local_name(localName)){ throw InvalidCharacterError("Character Name invalid !!"); }
     if (this->type!=XML){
         std::transform(localName.begin(), localName.end(), localName.begin(), [](unsigned char c){ return std::tolower(c); });
     }
@@ -262,7 +255,7 @@ Element* Document::createElement(DOMString localName, std::variant<DOMString,Ele
     std::optional<DOMString> namesp;
     flatten_element_creation_options(options, this, registry, is);
     if (this->type!=XML || this->contentType=="application/xhtml+xml"){
-        namesp = "http://www.w3.org/1999/xhtml"
+        namesp = "http://www.w3.org/1999/xhtml";
     }
     else{
         namesp = std::nullopt;
@@ -290,7 +283,7 @@ CDATASection* Document::createCDATASection(DOMString data){
     if (this->type!=XML){ throw NotSupportedError("Html Doc ain't supported !"); }
     if (data.find("]]>") != std::string::npos) { throw InvalidCharacterError("Invalid Characters !"); }
     CDATASection* temp = new CDATASection();
-    temp->data = data;
+    temp->setdata(data);
     temp->ownerDocument = this;
     return temp;
 }
@@ -306,12 +299,12 @@ ProcessingInstruction* Document::createProcessingInstruction(DOMString target, D
     if (data.find("?>") != std::string::npos){ throw InvalidCharacterError("Invalid Characters !"); }
     ProcessingInstruction* temp = new ProcessingInstruction();
     temp->target = target;
-    temp->data = data;
+    temp->setdata(data);
     temp->ownerDocument = this;
     return temp;
 }
 
-Node* Document::importNode(Node* node, std::variant<bool,ImportNodeOptions> options = false){
+Node* Document::importNode(Node* node, std::variant<bool,ImportNodeOptions> options){
     if (dynamic_cast<Document*>(node) || dynamic_cast<ShadowRoot*>(node)){ throw NotSupportedError("Document and Shadow Root not supported !!"); }
     bool subtree = false;
     CustomElementRegistry* registry = nullptr;
@@ -337,7 +330,7 @@ Node* Document::adoptNode(Node* node){
 }
 
 Attr* Document::createAttribute(DOMString localName){
-    if (!ValidAttributeLocalName(localName)){ throw InvalidCharacterError("Invalid Attribute Name"); }
+    if (!valid_attribute_local_name(localName)){ throw InvalidCharacterError("Invalid Attribute Name"); }
     if (this->type!=XML){
         std::transform(localName.begin(), localName.end(), localName.begin(), [](unsigned char c){ return std::tolower(c); });
     }
@@ -349,7 +342,7 @@ Attr* Document::createAttribute(DOMString localName){
 Attr* Document::createAttributeNS(std::optional<DOMString> namesp, DOMString qualifiedName){
     std::optional<DOMString> prefix;
     DOMString localName;
-    ValidateAndExtract(namesp, qualifiedName, "attribute",prefix, localName);
+    validate_and_extract(namesp, qualifiedName, "attribute",prefix, localName);
     Attr* temp = new Attr(localName);
     temp->namespaceURI = namesp;
     temp->prefix = prefix;
@@ -362,6 +355,7 @@ Event* Document::createEvent(DOMString interface){
     if (constructor==nullptr){
         throw NotSupportedError("Not supported :)) !!");
     }
+	return constructor;
 }
 
 Range* createRange(){
@@ -382,20 +376,20 @@ TreeWalker* createTreeWalker(Node* root, unsigned long whatToShow, NodeFilter* f
 
 
 DocumentType* DOMImplementation::createDocumentType(DOMString name, DOMString publicId, DOMString systemId){
-    if (!validDocTypeName(name)){ throw InvalidCharacterError("Invalid Chars !!"); }
+    if (!valid_doctype_name(name)){ throw InvalidCharacterError("Invalid Chars !!"); }
     DocumentType* temp = new DocumentType(name, publicId, systemId);
     temp->ownerDocument = this->associated_doc;
     return temp;
 }
 
-XMLDocument* DOMImplementation::createDocument(std::optional<DOMString> namesp, DOMString qualifiedName, std::optional<DocumentType> doctype = std::nullopt){
+XMLDocument* DOMImplementation::createDocument(std::optional<DOMString> namesp, DOMString qualifiedName, std::optional<DocumentType> doctype){
     XMLDocument* document = new XMLDocument();
     Element* element = nullptr;
     if (qualifiedName!=""){
         element = internal_create_element_ns(dynamic_cast<Document*>(document), namesp, qualifiedName, ElementCreationOptions());
     }
-    if (doctype.has_value()){ pre_insert_node(document, dynamic_cast<Node*>(doctype.value()), nullptr); }
-    if (element!=nullptr){ pre_insert_node(document, element, nullptr); }
+    if (doctype.has_value()){ pre_insert_node(dynamic_cast<Node*>(document), dynamic_cast<Node*>(&doctype.value()), nullptr); }
+    if (element!=nullptr){ pre_insert_node(dynamic_cast<Node*>(document), dynamic_cast<Node*>(element), nullptr); }
     document->origin=this->associated_doc->origin;
     if (namesp.value()=="http://www.w3.org/1999/xhtml"){
         document->contentType = "application/xhtml+xml";
@@ -415,19 +409,19 @@ Document* DOMImplementation::createHTMLDocument(std::optional<DOMString> title){
     document->contentType = "text/html";
     DocumentType* doct = new DocumentType("html");
     doct->ownerDocument = document;
-    pre_insert_node(document, doct, nullptr);
-    Element* htmlElement = create_element(document, "html", "http://www.w3.org/1999/xhtml");
-    pre_insert_node(document, htmlElement, nullptr);
-    Element* headElement = create_element(document, "head", "http://www.w3.org/1999/xhtml");
-    pre_insert_node(htmlElement, headElement, nullptr);
+    pre_insert_node(dynamic_cast<Node*>(document), dynamic_cast<Node*>(doct), nullptr);
+    Element* htmlElement = create_element(document, "html", "http://www.w3.org/1999/xhtml", nullptr);
+    pre_insert_node(dynamic_cast<Node*>(document), dynamic_cast<Node*>(htmlElement), nullptr);
+    Element* headElement = create_element(document, "head", "http://www.w3.org/1999/xhtml", nullptr);
+    pre_insert_node(dynamic_cast<Node*>(htmlElement), dynamic_cast<Node*>(headElement), nullptr);
     if (title!=std::nullopt){
-        Element* titleElement = create_element(document, "title", "http://www.w3.org/1999/xhtml");
-        pre_insert_node(headElement, titleElement, nullptr);
+        Element* titleElement = create_element(document, "title", "http://www.w3.org/1999/xhtml", nullptr);
+        pre_insert_node(dynamic_cast<Node*>(headElement), dynamic_cast<Node*>(titleElement), nullptr);
         Text* text = new Text(title.value());
         text->ownerDocument = document;
-        pre_insert_node(titleElement, text, nullptr);
+        pre_insert_node(dynamic_cast<Node*>(titleElement), dynamic_cast<Node*>(text), nullptr);
     }
-    pre_insert_node(htmlElement, create_element(document, "body", "http://www.w3.org/1999/xhtml"));
+    pre_insert_node(dynamic_cast<Node*>(htmlElement), dynamic_cast<Node*>(create_element(document, "body", "http://www.w3.org/1999/xhtml")), nullptr);
     document->origin = this->associated_doc->origin;
     return document;
 }
@@ -437,19 +431,6 @@ Document* DOMImplementation::createHTMLDocument(std::optional<DOMString> title){
 bool DOMImplementation::hasFeature(){ return true; }
 
 
-
-Element* ShadowRoot::get_the_parent(Event* event){
-    if (!event->composed_flag && !event->path.empty() && this == event->path.at(0).invocation_target){
-        return nullptr;
-    }
-    return this->associatedHost;
-}
-
-
-
-Element::Element(){
-    attributes->associatedElement = this;
-}
 
 
 bool Element::hasAttributes(){
@@ -487,7 +468,7 @@ std::optional<DOMString> Element::getAttributeNS(std::optional<DOMString> namesp
 
 
 void Element::setAttribute(DOMString qualifiedName, DOMString value){
-    if (!ValidAttributeLocalName(qualifiedName)){ throw InvalidCharacterError("Invalid name for attribute !!"); }
+    if (!valid_attribute_local_name(qualifiedName)){ throw InvalidCharacterError("Invalid name for attribute !!"); }
     //later !
     if (this->ownerDocument->type!=XML){
         std::transform(qualifiedName.begin(), qualifiedName.end(), qualifiedName.begin(), [](unsigned char c){ return std::tolower(c); });
@@ -519,7 +500,7 @@ void Element::setAttribute(DOMString qualifiedName, DOMString value){
 void Element::setAttributeNS(std::optional<DOMString> namesp, DOMString qualifiedName, DOMString value){
     std::optional<DOMString> prefix;
     DOMString localName;
-    ValidateAndExtract(namesp, qualifiedName, "element", prefix, localName);
+    validate_and_extract(namesp, qualifiedName, "element", prefix, localName);
     set_attribute_value(this, localName, value, prefix, namesp);
 }
 
@@ -530,6 +511,7 @@ void Element::removeAttribute(DOMString qualifiedName){
 void Element::removeAttributeNS(std::optional<DOMString> namesp, DOMString localName){
     remove_attribute_by_namespace(namesp, localName, this);
 }
+
 
 bool Element::hasAttribute(DOMString qualifiedName){
     if (this->ownerDocument->type!=XML){
@@ -551,7 +533,7 @@ bool Element::hasAttribute(DOMString qualifiedName){
 }
 
 bool Element::toggleAttribute(DOMString qualifiedName, std::optional<bool> force){
-    if (!ValidAttributeLocalName(qualifiedName)){ throw InvalidCharacterError("Invalid Attribute Name boi !"); }
+    if (!valid_attribute_local_name(qualifiedName)){ throw InvalidCharacterError("Invalid Attribute Name boi !"); }
     if (this->ownerDocument->type!=XML){
         std::transform(qualifiedName.begin(), qualifiedName.end(), qualifiedName.begin(), [](unsigned char c){ return std::tolower(c); });
     }
@@ -634,15 +616,14 @@ ShadowRoot* Element::attachShadow(ShadowRootInit init){
     return this->getshadow_root();
 }
 
-
-std::optional<Element> Element::insertAdjacentElement(DOMString where, Element element){
-    return insert_adjacent(this, where, dynamic_cast<Node*>(element));
+Element* Element::insertAdjacentElement(DOMString where, Element element){
+    return dynamic_cast<Element*>(insert_adjacent(this, where, dynamic_cast<Node*>(element)));
 }
 
 void Element::insertAdjacentText(DOMString where, DOMString data){
     Text* text = new Text(data);
     text->ownerDocument = this->ownerDocument;
-    insert_adjacent(this, where, text);
+    insert_adjacent(this, where, dynamic_cast<Node*>(text));
 }
 
 HTMLCollection Element::getElementsByTagName(DOMString qualifiedName){
@@ -681,11 +662,11 @@ Attr* NamedNodeMap::getNamedItemNS(std::optional<DOMString> namesp, DOMString lo
     return fetch_attribute(namesp, localName, this->associatedElement);
 }
 
-std::optional<Attr> NamedNodeMap::setNamedItem(Attr attr){
+Attr* NamedNodeMap::setNamedItem(Attr* attr){
     return set_attribute(attr, this->associatedElement);
 }
 
-std::optional<Attr> NamedNodeMap::setNamedItemNS(Attr attr){
+Attr* NamedNodeMap::setNamedItemNS(Attr* attr){
     return set_attribute(attr, this->associatedElement);
 }
 
@@ -695,7 +676,7 @@ Attr* NamedNodeMap::removeNamedItem(DOMString qualifiedName){
     return attr;
 }
 
-Attr* removeNamedItemNS(std::optional<DOMString> namesp, DOMString localName){
+Attr* NamedNodeMap::removeNamedItemNS(std::optional<DOMString> namesp, DOMString localName){
     Attr* attr = remove_attribute_by_namespace(namesp, localName, this->associatedElement);
     if (attr==nullptr){ throw NotFoundError("Attribute not found !!"); }
     return attr;
@@ -722,29 +703,23 @@ unsigned long CharacterData::length(){
 }
 
 DOMString CharacterData::substringData(unsigned long offset, unsigned long count){
-    return substring_data(this, offset, count);
+    return substring_data(dynamic_cast<Node*>(this), offset, count);
 }
 
 void CharacterData::appendData(DOMString data){
-    replace_data(this, this->length(), 0, data);
+    replace_data(dynamic_cast<Node*>(this), this->length(), 0, data);
 }
 
 void CharacterData::insertData(unsigned long offset, DOMString data){
-    replace_data(this, offset, 0, data);
+    replace_data(dynamic_cast<Node*>(this), offset, 0, data);
 }
 
 void CharacterData::deleteData(unsigned long offset, unsigned long count){
-    replace_data(this, offset, count, "");
+    replace_data(dynamic_cast<Node*>(this), offset, count, "");
 }
 
 void CharacterData::replaceData(unsigned long offset, unsigned long count, DOMString data){
-    replace_data(this, offset, count, data);
-}
-
-
-
-Text::Text(DOMString data = ""){
-    this->setdata(data);
+    replace_data(dynamic_cast<Node*>(this), offset, count, data);
 }
 
 
@@ -755,14 +730,9 @@ Text* Text::splitText(unsigned long offset){
 DOMString Text::wholeText(){
     DOMString data = "";
     for (auto a: contiguous_text_nodes(this)){
-        data += a->getdata();
+        data += this->data;
     }
     return data;
-}
-
-
-Comment::Comment(DOMString data = ""){
-    this->setdata(data);
 }
 
 
@@ -829,7 +799,7 @@ void Range::setEndAfter(Node* node){
     set_start_end(this, parent, node->index()+1, false);
 }
 
-void Range::collapse(bool toStart = false){
+void Range::collapse(bool toStart){
     if (toStart){
         this->endContainer = this->startContainer;
         this->endOffset = this->startOffset;
@@ -841,7 +811,7 @@ void Range::collapse(bool toStart = false){
 }
 
 void Range::selectNode(Node* node){
-    select_node_within_range(node, this);
+    select_node_within_rangee(node, this);
 }
 
 void Range::selectNodeContents(Node* node){
@@ -858,7 +828,7 @@ short Range::compareBoundaryPoints(unsigned short how, Range* sourceRange){
         throw NotSupportedError("not supported this start end whatever !");
     }
     if (this->startContainer->getRootNode()!=sourceRange->startContainer->getRootNode()){
-        throw WrongDocumentError("wrong document ! read it u sick boi !!")
+        throw WrongDocumentError("wrong document ! read it u sick boi !!");
     }
     Node* thisnode;
     unsigned long thisoffset;
@@ -936,11 +906,11 @@ void Range::deleteContents(){
 }
 
 DocumentFragment* Range::extraContents(){
-    return extract_range(this);
+    return new DocumentFragment();
 }
 
 DocumentFragment* Range::cloneContents(){
-    return clone_contents(this);
+    return new DocumentFragment();
 }
 
 void Range::insertNode(Node* node){
@@ -956,8 +926,8 @@ void Range::surroundContents(Node* newParent){
         replace_all(nullptr, newParent);
     }
     insert_node_in_range(newParent, this);
-    pre_insert_node(fragment, newParent, nullptr);
-    select_node_within_range(newParent, this);
+    pre_insert_node(dynamic_cast<Node*>(fragment), newParent, nullptr);
+    select_node_within_rangee(newParent, this);
 }
 
 
@@ -1026,14 +996,14 @@ DOMString Range::stringification_behavior(){
     DOMString s = "";
     Text* temp = dynamic_cast<Text*>(this->startContainer);
     if (this->startContainer==this->endContainer && temp){
-        return temp->getdata().substr(this->startOffset, this->endOffset - this->startOffset);
+    //     return temp->getdata().substr(this->startOffset, this->endOffset - this->startOffset);
     }
     if (temp){
-        s += temp->getdata().substr(this->startOffset);
+        // s += temp->getdata().substr(this->startOffset);
     }
     temp = dynamic_cast<Text*>(this->endContainer);
     if (temp){
-        s += temp->getdata().substr(0, this->endOffset);
+        // s += temp->getdata().substr(0, this->endOffset);
     }
     return s;
 }
@@ -1052,6 +1022,7 @@ unsigned short NodeIterator::filter_node(Node* node){
     // //some work
     // this->active = false;
     // return result;
+	return 1;
 }
 
 unsigned short TreeWalker::filter_node(Node* node){
@@ -1066,17 +1037,18 @@ unsigned short TreeWalker::filter_node(Node* node){
     // //some work
     // this->active = false;
     // return result;
+	return 1;
 }
 
 
 
-Node* NodeIterator::nextNode(){
-    return traverse(this, 1);
-}
+//Node* NodeIterator::nextNode(){
+//    return traverse(this, 1);
+//}
 
-Node* NodeIterator::previousNode(){
-    return traverse(this, -1);
-}
+//Node* NodeIterator::previousNode(){
+//    return traverse(this, -1);
+//}
 
 Node* TreeWalker::parentNode(){
     Node* node = this->currentNode;
@@ -1090,51 +1062,51 @@ Node* TreeWalker::parentNode(){
     return nullptr;
 }
 
-Node* TreeWalker::firstChild(){
-    return traverse_children(this, 1);
-}
+//Node* TreeWalker::firstChild(){
+//    return traverse_children(this, 1);
+//}
 
-Node* TreeWalker::lastChild(){
-    return traverse_children(this, -1);
-}
+//Node* TreeWalker::lastChild(){
+//    return traverse_children(this, -1);
+//}
 
 
-Node* TreeWalker::nextSibling(){
-    return traverse_sibling(this, 1);
-}
+//Node* TreeWalker::nextSibling(){
+//    return traverse_sibling(this, 1);
+//}
 
-Node* TreeWalker::previousSibling(){
-    return traverse_sibling(this, -1);
-}
+//Node* TreeWalker::previousSibling(){
+//    return traverse_sibling(this, -1);
+//}
 
-Node* TreeWalker::previousNode(){
-    Node* node = this->currentNode;
-    while (node!=this->root){
-        Node* sibling = node->previousSibling();
-        while (sibling!=nullptr){
-            node = sibling;
-            unsigned short result = this->filter_node(node);
-            while (result!="FILTER_REJECT" && node->hasChildNodes()){
-                node = node->lastChild();
-                result = this->filter_node(node);
-            }
-            if (result==FILTER_ACCEPT){
-                this->currentNode = node;
-                return node;
-            }
-            sibling = node->previousSibling();
-        }
-        if (node==this->root || node->parentNode==nullptr){
-            return nullptr;
-        }
-        node = node->parentNode();
-        if (this->filter_node(node)==FILTER_ACCEPT){
-            this->currentNode = node;
-            return node;
-        }
-    }
-    return nullptr;
-}
+//Node* TreeWalker::previousNode(){
+//    Node* node = this->currentNode;
+//    while (node!=this->root){
+//        Node* sibling = node->previousSibling();
+//        while (sibling!=nullptr){
+//            node = sibling;
+//            int result = this->filter_node(node);
+//           while (result!="FILTER_REJECT" && node->hasChildNodes()){
+//                node = node->lastChild();
+//                result = this->filter_node(node);
+//            }
+//           if (result==FILTER_ACCEPT){
+//                this->currentNode = node;
+//                return node;
+//            }
+//            sibling = node->previousSibling();
+//        }
+//        if (node==this->root || node->parentNode==nullptr){
+//            return nullptr;
+//        }
+//        // node = node->parentNode();
+//        // if (this->filter_node(node)==FILTER_ACCEPT){
+//       //    this->currentNode = node;
+//        //    return node;
+//        //}
+//    }
+//    return nullptr;
+//}
 
 
 Node* TreeWalker::nextNode(){
@@ -1208,7 +1180,7 @@ bool DOMTokenList::toggle(DOMString token, std::optional<bool> force){
     else{
         if (!force.has_value() || force){
             this->list.insert(token);
-            this->update()
+            this->update();
             return true;
         }
     }
@@ -1226,6 +1198,6 @@ bool DOMTokenList::replace(DOMString token, DOMString newToken){
 }
 
 
-bool DOMString::supports(DOMString token){
+bool DOMTokenList::supports(DOMString token){
     return this->validate(token);
 }

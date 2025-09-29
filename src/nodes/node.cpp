@@ -1,9 +1,9 @@
-#include "nodes/node.hpp"
-#include "nodes/document.hpp"
-#include "algos_base.cpp"
-#include "mutation_algos.cpp"
-#include "algos_node.cpp"
-#include "basic.cpp"
+#include "../include/nodes/node.hpp"
+#include "../include/nodes/document.hpp"
+#include "../algos/algos_base.cpp"
+#include "../algos/mutation_algos.cpp"
+#include "../algos/algos_node.cpp"
+#include "../algos/basic.cpp"
 
 
 
@@ -34,6 +34,18 @@ bool NodeList::operator==(const NodeList* otherNodeList) const{
     }
     return true;
 }
+
+void remove(Node* node){
+            unsigned int i = 0;
+            for (auto a: this->node_list){
+                if (a->isEqualNode(node)){
+                    this->node_list.erase(this->node_list.begin()+i);
+                    return;
+                }
+                i++;
+            }
+}
+
 
 NodeList::~NodeList(){
     for (auto a: node_list) {

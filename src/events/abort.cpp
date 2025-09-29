@@ -1,4 +1,7 @@
-#include "abort.hpp"
+#ifndef ABORT_MAIN
+#define ABORT_MAIN
+
+#include "../include/nodes/node.hpp"
 #include "../exceptions.cpp"
 
 AbortController::AbortController(){
@@ -7,7 +10,6 @@ AbortController::AbortController(){
 
 template <typename T>
 AbortController::abort(T reason){
-    signal.
 }
 
 const AbortSignal AbortSignal::abort(T reason){
@@ -38,3 +40,6 @@ void AbortSignal::throwIfAborted(){
         throw reason;
     }
 }
+
+
+#endif
