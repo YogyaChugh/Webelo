@@ -151,6 +151,8 @@
 - Next sibling stuff in `pre_insert_node`
 - Insert node addition after implementation in `pre_insert_node`
 - Doctype (others too) check in `ensure_pre_insert_validity`
+- Some global way to have live ranges stored. Then implement in:
+    - insert_node
 
 
 

@@ -117,7 +117,10 @@ void insert_node(Node* node, Node* parent, Node* child, bool suppress_observers 
                 parent->childNodes.node_list.insert(parent->childNodes.node_list.begin()+index, node);
             }
         }
-        auto bro = dynamic_cast<ShadowRoot*>(parent);
-        if (bro )
+        auto bro = dynamic_cast<Element*>(parent);
+        if (bro->shadow_root && bro->shadow_root->slotAssignment==named && (dynamic_cast<Element*>(node) || dynamic_cast<Node*>(node))){
+            assign_slot(node);
+        }
+        
     }
 }
