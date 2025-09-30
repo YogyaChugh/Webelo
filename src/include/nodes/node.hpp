@@ -156,10 +156,10 @@ class Node: public EventTarget{
 
         //Babies !!! ( Children )
         NodeList childNodes;
-        Node* firstChild();
-        Node* lastChild();
-        Node* previousSibling();
-        Node* nextSibling();
+        virtual Node* firstChild();
+        virtual Node* lastChild();
+        virtual Node* previousSibling();
+        virtual Node* nextSibling();
 
         bool hasChildNodes() const;
 
@@ -171,7 +171,15 @@ class Node: public EventTarget{
         Node* cloneNode(bool subtree);
 
 
-        Node(node_type nodeType, DOMString nodeName, Document* ownerDocument, Node* parentNode);
+        Node(node_type nodeType, DOMString nodeName, Document* ownerDocument = nullptr, Node* parentNode = nullptr){
+            this->nodeType = nodeType;
+            this->nodeName = nodeName;
+            this->ownerDocument = ownerDocument;
+            this->parentNode = parentNode;
+            if (dynamic_cast<Element*>(parentNode)){
+                this->parentElement = dynamic_cast<Element*>(parentNode);
+            }
+        }
 
         unsigned long length(){
             //if (dynamic_cast<DocumentType*>(this) || dynamic_cast<Attr*>(this)){
@@ -212,7 +220,6 @@ class Node: public EventTarget{
         }
         virtual void settextContent(DOMString  &val){};
 
-        virtual void making_it_abstract() = 0;
 
         bool operator==(Node& other){ return this->isEqualNode(&other); }
 

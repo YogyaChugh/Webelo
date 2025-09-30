@@ -78,6 +78,7 @@ void ensure_pre_insert_validity(Node* node, Node* parent, Node* child){
 void ensure_pre_insert_validity(Node* temp,Node* node,Node* child){};
 void move_node(Node* node,Node* node2,Node* Child){};
 void replace(Node* obj, Node* node, Node* parent){};
+// void replace_data(Node* node, unsigned long offset, unsigned long count, DOMString data){}
 
 Node* pre_insert_node(Node* node, Node* parent, Node* child){
     ensure_pre_insert_validity(node, parent, child);

@@ -255,7 +255,7 @@ class ParentNode: public Node {
         Element* querySelector(DOMString selectors);
         NodeList querySelectorAll(DOMString selectors);
 
-        virtual void making_it_abstract() override = 0;
+        virtual void making_it_abstract(){};
 
         ParentNode(node_type nodeType, DOMString nodeName, Document* ownerDocument, Node* parentNode): Node(nodeType, nodeName, ownerDocument, parentNode){};
 };
@@ -276,7 +276,9 @@ class Attr: public Node{
         DOMString value = "";
         DOMString qualifiedName();
 
-        Attr(DOMString localName);
+        Attr(DOMString localName): Node(ATTRIBUTE_NODE, this->qualifiedName()){
+            this->localName = localName;
+        }
 
         virtual void making_it_abstract() override {};
 
@@ -311,8 +313,6 @@ class CharacterData: public Node{
         virtual DOMString setdata(DOMString data){
             replace_data(this, 0, this->length(),data);
         }
-
-        virtual void making_it_abstract() override {};
 };
 
 
@@ -812,9 +812,9 @@ void flatten_element_creation_options(std::variant<DOMString,ElementCreationOpti
 void adopt(Node* node, Document* document){
     Document* oldDocument = node->ownerDocument;
     if (node->parentNode!=nullptr){ remove_node(node); }
-    if (document!=oldDocument){
-        for (auto inclusiveDescendant: node->shad)
-    }
+    // if (document!=oldDocument){
+    //     for (auto inclusiveDescendant: node->shad)
+    // }
 }
 
 Element* internal_create_element_ns(Document* document, std::optional<DOMString> namesp, DOMString qualifiedName, std::variant<DOMString,ElementCreationOptions> options){
@@ -1059,8 +1059,9 @@ DOMString descendant_text_content(Node* node){
     DOMString data = "";
     while (currentNode!=nullptr){
         temp2 = dynamic_cast<Text*>(currentNode);
+        auto temp3 = dynamic_cast<CharacterData*>(currentNode);
         if (temp2){
-            data += temp2->getdata();
+            data += temp3->getdata();
         }
         if (currentNode->childNodes.length()!=0){
             temp.push_back(currentNode);
@@ -1078,22 +1079,22 @@ DOMString descendant_text_content(Node* node){
 
 
 Text* split_text_node(Text* node, unsigned long offset){
-    unsigned long length = node->length();
+    auto smth = dynamic_cast<Node*>(node);
+    unsigned long length = smth->length();
     if (offset>length){ throw IndexSizeError("size issues ! You are fat :) "); }
     unsigned long count = length - offset;
 
-    DOMString data = substring_data(node, offset, count);
+    DOMString data = substring_data(smth, offset, count);
     Text* new_node = new Text(data);
-    new_node->ownerDocument = node->ownerDocument;
+    new_node->ownerDocument = smth->ownerDocument;
 
-    Node* parent = node->parentNode;
+    Node* parent = smth->parentNode;
     if (parent!=nullptr){
-        insert_node(new_node, parent, node->nextSibling());
+        insert_node(dynamic_cast<Node*>(new_node), parent, smth->nextSibling());
     }
-    replace_data(node, offset, count, "");
+    replace_data(dynamic_cast<Node*>(node), offset, count, "");
     return new_node;
 }
-
 
 int position(Node* nodeA, unsigned long offsetA, Node* nodeB, unsigned long offsetB){
     assert(nodeA->getRootNode()==nodeB->getRootNode());
@@ -1224,7 +1225,7 @@ DocumentFragment* extract_range(Range* range){
         Node* temp = clone_node(original_startnode);
         CharacterData* clone = dynamic_cast<CharacterData*>(temp);
         clone->setdata(substring_data(original_startnode, original_startoffset, original_endoffset - original_startoffset));
-        pre_insert_node(clone, fragment, nullptr);
+        pre_insert_node(dynamic_cast<Node*>(clone), dynamic_cast<Node*>(fragment), nullptr);
         replace_data(original_startnode, original_startoffset, original_endoffset - original_startoffset, "");
         return fragment;
     }
@@ -1300,20 +1301,20 @@ DocumentFragment* extract_range(Range* range){
         Node* temp = clone_node(original_endnode);
         CharacterData* clone = dynamic_cast<CharacterData*>(temp);
         clone->setdata(substring_data(original_endnode, 0, original_endoffset));
-        pre_insert_node(clone, fragment, nullptr);
+        pre_insert_node(dynamic_cast<Node*>(clone), dynamic_cast<Node*>(fragment), nullptr);
         replace_data(original_endnode, 0, original_endoffset, "");
     }
     else if (first_partially_contained_child!=nullptr){
         Node* temp = clone_node(last_partially_contained_child);
         CharacterData* clone = dynamic_cast<CharacterData*>(temp);
-        pre_insert_node(clone, fragment, nullptr);
+        pre_insert_node(dynamic_cast<Node*>(clone), dynamic_cast<Node*>(fragment), nullptr);
         Range* subrange = new Range();
         subrange->startContainer = last_partially_contained_child;
         subrange->startOffset = 0;
         subrange->endContainer = original_endnode;
         subrange->endOffset = original_endoffset;
         DocumentFragment* subfragment = extract_range(subrange);
-        pre_insert_node(subfragment, clone, nullptr);   
+        pre_insert_node(dynamic_cast<Node*>(subfragment), dynamic_cast<Node*>(clone), nullptr);   
     }
     range->startContainer = new_node;
     range->endContainer = new_node;
@@ -1339,7 +1340,7 @@ DocumentFragment* clone_contents(Range* range){
         Node* temp = clone_node(original_startnode);
         CharacterData* clone = dynamic_cast<CharacterData*>(temp);
         clone->setdata(substring_data(original_startnode, original_startoffset, original_endoffset - original_startoffset));
-        pre_insert_node(clone, fragment, nullptr);
+        pre_insert_node(dynamic_cast<Node*>(clone), dynamic_cast<Node*>(fragment), nullptr);
         return fragment;
     }
     Node* common_ancestor = original_startnode;
@@ -1378,42 +1379,42 @@ DocumentFragment* clone_contents(Range* range){
         Node* temp = clone_node(original_startnode);
         CharacterData* clone = dynamic_cast<CharacterData*>(temp);
         clone->setdata(substring_data(original_startnode, original_startoffset, original_startnode->length() - original_startoffset));
-        pre_insert_node(clone, fragment, nullptr);
+        pre_insert_node(dynamic_cast<Node*>(clone), dynamic_cast<Node*>(fragment), nullptr);
     }
     else if (first_partially_contained_child!=nullptr){
         Node* temp = clone_node(first_partially_contained_child);
         CharacterData* clone = dynamic_cast<CharacterData*>(temp);
-        pre_insert_node(clone, fragment, nullptr);
+        pre_insert_node(dynamic_cast<Node*>(clone), dynamic_cast<Node*>(fragment), nullptr);
         Range* subrange = new Range();
         subrange->startContainer = original_startnode;
         subrange->startOffset = original_startoffset;
         subrange->endContainer = first_partially_contained_child;
         subrange->endOffset = first_partially_contained_child->length();
-        DocumentFragment* subfragment = cloen_contents(subrange);
-        pre_insert_node(subfragment, clone, nullptr);  
+        DocumentFragment* subfragment = clone_contents(subrange);
+        pre_insert_node(dynamic_cast<Node*>(subfragment), dynamic_cast<Node*>(clone), nullptr);
     }
     for (auto child: contained_children){
-        Node* clone = clone_node(child);
-        pre_insert_node(clone, fragment, nullptr);
+        Node* clone = clone_node(dynamic_cast<Node*>(child));
+        pre_insert_node(dynamic_cast<Node*>(clone), dynamic_cast<Node*>(fragment), nullptr);
     }
 
     if (dynamic_cast<CharacterData*>(last_partially_contained_child)){
         Node* temp = clone_node(original_endnode);
         CharacterData* clone = dynamic_cast<CharacterData*>(temp);
         clone->setdata(substring_data(original_endnode, 0, original_endoffset));
-        pre_insert_node(clone, fragment, nullptr);
+        pre_insert_node(dynamic_cast<Node*>(clone), dynamic_cast<Node*>(fragment), nullptr);
     }
     else if (first_partially_contained_child!=nullptr){
         Node* temp = clone_node(last_partially_contained_child);
         CharacterData* clone = dynamic_cast<CharacterData*>(temp);
-        pre_insert_node(clone, fragment, nullptr);
+        pre_insert_node(dynamic_cast<Node*>(clone), dynamic_cast<Node*>(fragment), nullptr);
         Range* subrange = new Range();
         subrange->startContainer = last_partially_contained_child;
         subrange->startOffset = 0;
         subrange->endContainer = original_endnode;
         subrange->endOffset = original_endoffset;
         DocumentFragment* subfragment = clone_contents(subrange);
-        pre_insert_node(subfragment, clone, nullptr);  
+        pre_insert_node(dynamic_cast<Node*>(subfragment), dynamic_cast<Node*>(clone), nullptr);
     }
     return fragment;
 }
@@ -1482,13 +1483,11 @@ void pre_remove_steps(NodeIterator* node_iterator, Node* toBeRemovedNode){
         return;
     }
     if (node_iterator->pointerBeforeReferenceNode){
-        if (next!=nullptr){
-            node_iterator->referenceNode = next;
-            return;
-        }
-        else{
-            node_iterator->pointerBeforeReferenceNode = false;
-        }
+        // if (next!=nullptr){
+        //     node_iterator->referenceNode = next;
+        //     return;
+        // }
+        node_iterator->pointerBeforeReferenceNode = false;
     }
     if (toBeRemovedNode->previousSibling()==nullptr){
         // node_iterator->referenceNode = toBeRemovedNode->parentNode();

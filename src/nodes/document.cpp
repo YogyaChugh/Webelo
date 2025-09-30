@@ -12,18 +12,19 @@
 
 void ParentNode::prepend(std::vector<std::variant<Node*, DOMString>> &nodes) {
     Node* temp = convert_nodes_to_node(nodes, this->ownerDocument);
-    pre_insert_node(temp, this, this->firstChild());
+    auto smth = dynamic_cast<Node*>(this);
+    pre_insert_node(temp, dynamic_cast<Node*>(this), smth->firstChild());
 }
 
 void ParentNode::append(std::vector<std::variant<Node*, DOMString>> &nodes){
     Node* temp = convert_nodes_to_node(nodes, this->ownerDocument);
-    pre_insert_node(temp, this, nullptr);
+    pre_insert_node(temp, dynamic_cast<Node*>(this), nullptr);
 }
 
 void ParentNode::replaceChildren(std::vector<std::variant<Node*, DOMString>> &nodes){
     Node* temp = convert_nodes_to_node(nodes, this->ownerDocument);
     ensure_pre_insert_validity(temp, dynamic_cast<Node*>(this), nullptr);
-    replace_all(temp, this);
+    replace_all(temp, dynamic_cast<Node*>(this));
 }
 
 void ParentNode::moveBefore(Node* node, Node* child){
@@ -31,7 +32,7 @@ void ParentNode::moveBefore(Node* node, Node* child){
     if (*referenceChild == *node){
         referenceChild = node->nextSibling();
     }
-    move_node(node, this, referenceChild);
+    move_node(node, dynamic_cast<Node*>(this), referenceChild);
 }
 
 
@@ -40,10 +41,12 @@ void ParentNode::moveBefore(Node* node, Node* child){
 
 
 Element* Element::previousElementSibling(){
-    Node* prev = this->previousSibling();
+    auto smth = dynamic_cast<Node*>(this);
+    Node* prev = smth->previousSibling();
     while (prev){
-        if (dynamic_cast<Element*>(prev)){
-            return prev;
+        auto bro = dynamic_cast<Element*>(prev);
+        if (bro){
+            return bro;
         }
         prev = prev->previousSibling();
     }
@@ -51,10 +54,12 @@ Element* Element::previousElementSibling(){
 }
 
 Element* Element::nextElementSibling(){
-    Node* next = this->nextSibling();
+    auto smth = dynamic_cast<Node*>(this);
+    Node* next = smth->nextSibling();
     while (next){
-        if (dynamic_cast<Element*>(next)){
-            return next;
+        auto bro = dynamic_cast<Element*>(next);
+        if (bro){
+            return bro;
         }
         next = next->nextSibling();
     }
@@ -62,7 +67,8 @@ Element* Element::nextElementSibling(){
 }
 
 Element* CharacterData::previousElementSibling(){
-    Node* prev = this->previousSibling();
+    auto smth = dynamic_cast<Node*>(this);
+    Node* prev = smth->previousSibling();
     while (prev){
         if (dynamic_cast<Element*>(prev)){
             return dynamic_cast<Element*>(prev);
@@ -73,7 +79,8 @@ Element* CharacterData::previousElementSibling(){
 }
 
 Element* CharacterData::nextElementSibling(){
-    Node* next = this->nextSibling();
+    auto smth = dynamic_cast<Node*>(this);
+    Node* next = smth->nextSibling();
     while (next){
         if (dynamic_cast<Element*>(next)){
             return dynamic_cast<Element*>(next);
@@ -691,11 +698,6 @@ DOMString Attr::qualifiedName(){
     }
     return this->prefix.value() + ":" + this->localName;
 }
-
-Attr::Attr(DOMString localName){
-    this->localName = localName;
-}
-
 
 
 unsigned long CharacterData::length(){

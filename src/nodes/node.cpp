@@ -98,16 +98,6 @@ HTMLCollection::~HTMLCollection(){
 
 // Node
 
-Node::Node(node_type nodeType, DOMString nodeName, Document* ownerDocument, Node* parentNode){
-    this->nodeType = nodeType;
-    this->nodeName = nodeName;
-    this->ownerDocument = ownerDocument;
-    this->parentNode = parentNode;
-    if (dynamic_cast<Element*>(parentNode)){
-        this->parentElement = dynamic_cast<Element*>(parentNode);
-    }
-}
-
 
 bool inline Node::isConnected(){
     if (dynamic_cast<Document*>(this->getRootNode(true))){
@@ -140,21 +130,28 @@ inline Node* Node::firstChild(){
 inline Node* Node::lastChild(){
     return this->childNodes.node_list.back();
 }
-Node* Node::previousSibling(){
-    if (this->parentNode){
-        auto vect = this->parentNode->childNodes.node_list;
-        auto it = std::find(vect.begin(), vect.end(), this) - 1;
-        if (it==vect.begin()){ return nullptr; };
-        return *it;
+Node* Node::previousSibling() {
+    if (this->parentNode) {
+        auto& vect = this->parentNode->childNodes.node_list;
+        for (size_t i = 0; i < vect.size(); i++) {
+            if (vect[i] == this) {
+                if (i == 0) return nullptr; // no previous
+                return vect[i - 1];
+            }
+        }
     }
     return nullptr;
 }
-Node* Node::nextSibling(){
-    if (this->parentNode){
-        auto vect = this->parentNode->childNodes.node_list;
-        auto it = std::find(vect.begin(), vect.end(), this) + 1;
-        if (it==vect.end()){ return nullptr; };
-        return *it;
+
+Node* Node::nextSibling() {
+    if (this->parentNode) {
+        auto& vect = this->parentNode->childNodes.node_list;
+        for (size_t i = 0; i < vect.size(); i++) {
+            if (vect[i] == this) {
+                if (i + 1 >= vect.size()) return nullptr; // no next
+                return vect[i + 1];
+            }
+        }
     }
     return nullptr;
 }
