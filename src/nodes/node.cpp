@@ -35,15 +35,15 @@ bool NodeList::operator==(const NodeList* otherNodeList) const{
     return true;
 }
 
-void remove(Node* node){
-            unsigned int i = 0;
-            for (auto a: this->node_list){
-                if (a->isEqualNode(node)){
-                    this->node_list.erase(this->node_list.begin()+i);
-                    return;
-                }
-                i++;
-            }
+void NodeList::remove(Node* node){
+    unsigned int i = 0;
+    for (auto a: this->node_list){
+        if (a->isEqualNode(node)){
+            this->node_list.erase(this->node_list.begin()+i);
+            return;
+        }
+        i++;
+    }
 }
 
 
@@ -274,6 +274,3 @@ void Node::normalize(){
         }
     }
 }
-
-
-int main(){}

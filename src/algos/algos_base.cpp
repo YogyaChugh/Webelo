@@ -195,7 +195,6 @@ void validate_and_extract(std::optional<DOMString> &namesp,DOMString qualifiedNa
     if (namesp.has_value() && namesp.value()=="http://www.w3.org/2000/xmlns/" && (qualifiedName!="xmlns" && (!prefix.has_value() ||(prefix.has_value() && prefix.value()!="xmlns")))){ throw NamespaceError("Namespace error !! Namespace & namespace prefix don't match !"); }
 }
 
-int main(){}
 
 
 #endif

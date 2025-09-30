@@ -10,7 +10,6 @@
 #include <algorithm>
 #include "../exceptions.cpp"
 #include "algos_node.cpp"
-#include "assert.h"
-
+#include <cassert>
 
 #endif

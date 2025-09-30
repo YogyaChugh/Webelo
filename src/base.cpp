@@ -58,7 +58,4 @@ std::vector<DOMString> split_text_multiple(DOMString input, std::vector<int> del
 }
 
 
-int main(){}
-
-
 #endif

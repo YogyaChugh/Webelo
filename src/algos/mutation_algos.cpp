@@ -139,6 +139,4 @@ void insert_node(Node* node, Node* parent, Node* child, bool suppress_observers)
 
 void remove_node(Node* node){}
 
-int main(){}
-
 #endif

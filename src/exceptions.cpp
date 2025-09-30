@@ -141,6 +141,4 @@ class WrongDocumentError: public exception {
         }
 };
 
-int main(){}
-
 #endif

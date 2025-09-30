@@ -290,7 +290,5 @@ std::optional<DOMString> locate_a_namespace_prefix(Element* element, std::option
 // }
 
 
-int main(){}
-
 
 #endif

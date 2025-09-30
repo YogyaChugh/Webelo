@@ -1261,8 +1261,3 @@ bool DOMTokenList::replace(DOMString token, DOMString newToken){
 bool DOMTokenList::supports(DOMString token){
     return this->validate(token);
 }
-
-
-int main(){
-    std::cout<<"Hello";
-}

@@ -153,8 +153,6 @@ Node* retarget(Node* A, Node* B){
     }
 }
 
-int main(){}
-
 
 
 #endif

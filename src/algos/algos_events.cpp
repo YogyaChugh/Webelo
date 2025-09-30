@@ -453,7 +453,5 @@ AbortSignal* create_dependent_abort_signal(std::vector<AbortSignal*> signals, Ab
 }
 
 
-int main(){}
-
 
 #endif
