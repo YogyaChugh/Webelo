@@ -57,47 +57,16 @@ NodeList::~NodeList(){
 
 
 
-// HTMLCollection
-
-Element* HTMLCollection::item(const unsigned long &index) const{
-    try {
-        return element_list.at(index);
-    }
-    catch (const std::out_of_range&) {
-        return nullptr;
-    }
-}
-
-Element* HTMLCollection::namedItem(const DOMString &name) const{
-    if (name=="") {
-        return nullptr;
-    }
-    for (auto element: element_list) {
-        //! CHECK IF `element` IS IN THE HTML NAMESPACE
-        //! CHECK IF `element` HAS A NAME ATTRIBUTE WHOSE VALUE IS name
-        if (element->id==name) {
-            return element;
-        }
-    }
-    return nullptr;
-}
-
-unsigned long HTMLCollection::length() const{
-    return element_list.size();
-}
-
-HTMLCollection::~HTMLCollection(){
-    for (auto a: element_list) {
-        delete a;
-    }
-    element_list.clear();
-}
-
-
-
-
 // Node
-
+Node::Node(node_type nodeType, DOMString nodeName, Document* ownerDocument = nullptr, Node* parentNode = nullptr){
+    this->nodeType = nodeType;
+    this->nodeName = nodeName;
+    this->ownerDocument = ownerDocument;
+    this->parentNode = parentNode;
+    if (dynamic_cast<Element*>(parentNode)){
+        this->parentElement = dynamic_cast<Element*>(parentNode);
+    }
+}
 
 bool inline Node::isConnected(){
     if (dynamic_cast<Document*>(this->getRootNode(true))){
@@ -305,3 +274,6 @@ void Node::normalize(){
         }
     }
 }
+
+
+int main(){}

@@ -41,5 +41,6 @@ void AbortSignal::throwIfAborted(){
     }
 }
 
+int main(){}
 
 #endif

@@ -8,7 +8,7 @@
 #include <set>
 #include <string>
 #include <vector>
-#include <assert.h>
+#include <cassert>
 #include "../utf8.h"
 
 // Returns a set of strings. It separates all the substrings based on ASCII whitespace in the input !!
@@ -186,7 +186,7 @@ void validate_and_extract(std::optional<DOMString> &namesp,DOMString qualifiedNa
         localName = splitResult[1];
         if (!valid_namespace_prefix(prefix.value())){ throw InvalidCharacterError("The prefix aka 'text before colon (:)' in the qualifiedName (2nd arg) should be a valid namespace prefix !"); }
     }
-    std::assert(!prefix.has_value() || valid_namespace_prefix(prefix.value()));
+    assert(!prefix.has_value() || valid_namespace_prefix(prefix.value()));
     if (context=="attribute" && !valid_attribute_local_name(localName)){ throw InvalidCharacterError("qualified name (sometimes, text after colon (:)) isn't a valid attribute name !"); }
     if (context=="element" && !valid_element_local_name(localName)){ throw InvalidCharacterError("qualified name (sometimes, text after colon (:)) isn't a valid element name !"); }
     if (!prefix.has_value() && !namesp.has_value()){ throw NamespaceError("Namespace error !! Namespace &  Namespace Prefix are both null !"); }
@@ -194,6 +194,8 @@ void validate_and_extract(std::optional<DOMString> &namesp,DOMString qualifiedNa
     if ((qualifiedName=="xmlns" ||(prefix.has_value() && prefix.value()=="xmlns")) && (!namesp.has_value() || namesp.value()!="http://www.w3.org/2000/xmlns/")){ throw NamespaceError("Namespace error !! Namespace & namespace prefix don't match !"); }
     if (namesp.has_value() && namesp.value()=="http://www.w3.org/2000/xmlns/" && (qualifiedName!="xmlns" && (!prefix.has_value() ||(prefix.has_value() && prefix.value()!="xmlns")))){ throw NamespaceError("Namespace error !! Namespace & namespace prefix don't match !"); }
 }
+
+int main(){}
 
 
 #endif

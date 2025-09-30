@@ -145,7 +145,7 @@ class AbortSignal: public EventTarget{
         bool isaborted(){
             if (this->reason.has_value()){
                 try{
-                    std::any_cast<std::nullptr_t>(this->reason);
+                    auto k = std::any_cast<std::nullptr_t>(this->reason);
                     return false;
                 }
                 catch(std::bad_any_cast){

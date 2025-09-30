@@ -44,7 +44,7 @@
 #include <algorithm>
 #include "../../exceptions.cpp"
 #include "../../algos/algos_node.cpp"
-#include "assert.h"
+#include <cassert>
 
 class Attr;
 class CharacterData;
@@ -52,6 +52,7 @@ class Text;
 class Element;
 class ProcessingInstruction;
 class Comment;
+class Document;
 class CDATASection;
 class DocumentType;
 class DocumentFragment;
@@ -63,8 +64,6 @@ class NamedNodeMap;
 class XMLDocument;
 class DOMImplementation;
 class NodeList;
-class HTMLCollection;
-class Document;
 class NodeFilter; //! IMPLEMENT THIS !
 class NodeIterator; //! THIS TOO !
 class TreeWalker; //! THIS TOO !
@@ -72,6 +71,26 @@ class AbstractRange;
 struct StaticRangeInit;
 class StaticRange;
 class Range;
+class HTMLCollection;
+
+
+struct ImportNodeOptions{
+    CustomElementRegistry* customElementRegistry;
+    bool selfOnly = false;
+};
+
+DOMString replace_data(Node* node, unsigned long offset, unsigned long count, DOMString data){
+    unsigned length = node->length();
+    if (offset>length){ throw IndexSizeError("greater than error !!"); }
+    if ((offset+count)>length){ count = length-offset; }
+    // queue mutation record
+	return "";
+}
+
+
+Element* create_element(Document* document, DOMString localName, std::optional<DOMString> namesp, std::optional<DOMString> prefix = std::nullopt, std::optional<DOMString> is = std::nullopt, bool synchronousCustomElements = false, std::variant<DOMString,std::nullptr_t,CustomElementRegistry> registry = "default"){
+    return nullptr;
+}
 
 // Element* getElementById(Node* node,const DOMString &elementId){
 //     if (node->childNodes.length()==0){ return nullptr; }
@@ -100,6 +119,7 @@ class Range;
     
 //     return nullptr;
 // }
+
 
 class NodeIterator{
     public:
@@ -146,7 +166,7 @@ class TreeWalker{
 
 class NodeFilter{
     public:
-        unsigned short acceptNode(Node* node){};
+        void acceptNode(Node* node){};
 };
 
 
@@ -223,6 +243,65 @@ enum SlotAssignmentMode{ manual, named};
 
 
 
+/*
+Collection of Element objects
+
+Attributes:
+    None
+
+Methods:
+    item(unsigned long index) - Returns ptr to node object at index if present else nullptr
+    namedItem(DOMString name)
+    length() - Number of elements in the nodelist
+
+Operators:
+    [unsigned long index] - Operator using item() method internally
+    [DOMString name] - Operator using namedItem() method internally
+ */
+class HTMLCollection{
+    public:
+        std::vector<Element*> element_list = {};
+
+        // Returns the Node ptr on the index provided !
+        Element* item(const unsigned long &index) const;
+
+        // Returns the Node ptr on the index provided !
+        Element* operator[](const unsigned long &index) const {
+            return this->item(index);
+        }
+
+        Element* namedItem(const DOMString &name) const;
+
+        Element* operator[](const DOMString &name) const{
+            return this->namedItem(name);
+        }
+
+        // Returns the length of the list stored ! Must be stored in a variable.
+        [[nodiscard]] unsigned long length() const;
+
+        void append(Element* node){
+            this->element_list.push_back(node);
+        }
+
+        void insert(Element* node, const unsigned long &index){
+            if (index<0){return;}
+            this->element_list.insert(this->element_list.begin()+index, node);
+        }
+
+        void remove(Element* node){
+            unsigned int i = 0;
+            for (auto a: this->element_list){
+                // if (dynamic_cast<Node*>(a)->isEqualNode(dynamic_cast<Node*>(node))){
+                //     this->element_list.erase(this->element_list.begin()+i);
+                //     return;
+                // }
+                i++;
+            }
+        }
+
+        ~HTMLCollection();
+};
+
 
 
 class ParentNode: public Node {
@@ -280,7 +359,6 @@ class Attr: public Node{
             this->localName = localName;
         }
 
-        virtual void making_it_abstract() override {};
 
         void setvalue(DOMString value){
             if (this->ownerElement==nullptr){ this->value = value; }
@@ -310,7 +388,7 @@ class CharacterData: public Node{
         CharacterData(Document* ownerdoc = nullptr, Node* parentnode = nullptr): Node(CDATA_SECTION_NODE, "#cdata-section", ownerdoc, parentnode){};
 
         DOMString getdata(){ return this->data; }
-        virtual DOMString setdata(DOMString data){
+        virtual void setdata(DOMString data){
             replace_data(this, 0, this->length(),data);
         }
 };
@@ -323,16 +401,15 @@ class Text: public CharacterData{
         DOMString slot=""; //! IMPORTANT SOMEWHERE in dispatch_event (slottable check)
         DOMString* assignedSlot;
 
-        virtual DOMString setdata(DOMString data) override{
+        virtual void setdata(DOMString data) override{
             replace_data(this, 0, this->length(),data);
         }
         
-        Text(DOMString data = ""){
+        Text(DOMString data = ""):CharacterData(){
             this->setdata(data);
         };
         Text* splitText(unsigned long offset); //NewObject
 
-        virtual void making_it_abstract() override {};
 };
 
 //Exposed to window only
@@ -340,13 +417,12 @@ class ProcessingInstruction: public CharacterData{
     public:
         DOMString target;
 
-        virtual DOMString setdata(DOMString data) override{
+        virtual void setdata(DOMString data) override{
             replace_data(this, 0, this->length(),data);
         }
 
         ProcessingInstruction(Document* ownerdoc = nullptr, Node* parentnode = nullptr): CharacterData(ownerdoc, parentnode){};
 
-        virtual void making_it_abstract() override {};
 };
 
 
@@ -354,7 +430,7 @@ class ProcessingInstruction: public CharacterData{
 class Comment: public CharacterData{
     public:
 
-        virtual DOMString setdata(DOMString data) override{
+        virtual void setdata(DOMString data) override{
             replace_data(this, 0, this->length(),data);
         }
 
@@ -362,18 +438,93 @@ class Comment: public CharacterData{
             this->setdata(data);
         };
 
-        virtual void making_it_abstract() override {};
 };
 
 //Exposed to window only
 class CDATASection: public Text{
     public:
 
-        virtual DOMString setdata(DOMString data) override{
-            replace_data(this, 0, this->length(),data);
+        virtual void setdata(DOMString data) override{
+            replace_data(dynamic_cast<Node*>(this),0, this->length(),data);
         }
 
-        virtual void making_it_abstract() override {};
+};
+
+
+enum DocType{
+    XML,
+    HTML,
+    XML_XHTML
+};
+
+enum DocMode{
+    NO_QUIRKS,
+    QUIRKS,
+    LIMITED_QUIRKS
+};
+
+class Document: public ParentNode{
+    public:
+        CustomElementRegistry* custom_element_registry = nullptr;
+        DOMImplementation* implementation;
+        USVString URL = "about:blank"; //!serialize
+        USVString documentURI = URL; //!serialize
+        DOMString characterSet = "utf-8";
+        DOMString contentType = "application/xml";
+
+        DocumentType* doctype();
+        Element* documentElement();
+
+        DOMString encoding = "utf-8";
+        DocType type = XML;
+        DOMString* origin = nullptr; //lateeeeeer
+        DocMode mode = NO_QUIRKS;
+        bool allow_declarative_shodow_roots = false;
+
+        Document(Document* ownerdoc = nullptr, Node* parentnode = nullptr): ParentNode(DOCUMENT_NODE, "#document", ownerdoc, parentnode){
+            // this->implementation->associated_doc = this;
+        };
+
+        DOMString compatMode();
+
+        DOMString* lookupPrefix(std::optional<DOMString> namesp); //Redefining for Node class
+
+        HTMLCollection* getElementsByTagName(DOMString qualifiedName);
+        HTMLCollection* getElementsByTagNameNS(std::optional<DOMString> namesp, DOMString localname);
+        HTMLCollection* getElementsByClassName(std::vector<DOMString> &classNames);
+        // friend Element* getElementById(Node* node, const DOMString &elementId);
+
+
+        Element* createElement(DOMString localName, std::variant<DOMString,ElementCreationOptions> options); //NOTE: Keep last argument as optional
+        Element* createElementNS(std::optional<DOMString> namesp, DOMString qualifiedName, std::variant<DOMString,ElementCreationOptions> options); //NOTE: Keep last argument as optional
+        Node* importNode(Node* node, std::variant<bool,ImportNodeOptions> options = false);
+        Node* adoptNode(Node* node); //no NewObject
+
+        //NewObject
+        DocumentFragment* createDocumentFragment();
+        Text* createTextNode(DOMString data);
+        CDATASection* createCDATASection(DOMString data);
+        Comment* createComment(DOMString data);
+        ProcessingInstruction* createProcessingInstruction(DOMString target, DOMString data);
+        Attr* createAttribute(DOMString localName);
+        Attr* createAttributeNS(std::optional<DOMString> namesp, DOMString qualifiedName);
+        Event* createEvent(DOMString interface); //LEGACY
+        Range* createRange();
+        NodeIterator* createNodeIterator(Node* root, unsigned long whatToShow = 0xFFFFFFFF, NodeFilter* filter = nullptr);
+        TreeWalker* createTreeWalker(Node* root, unsigned long whatToShow = 0xFFFFFFFF, NodeFilter* filter = nullptr);
+
+        CustomElementRegistry* get_custom_element_registry() const{
+            return this->custom_element_registry;
+        }
+
+        virtual Node* get_the_parent(Event* event){
+            if (event->gettype()=="load"){
+                return nullptr;
+            }
+            return nullptr;
+        }
+
+        virtual void making_it_abstract(){};
 };
 
 
@@ -405,7 +556,6 @@ class DocumentType: public Node{
             return systemId;
         }
 
-        virtual void making_it_abstract() override {};
 };
 
 class DocumentFragment: public ParentNode{
@@ -414,7 +564,6 @@ class DocumentFragment: public ParentNode{
         // friend Element* getElementById(Node* node ,const DOMString &elementId);
         DocumentFragment(Document* ownerdoc = nullptr, Node* parentnode = nullptr): ParentNode(DOCUMENT_FRAGMENT_NODE, "#document-fragment", ownerdoc, parentnode){};
 
-        virtual void making_it_abstract() override{};
 };
 
 //Exposed to window only
@@ -434,14 +583,13 @@ class ShadowRoot: public DocumentFragment{
         bool keepCustomElementRegistryNull = false;
 
         // virtual Element* get_the_parent(Event* event);
-        virtual Element* get_the_parent(Event* event){
-            if (!event->composed_flag && !event->path.empty() && dynamic_cast<EventTarget*>(this) == event->path.at(0).invocation_target){
-                return nullptr;
-            }
-            return this->associatedHost;
-        }
+        // virtual Element* get_the_parent(Event* event) override{
+        //     if (!event->composed_flag && !event->path.empty() && dynamic_cast<EventTarget*>(this) == event->path.at(0).invocation_target){
+        //         return nullptr;
+        //     }
+        //     return this->associatedHost;
+        // }
 
-        virtual void making_it_abstract() override {};
 };
 
 
@@ -450,11 +598,6 @@ struct ElementCreationOptions{
     std::optional<DOMString> is = std::nullopt;
 
     ElementCreationOptions(){};
-};
-
-struct ImportNodeOptions{
-    CustomElementRegistry* customElementRegistry;
-    bool selfOnly = false;
 };
 
 struct ShadowRootInit{
@@ -513,9 +656,9 @@ class Element: public ParentNode{
             DOMString qualified_name;
             if (this->prefix==std::nullopt){ qualified_name = this->localName; }
             else{ qualified_name = this->prefix.value() + ":" + this->localName; }
-            if (this->ownerDocument->type != XML){
-                std::transform(qualified_name.begin(), qualified_name.end(), qualified_name.begin(), [](unsigned char c){ return std::toupper(c); });
-            }
+            // if (this->ownerDocument->type != XML){
+            //     std::transform(qualified_name.begin(), qualified_name.end(), qualified_name.begin(), [](unsigned char c){ return std::toupper(c); });
+            // }
             return qualified_name;
         }
 
@@ -558,9 +701,9 @@ class Element: public ParentNode{
         std::optional<Element> closest(DOMString selectors);
         bool matches(DOMString selectors);
 
-        HTMLCollection getElementsByTagName(DOMString qualifiedName);
-        HTMLCollection getElementsByTagNameNS(std::optional<DOMString> namesp, DOMString localName);
-        HTMLCollection getElementsByClassName(DOMString classNames);
+        HTMLCollection* getElementsByTagName(DOMString qualifiedName);
+        HTMLCollection* getElementsByTagNameNS(std::optional<DOMString> namesp, DOMString localName);
+        HTMLCollection* getElementsByClassName(DOMString classNames);
 
         Element* insertAdjacentElement(DOMString where, Element element); //legacy
         void insertAdjacentText(DOMString where, DOMString data); //legacy
@@ -574,9 +717,6 @@ class Element: public ParentNode{
 
         virtual void making_it_abstract(){};
 
-        Element(node_type nodeType, DOMString nodeName, Document* ownerDocument, Node* parentNode): ParentNode(ELEMENT_NODE, nodeName, ownerDocument, parentNode){
-            this->attributes.associatedElement = this;
-        }
 
 
         //Getter Setters
@@ -626,81 +766,8 @@ class Element: public ParentNode{
 
 
 
-enum DocType{
-    XML,
-    HTML,
-    XML_XHTML
-};
-
-enum DocMode{
-    NO_QUIRKS,
-    QUIRKS,
-    LIMITED_QUIRKS
-};
-
-class Document: public ParentNode{
-    public:
-        CustomElementRegistry* custom_element_registry = nullptr;
-        DOMImplementation* implementation;
-        USVString URL = "about:blank"; //!serialize
-        USVString documentURI = URL; //!serialize
-        DOMString characterSet = "utf-8";
-        DOMString contentType = "application/xml";
-
-        DocumentType* doctype();
-        Element* documentElement();
-
-        DOMString encoding = "utf-8";
-        DocType type = XML;
-        DOMString* origin = nullptr; //lateeeeeer
-        DocMode mode = NO_QUIRKS;
-        bool allow_declarative_shodow_roots = false;
-
-        Document(Document* ownerdoc = nullptr, Node* parentnode = nullptr): ParentNode(DOCUMENT_NODE, "#document", ownerdoc, parentnode){
-            this->implementation->associated_doc = this;
-        };
-
-        DOMString compatMode();
-
-        std::optional<DOMString> lookupPrefix(std::optional<DOMString> namesp); //Redefining for Node class
-
-        HTMLCollection getElementsByTagName(DOMString qualifiedName);
-        HTMLCollection getElementsByTagNameNS(std::optional<DOMString> namesp, DOMString localname);
-        HTMLCollection getElementsByClassName(std::vector<DOMString> &classNames);
-        // friend Element* getElementById(Node* node, const DOMString &elementId);
 
 
-        Element* createElement(DOMString localName, std::variant<DOMString,ElementCreationOptions> options); //NOTE: Keep last argument as optional
-        Element* createElementNS(std::optional<DOMString> namesp, DOMString qualifiedName, std::variant<DOMString,ElementCreationOptions> options); //NOTE: Keep last argument as optional
-        Node* importNode(Node* node, std::variant<bool,ImportNodeOptions> options = false);
-        Node* adoptNode(Node* node); //no NewObject
-
-        //NewObject
-        DocumentFragment* createDocumentFragment();
-        Text* createTextNode(DOMString data);
-        CDATASection* createCDATASection(DOMString data);
-        Comment* createComment(DOMString data);
-        ProcessingInstruction* createProcessingInstruction(DOMString target, DOMString data);
-        Attr* createAttribute(DOMString localName);
-        Attr* createAttributeNS(std::optional<DOMString> namesp, DOMString qualifiedName);
-        Event* createEvent(DOMString interface); //LEGACY
-        Range* createRange();
-        NodeIterator* createNodeIterator(Node* root, unsigned long whatToShow = 0xFFFFFFFF, NodeFilter* filter = nullptr);
-        TreeWalker* createTreeWalker(Node* root, unsigned long whatToShow = 0xFFFFFFFF, NodeFilter* filter = nullptr);
-
-        CustomElementRegistry* get_custom_element_registry() const{
-            return this->custom_element_registry;
-        }
-
-        virtual Node* get_the_parent(Event* event){
-            if (event->gettype()=="load"){
-                return nullptr;
-            }
-            return nullptr;
-        }
-
-        virtual void making_it_abstract(){};
-};
 
 //Exposed to window only
 class XMLDocument: public Document{};
@@ -810,7 +877,7 @@ void flatten_element_creation_options(std::variant<DOMString,ElementCreationOpti
 }
 
 void adopt(Node* node, Document* document){
-    Document* oldDocument = node->ownerDocument;
+    // Document* oldDocument = node->ownerDocument;
     if (node->parentNode!=nullptr){ remove_node(node); }
     // if (document!=oldDocument){
     //     for (auto inclusiveDescendant: node->shad)
@@ -820,47 +887,48 @@ void adopt(Node* node, Document* document){
 Element* internal_create_element_ns(Document* document, std::optional<DOMString> namesp, DOMString qualifiedName, std::variant<DOMString,ElementCreationOptions> options){
     std::optional<DOMString> prefix;
     DOMString localName;
-    ValidateAndExtract(namesp, qualifiedName, "element", prefix, localName);
+    validate_and_extract(namesp, qualifiedName, "element", prefix, localName);
     CustomElementRegistry* registry;
     std::optional<DOMString> is;
     flatten_element_creation_options(options, document, registry, is);
-    return create_element(document, localName, namesp, prefix, is, true, registry);
+    // return create_element(document, localName, namesp, prefix, is, true, registry);
+    return new Element("","","");
 }
 
 
 void change_attribute_value(Attr* attribute, DOMString value){
     DOMString oldValue = attribute->value;
     attribute->value = value;
-    handle_attribute_changes(attribute, attribute->ownerElement, oldValue, value);
+    // handle_attribute_changes(attribute, attribute->ownerElement, oldValue, value);
 }
 
 void append_attribute(Attr* attribute, Element* element){
     element->attributes.attribute_list.push_back(attribute);
     attribute->ownerElement = element;
-    attribute->ownerDocument = element->ownerDocument;
-    handle_attribute_changes(attribute, element, std::nullopt, attribute->value);
+    // attribute->ownerDocument = element->ownerDocument;
+    // handle_attribute_changes(attribute, element, std::nullopt, attribute->value);
 }
 
 void remove_attribute(Attr* attribute){
     Element* element = attribute->ownerElement;
     element->attributes.attribute_list.erase(std::find(element->attributes.attribute_list.begin(), element->attributes.attribute_list.end(), attribute));
     attribute->ownerElement = nullptr;
-    handle_attribute_changes(attribute, element, attribute->value, std::nullopt);
+    // handle_attribute_changes(attribute, element, attribute->value, std::nullopt);
 }
 
 void replace_attribute(Attr* oldAttribute, Attr* newAttribute){
     Element* element = oldAttribute->ownerElement;
     std::replace(element->attributes.attribute_list.begin(), element->attributes.attribute_list.end(), oldAttribute, newAttribute);
     newAttribute->ownerElement = element;
-    newAttribute->ownerDocument = element->ownerDocument;
+    // newAttribute->ownerDocument = element->ownerDocument;
     oldAttribute->ownerElement = nullptr;
-    handle_attribute_changes(oldAttribute, element, oldAttribute->value, newAttribute->value);
+    // handle_attribute_changes(oldAttribute, element, oldAttribute->value, newAttribute->value);
 }
 
 Attr* fetch_attribute(DOMString qualifiedName, Element* element){
-    if (element->ownerDocument->type!=XML){
-        std::transform(qualifiedName.begin(), qualifiedName.end(), qualifiedName.begin(), [](unsigned char c){ return std::tolower(c); });
-    }
+    // if (element->ownerDocument->type!=XML){
+    //     std::transform(qualifiedName.begin(), qualifiedName.end(), qualifiedName.begin(), [](unsigned char c){ return std::tolower(c); });
+    // }
     for (auto attr: element->attributes.attribute_list){
         if (attr->qualifiedName()==qualifiedName){
             return attr;
@@ -908,7 +976,7 @@ void set_attribute_value(Element* element, DOMString localName, DOMString value,
         attr->namespaceURI = namesp;
         attr->prefix = prefix;
         attr->value = value;
-        attr->ownerDocument = element->ownerDocument;
+        // attr->ownerDocument = element->ownerDocument;
         append_attribute(attr, element);
         return;
     }
@@ -933,8 +1001,8 @@ Attr* remove_attribute_by_namespace(std::optional<DOMString> namesp, DOMString l
 
 void attach_shadow_root(Element* element, ShadowRootMode mode, bool clonable, bool serializable, bool delegatesFocus, SlotAssignmentMode slotAssignment, std::optional<CustomElementRegistry> registry){
     if (element->namespaceURI!="http://www.w3.org/1999/xhtml"){ throw NotSupportedError("nope not supported"); }
-    if (!ValidShadowHostName(element->localName)){ throw NotSupportedError("nope not supported boi !!"); }
-    if (ValidCustomElementName(element->localName) || element->is!=std::nullopt){}
+    // if (!ValidShadowHostName(element->localName)){ throw NotSupportedError("nope not supported boi !!"); }
+    // if (ValidCustomElementName(element->localName) || element->is!=std::nullopt){}
     if (element->getshadow_root()!=nullptr){
         ShadowRoot* currentShadowRoot = element->getshadow_root();
         if (!currentShadowRoot->declarative || currentShadowRoot->mode!=mode){ throw NotSupportedError("nope not supporting :) !"); }
@@ -947,7 +1015,7 @@ void attach_shadow_root(Element* element, ShadowRootMode mode, bool clonable, bo
         }
     }
     ShadowRoot* shadow = new ShadowRoot();
-    shadow->ownerDocument = element->ownerDocument;
+    // shadow->ownerDocument = element->ownerDocument;
     shadow->associatedHost = element;
     shadow->mode = mode;
     shadow->delegatesFocus = delegatesFocus;
@@ -966,29 +1034,21 @@ Node* insert_adjacent(Element* element, DOMString where, Node* node){
     std::transform(where.begin(), where.end(), where.begin(), [](unsigned char c){ return std::tolower(c); } );
     if (where=="beforebegin"){
         if (element->parentNode==nullptr){ return nullptr; }
-        return pre_insert_node(node, element->parentNode, element);
+        return pre_insert_node(node, dynamic_cast<Node*>(element)->parentNode, dynamic_cast<Node*>(element));
     }
     else if (where=="afterbegin"){
-        return pre_insert_node(node, element, element->firstChild());
+        return pre_insert_node(node, dynamic_cast<Node*>(element), dynamic_cast<Node*>(element)->firstChild());
     }
     else if (where=="beforeend"){
-        return pre_insert_node(node, element, nullptr);
+        return pre_insert_node(node, dynamic_cast<Node*>(element), nullptr);
     }
     else if (where=="afterend"){
         if (element->parentNode==nullptr){ return nullptr; }
-        return pre_insert_node(node, element->parentNode, element->nextSibling());
+        return pre_insert_node(node, element->parentNode, dynamic_cast<Node*>(element)->nextSibling());
     }
     else{
         throw SyntaxError("syntax errrrrror boi !!");
     }
-}
-
-DOMString replace_data(Node* node, unsigned long offset, unsigned long count, DOMString data){
-    unsigned length = node->length();
-    if (offset>length){ throw IndexSizeError("greater than error !!"); }
-    if ((offset+count)>length){ count = length-offset; }
-    // queue mutation record
-	return "";
 }
 
 DOMString replace_all(Node* node, Node* newParent){
@@ -1027,15 +1087,18 @@ std::vector<Text*> contiguous_text_nodes(Text* node){
 
 std::vector<Text*> contiguous_exclusive_text_nodes(Text* node){
     std::vector<Text*> temp = {node};
-    Text* currentNode = dynamic_cast<Text*>(node->previousSibling());
+    Text* currentNode = dynamic_cast<Text*>(dynamic_cast<Node*>(node)->previousSibling());
+    auto smth = dynamic_cast<Node*>(currentNode);
     while (currentNode && !dynamic_cast<CDATASection*>(currentNode)){
         temp.insert(temp.begin(), currentNode);
-        currentNode = dynamic_cast<Text*>(currentNode->previousSibling());
+        currentNode = dynamic_cast<Text*>(smth->previousSibling());
+        smth = dynamic_cast<Node*>(currentNode);
     }
     currentNode = dynamic_cast<Text*>(node->nextSibling());
     while (currentNode && !dynamic_cast<CDATASection*>(currentNode)){
         temp.push_back(currentNode);
-        currentNode = dynamic_cast<Text*>(currentNode->nextSibling());
+        currentNode = dynamic_cast<Text*>(smth->nextSibling());
+        smth = dynamic_cast<Node*>(currentNode);
     }
     return temp;
 }
@@ -1086,7 +1149,7 @@ Text* split_text_node(Text* node, unsigned long offset){
 
     DOMString data = substring_data(smth, offset, count);
     Text* new_node = new Text(data);
-    new_node->ownerDocument = smth->ownerDocument;
+    // new_node->ownerDocument = smth->ownerDocument;
 
     Node* parent = smth->parentNode;
     if (parent!=nullptr){
@@ -1212,7 +1275,7 @@ void select_node_within_rangee(Node* node, Range* range){
 
 DocumentFragment* extract_range(Range* range){
     DocumentFragment* fragment = new DocumentFragment();
-    fragment->ownerDocument = range->startContainer->ownerDocument;
+    // fragment->ownerDocument = range->startContainer->ownerDocument;
     if (range->collapsed()){
         return fragment;
     }
@@ -1327,7 +1390,7 @@ DocumentFragment* extract_range(Range* range){
 
 DocumentFragment* clone_contents(Range* range){
     DocumentFragment* fragment = new DocumentFragment();
-    fragment->ownerDocument = range->startContainer->ownerDocument;
+    // fragment->ownerDocument = range->startContainer->ownerDocument;
     if (range->collapsed()){
         return fragment;
     }

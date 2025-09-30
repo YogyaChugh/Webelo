@@ -7,22 +7,66 @@
 #include "../algos/basic.cpp"
 #include "../algos/mutation_algos.cpp"
 #include <optional>
+#include <iostream>
+
+
+// HTMLCollection
+
+Element* HTMLCollection::item(const unsigned long &index) const{
+    try {
+        return element_list.at(index);
+    }
+    catch (const std::out_of_range&) {
+        return nullptr;
+    }
+}
+
+Element* HTMLCollection::namedItem(const DOMString &name) const{
+    if (name=="") {
+        return nullptr;
+    }
+    for (auto element: element_list) {
+        //! CHECK IF `element` IS IN THE HTML NAMESPACE
+        //! CHECK IF `element` HAS A NAME ATTRIBUTE WHOSE VALUE IS name
+        if (element->id==name) {
+            return element;
+        }
+    }
+    return nullptr;
+}
+
+unsigned long HTMLCollection::length() const{
+    return element_list.size();
+}
+
+HTMLCollection::~HTMLCollection(){
+    for (auto a: element_list) {
+        delete a;
+    }
+    element_list.clear();
+}
 
 
 
 void ParentNode::prepend(std::vector<std::variant<Node*, DOMString>> &nodes) {
-    Node* temp = convert_nodes_to_node(nodes, this->ownerDocument);
+    DOMString kk = "";
+    Node* temp = new Node(ELEMENT_NODE, kk);
+    // Node* temp = convert_nodes_to_node(nodes, this->ownerDocument);
     auto smth = dynamic_cast<Node*>(this);
     pre_insert_node(temp, dynamic_cast<Node*>(this), smth->firstChild());
 }
 
 void ParentNode::append(std::vector<std::variant<Node*, DOMString>> &nodes){
-    Node* temp = convert_nodes_to_node(nodes, this->ownerDocument);
+    DOMString kk = "";
+    Node* temp = new Node(ELEMENT_NODE, kk);
+    // Node* temp = convert_nodes_to_node(nodes, this->ownerDocument);
     pre_insert_node(temp, dynamic_cast<Node*>(this), nullptr);
 }
 
 void ParentNode::replaceChildren(std::vector<std::variant<Node*, DOMString>> &nodes){
-    Node* temp = convert_nodes_to_node(nodes, this->ownerDocument);
+    DOMString kk = "";
+    Node* temp = new Node(ELEMENT_NODE, kk);
+    // Node* temp = convert_nodes_to_node(nodes, this->ownerDocument);
     ensure_pre_insert_validity(temp, dynamic_cast<Node*>(this), nullptr);
     replace_all(temp, dynamic_cast<Node*>(this));
 }
@@ -116,7 +160,8 @@ void before(std::vector<std::variant<Node*, DOMString>> &nodes, Node* obj){
         prev = prev->previousSibling();
         found = false;
     }
-    Node* node = convert_nodes_to_node(nodes, obj->ownerDocument);
+    DOMString kk = "";
+    Node* node = new Node(ELEMENT_NODE, kk);
     if (viablePreviousSibling==nullptr){
         viablePreviousSibling = parent->firstChild();
     }
@@ -149,7 +194,8 @@ void after(std::vector<std::variant<Node*, DOMString>>& nodes, Node* obj){
         next = next->nextSibling();
         found = false;
     }
-    Node* node = convert_nodes_to_node(nodes, obj->ownerDocument);
+    DOMString kk = "";
+    Node* node = new Node(ELEMENT_NODE, kk);
     pre_insert_node(node, parent, viableNextSibling);
 }
 
@@ -175,7 +221,9 @@ void replaceWith(std::vector<std::variant<Node*, DOMString>> &nodes, Node* obj){
         next = next->nextSibling();
         found = false;
     }
-    Node* node = convert_nodes_to_node(nodes, obj->ownerDocument);
+    // Node* node = convert_nodes_to_node(nodes, obj->ownerDocument);
+    DOMString ff = "";
+    Node* node = new Node(ELEMENT_NODE,ff);
     if (*obj->parentNode==*parent){
         replace(obj, node, parent);
     }
@@ -204,10 +252,12 @@ void remove(Node* obj){
 
 
 
-std::optional<DOMString> Document::lookupPrefix(std::optional<DOMString> namesp){
-    if (namesp==std::nullopt || namesp.value()==""){ return std::nullopt; }
-    if (this->documentElement()==nullptr){ return std::nullopt; }
-    return locate_a_namespace_prefix(this->documentElement() , namesp);
+DOMString* Document::lookupPrefix(std::optional<DOMString> namesp){
+    if (namesp==std::nullopt || namesp.value()==""){ return nullptr; }
+    if (this->documentElement()==nullptr){ return nullptr; }
+    // return locate_a_namespace_prefix(this->documentElement() , namesp);
+    DOMString k = "";
+    return nullptr;
 }
 
 
@@ -240,16 +290,19 @@ Element* Document::documentElement(){
 
 
 
-HTMLCollection Document::getElementsByTagName(DOMString qualifiedName){
-    return list_of_elements(qualifiedName, dynamic_cast<Node*>(this));
+HTMLCollection* Document::getElementsByTagName(DOMString qualifiedName){
+    // return list_of_elements(qualifiedName, dynamic_cast<Node*>(this));
+    return new HTMLCollection();
 }
 
-HTMLCollection Document::getElementsByTagNameNS(std::optional<DOMString> namesp, DOMString localname){
-    return list_of_elements(namesp, localname, dynamic_cast<Node*>(this));
+HTMLCollection* Document::getElementsByTagNameNS(std::optional<DOMString> namesp, DOMString localname){
+    // return list_of_elements(namesp, localname, dynamic_cast<Node*>(this));
+    return new HTMLCollection();
 }
 
-HTMLCollection Document::getElementsByClassName(std::vector<DOMString> &classNames){
-    return list_of_elements(classNames, dynamic_cast<Node*>(this));
+HTMLCollection* Document::getElementsByClassName(std::vector<DOMString> &classNames){
+    // return list_of_elements(classNames, dynamic_cast<Node*>(this));
+    return new HTMLCollection();
 }
 
 Element* Document::createElement(DOMString localName, std::variant<DOMString,ElementCreationOptions> options){
@@ -267,7 +320,8 @@ Element* Document::createElement(DOMString localName, std::variant<DOMString,Ele
     else{
         namesp = std::nullopt;
     }
-    return create_element(this, localName, namesp, nullptr, is, true, registry);
+    // return create_element(this, localName, namesp, std::nullopt, is, true, registry);
+    return new Element("","","");
 }
 
 Element* Document::createElementNS(std::optional<DOMString> namesp, DOMString qualifiedName, std::variant<DOMString,ElementCreationOptions> options){
@@ -276,13 +330,13 @@ Element* Document::createElementNS(std::optional<DOMString> namesp, DOMString qu
 
 DocumentFragment* Document::createDocumentFragment(){
     DocumentFragment* temp = new DocumentFragment();
-    temp->ownerDocument = this;
+    // temp->ownerDocument = this;
     return temp;
 }
 
 Text* Document::createTextNode(DOMString data){
     Text* temp = new Text(data);
-    temp->ownerDocument = this;
+    // temp->ownerDocument = this;
     return temp;
 }
 
@@ -291,13 +345,13 @@ CDATASection* Document::createCDATASection(DOMString data){
     if (data.find("]]>") != std::string::npos) { throw InvalidCharacterError("Invalid Characters !"); }
     CDATASection* temp = new CDATASection();
     temp->setdata(data);
-    temp->ownerDocument = this;
+    // temp->ownerDocument = this;
     return temp;
 }
 
 Comment* Document::createComment(DOMString data){
     Comment* temp = new Comment(data);
-    temp->ownerDocument = this;
+    // temp->ownerDocument = this;
     return temp;
 }
 
@@ -307,7 +361,7 @@ ProcessingInstruction* Document::createProcessingInstruction(DOMString target, D
     ProcessingInstruction* temp = new ProcessingInstruction();
     temp->target = target;
     temp->setdata(data);
-    temp->ownerDocument = this;
+    // temp->ownerDocument = this;
     return temp;
 }
 
@@ -342,7 +396,7 @@ Attr* Document::createAttribute(DOMString localName){
         std::transform(localName.begin(), localName.end(), localName.begin(), [](unsigned char c){ return std::tolower(c); });
     }
     Attr* temp = new Attr(localName);
-    temp->ownerDocument = this;
+    // temp->ownerDocument = this;
     return temp;
 }
 
@@ -353,7 +407,7 @@ Attr* Document::createAttributeNS(std::optional<DOMString> namesp, DOMString qua
     Attr* temp = new Attr(localName);
     temp->namespaceURI = namesp;
     temp->prefix = prefix;
-    temp->ownerDocument = this;
+    // temp->ownerDocument = this;
     return temp;
 }
 
@@ -385,7 +439,7 @@ TreeWalker* createTreeWalker(Node* root, unsigned long whatToShow, NodeFilter* f
 DocumentType* DOMImplementation::createDocumentType(DOMString name, DOMString publicId, DOMString systemId){
     if (!valid_doctype_name(name)){ throw InvalidCharacterError("Invalid Chars !!"); }
     DocumentType* temp = new DocumentType(name, publicId, systemId);
-    temp->ownerDocument = this->associated_doc;
+    // temp->ownerDocument = this->associated_doc;
     return temp;
 }
 
@@ -415,17 +469,17 @@ Document* DOMImplementation::createHTMLDocument(std::optional<DOMString> title){
     document->type = HTML;
     document->contentType = "text/html";
     DocumentType* doct = new DocumentType("html");
-    doct->ownerDocument = document;
+    // doct->ownerDocument = document;
     pre_insert_node(dynamic_cast<Node*>(document), dynamic_cast<Node*>(doct), nullptr);
-    Element* htmlElement = create_element(document, "html", "http://www.w3.org/1999/xhtml", nullptr);
+    Element* htmlElement = create_element(document, "html", "http://www.w3.org/1999/xhtml", std::nullopt);
     pre_insert_node(dynamic_cast<Node*>(document), dynamic_cast<Node*>(htmlElement), nullptr);
-    Element* headElement = create_element(document, "head", "http://www.w3.org/1999/xhtml", nullptr);
+    Element* headElement = create_element(document, "head", "http://www.w3.org/1999/xhtml", std::nullopt);
     pre_insert_node(dynamic_cast<Node*>(htmlElement), dynamic_cast<Node*>(headElement), nullptr);
     if (title!=std::nullopt){
-        Element* titleElement = create_element(document, "title", "http://www.w3.org/1999/xhtml", nullptr);
+        Element* titleElement = create_element(document, "title", "http://www.w3.org/1999/xhtml", std::nullopt);
         pre_insert_node(dynamic_cast<Node*>(headElement), dynamic_cast<Node*>(titleElement), nullptr);
         Text* text = new Text(title.value());
-        text->ownerDocument = document;
+        // text->ownerDocument = document;
         pre_insert_node(dynamic_cast<Node*>(titleElement), dynamic_cast<Node*>(text), nullptr);
     }
     pre_insert_node(dynamic_cast<Node*>(htmlElement), dynamic_cast<Node*>(create_element(document, "body", "http://www.w3.org/1999/xhtml")), nullptr);
@@ -477,9 +531,9 @@ std::optional<DOMString> Element::getAttributeNS(std::optional<DOMString> namesp
 void Element::setAttribute(DOMString qualifiedName, DOMString value){
     if (!valid_attribute_local_name(qualifiedName)){ throw InvalidCharacterError("Invalid name for attribute !!"); }
     //later !
-    if (this->ownerDocument->type!=XML){
-        std::transform(qualifiedName.begin(), qualifiedName.end(), qualifiedName.begin(), [](unsigned char c){ return std::tolower(c); });
-    }
+    // if (this->ownerDocument->type!=XML){
+    //     std::transform(qualifiedName.begin(), qualifiedName.end(), qualifiedName.begin(), [](unsigned char c){ return std::tolower(c); });
+    // }
     Attr* attribute = nullptr;
     for (auto attr: this->attributes.attribute_list){
         DOMString qualif;
@@ -497,7 +551,7 @@ void Element::setAttribute(DOMString qualifiedName, DOMString value){
     if (attribute==nullptr){
         Attr* temp = new Attr(qualifiedName);
         temp->value = value;
-        temp->ownerDocument = this->ownerDocument;
+        // temp->ownerDocument = this->ownerDocument;
         append_attribute(temp, this);
         return;
     }
@@ -521,9 +575,9 @@ void Element::removeAttributeNS(std::optional<DOMString> namesp, DOMString local
 
 
 bool Element::hasAttribute(DOMString qualifiedName){
-    if (this->ownerDocument->type!=XML){
-        std::transform(qualifiedName.begin(), qualifiedName.end(), qualifiedName.begin(), [](unsigned char c){ return std::tolower(c); });
-    }
+    // if (this->ownerDocument->type!=XML){
+    //     std::transform(qualifiedName.begin(), qualifiedName.end(), qualifiedName.begin(), [](unsigned char c){ return std::tolower(c); });
+    // }
     for (auto attr: this->attributes.attribute_list){
         DOMString qualif;
         if (attr->prefix == std::nullopt){
@@ -541,9 +595,9 @@ bool Element::hasAttribute(DOMString qualifiedName){
 
 bool Element::toggleAttribute(DOMString qualifiedName, std::optional<bool> force){
     if (!valid_attribute_local_name(qualifiedName)){ throw InvalidCharacterError("Invalid Attribute Name boi !"); }
-    if (this->ownerDocument->type!=XML){
-        std::transform(qualifiedName.begin(), qualifiedName.end(), qualifiedName.begin(), [](unsigned char c){ return std::tolower(c); });
-    }
+    // if (this->ownerDocument->type!=XML){
+    //     std::transform(qualifiedName.begin(), qualifiedName.end(), qualifiedName.begin(), [](unsigned char c){ return std::tolower(c); });
+    // }
     Attr* attribute = nullptr;
     for (auto attr: this->attributes.attribute_list){
         DOMString qualif;
@@ -562,7 +616,7 @@ bool Element::toggleAttribute(DOMString qualifiedName, std::optional<bool> force
         if (!force.has_value() || (force.has_value() && force.value()==true)){
             Attr* temp = new Attr(qualifiedName);
             temp->value = "";
-            temp->ownerDocument = this->ownerDocument;
+            // temp->ownerDocument = this->ownerDocument;
             append_attribute(temp, this);
             return true;
         }
@@ -617,32 +671,36 @@ ShadowRoot* Element::attachShadow(ShadowRootInit init){
     CustomElementRegistry* registry = this->customElementRegistry;
     if (init.customElementRegistry!=nullptr){
         registry = init.customElementRegistry;
-        if (registry!=this->ownerDocument->custom_element_registry){ throw NotSupportedError("This ain't supported !"); }
+        // if (registry!=this->ownerDocument->custom_element_registry){ throw NotSupportedError("This ain't supported !"); }
     }
     attach_shadow_root(this, init.mode, init.clonable, init.serializable, init.delegatesFocus, init.slotAssignment, *registry);
     return this->getshadow_root();
 }
 
 Element* Element::insertAdjacentElement(DOMString where, Element element){
-    return dynamic_cast<Element*>(insert_adjacent(this, where, dynamic_cast<Node*>(element)));
+    // return dynamic_cast<Element*>(insert_adjacent(this, where, dynamic_cast<Node*>(element)));
+    return new Element("","","");
 }
 
 void Element::insertAdjacentText(DOMString where, DOMString data){
-    Text* text = new Text(data);
-    text->ownerDocument = this->ownerDocument;
-    insert_adjacent(this, where, dynamic_cast<Node*>(text));
+    // Text* text = new Text(data);
+    // text->ownerDocument = this->ownerDocument;
+    // insert_adjacent(this, where, dynamic_cast<Node*>(text));
 }
 
-HTMLCollection Element::getElementsByTagName(DOMString qualifiedName){
-    return list_of_elements(qualifiedName, dynamic_cast<Node*>(this));
+HTMLCollection* Element::getElementsByTagName(DOMString qualifiedName){
+    // return list_of_elements(qualifiedName, dynamic_cast<Node*>(this));
+    return new HTMLCollection();
 }
 
-HTMLCollection Element::getElementsByTagNameNS(std::optional<DOMString> namesp, DOMString localName){
-    return list_of_elements(namesp, localName, dynamic_cast<Node*>(this));
+HTMLCollection* Element::getElementsByTagNameNS(std::optional<DOMString> namesp, DOMString localName){
+    // return list_of_elements(namesp, localName, dynamic_cast<Node*>(this));
+    return new HTMLCollection();
 }
 
-HTMLCollection Element::getElementsByClassName(DOMString classNames){
-    return list_of_elements(classNames, dynamic_cast<Node*>(this));
+HTMLCollection* Element::getElementsByClassName(DOMString classNames){
+    // return list_of_elements(classNames, dynamic_cast<Node*>(this));
+    return new HTMLCollection();
 }
 
 
@@ -1202,4 +1260,9 @@ bool DOMTokenList::replace(DOMString token, DOMString newToken){
 
 bool DOMTokenList::supports(DOMString token){
     return this->validate(token);
+}
+
+
+int main(){
+    std::cout<<"Hello";
 }

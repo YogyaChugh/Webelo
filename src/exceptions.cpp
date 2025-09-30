@@ -140,4 +140,7 @@ class WrongDocumentError: public exception {
             return message.c_str();
         }
 };
+
+int main(){}
+
 #endif

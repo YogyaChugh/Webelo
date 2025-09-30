@@ -6,6 +6,7 @@
 #include "../include/window.hpp"
 #include "../include/nodes/node.hpp"
 #include "basic.cpp"
+#include <cassert>
 
 
 EventTarget* retard(EventTarget* a, EventTarget* b){
@@ -451,6 +452,8 @@ AbortSignal* create_dependent_abort_signal(std::vector<AbortSignal*> signals, Ab
     return resultSignal;
 }
 
+
+int main(){}
 
 
 #endif

@@ -13,6 +13,8 @@
 #define DOCUMENT_POSITION_IMPLEMENTATION_SPECIFIC 0x20
 
 class Node;
+class Document;
+class Element;
 
 /*
 Collection of Node objects
@@ -62,67 +64,6 @@ class NodeList{
 
 
 
-/*
-Collection of Element objects
-
-Attributes:
-    None
-
-Methods:
-    item(unsigned long index) - Returns ptr to node object at index if present else nullptr
-    namedItem(DOMString name)
-    length() - Number of elements in the nodelist
-
-Operators:
-    [unsigned long index] - Operator using item() method internally
-    [DOMString name] - Operator using namedItem() method internally
- */
-class HTMLCollection{
-    public:
-        std::vector<Element*> element_list = {};
-
-        // Returns the Node ptr on the index provided !
-        Element* item(const unsigned long &index) const;
-
-        // Returns the Node ptr on the index provided !
-        Element* operator[](const unsigned long &index) const {
-            return this->item(index);
-        }
-
-        Element* namedItem(const DOMString &name) const;
-
-        Element* operator[](const DOMString &name) const{
-            return this->namedItem(name);
-        }
-
-        // Returns the length of the list stored ! Must be stored in a variable.
-        [[nodiscard]] unsigned long length() const;
-
-        void append(Element* node){
-            this->element_list.push_back(node);
-        }
-
-        void insert(Element* node, const unsigned long &index){
-            if (index<0){return;}
-            this->element_list.insert(this->element_list.begin()+index, node);
-        }
-
-        void remove(Element* node){
-            unsigned int i = 0;
-            for (auto a: this->element_list){
-                if (a->isEqualNode(node)){
-                    this->element_list.erase(this->element_list.begin()+i);
-                    return;
-                }
-                i++;
-            }
-        }
-
-        ~HTMLCollection();
-};
-
-
-
 
 // Types of Node objects possible !!
 enum node_type{
@@ -166,20 +107,12 @@ class Node: public EventTarget{
         Node* getRootNode(bool composed = false);
 
         DOMString nodeValue;
-        DOMString textContent;
+        DOMString textContent;      
         void normalize();
         Node* cloneNode(bool subtree);
 
 
-        Node(node_type nodeType, DOMString nodeName, Document* ownerDocument = nullptr, Node* parentNode = nullptr){
-            this->nodeType = nodeType;
-            this->nodeName = nodeName;
-            this->ownerDocument = ownerDocument;
-            this->parentNode = parentNode;
-            if (dynamic_cast<Element*>(parentNode)){
-                this->parentElement = dynamic_cast<Element*>(parentNode);
-            }
-        }
+        Node(node_type nodeType, DOMString nodeName, Document* ownerDocument = nullptr, Node* parentNode = nullptr);
 
         unsigned long length(){
             //if (dynamic_cast<DocumentType*>(this) || dynamic_cast<Attr*>(this)){
