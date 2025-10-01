@@ -121,7 +121,7 @@ enum event_phase: unsigned int{
     BUBBLING_PHASE //bottom to top again !
 };
 
-enum ShadowRootMode{ open, closed};
+enum ShadowRootMode{ openh, closed};
 enum SlotAssignmentMode{ manual, named};
 
 enum DocType{
@@ -1390,7 +1390,7 @@ class DOMTokenList{
         }
 
 
-        DOMTokenList(Element* element, Attr* attribute){
+        DOMTokenList(Element* element = nullptr, Attr* attribute = nullptr){
             this->associatedElement = element;
             this->associatedAttribute = attribute;
             // this->setvalue(fetch_attribute(element, attribute->localName));
@@ -5165,6 +5165,6 @@ bool DOMTokenList::supports(DOMString token){
 
 
 
-int main(){
-    std::cout<<"La lala lalalalalalala";
-}
+// int main(){
+//     std::cout<<"La lala lalalalalalala";
+// }
