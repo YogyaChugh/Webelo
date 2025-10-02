@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.14.0" xml:lang="en-US">
+  <compounddef id="struct_focus_options" kind="struct" language="C++" prot="public">
+    <compoundname>FocusOptions</compoundname>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="struct_focus_options_1a0d61cc5c6db2f8e8f25354da1e3dfb43" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool FocusOptions::preventScroll</definition>
+        <argsstring></argsstring>
+        <name>preventScroll</name>
+        <qualifiedname>FocusOptions::preventScroll</qualifiedname>
+        <initializer>= false</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="166" column="10" bodyfile="HtmlElements.cpp" bodystart="166" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_focus_options_1a95fe6f2ec3799749d813e073f9a1cf2c" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool FocusOptions::focusVisible</definition>
+        <argsstring></argsstring>
+        <name>focusVisible</name>
+        <qualifiedname>FocusOptions::focusVisible</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="167" column="10" bodyfile="HtmlElements.cpp" bodystart="167" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="HtmlElements.cpp" line="165" column="1" bodyfile="HtmlElements.cpp" bodystart="165" bodyend="168"/>
+    <listofallmembers>
+      <member refid="struct_focus_options_1a95fe6f2ec3799749d813e073f9a1cf2c" prot="public" virt="non-virtual"><scope>FocusOptions</scope><name>focusVisible</name></member>
+      <member refid="struct_focus_options_1a0d61cc5c6db2f8e8f25354da1e3dfb43" prot="public" virt="non-virtual"><scope>FocusOptions</scope><name>preventScroll</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

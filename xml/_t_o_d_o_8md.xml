@@ -1,0 +1,292 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.14.0" xml:lang="en-US">
+  <compounddef id="_t_o_d_o_8md" kind="file" language="Markdown">
+    <compoundname>TODO.md</compoundname>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline><highlight class="normal">#<sp/>TODO&apos;S</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">##<sp/>GLOBAL<sp/>TODO&apos;S</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>Comment<sp/>Sorting</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>Resolve<sp/>Header<sp/>Files</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>Private/Public<sp/>Resolve</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>CEReactions<sp/>?</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>NewObject,<sp/>SameObject</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>This<sp/>setter/getter<sp/>resolving<sp/>!</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>There<sp/>could<sp/>be<sp/>a<sp/>problem<sp/>in<sp/>the<sp/>future<sp/>with<sp/>null<sp/>character<sp/>cause<sp/>it&apos;s<sp/>\0<sp/>and<sp/>also<sp/>end<sp/>of<sp/>string<sp/>!<sp/>So<sp/>just<sp/>noting<sp/>it<sp/>down<sp/>!!</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>ServiceWorkerGlobalScope<sp/>implementation<sp/>in:</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>-<sp/>add_event_listener</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>-<sp/>removeEventListener</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>-<sp/>removeAllEventListeners</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>Remember<sp/>to<sp/>remove<sp/>MouseEvent<sp/>from<sp/>events.hpp<sp/>when<sp/>later<sp/>rewriting<sp/>&amp;<sp/>also<sp/>adding<sp/>to<sp/>algos_events.cpp<sp/>dispatch_event<sp/>algo.</highlight></codeline>
+<codeline></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">##<sp/>Personal<sp/>Remember</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>Do<sp/>check<sp/>`events.md`<sp/>currentTarget<sp/>value<sp/>explanation.<sp/>Might<sp/>need<sp/>improv</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>Change<sp/>reference<sp/>to<sp/>`shadow.md`<sp/>in<sp/>`events.md`</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>Add<sp/>`path_structs`<sp/>in<sp/>docs</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>DO<sp/>NOT<sp/>RUN<sp/>THIS<sp/>BEFORE<sp/>HAVING<sp/>THE<sp/>FULL<sp/>Windows<sp/>OBJECT<sp/>FROM<sp/>HTML<sp/>SPEC</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>DO<sp/>CHECK<sp/>dispatchEvent<sp/>for<sp/>associatedDocument<sp/>of<sp/>target<sp/>before<sp/>running</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>add_abort_algo()<sp/>for<sp/>abortsignal</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>Do<sp/>change<sp/>slot<sp/>in<sp/>dispatch_event<sp/>in<sp/>case<sp/>the<sp/>name<sp/>changes<sp/>in<sp/>Element<sp/>&amp;<sp/>Text<sp/>!<sp/>Also,<sp/>it&apos;s<sp/>implementation</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>Just<sp/>logging<sp/>a<sp/>possible<sp/>error:<sp/>preceding<sp/>struct<sp/>check<sp/>in<sp/>invoke<sp/>algo<sp/>for<sp/>events.</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>Could<sp/>be<sp/>later<sp/>!<sp/>Add<sp/>eventConstructor<sp/>in<sp/>fire_event</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>the<sp/>getnodeValue()<sp/>&amp;&amp;<sp/>gettextContent()<sp/>method<sp/>in<sp/>Node<sp/>class<sp/>returns<sp/>a<sp/>&quot;&quot;<sp/>rather<sp/>than<sp/>nullptr</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>Can<sp/>add<sp/>later<sp/>(special<sp/>cloning<sp/>steps<sp/>in<sp/>other<sp/>specifications)<sp/>for<sp/>`clone_node`<sp/>in<sp/>algos_node.cpp</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>Could<sp/>be<sp/>error<sp/>in<sp/>node.cpp<sp/>compareDocumentPosition</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>Node&apos;s<sp/>node<sp/>document<sp/>can<sp/>be<sp/>changed<sp/>using<sp/>the<sp/>adopt<sp/>algo</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>Encoding<sp/>sort<sp/>for<sp/>Document<sp/>object</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>Doctype<sp/>and<sp/>mode<sp/>check<sp/>eveywhere<sp/>!<sp/>all<sp/>functions<sp/>change</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>Controversial<sp/>ownerDocument<sp/>vs<sp/>nodeDocument</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>Running<sp/>normal<sp/>split<sp/>instead<sp/>strict<sp/>split<sp/>`base_algos.cpp`</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>Replace<sp/>seteventPhase()<sp/>#Later</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>Always<sp/>have<sp/>a<sp/>newObject<sp/>func<sp/>in<sp/>new<sp/>Event<sp/>derived<sp/>clases</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>Work<sp/>on<sp/>onabort<sp/>attribute<sp/>in<sp/>`AbortSignal`<sp/>object<sp/>!</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">##<sp/>Algorithms</highlight></codeline>
+<codeline><highlight class="normal">&gt;<sp/>Remember<sp/>to<sp/>check<sp/>all<sp/>calls<sp/>to<sp/>these<sp/>algo&apos;s<sp/>in-order<sp/>to<sp/>rectify<sp/>arg<sp/>issues<sp/>!</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>~~parse_ordered_set~~</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>~~serialize_ordered_set~~</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>scope_match_selectors_string</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>~~clone_node~~</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>~~clone_a_single_node~~</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>~~locate_a_namespace_prefix~~</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>~~locate_a_namespace~~</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>~~add_event_listener~~</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>~~remove_event_listener~~</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>preInsertNode</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>replaceNode</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>preRemoveNode</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>~~ValidNamespacePrefix~~</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>~~ValidElementLocalName~~</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>-<sp/>~~Very<sp/>Important<sp/>!<sp/>Just<sp/>2<sp/>steps<sp/>left<sp/>!!~~</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>~~ValidAttributeLocalName~~</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>~~ValidDocTypeName~~</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>~~flatten_element_creation_options~~</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>create_element</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>~~internal_create_element_ns~~</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>adopt</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>~~ValidateAndExtract~~</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>-<sp/>~~Check<sp/>for<sp/>namespace<sp/>XML,d<sp/>XMLNS~~</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>~~check_shadow_including_descendant~~</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>~~find_root~~</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>~~is_closed_shadow_hidden~~</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>~~retarget~~</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>create_element_internal</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>handle_attribute_changes</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>~~change_attribute_value~~</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>~~append_attribute~~</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>~~remove_attribute~~</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>~~replace_attribute~~</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>~~FetchAttributeByName~~</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>~~FetchAttributeByNamespaceAndLocalName~~</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>~~FetchAttributeValue~~</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>~~set_attribute~~</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>~~set_attribute_value~~</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>~~remove_attribute_by_name~~</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>~~remove_attribute_by_namespace~~</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>~~html_uppercased_qualified_name~~</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>~~attach_shadow_root~~</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>listElementsWithQualifiedName</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>listElementsWithNamespaceAndLocalName</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>listElementsWithClassNames</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>~~insert_adjacent~~</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>SetExistingAttributeValue</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>replace_data</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>~~substring_data~~</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>DetermineNodeLength</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>~~split_text_node~~</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>~~descendant_text_node~~</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>~~child_text_content~~</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>~~contiguous_exclusive_text_nodes~~</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>~~contiguous_text_nodes~~</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>~~check_exclusive_text_node~~</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>StrictSplitText</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>~~string_replace_all~~</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>replace_all</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>replace</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>remove_node</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>move_all</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>append_node</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>scope_match_selectors_string</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>~~nodequals~~</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>~~position~~</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>~~static_range_valid~~</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>~~contained_in_range~~</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>~~partially_contained_in_range~~</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>pre_remove_range<sp/>-<sp/>live<sp/>range<sp/>pre-remove<sp/>steps</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>~~extract_range~~</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>~~insert_node_in_range~~</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>~~traverse_sibling~~</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>~~traverse_children~~</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>~~default_passive_value~~</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>~~retard~~</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">##<sp/>Event</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>Realm<sp/>implementation<sp/>in<sp/>`inner_event_creation_steps`<sp/>&amp;<sp/>`base.cpp`<sp/>#JS</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>Special<sp/>event<sp/>constructing<sp/>steps<sp/>for<sp/>each<sp/>specification<sp/>in<sp/>`inner_event_creation_steps`<sp/>-<sp/>**JUST<sp/>A<sp/>NOTE**<sp/>#JS</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>~~Implementation<sp/>of<sp/>`relative_high_resolution_coarse_time`<sp/>in<sp/>`inner_event_creation_steps`~~</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">##<sp/>CustomEvent</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">##<sp/>EventTarget</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>In<sp/>algo<sp/>for<sp/>events,<sp/>`default_passive_value`<sp/>body<sp/>element<sp/>check<sp/>after<sp/>HTML<sp/>work<sp/>done.<sp/>#HTML</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>~~Add<sp/>`algo`<sp/>for<sp/>`add_event_listener`~~</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>Service<sp/>Worker<sp/>Global<sp/>Scope:<sp/>#JS</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>-<sp/>add_event_listener</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>-<sp/>remove_event_listener</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>Set<sp/>`targetOverride`<sp/>to<sp/>target&apos;s<sp/>`associatedDocument`<sp/>in<sp/>`dispatch_event`<sp/>#HTML</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>~~Assert<sp/>for<sp/>`slot`<sp/>check<sp/>in<sp/>`dispatch_event`<sp/>after<sp/>implementation<sp/>of<sp/>Slot~~</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>~~Implement<sp/>check<sp/>for<sp/>**shadow-including<sp/>inclusive<sp/>ancestor**<sp/>in<sp/>`dispatch_event`~~</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>After<sp/>implementation<sp/>of<sp/>realm/global<sp/>object,<sp/>remember<sp/>to<sp/>complete<sp/>`inner_invoke`<sp/>func<sp/>in<sp/>`algos_events`<sp/>#JS</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>Relevant<sp/>`realm`<sp/>implementation<sp/>with<sp/>`eventConstructor`<sp/>in<sp/>`fire_event`<sp/>in<sp/>algos<sp/>for<sp/>events.<sp/>#JS</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>This<sp/>`realm`<sp/>boi<sp/>implementation<sp/>in<sp/>`create_event`<sp/>tooooo.<sp/>#JS</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>~~Complete<sp/>the<sp/>`retard`<sp/>function<sp/>after<sp/>shadow-inclusing<sp/>ancestor.~~</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">##<sp/>AbortController</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">##<sp/>AbortSignal</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>Mf<sp/>global<sp/>object<sp/>to<sp/>trouble<sp/>again<sp/>!<sp/>#HTML</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>Current<sp/>realm<sp/>implementation<sp/>in<sp/>`_any`<sp/>method<sp/>#JS</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>The<sp/>same<sp/>thing<sp/>above<sp/>in<sp/>the<sp/>creating<sp/>#JS</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>`onabort`<sp/>implementation<sp/>after<sp/>HTML<sp/>#HTML</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">##<sp/>Mutation<sp/>Algo&apos;s</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>~~`host-including<sp/>inclusive<sp/>ancestor`<sp/>implementation,<sp/>then<sp/>for<sp/>`ensure_pre_insert_validity`~~</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>~~Point<sp/>6<sp/>in<sp/>`ensure_pre_insert_validity`<sp/>after<sp/>figuring<sp/>out<sp/>best<sp/>way<sp/>to<sp/>find<sp/>type<sp/>of<sp/>child.~~</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>Next<sp/>sibling<sp/>stuff<sp/>in<sp/>`pre_insert_node`</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>Insert<sp/>node<sp/>addition<sp/>after<sp/>implementation<sp/>in<sp/>`pre_insert_node`</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>Doctype<sp/>(others<sp/>too)<sp/>check<sp/>in<sp/>`ensure_pre_insert_validity`</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>Some<sp/>global<sp/>way<sp/>to<sp/>have<sp/>live<sp/>ranges<sp/>stored.<sp/>Then<sp/>implement<sp/>in:</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>-<sp/>insert_node</highlight></codeline>
+<codeline></codeline>
+<codeline></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">##<sp/>ParentNode</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>To<sp/>write<sp/>definition<sp/>after<sp/>selector<sp/>stuff:</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>-<sp/>Element*<sp/>querySelector(DOMString<sp/>selectors);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>-<sp/>NodeList<sp/>querySelectorAll(DOMString<sp/>selectors);</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>Constructor<sp/>required<sp/>boi</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">##<sp/>Slottable</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>Change<sp/>type<sp/>of<sp/>`assignedSlot`<sp/>from<sp/>DOMString<sp/>to<sp/>`HTMLSlotElement`<sp/>after<sp/>HTML<sp/>implementation.<sp/>#HTML</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">##<sp/>Node</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>~~Meaningfull<sp/>virtual<sp/>func<sp/>-&gt;<sp/>abstract<sp/>class~~</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>~~`getTheParent`<sp/>algo~~</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>`registered_observer_list`<sp/>implementation</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>`serialize`<sp/>algo</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>`baseURI`<sp/>after<sp/>node<sp/>document&apos;s<sp/>document<sp/>base<sp/>URI<sp/>sorted<sp/>after<sp/>HTML<sp/>implementation.</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>`normalize()`<sp/>-<sp/>This<sp/>is<sp/>fucking<sp/>tough<sp/>!</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>~~`cloneNode()`~~</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>~~JS<sp/>Work<sp/>for<sp/>equalAlgo<sp/>-<sp/>isEqualNode()~~</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>~~`compareDocumentPosition()`~~</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>~~tolower()<sp/>to<sp/>be<sp/>made<sp/>especially<sp/>for<sp/>ASCII~~</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>Rewrites:</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>-<sp/>nodeType:<sp/>all<sp/>kids</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>-<sp/>nodeName:<sp/>all<sp/>kids</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>-<sp/>nodeValue:<sp/>Attr,<sp/>CharacteData</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>-<sp/>textContent:<sp/>Attr,<sp/>CharacterData,<sp/>Element,<sp/>DocumentFragment</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>-<sp/>cloneNode():<sp/>ShadowRoot</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>-<sp/>lookupPrefix():<sp/>all<sp/>kids</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>In<sp/>`clone_a_single_node`<sp/>algo,<sp/>check<sp/>for<sp/>global<sp/>custom<sp/>element<sp/>registry</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>In<sp/>`clone_a_single_node`<sp/>algo,<sp/>complete<sp/>the<sp/>custom<sp/>element<sp/>registry<sp/>#HTML</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">##<sp/>Document</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>Opaque<sp/>Origin<sp/>#HTML</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>`getTheParent`<sp/>algo<sp/>incomplete:<sp/>browsing<sp/>context<sp/>&amp;<sp/>relevant<sp/>global<sp/>object</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>`serialize`<sp/>algo</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>Constructor<sp/>work<sp/>to<sp/>set<sp/>origin<sp/>to<sp/>origin<sp/>of<sp/>current<sp/>global<sp/>object&apos;s<sp/>`associated<sp/>Doc`<sp/>#HTML</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>Resolve<sp/>this<sp/>in<sp/>`createProcessingInstruction`<sp/>for<sp/>`Document`<sp/>-&gt;<sp/>If<sp/>target<sp/>does<sp/>not<sp/>match<sp/>the<sp/>Name<sp/>production</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>Complete:</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>-<sp/>`createEvent()`<sp/>#HTML</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>-<sp/>`createRange()`<sp/>#<sp/>After<sp/>Range<sp/>implementation</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>-<sp/>`createNodeIterator()`<sp/>#<sp/>After<sp/>NodeIterator<sp/>implementation</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>-<sp/>`createTreeWalker()`<sp/>#<sp/>After<sp/>TreeWalker<sp/>implementation</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>is_scoped<sp/>var<sp/>in<sp/>`flatten_element_creation_options`<sp/>and<sp/>in<sp/>`importNode`<sp/>#HTML</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>looking<sp/>up<sp/>a<sp/>custom<sp/>element<sp/>registry<sp/>for<sp/>`flatten_element_creation_options`<sp/>and<sp/>in<sp/>`importNode`<sp/>#HTML</highlight></codeline>
+<codeline></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">##<sp/>DOMImplementation</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>Empty<sp/>dict<sp/>passing<sp/>to<sp/>internalCreateElementNS<sp/>resolving<sp/>!</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">##<sp/>DocumentType</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">##<sp/>DocumentFragment</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>Define<sp/>it&apos;s<sp/>constructor<sp/>using<sp/>current<sp/>global<sp/>object<sp/>value<sp/>req<sp/>#HTML</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">##<sp/>ShadowRoot</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>onslotchange<sp/>attribute<sp/>event<sp/>handler</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">##<sp/>Element</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>customElementDefinition<sp/>implementation<sp/>#HTML</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>~~is<sp/>value<sp/>implementation<sp/>#HTML~~</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>~~validCustomElementName<sp/>#HTML~~</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>~~tagName<sp/>getter<sp/>steps<sp/>with<sp/>HTMLUpperCasedQualifiedName~~</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>Complete<sp/>CustomElementRegistry<sp/>class<sp/>!</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>shadowRoot<sp/>resolve<sp/>with<sp/>getter<sp/>steps<sp/>!</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>Implement</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>-<sp/>~~setAttribute()~~</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>-<sp/>~~hasAttribute()~~</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>-<sp/>~~toggleAttribute()~~</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>-<sp/>closest()<sp/>#CSS</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>-<sp/>matches()<sp/>#CSS</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>-<sp/>webkitMatchesSelector()<sp/>#CSS</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>~~Implement<sp/>`refect`~~</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>create_element<sp/>algo<sp/>with<sp/>#HTML</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>`fetch_attribute`<sp/>in<sp/>HTML<sp/>namespace<sp/>#HTML</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>getter<sp/>method<sp/>for<sp/>classList<sp/>after<sp/>`DOMTokenList`</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>HTML<sp/>namespace<sp/>check<sp/>in<sp/>`setAttribute`<sp/>&amp;<sp/>`hasAttribute`<sp/>&amp;&amp;<sp/>`toggleAttribute`<sp/>#HTML</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>is_scoped<sp/>in<sp/>`attachShadow`<sp/>#HTML</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>Custom<sp/>stuff<sp/>in<sp/>`attach_shadow_root`<sp/>algo<sp/>in<sp/>algos_docs.cpp<sp/>#HTML</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">##<sp/>NamedNodeMap</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>supported<sp/>property<sp/>names</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">##<sp/>Attr</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">##<sp/>CharacterData</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>Setter<sp/>steps<sp/>for<sp/>data</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">##<sp/>Text</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>Constructor<sp/>after<sp/>figuring<sp/>out<sp/>current<sp/>global<sp/>object<sp/>from<sp/>Realm<sp/>#HTML</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>In<sp/>`split_text_node`,<sp/>complete<sp/>after<sp/>completing<sp/>`Range`</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>wholeText()<sp/>implementation<sp/>later<sp/>after<sp/>learning<sp/>tree<sp/>structure<sp/>implementation</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">##<sp/>ProcessingInstruction</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">##<sp/>Comment</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>Constructor<sp/>after<sp/>figuring<sp/>out<sp/>dude<sp/>about<sp/>current<sp/>global<sp/>object<sp/>!<sp/>#HTML</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">##<sp/>AbstractRange</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">##<sp/>StaticRange</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">##<sp/>Range</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>Wtf<sp/>is<sp/>this<sp/>`stringifier`<sp/>!<sp/>check<sp/>definition<sp/>boi</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>Constructor<sp/>after<sp/>figuring<sp/>out<sp/>dude<sp/>about<sp/>current<sp/>global<sp/>object<sp/>!<sp/>#HTML</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>`deleteContents()`<sp/>-<sp/>Implementation<sp/>of<sp/>nodes_to_remove</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>clone<sp/>children<sp/>flag<sp/>in<sp/>`clone_contents`<sp/>algo</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>Text<sp/>nodes<sp/>contained<sp/>in<sp/>this<sp/>range<sp/>in<sp/>tree<sp/>order<sp/>in<sp/>`stringification_behavior`</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>non-Text<sp/>node<sp/>is<sp/>partially<sp/>contained<sp/>in<sp/>range<sp/>in<sp/>`surroundContents`<sp/>method</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">##<sp/>NodeIterator</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>`filter_node`<sp/>method<sp/>complete<sp/>later</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>`pre_remove_steps`<sp/>complete</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>Implement<sp/>iterator<sp/>collection</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>After<sp/>above<sp/>step,<sp/>complete<sp/>`traverse`<sp/>algo</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">##<sp/>TreeWalker</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>`filter_node`<sp/>method<sp/>complete<sp/>later</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">##<sp/>NodeFilter</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">##<sp/>DOMTokenList</highlight></codeline>
+<codeline><highlight class="normal">-<sp/>Supported<sp/>tokens<sp/>resolve<sp/>based<sp/>on<sp/>specifications<sp/>in<sp/>`validate()`</highlight></codeline>
+    </programlisting>
+    <location file="TODO.md"/>
+  </compounddef>
+</doxygen>

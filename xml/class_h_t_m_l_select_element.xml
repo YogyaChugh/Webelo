@@ -1,0 +1,573 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.14.0" xml:lang="en-US">
+  <compounddef id="class_h_t_m_l_select_element" kind="class" language="C++" prot="public">
+    <compoundname>HTMLSelectElement</compoundname>
+    <basecompoundref refid="class_h_t_m_l_element" prot="public" virt="non-virtual">HTMLElement</basecompoundref>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="class_h_t_m_l_select_element_1a88a55a7b3d9b39a172a8d92267eda1be" prot="public" static="no" mutable="no">
+        <type>DOMString</type>
+        <definition>DOMString HTMLSelectElement::autocomplete</definition>
+        <argsstring></argsstring>
+        <name>autocomplete</name>
+        <qualifiedname>HTMLSelectElement::autocomplete</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="1078" column="19" bodyfile="HtmlElements.cpp" bodystart="1078" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_h_t_m_l_select_element_1a1b5a77591c9434b21cbaba8446ae86d9" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool HTMLSelectElement::disabled</definition>
+        <argsstring></argsstring>
+        <name>disabled</name>
+        <qualifiedname>HTMLSelectElement::disabled</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="1079" column="14" bodyfile="HtmlElements.cpp" bodystart="1079" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_h_t_m_l_select_element_1a18d127866c1a832fb75a3cae4018a657" prot="public" static="no" mutable="no">
+        <type><ref refid="class_h_t_m_l_form_element" kindref="compound">HTMLFormElement</ref> *</type>
+        <definition>HTMLFormElement* HTMLSelectElement::form</definition>
+        <argsstring></argsstring>
+        <name>form</name>
+        <qualifiedname>HTMLSelectElement::form</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="1080" column="25" bodyfile="HtmlElements.cpp" bodystart="1080" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_h_t_m_l_select_element_1af0e5e59b2360b165dea654c143f62bb3" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool HTMLSelectElement::multiple</definition>
+        <argsstring></argsstring>
+        <name>multiple</name>
+        <qualifiedname>HTMLSelectElement::multiple</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="1081" column="14" bodyfile="HtmlElements.cpp" bodystart="1081" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_h_t_m_l_select_element_1ac2ab67aaeacf219e7af3405c18e15d50" prot="public" static="no" mutable="no">
+        <type>DOMString</type>
+        <definition>DOMString HTMLSelectElement::name</definition>
+        <argsstring></argsstring>
+        <name>name</name>
+        <qualifiedname>HTMLSelectElement::name</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="1082" column="19" bodyfile="HtmlElements.cpp" bodystart="1082" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_h_t_m_l_select_element_1a15f47e9fc296d277145997bd8996fa9e" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool HTMLSelectElement::required</definition>
+        <argsstring></argsstring>
+        <name>required</name>
+        <qualifiedname>HTMLSelectElement::required</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="1083" column="14" bodyfile="HtmlElements.cpp" bodystart="1083" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_h_t_m_l_select_element_1a2ab5a7cce24e41f66eb0ba72208a8474" prot="public" static="no" mutable="no">
+        <type>unsigned long</type>
+        <definition>unsigned long HTMLSelectElement::size</definition>
+        <argsstring></argsstring>
+        <name>size</name>
+        <qualifiedname>HTMLSelectElement::size</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="1084" column="23" bodyfile="HtmlElements.cpp" bodystart="1084" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_h_t_m_l_select_element_1a66346469634d148b45990c80718238b8" prot="public" static="no" mutable="no">
+        <type>DOMString</type>
+        <definition>DOMString HTMLSelectElement::type</definition>
+        <argsstring></argsstring>
+        <name>type</name>
+        <qualifiedname>HTMLSelectElement::type</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="1086" column="19" bodyfile="HtmlElements.cpp" bodystart="1086" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_h_t_m_l_select_element_1a12e29188f1d66b5520aeb4c42b8aa527" prot="public" static="no" mutable="no">
+        <type><ref refid="class_h_t_m_l_options_collection" kindref="compound">HTMLOptionsCollection</ref></type>
+        <definition>HTMLOptionsCollection HTMLSelectElement::options</definition>
+        <argsstring></argsstring>
+        <name>options</name>
+        <qualifiedname>HTMLSelectElement::options</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="1087" column="31" bodyfile="HtmlElements.cpp" bodystart="1087" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_h_t_m_l_select_element_1ad59456fc04088884736d7617a134707c" prot="public" static="no" mutable="no">
+        <type>unsigned long</type>
+        <definition>unsigned long HTMLSelectElement::length</definition>
+        <argsstring></argsstring>
+        <name>length</name>
+        <qualifiedname>HTMLSelectElement::length</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="1088" column="23" bodyfile="HtmlElements.cpp" bodystart="1088" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_h_t_m_l_select_element_1a760a87e1cf88f1f6857765304ef42940" prot="public" static="no" mutable="no">
+        <type>HTMLCollection</type>
+        <definition>HTMLCollection HTMLSelectElement::selectedOptions</definition>
+        <argsstring></argsstring>
+        <name>selectedOptions</name>
+        <qualifiedname>HTMLSelectElement::selectedOptions</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="1097" column="24" bodyfile="HtmlElements.cpp" bodystart="1097" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_h_t_m_l_select_element_1ac37315e4eb341526db7764d80464be98" prot="public" static="no" mutable="no">
+        <type>long</type>
+        <definition>long HTMLSelectElement::selectedIndex</definition>
+        <argsstring></argsstring>
+        <name>selectedIndex</name>
+        <qualifiedname>HTMLSelectElement::selectedIndex</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="1098" column="14" bodyfile="HtmlElements.cpp" bodystart="1098" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_h_t_m_l_select_element_1a13317b74a498cb5ba7c6401d5d70b14d" prot="public" static="no" mutable="no">
+        <type>DOMString</type>
+        <definition>DOMString HTMLSelectElement::value</definition>
+        <argsstring></argsstring>
+        <name>value</name>
+        <qualifiedname>HTMLSelectElement::value</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="1099" column="19" bodyfile="HtmlElements.cpp" bodystart="1099" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_h_t_m_l_select_element_1ad1566f189fc11074bdd9608b4659d734" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool HTMLSelectElement::willValidate</definition>
+        <argsstring></argsstring>
+        <name>willValidate</name>
+        <qualifiedname>HTMLSelectElement::willValidate</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="1101" column="14" bodyfile="HtmlElements.cpp" bodystart="1101" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_h_t_m_l_select_element_1a3971a199276dc094999528fb1097b2ae" prot="public" static="no" mutable="no">
+        <type><ref refid="struct_validity_state" kindref="compound">ValidityState</ref></type>
+        <definition>ValidityState HTMLSelectElement::validity</definition>
+        <argsstring></argsstring>
+        <name>validity</name>
+        <qualifiedname>HTMLSelectElement::validity</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="1102" column="23" bodyfile="HtmlElements.cpp" bodystart="1102" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_h_t_m_l_select_element_1a7d681b2e8c7ce31b9cba9d9e074b89a9" prot="public" static="no" mutable="no">
+        <type>DOMString</type>
+        <definition>DOMString HTMLSelectElement::validationMessage</definition>
+        <argsstring></argsstring>
+        <name>validationMessage</name>
+        <qualifiedname>HTMLSelectElement::validationMessage</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="1103" column="19" bodyfile="HtmlElements.cpp" bodystart="1103" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_h_t_m_l_select_element_1a6cf1e8f87c6f9f321cfcc154a8a70aa8" prot="public" static="no" mutable="no">
+        <type>NodeList</type>
+        <definition>NodeList HTMLSelectElement::labels</definition>
+        <argsstring></argsstring>
+        <name>labels</name>
+        <qualifiedname>HTMLSelectElement::labels</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="1110" column="18" bodyfile="HtmlElements.cpp" bodystart="1110" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="class_h_t_m_l_select_element_1ad104c709c9b74b9beff3910d1d1d5699" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>HTMLSelectElement::HTMLSelectElement</definition>
+        <argsstring>()</argsstring>
+        <name>HTMLSelectElement</name>
+        <qualifiedname>HTMLSelectElement::HTMLSelectElement</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="1077" column="9" bodyfile="HtmlElements.cpp" bodystart="1077" bodyend="1077"/>
+      </memberdef>
+      <memberdef kind="function" id="class_h_t_m_l_select_element_1a8e7b4c4def18b86fb25882dcf1a03cb8" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="class_h_t_m_l_option_element" kindref="compound">HTMLOptionElement</ref> *</type>
+        <definition>HTMLOptionElement * HTMLSelectElement::item</definition>
+        <argsstring>(unsigned long index)</argsstring>
+        <name>item</name>
+        <qualifiedname>HTMLSelectElement::item</qualifiedname>
+        <param>
+          <type>unsigned long</type>
+          <declname>index</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="1089" column="27"/>
+      </memberdef>
+      <memberdef kind="function" id="class_h_t_m_l_select_element_1a1ae2ebc26f8d48073b7047a56d457c87" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="class_h_t_m_l_option_element" kindref="compound">HTMLOptionElement</ref> *</type>
+        <definition>HTMLOptionElement * HTMLSelectElement::namedItem</definition>
+        <argsstring>(DOMString name)</argsstring>
+        <name>namedItem</name>
+        <qualifiedname>HTMLSelectElement::namedItem</qualifiedname>
+        <param>
+          <type>DOMString</type>
+          <declname>name</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="1090" column="27"/>
+      </memberdef>
+      <memberdef kind="function" id="class_h_t_m_l_select_element_1a2a8464aa360a1ea530021bdc6d32b702" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void HTMLSelectElement::add</definition>
+        <argsstring>(std::variant&lt; HTMLOptionElement *, HTMLOptGroupElement * &gt; element, std::variant&lt; HTMLElement *, bool &gt; before=nullptr)</argsstring>
+        <name>add</name>
+        <qualifiedname>HTMLSelectElement::add</qualifiedname>
+        <param>
+          <type>std::variant&lt; <ref refid="class_h_t_m_l_option_element" kindref="compound">HTMLOptionElement</ref> *, <ref refid="class_h_t_m_l_opt_group_element" kindref="compound">HTMLOptGroupElement</ref> * &gt;</type>
+          <declname>element</declname>
+        </param>
+        <param>
+          <type>std::variant&lt; <ref refid="class_h_t_m_l_element" kindref="compound">HTMLElement</ref> *, bool &gt;</type>
+          <declname>before</declname>
+          <defval>nullptr</defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="1091" column="14"/>
+      </memberdef>
+      <memberdef kind="function" id="class_h_t_m_l_select_element_1acecb739ef45155864cb01e20711b4df5" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void HTMLSelectElement::remove</definition>
+        <argsstring>()</argsstring>
+        <name>remove</name>
+        <qualifiedname>HTMLSelectElement::remove</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="1092" column="14"/>
+      </memberdef>
+      <memberdef kind="function" id="class_h_t_m_l_select_element_1aa75ccdca77e1ac811713c71709f7c247" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void HTMLSelectElement::remove</definition>
+        <argsstring>(long index)</argsstring>
+        <name>remove</name>
+        <qualifiedname>HTMLSelectElement::remove</qualifiedname>
+        <param>
+          <type>long</type>
+          <declname>index</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="1093" column="14"/>
+      </memberdef>
+      <memberdef kind="function" id="class_h_t_m_l_select_element_1ab9a3a36a9895a6c058e0d7ca7b5de3de" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void HTMLSelectElement::set</definition>
+        <argsstring>(unsigned long index, HTMLOptionElement *option)</argsstring>
+        <name>set</name>
+        <qualifiedname>HTMLSelectElement::set</qualifiedname>
+        <param>
+          <type>unsigned long</type>
+          <declname>index</declname>
+        </param>
+        <param>
+          <type><ref refid="class_h_t_m_l_option_element" kindref="compound">HTMLOptionElement</ref> *</type>
+          <declname>option</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="1095" column="14"/>
+      </memberdef>
+      <memberdef kind="function" id="class_h_t_m_l_select_element_1ad1010f8ed4295db8535026fb974063d2" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool HTMLSelectElement::checkValidity</definition>
+        <argsstring>()</argsstring>
+        <name>checkValidity</name>
+        <qualifiedname>HTMLSelectElement::checkValidity</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="1104" column="14"/>
+      </memberdef>
+      <memberdef kind="function" id="class_h_t_m_l_select_element_1ae2a206de51a824c6123b8f4940190e81" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool HTMLSelectElement::reportValidity</definition>
+        <argsstring>()</argsstring>
+        <name>reportValidity</name>
+        <qualifiedname>HTMLSelectElement::reportValidity</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="1105" column="14"/>
+      </memberdef>
+      <memberdef kind="function" id="class_h_t_m_l_select_element_1ab7ee2c2c835ac77051f654f91f369f85" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void HTMLSelectElement::setCustomValidity</definition>
+        <argsstring>(DOMString error)</argsstring>
+        <name>setCustomValidity</name>
+        <qualifiedname>HTMLSelectElement::setCustomValidity</qualifiedname>
+        <param>
+          <type>DOMString</type>
+          <declname>error</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="1106" column="14"/>
+      </memberdef>
+      <memberdef kind="function" id="class_h_t_m_l_select_element_1ab0f982dcafd255658c4a2f6815c46745" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void HTMLSelectElement::showPicker</definition>
+        <argsstring>()</argsstring>
+        <name>showPicker</name>
+        <qualifiedname>HTMLSelectElement::showPicker</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="1108" column="14"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="3">
+        <label>Element</label>
+      </node>
+      <node id="2">
+        <label>HTMLElement</label>
+        <link refid="class_h_t_m_l_element"/>
+        <childnode refid="3" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>HTMLSelectElement</label>
+        <link refid="class_h_t_m_l_select_element"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="3">
+        <label>Element</label>
+      </node>
+      <node id="6">
+        <label>HTMLCollection</label>
+      </node>
+      <node id="2">
+        <label>HTMLElement</label>
+        <link refid="class_h_t_m_l_element"/>
+        <childnode refid="3" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>HTMLFormControlsCollection</label>
+        <link refid="class_h_t_m_l_form_controls_collection"/>
+        <childnode refid="6" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>HTMLFormElement</label>
+        <link refid="class_h_t_m_l_form_element"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+        <childnode refid="5" relation="usage">
+          <edgelabel>elements</edgelabel>
+        </childnode>
+      </node>
+      <node id="7">
+        <label>HTMLOptionsCollection</label>
+        <link refid="class_h_t_m_l_options_collection"/>
+        <childnode refid="6" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>HTMLSelectElement</label>
+        <link refid="class_h_t_m_l_select_element"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+        <childnode refid="4" relation="usage">
+          <edgelabel>form</edgelabel>
+        </childnode>
+        <childnode refid="7" relation="usage">
+          <edgelabel>options</edgelabel>
+        </childnode>
+        <childnode refid="8" relation="usage">
+          <edgelabel>validity</edgelabel>
+        </childnode>
+      </node>
+      <node id="8">
+        <label>ValidityState</label>
+        <link refid="struct_validity_state"/>
+      </node>
+    </collaborationgraph>
+    <location file="HtmlElements.cpp" line="1075" column="1" bodyfile="HtmlElements.cpp" bodystart="1075" bodyend="1111"/>
+    <listofallmembers>
+      <member refid="class_h_t_m_l_element_1a34f5929019d1f62156f9dba13a54d082" prot="public" virt="non-virtual"><scope>HTMLSelectElement</scope><name>accessKey</name></member>
+      <member refid="class_h_t_m_l_element_1aab20f7a1cbba885509eeadd23ae676a4" prot="public" virt="non-virtual"><scope>HTMLSelectElement</scope><name>accessKeyLabel</name></member>
+      <member refid="class_h_t_m_l_select_element_1a2a8464aa360a1ea530021bdc6d32b702" prot="public" virt="non-virtual"><scope>HTMLSelectElement</scope><name>add</name></member>
+      <member refid="class_h_t_m_l_element_1a4c341258f8600bb0d061f147d980fb71" prot="public" virt="non-virtual"><scope>HTMLSelectElement</scope><name>attachInternals</name></member>
+      <member refid="class_h_t_m_l_element_1afcd9d9037543f93fd468ca2f397f6fb1" prot="public" virt="non-virtual"><scope>HTMLSelectElement</scope><name>autocapitalize</name></member>
+      <member refid="class_h_t_m_l_select_element_1a88a55a7b3d9b39a172a8d92267eda1be" prot="public" virt="non-virtual"><scope>HTMLSelectElement</scope><name>autocomplete</name></member>
+      <member refid="class_h_t_m_l_element_1a6565458cb2869f8b3ef8a5bc635b6af5" prot="public" virt="non-virtual"><scope>HTMLSelectElement</scope><name>autocorrect</name></member>
+      <member refid="class_h_t_m_l_element_1a82f585ce5247efc80d3bcd83c4e64aff" prot="public" virt="non-virtual"><scope>HTMLSelectElement</scope><name>autofocus</name></member>
+      <member refid="class_h_t_m_l_element_1a3359744a29b30e0e7f9bf782e203be70" prot="public" virt="non-virtual"><scope>HTMLSelectElement</scope><name>blur</name></member>
+      <member refid="class_h_t_m_l_select_element_1ad1010f8ed4295db8535026fb974063d2" prot="public" virt="non-virtual"><scope>HTMLSelectElement</scope><name>checkValidity</name></member>
+      <member refid="class_h_t_m_l_element_1aa3ae4ebe265852f5b18ca97c42690acc" prot="public" virt="non-virtual"><scope>HTMLSelectElement</scope><name>classname</name></member>
+      <member refid="class_h_t_m_l_element_1a23d7391ed5de254618b27e9b4b235659" prot="public" virt="non-virtual"><scope>HTMLSelectElement</scope><name>click</name></member>
+      <member refid="class_h_t_m_l_element_1a1aa6efe89cc078f89c5353929ec59ad2" prot="public" virt="non-virtual"><scope>HTMLSelectElement</scope><name>dir</name></member>
+      <member refid="class_h_t_m_l_select_element_1a1b5a77591c9434b21cbaba8446ae86d9" prot="public" virt="non-virtual"><scope>HTMLSelectElement</scope><name>disabled</name></member>
+      <member refid="class_h_t_m_l_element_1a751f062860bb6b8e72ecd61ceb88b100" prot="public" virt="non-virtual"><scope>HTMLSelectElement</scope><name>draggable</name></member>
+      <member refid="class_h_t_m_l_element_1a8e7d731e966a64e878d6bd6e822a6f5c" prot="public" virt="non-virtual"><scope>HTMLSelectElement</scope><name>focus</name></member>
+      <member refid="class_h_t_m_l_select_element_1a18d127866c1a832fb75a3cae4018a657" prot="public" virt="non-virtual"><scope>HTMLSelectElement</scope><name>form</name></member>
+      <member refid="class_h_t_m_l_element_1a1e295cf654398a2738da85f9d3c905b0" prot="public" virt="non-virtual"><scope>HTMLSelectElement</scope><name>headingOffset</name></member>
+      <member refid="class_h_t_m_l_element_1ad166a49ba19635a2e4ca3df474858181" prot="public" virt="non-virtual"><scope>HTMLSelectElement</scope><name>headingReset</name></member>
+      <member refid="class_h_t_m_l_element_1ac87a008f78788b17f5c8961f9007f6e4" prot="public" virt="non-virtual"><scope>HTMLSelectElement</scope><name>hidden</name></member>
+      <member refid="class_h_t_m_l_element_1a3c776d3db47cb3a9d0f8a27fed739b4f" prot="public" virt="non-virtual"><scope>HTMLSelectElement</scope><name>hidePopover</name></member>
+      <member refid="class_h_t_m_l_element_1ac88990568d6d3db84a41483fbbf3422d" prot="public" virt="non-virtual"><scope>HTMLSelectElement</scope><name>HTMLElement</name></member>
+      <member refid="class_h_t_m_l_select_element_1ad104c709c9b74b9beff3910d1d1d5699" prot="public" virt="non-virtual"><scope>HTMLSelectElement</scope><name>HTMLSelectElement</name></member>
+      <member refid="class_h_t_m_l_element_1a0d4276f08d39f385d4a36030a0136376" prot="public" virt="non-virtual"><scope>HTMLSelectElement</scope><name>id</name></member>
+      <member refid="class_h_t_m_l_element_1ad87ee3f4e1fc2c1a064cda454ba5dec3" prot="public" virt="non-virtual"><scope>HTMLSelectElement</scope><name>inert</name></member>
+      <member refid="class_h_t_m_l_element_1ab2f17f5a21719b8f89de9e42767669ca" prot="public" virt="non-virtual"><scope>HTMLSelectElement</scope><name>innerText</name></member>
+      <member refid="class_h_t_m_l_select_element_1a8e7b4c4def18b86fb25882dcf1a03cb8" prot="public" virt="non-virtual"><scope>HTMLSelectElement</scope><name>item</name></member>
+      <member refid="class_h_t_m_l_select_element_1a6cf1e8f87c6f9f321cfcc154a8a70aa8" prot="public" virt="non-virtual"><scope>HTMLSelectElement</scope><name>labels</name></member>
+      <member refid="class_h_t_m_l_element_1a5210bdf34a9f9437e701facb98d0d929" prot="public" virt="non-virtual"><scope>HTMLSelectElement</scope><name>lang</name></member>
+      <member refid="class_h_t_m_l_select_element_1ad59456fc04088884736d7617a134707c" prot="public" virt="non-virtual"><scope>HTMLSelectElement</scope><name>length</name></member>
+      <member refid="class_h_t_m_l_select_element_1af0e5e59b2360b165dea654c143f62bb3" prot="public" virt="non-virtual"><scope>HTMLSelectElement</scope><name>multiple</name></member>
+      <member refid="class_h_t_m_l_select_element_1ac2ab67aaeacf219e7af3405c18e15d50" prot="public" virt="non-virtual"><scope>HTMLSelectElement</scope><name>name</name></member>
+      <member refid="class_h_t_m_l_select_element_1a1ae2ebc26f8d48073b7047a56d457c87" prot="public" virt="non-virtual"><scope>HTMLSelectElement</scope><name>namedItem</name></member>
+      <member refid="class_h_t_m_l_element_1adf3ac36c36e3bc7aee4799fb58b68b3d" prot="public" virt="non-virtual"><scope>HTMLSelectElement</scope><name>nonce</name></member>
+      <member refid="class_h_t_m_l_select_element_1a12e29188f1d66b5520aeb4c42b8aa527" prot="public" virt="non-virtual"><scope>HTMLSelectElement</scope><name>options</name></member>
+      <member refid="class_h_t_m_l_element_1ae01f3838f2d334cc79e343e7530ca4f9" prot="public" virt="non-virtual"><scope>HTMLSelectElement</scope><name>outerText</name></member>
+      <member refid="class_h_t_m_l_element_1a55ff5d14da80ff7b7f663d3d6215387c" prot="public" virt="non-virtual"><scope>HTMLSelectElement</scope><name>popover</name></member>
+      <member refid="class_h_t_m_l_select_element_1acecb739ef45155864cb01e20711b4df5" prot="public" virt="non-virtual"><scope>HTMLSelectElement</scope><name>remove</name></member>
+      <member refid="class_h_t_m_l_select_element_1aa75ccdca77e1ac811713c71709f7c247" prot="public" virt="non-virtual"><scope>HTMLSelectElement</scope><name>remove</name></member>
+      <member refid="class_h_t_m_l_select_element_1ae2a206de51a824c6123b8f4940190e81" prot="public" virt="non-virtual"><scope>HTMLSelectElement</scope><name>reportValidity</name></member>
+      <member refid="class_h_t_m_l_select_element_1a15f47e9fc296d277145997bd8996fa9e" prot="public" virt="non-virtual"><scope>HTMLSelectElement</scope><name>required</name></member>
+      <member refid="class_h_t_m_l_select_element_1ac37315e4eb341526db7764d80464be98" prot="public" virt="non-virtual"><scope>HTMLSelectElement</scope><name>selectedIndex</name></member>
+      <member refid="class_h_t_m_l_select_element_1a760a87e1cf88f1f6857765304ef42940" prot="public" virt="non-virtual"><scope>HTMLSelectElement</scope><name>selectedOptions</name></member>
+      <member refid="class_h_t_m_l_select_element_1ab9a3a36a9895a6c058e0d7ca7b5de3de" prot="public" virt="non-virtual"><scope>HTMLSelectElement</scope><name>set</name></member>
+      <member refid="class_h_t_m_l_select_element_1ab7ee2c2c835ac77051f654f91f369f85" prot="public" virt="non-virtual"><scope>HTMLSelectElement</scope><name>setCustomValidity</name></member>
+      <member refid="class_h_t_m_l_select_element_1ab0f982dcafd255658c4a2f6815c46745" prot="public" virt="non-virtual"><scope>HTMLSelectElement</scope><name>showPicker</name></member>
+      <member refid="class_h_t_m_l_element_1afa4af2705fb03a14cfa534f59d134b15" prot="public" virt="non-virtual"><scope>HTMLSelectElement</scope><name>showPopover</name></member>
+      <member refid="class_h_t_m_l_select_element_1a2ab5a7cce24e41f66eb0ba72208a8474" prot="public" virt="non-virtual"><scope>HTMLSelectElement</scope><name>size</name></member>
+      <member refid="class_h_t_m_l_element_1ac89fd46c28c72618fe80fb1962b725e8" prot="public" virt="non-virtual"><scope>HTMLSelectElement</scope><name>spellcheck</name></member>
+      <member refid="class_h_t_m_l_element_1aa1934fbb36b074b224e2d81d04baeb38" prot="public" virt="non-virtual"><scope>HTMLSelectElement</scope><name>tabIndex</name></member>
+      <member refid="class_h_t_m_l_element_1ab7a16d9ff2c240912fa946c6f4466c13" prot="public" virt="non-virtual"><scope>HTMLSelectElement</scope><name>title</name></member>
+      <member refid="class_h_t_m_l_element_1a74026637504c1456b7619d7611b1ba87" prot="public" virt="non-virtual"><scope>HTMLSelectElement</scope><name>togglePopover</name></member>
+      <member refid="class_h_t_m_l_element_1a3f14e5b88a6bdae0cfd42b512a48b4eb" prot="public" virt="non-virtual"><scope>HTMLSelectElement</scope><name>translate</name></member>
+      <member refid="class_h_t_m_l_select_element_1a66346469634d148b45990c80718238b8" prot="public" virt="non-virtual"><scope>HTMLSelectElement</scope><name>type</name></member>
+      <member refid="class_h_t_m_l_select_element_1a7d681b2e8c7ce31b9cba9d9e074b89a9" prot="public" virt="non-virtual"><scope>HTMLSelectElement</scope><name>validationMessage</name></member>
+      <member refid="class_h_t_m_l_select_element_1a3971a199276dc094999528fb1097b2ae" prot="public" virt="non-virtual"><scope>HTMLSelectElement</scope><name>validity</name></member>
+      <member refid="class_h_t_m_l_select_element_1a13317b74a498cb5ba7c6401d5d70b14d" prot="public" virt="non-virtual"><scope>HTMLSelectElement</scope><name>value</name></member>
+      <member refid="class_h_t_m_l_select_element_1ad1566f189fc11074bdd9608b4659d734" prot="public" virt="non-virtual"><scope>HTMLSelectElement</scope><name>willValidate</name></member>
+      <member refid="class_h_t_m_l_element_1a7e5a08fa4e11484d77226ae2bd28ad69" prot="public" virt="non-virtual"><scope>HTMLSelectElement</scope><name>writingSuggestions</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

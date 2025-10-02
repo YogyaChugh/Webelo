@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.14.0" xml:lang="en-US">
+  <compounddef id="namespacesetup" kind="namespace" language="Python">
+    <compoundname>setup</compoundname>
+    <sectiondef kind="var">
+      <memberdef kind="variable" id="setup_8py_1a1bf56ea61d1e9865f316116dca2fbfea" prot="public" static="no" mutable="no">
+        <type>list</type>
+        <definition>setup.ext_modules</definition>
+        <argsstring></argsstring>
+        <name>ext_modules</name>
+        <qualifiedname>setup.ext_modules</qualifiedname>
+        <initializer>=  [
+    Extension(
+        &quot;Webelo&quot;,
+        [&quot;html.cpp&quot;],
+        include_dirs=[pybind11.get_include()],
+        language=&quot;c++&quot;,
+        extra_compile_args=[&quot;/std:c++17&quot;],
+    ),
+]</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="setup.py" line="4" column="1" bodyfile="setup.py" bodystart="4" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="setup_8py_1ab3a7a0638d76a01367c5bc3cc699447f" prot="public" static="no" mutable="no">
+        <type></type>
+        <definition>setup.name</definition>
+        <argsstring></argsstring>
+        <name>name</name>
+        <qualifiedname>setup.name</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="setup.py" line="15" column="1" bodyfile="setup.py" bodystart="15" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="setup_8py_1a2aa722b36a933088812b50ea79b97a5c" prot="public" static="no" mutable="no">
+        <type></type>
+        <definition>setup.version</definition>
+        <argsstring></argsstring>
+        <name>version</name>
+        <qualifiedname>setup.version</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="setup.py" line="16" column="1" bodyfile="setup.py" bodystart="16" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="setup.py" line="1" column="1"/>
+  </compounddef>
+</doxygen>

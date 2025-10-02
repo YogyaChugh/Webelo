@@ -1,0 +1,138 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.14.0" xml:lang="en-US">
+  <compounddef id="class_audio_track_list" kind="class" language="C++" prot="public">
+    <compoundname>AudioTrackList</compoundname>
+    <basecompoundref prot="public" virt="non-virtual">EventTarget</basecompoundref>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="class_audio_track_list_1aa332dfd0af21d42e2614ef6118e4ce34" prot="public" static="no" mutable="no">
+        <type>unsigned long</type>
+        <definition>unsigned long AudioTrackList::length</definition>
+        <argsstring></argsstring>
+        <name>length</name>
+        <qualifiedname>AudioTrackList::length</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="613" column="23" bodyfile="HtmlElements.cpp" bodystart="613" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_audio_track_list_1aee5d69d0dc4a145be57a1fc8eb7e47ef" prot="public" static="no" mutable="no">
+        <type>EventHandler</type>
+        <definition>EventHandler AudioTrackList::onchange</definition>
+        <argsstring></argsstring>
+        <name>onchange</name>
+        <qualifiedname>AudioTrackList::onchange</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="617" column="22" bodyfile="HtmlElements.cpp" bodystart="617" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_audio_track_list_1a2d1183b98f41932bcc567f7aab7a4a92" prot="public" static="no" mutable="no">
+        <type>EventHandler</type>
+        <definition>EventHandler AudioTrackList::onaddtrack</definition>
+        <argsstring></argsstring>
+        <name>onaddtrack</name>
+        <qualifiedname>AudioTrackList::onaddtrack</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="618" column="22" bodyfile="HtmlElements.cpp" bodystart="618" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_audio_track_list_1a82a8db6db7bc2ff59d4aea1d5b522b2b" prot="public" static="no" mutable="no">
+        <type>EventHandler</type>
+        <definition>EventHandler AudioTrackList::onremovetrack</definition>
+        <argsstring></argsstring>
+        <name>onremovetrack</name>
+        <qualifiedname>AudioTrackList::onremovetrack</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="619" column="22" bodyfile="HtmlElements.cpp" bodystart="619" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="class_audio_track_list_1a0bb5394d4feaba7f39d0fb261fd8fa89" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="class_audio_track" kindref="compound">AudioTrack</ref></type>
+        <definition>AudioTrack AudioTrackList::get</definition>
+        <argsstring>(unsigned long index)</argsstring>
+        <name>get</name>
+        <qualifiedname>AudioTrackList::get</qualifiedname>
+        <param>
+          <type>unsigned long</type>
+          <declname>index</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="614" column="20"/>
+      </memberdef>
+      <memberdef kind="function" id="class_audio_track_list_1a1f6fbe5eb8563ded0104c98bcc442abf" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="class_audio_track" kindref="compound">AudioTrack</ref> *</type>
+        <definition>AudioTrack * AudioTrackList::getTrackById</definition>
+        <argsstring>(DOMString id)</argsstring>
+        <name>getTrackById</name>
+        <qualifiedname>AudioTrackList::getTrackById</qualifiedname>
+        <param>
+          <type>DOMString</type>
+          <declname>id</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="615" column="20"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="1">
+        <label>AudioTrackList</label>
+        <link refid="class_audio_track_list"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>EventTarget</label>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="1">
+        <label>AudioTrackList</label>
+        <link refid="class_audio_track_list"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>EventTarget</label>
+      </node>
+    </collaborationgraph>
+    <location file="HtmlElements.cpp" line="611" column="1" bodyfile="HtmlElements.cpp" bodystart="611" bodyend="620"/>
+    <listofallmembers>
+      <member refid="class_audio_track_list_1a0bb5394d4feaba7f39d0fb261fd8fa89" prot="public" virt="non-virtual"><scope>AudioTrackList</scope><name>get</name></member>
+      <member refid="class_audio_track_list_1a1f6fbe5eb8563ded0104c98bcc442abf" prot="public" virt="non-virtual"><scope>AudioTrackList</scope><name>getTrackById</name></member>
+      <member refid="class_audio_track_list_1aa332dfd0af21d42e2614ef6118e4ce34" prot="public" virt="non-virtual"><scope>AudioTrackList</scope><name>length</name></member>
+      <member refid="class_audio_track_list_1a2d1183b98f41932bcc567f7aab7a4a92" prot="public" virt="non-virtual"><scope>AudioTrackList</scope><name>onaddtrack</name></member>
+      <member refid="class_audio_track_list_1aee5d69d0dc4a145be57a1fc8eb7e47ef" prot="public" virt="non-virtual"><scope>AudioTrackList</scope><name>onchange</name></member>
+      <member refid="class_audio_track_list_1a82a8db6db7bc2ff59d4aea1d5b522b2b" prot="public" virt="non-virtual"><scope>AudioTrackList</scope><name>onremovetrack</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

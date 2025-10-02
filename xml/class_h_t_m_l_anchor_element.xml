@@ -1,0 +1,398 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.14.0" xml:lang="en-US">
+  <compounddef id="class_h_t_m_l_anchor_element" kind="class" language="C++" prot="public">
+    <compoundname>HTMLAnchorElement</compoundname>
+    <basecompoundref refid="class_h_t_m_l_element" prot="public" virt="non-virtual">HTMLElement</basecompoundref>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="class_h_t_m_l_anchor_element_1abc7e9aafd6e070ab6dc1277a4bb70bef" prot="public" static="no" mutable="no">
+        <type>DOMString</type>
+        <definition>DOMString HTMLAnchorElement::target</definition>
+        <argsstring></argsstring>
+        <name>target</name>
+        <qualifiedname>HTMLAnchorElement::target</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="443" column="19" bodyfile="HtmlElements.cpp" bodystart="443" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_h_t_m_l_anchor_element_1a018cbb7a76dde1a9b78dc388dd8df7b0" prot="public" static="no" mutable="no">
+        <type>DOMString</type>
+        <definition>DOMString HTMLAnchorElement::download</definition>
+        <argsstring></argsstring>
+        <name>download</name>
+        <qualifiedname>HTMLAnchorElement::download</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="444" column="19" bodyfile="HtmlElements.cpp" bodystart="444" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_h_t_m_l_anchor_element_1a3991e0f1756efde67d7388d5fab281ed" prot="public" static="no" mutable="no">
+        <type>USVString</type>
+        <definition>USVString HTMLAnchorElement::ping</definition>
+        <argsstring></argsstring>
+        <name>ping</name>
+        <qualifiedname>HTMLAnchorElement::ping</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="445" column="19" bodyfile="HtmlElements.cpp" bodystart="445" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_h_t_m_l_anchor_element_1a3905511b1cc03b77e95d27e813b7b083" prot="public" static="no" mutable="no">
+        <type>DOMString</type>
+        <definition>DOMString HTMLAnchorElement::rel</definition>
+        <argsstring></argsstring>
+        <name>rel</name>
+        <qualifiedname>HTMLAnchorElement::rel</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="446" column="19" bodyfile="HtmlElements.cpp" bodystart="446" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_h_t_m_l_anchor_element_1a96718cf8665f6e226d860b3e23610477" prot="public" static="no" mutable="no">
+        <type>DOMTokenList</type>
+        <definition>DOMTokenList HTMLAnchorElement::relList</definition>
+        <argsstring></argsstring>
+        <name>relList</name>
+        <qualifiedname>HTMLAnchorElement::relList</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="447" column="22" bodyfile="HtmlElements.cpp" bodystart="447" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_h_t_m_l_anchor_element_1afadbc21bab8feff89ea9910175a08e41" prot="public" static="no" mutable="no">
+        <type>DOMString</type>
+        <definition>DOMString HTMLAnchorElement::hreflang</definition>
+        <argsstring></argsstring>
+        <name>hreflang</name>
+        <qualifiedname>HTMLAnchorElement::hreflang</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="448" column="19" bodyfile="HtmlElements.cpp" bodystart="448" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_h_t_m_l_anchor_element_1a6efe087f4f848b77c6298da338720798" prot="public" static="no" mutable="no">
+        <type>DOMString</type>
+        <definition>DOMString HTMLAnchorElement::type</definition>
+        <argsstring></argsstring>
+        <name>type</name>
+        <qualifiedname>HTMLAnchorElement::type</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="449" column="19" bodyfile="HtmlElements.cpp" bodystart="449" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_h_t_m_l_anchor_element_1aa33eb354d7e615b95f8cde46e91cc6d4" prot="public" static="no" mutable="no">
+        <type>DOMString</type>
+        <definition>DOMString HTMLAnchorElement::text</definition>
+        <argsstring></argsstring>
+        <name>text</name>
+        <qualifiedname>HTMLAnchorElement::text</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="450" column="19" bodyfile="HtmlElements.cpp" bodystart="450" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_h_t_m_l_anchor_element_1ab637ee19aab3ce37e5b8efcd51d80f15" prot="public" static="no" mutable="no">
+        <type>DOMString</type>
+        <definition>DOMString HTMLAnchorElement::referrerPolicy</definition>
+        <argsstring></argsstring>
+        <name>referrerPolicy</name>
+        <qualifiedname>HTMLAnchorElement::referrerPolicy</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="451" column="19" bodyfile="HtmlElements.cpp" bodystart="451" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_h_t_m_l_anchor_element_1aa9b36e9567fe213a2a198da1c7e69efb" prot="public" static="no" mutable="no">
+        <type>USVString</type>
+        <definition>USVString HTMLAnchorElement::href</definition>
+        <argsstring></argsstring>
+        <name>href</name>
+        <qualifiedname>HTMLAnchorElement::href</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="454" column="19" bodyfile="HtmlElements.cpp" bodystart="454" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_h_t_m_l_anchor_element_1aa6d53c1c5eabc07d63fc11bfa7947772" prot="public" static="no" mutable="no">
+        <type>USVString</type>
+        <definition>USVString HTMLAnchorElement::origin</definition>
+        <argsstring></argsstring>
+        <name>origin</name>
+        <qualifiedname>HTMLAnchorElement::origin</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="455" column="19" bodyfile="HtmlElements.cpp" bodystart="455" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_h_t_m_l_anchor_element_1a131491e9f4286f46ab681b557886500d" prot="public" static="no" mutable="no">
+        <type>USVString</type>
+        <definition>USVString HTMLAnchorElement::protocol</definition>
+        <argsstring></argsstring>
+        <name>protocol</name>
+        <qualifiedname>HTMLAnchorElement::protocol</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="456" column="19" bodyfile="HtmlElements.cpp" bodystart="456" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_h_t_m_l_anchor_element_1a29a6c25bd8eb42a3feac0852035bf699" prot="public" static="no" mutable="no">
+        <type>USVString</type>
+        <definition>USVString HTMLAnchorElement::username</definition>
+        <argsstring></argsstring>
+        <name>username</name>
+        <qualifiedname>HTMLAnchorElement::username</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="457" column="19" bodyfile="HtmlElements.cpp" bodystart="457" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_h_t_m_l_anchor_element_1abc08c9108a88da56b65ff3723b4613ee" prot="public" static="no" mutable="no">
+        <type>USVString</type>
+        <definition>USVString HTMLAnchorElement::password</definition>
+        <argsstring></argsstring>
+        <name>password</name>
+        <qualifiedname>HTMLAnchorElement::password</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="458" column="19" bodyfile="HtmlElements.cpp" bodystart="458" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_h_t_m_l_anchor_element_1a521f822a421eed15620d1375661981a8" prot="public" static="no" mutable="no">
+        <type>USVString</type>
+        <definition>USVString HTMLAnchorElement::host</definition>
+        <argsstring></argsstring>
+        <name>host</name>
+        <qualifiedname>HTMLAnchorElement::host</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="459" column="19" bodyfile="HtmlElements.cpp" bodystart="459" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_h_t_m_l_anchor_element_1aea2c07fdece8fc206d32185d313bc940" prot="public" static="no" mutable="no">
+        <type>USVString</type>
+        <definition>USVString HTMLAnchorElement::hostname</definition>
+        <argsstring></argsstring>
+        <name>hostname</name>
+        <qualifiedname>HTMLAnchorElement::hostname</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="460" column="19" bodyfile="HtmlElements.cpp" bodystart="460" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_h_t_m_l_anchor_element_1ad6db8b4624449541fc4d1be9f8e1aee3" prot="public" static="no" mutable="no">
+        <type>USVString</type>
+        <definition>USVString HTMLAnchorElement::port</definition>
+        <argsstring></argsstring>
+        <name>port</name>
+        <qualifiedname>HTMLAnchorElement::port</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="461" column="19" bodyfile="HtmlElements.cpp" bodystart="461" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_h_t_m_l_anchor_element_1a54ccabeedfc23c613ae077f8e8384965" prot="public" static="no" mutable="no">
+        <type>USVString</type>
+        <definition>USVString HTMLAnchorElement::pathname</definition>
+        <argsstring></argsstring>
+        <name>pathname</name>
+        <qualifiedname>HTMLAnchorElement::pathname</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="462" column="19" bodyfile="HtmlElements.cpp" bodystart="462" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_h_t_m_l_anchor_element_1ad9a7332f3f933b2e2c95f9357c54cd99" prot="public" static="no" mutable="no">
+        <type>USVString</type>
+        <definition>USVString HTMLAnchorElement::search</definition>
+        <argsstring></argsstring>
+        <name>search</name>
+        <qualifiedname>HTMLAnchorElement::search</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="463" column="19" bodyfile="HtmlElements.cpp" bodystart="463" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_h_t_m_l_anchor_element_1ae50c55cc249b67e970f92fd833c0915f" prot="public" static="no" mutable="no">
+        <type>USVString</type>
+        <definition>USVString HTMLAnchorElement::hash</definition>
+        <argsstring></argsstring>
+        <name>hash</name>
+        <qualifiedname>HTMLAnchorElement::hash</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="464" column="19" bodyfile="HtmlElements.cpp" bodystart="464" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="class_h_t_m_l_anchor_element_1ac46e69890c2f024475342162b55b9695" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>HTMLAnchorElement::HTMLAnchorElement</definition>
+        <argsstring>()</argsstring>
+        <name>HTMLAnchorElement</name>
+        <qualifiedname>HTMLAnchorElement::HTMLAnchorElement</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="441" column="9" bodyfile="HtmlElements.cpp" bodystart="441" bodyend="441"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="3">
+        <label>Element</label>
+      </node>
+      <node id="1">
+        <label>HTMLAnchorElement</label>
+        <link refid="class_h_t_m_l_anchor_element"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>HTMLElement</label>
+        <link refid="class_h_t_m_l_element"/>
+        <childnode refid="3" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="3">
+        <label>Element</label>
+      </node>
+      <node id="1">
+        <label>HTMLAnchorElement</label>
+        <link refid="class_h_t_m_l_anchor_element"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>HTMLElement</label>
+        <link refid="class_h_t_m_l_element"/>
+        <childnode refid="3" relation="public-inheritance">
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="HtmlElements.cpp" line="439" column="1" bodyfile="HtmlElements.cpp" bodystart="439" bodyend="465"/>
+    <listofallmembers>
+      <member refid="class_h_t_m_l_element_1a34f5929019d1f62156f9dba13a54d082" prot="public" virt="non-virtual"><scope>HTMLAnchorElement</scope><name>accessKey</name></member>
+      <member refid="class_h_t_m_l_element_1aab20f7a1cbba885509eeadd23ae676a4" prot="public" virt="non-virtual"><scope>HTMLAnchorElement</scope><name>accessKeyLabel</name></member>
+      <member refid="class_h_t_m_l_element_1a4c341258f8600bb0d061f147d980fb71" prot="public" virt="non-virtual"><scope>HTMLAnchorElement</scope><name>attachInternals</name></member>
+      <member refid="class_h_t_m_l_element_1afcd9d9037543f93fd468ca2f397f6fb1" prot="public" virt="non-virtual"><scope>HTMLAnchorElement</scope><name>autocapitalize</name></member>
+      <member refid="class_h_t_m_l_element_1a6565458cb2869f8b3ef8a5bc635b6af5" prot="public" virt="non-virtual"><scope>HTMLAnchorElement</scope><name>autocorrect</name></member>
+      <member refid="class_h_t_m_l_element_1a82f585ce5247efc80d3bcd83c4e64aff" prot="public" virt="non-virtual"><scope>HTMLAnchorElement</scope><name>autofocus</name></member>
+      <member refid="class_h_t_m_l_element_1a3359744a29b30e0e7f9bf782e203be70" prot="public" virt="non-virtual"><scope>HTMLAnchorElement</scope><name>blur</name></member>
+      <member refid="class_h_t_m_l_element_1aa3ae4ebe265852f5b18ca97c42690acc" prot="public" virt="non-virtual"><scope>HTMLAnchorElement</scope><name>classname</name></member>
+      <member refid="class_h_t_m_l_element_1a23d7391ed5de254618b27e9b4b235659" prot="public" virt="non-virtual"><scope>HTMLAnchorElement</scope><name>click</name></member>
+      <member refid="class_h_t_m_l_element_1a1aa6efe89cc078f89c5353929ec59ad2" prot="public" virt="non-virtual"><scope>HTMLAnchorElement</scope><name>dir</name></member>
+      <member refid="class_h_t_m_l_anchor_element_1a018cbb7a76dde1a9b78dc388dd8df7b0" prot="public" virt="non-virtual"><scope>HTMLAnchorElement</scope><name>download</name></member>
+      <member refid="class_h_t_m_l_element_1a751f062860bb6b8e72ecd61ceb88b100" prot="public" virt="non-virtual"><scope>HTMLAnchorElement</scope><name>draggable</name></member>
+      <member refid="class_h_t_m_l_element_1a8e7d731e966a64e878d6bd6e822a6f5c" prot="public" virt="non-virtual"><scope>HTMLAnchorElement</scope><name>focus</name></member>
+      <member refid="class_h_t_m_l_anchor_element_1ae50c55cc249b67e970f92fd833c0915f" prot="public" virt="non-virtual"><scope>HTMLAnchorElement</scope><name>hash</name></member>
+      <member refid="class_h_t_m_l_element_1a1e295cf654398a2738da85f9d3c905b0" prot="public" virt="non-virtual"><scope>HTMLAnchorElement</scope><name>headingOffset</name></member>
+      <member refid="class_h_t_m_l_element_1ad166a49ba19635a2e4ca3df474858181" prot="public" virt="non-virtual"><scope>HTMLAnchorElement</scope><name>headingReset</name></member>
+      <member refid="class_h_t_m_l_element_1ac87a008f78788b17f5c8961f9007f6e4" prot="public" virt="non-virtual"><scope>HTMLAnchorElement</scope><name>hidden</name></member>
+      <member refid="class_h_t_m_l_element_1a3c776d3db47cb3a9d0f8a27fed739b4f" prot="public" virt="non-virtual"><scope>HTMLAnchorElement</scope><name>hidePopover</name></member>
+      <member refid="class_h_t_m_l_anchor_element_1a521f822a421eed15620d1375661981a8" prot="public" virt="non-virtual"><scope>HTMLAnchorElement</scope><name>host</name></member>
+      <member refid="class_h_t_m_l_anchor_element_1aea2c07fdece8fc206d32185d313bc940" prot="public" virt="non-virtual"><scope>HTMLAnchorElement</scope><name>hostname</name></member>
+      <member refid="class_h_t_m_l_anchor_element_1aa9b36e9567fe213a2a198da1c7e69efb" prot="public" virt="non-virtual"><scope>HTMLAnchorElement</scope><name>href</name></member>
+      <member refid="class_h_t_m_l_anchor_element_1afadbc21bab8feff89ea9910175a08e41" prot="public" virt="non-virtual"><scope>HTMLAnchorElement</scope><name>hreflang</name></member>
+      <member refid="class_h_t_m_l_anchor_element_1ac46e69890c2f024475342162b55b9695" prot="public" virt="non-virtual"><scope>HTMLAnchorElement</scope><name>HTMLAnchorElement</name></member>
+      <member refid="class_h_t_m_l_element_1ac88990568d6d3db84a41483fbbf3422d" prot="public" virt="non-virtual"><scope>HTMLAnchorElement</scope><name>HTMLElement</name></member>
+      <member refid="class_h_t_m_l_element_1a0d4276f08d39f385d4a36030a0136376" prot="public" virt="non-virtual"><scope>HTMLAnchorElement</scope><name>id</name></member>
+      <member refid="class_h_t_m_l_element_1ad87ee3f4e1fc2c1a064cda454ba5dec3" prot="public" virt="non-virtual"><scope>HTMLAnchorElement</scope><name>inert</name></member>
+      <member refid="class_h_t_m_l_element_1ab2f17f5a21719b8f89de9e42767669ca" prot="public" virt="non-virtual"><scope>HTMLAnchorElement</scope><name>innerText</name></member>
+      <member refid="class_h_t_m_l_element_1a5210bdf34a9f9437e701facb98d0d929" prot="public" virt="non-virtual"><scope>HTMLAnchorElement</scope><name>lang</name></member>
+      <member refid="class_h_t_m_l_element_1adf3ac36c36e3bc7aee4799fb58b68b3d" prot="public" virt="non-virtual"><scope>HTMLAnchorElement</scope><name>nonce</name></member>
+      <member refid="class_h_t_m_l_anchor_element_1aa6d53c1c5eabc07d63fc11bfa7947772" prot="public" virt="non-virtual"><scope>HTMLAnchorElement</scope><name>origin</name></member>
+      <member refid="class_h_t_m_l_element_1ae01f3838f2d334cc79e343e7530ca4f9" prot="public" virt="non-virtual"><scope>HTMLAnchorElement</scope><name>outerText</name></member>
+      <member refid="class_h_t_m_l_anchor_element_1abc08c9108a88da56b65ff3723b4613ee" prot="public" virt="non-virtual"><scope>HTMLAnchorElement</scope><name>password</name></member>
+      <member refid="class_h_t_m_l_anchor_element_1a54ccabeedfc23c613ae077f8e8384965" prot="public" virt="non-virtual"><scope>HTMLAnchorElement</scope><name>pathname</name></member>
+      <member refid="class_h_t_m_l_anchor_element_1a3991e0f1756efde67d7388d5fab281ed" prot="public" virt="non-virtual"><scope>HTMLAnchorElement</scope><name>ping</name></member>
+      <member refid="class_h_t_m_l_element_1a55ff5d14da80ff7b7f663d3d6215387c" prot="public" virt="non-virtual"><scope>HTMLAnchorElement</scope><name>popover</name></member>
+      <member refid="class_h_t_m_l_anchor_element_1ad6db8b4624449541fc4d1be9f8e1aee3" prot="public" virt="non-virtual"><scope>HTMLAnchorElement</scope><name>port</name></member>
+      <member refid="class_h_t_m_l_anchor_element_1a131491e9f4286f46ab681b557886500d" prot="public" virt="non-virtual"><scope>HTMLAnchorElement</scope><name>protocol</name></member>
+      <member refid="class_h_t_m_l_anchor_element_1ab637ee19aab3ce37e5b8efcd51d80f15" prot="public" virt="non-virtual"><scope>HTMLAnchorElement</scope><name>referrerPolicy</name></member>
+      <member refid="class_h_t_m_l_anchor_element_1a3905511b1cc03b77e95d27e813b7b083" prot="public" virt="non-virtual"><scope>HTMLAnchorElement</scope><name>rel</name></member>
+      <member refid="class_h_t_m_l_anchor_element_1a96718cf8665f6e226d860b3e23610477" prot="public" virt="non-virtual"><scope>HTMLAnchorElement</scope><name>relList</name></member>
+      <member refid="class_h_t_m_l_anchor_element_1ad9a7332f3f933b2e2c95f9357c54cd99" prot="public" virt="non-virtual"><scope>HTMLAnchorElement</scope><name>search</name></member>
+      <member refid="class_h_t_m_l_element_1afa4af2705fb03a14cfa534f59d134b15" prot="public" virt="non-virtual"><scope>HTMLAnchorElement</scope><name>showPopover</name></member>
+      <member refid="class_h_t_m_l_element_1ac89fd46c28c72618fe80fb1962b725e8" prot="public" virt="non-virtual"><scope>HTMLAnchorElement</scope><name>spellcheck</name></member>
+      <member refid="class_h_t_m_l_element_1aa1934fbb36b074b224e2d81d04baeb38" prot="public" virt="non-virtual"><scope>HTMLAnchorElement</scope><name>tabIndex</name></member>
+      <member refid="class_h_t_m_l_anchor_element_1abc7e9aafd6e070ab6dc1277a4bb70bef" prot="public" virt="non-virtual"><scope>HTMLAnchorElement</scope><name>target</name></member>
+      <member refid="class_h_t_m_l_anchor_element_1aa33eb354d7e615b95f8cde46e91cc6d4" prot="public" virt="non-virtual"><scope>HTMLAnchorElement</scope><name>text</name></member>
+      <member refid="class_h_t_m_l_element_1ab7a16d9ff2c240912fa946c6f4466c13" prot="public" virt="non-virtual"><scope>HTMLAnchorElement</scope><name>title</name></member>
+      <member refid="class_h_t_m_l_element_1a74026637504c1456b7619d7611b1ba87" prot="public" virt="non-virtual"><scope>HTMLAnchorElement</scope><name>togglePopover</name></member>
+      <member refid="class_h_t_m_l_element_1a3f14e5b88a6bdae0cfd42b512a48b4eb" prot="public" virt="non-virtual"><scope>HTMLAnchorElement</scope><name>translate</name></member>
+      <member refid="class_h_t_m_l_anchor_element_1a6efe087f4f848b77c6298da338720798" prot="public" virt="non-virtual"><scope>HTMLAnchorElement</scope><name>type</name></member>
+      <member refid="class_h_t_m_l_anchor_element_1a29a6c25bd8eb42a3feac0852035bf699" prot="public" virt="non-virtual"><scope>HTMLAnchorElement</scope><name>username</name></member>
+      <member refid="class_h_t_m_l_element_1a7e5a08fa4e11484d77226ae2bd28ad69" prot="public" virt="non-virtual"><scope>HTMLAnchorElement</scope><name>writingSuggestions</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

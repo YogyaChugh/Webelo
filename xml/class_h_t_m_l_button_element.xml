@@ -1,0 +1,445 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.14.0" xml:lang="en-US">
+  <compounddef id="class_h_t_m_l_button_element" kind="class" language="C++" prot="public">
+    <compoundname>HTMLButtonElement</compoundname>
+    <basecompoundref refid="class_h_t_m_l_element" prot="public" virt="non-virtual">HTMLElement</basecompoundref>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="class_h_t_m_l_button_element_1a365e302e24fed3f60082ce87d8cede64" prot="public" static="no" mutable="no">
+        <type>DOMString</type>
+        <definition>DOMString HTMLButtonElement::command</definition>
+        <argsstring></argsstring>
+        <name>command</name>
+        <qualifiedname>HTMLButtonElement::command</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="1024" column="19" bodyfile="HtmlElements.cpp" bodystart="1024" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_h_t_m_l_button_element_1adbca1bc975d1de465f418fa91e24407a" prot="public" static="no" mutable="no">
+        <type>Element *</type>
+        <definition>Element* HTMLButtonElement::commandForElement</definition>
+        <argsstring></argsstring>
+        <name>commandForElement</name>
+        <qualifiedname>HTMLButtonElement::commandForElement</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="1025" column="17" bodyfile="HtmlElements.cpp" bodystart="1025" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_h_t_m_l_button_element_1a27f23607d2bc0867f5a02cbf4889c4fc" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool HTMLButtonElement::disabled</definition>
+        <argsstring></argsstring>
+        <name>disabled</name>
+        <qualifiedname>HTMLButtonElement::disabled</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="1026" column="14" bodyfile="HtmlElements.cpp" bodystart="1026" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_h_t_m_l_button_element_1abde336c29f0d5e183f9c54de3381aec1" prot="public" static="no" mutable="no">
+        <type><ref refid="class_h_t_m_l_form_element" kindref="compound">HTMLFormElement</ref> *</type>
+        <definition>HTMLFormElement* HTMLButtonElement::form</definition>
+        <argsstring></argsstring>
+        <name>form</name>
+        <qualifiedname>HTMLButtonElement::form</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="1027" column="25" bodyfile="HtmlElements.cpp" bodystart="1027" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_h_t_m_l_button_element_1ab4dac9eaafdbd910e7d76e3786cea016" prot="public" static="no" mutable="no">
+        <type>USVString</type>
+        <definition>USVString HTMLButtonElement::formAction</definition>
+        <argsstring></argsstring>
+        <name>formAction</name>
+        <qualifiedname>HTMLButtonElement::formAction</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="1028" column="19" bodyfile="HtmlElements.cpp" bodystart="1028" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_h_t_m_l_button_element_1a19863fabe89c80798341ab08fc874944" prot="public" static="no" mutable="no">
+        <type>DOMString</type>
+        <definition>DOMString HTMLButtonElement::formEnctype</definition>
+        <argsstring></argsstring>
+        <name>formEnctype</name>
+        <qualifiedname>HTMLButtonElement::formEnctype</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="1029" column="19" bodyfile="HtmlElements.cpp" bodystart="1029" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_h_t_m_l_button_element_1a95b7b70ad8e78c6ee7f21fe8c571c0a0" prot="public" static="no" mutable="no">
+        <type>DOMString</type>
+        <definition>DOMString HTMLButtonElement::formMethod</definition>
+        <argsstring></argsstring>
+        <name>formMethod</name>
+        <qualifiedname>HTMLButtonElement::formMethod</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="1030" column="19" bodyfile="HtmlElements.cpp" bodystart="1030" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_h_t_m_l_button_element_1a6f6d993403a01039bfc69d81f26a0ea6" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool HTMLButtonElement::formNoValidate</definition>
+        <argsstring></argsstring>
+        <name>formNoValidate</name>
+        <qualifiedname>HTMLButtonElement::formNoValidate</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="1031" column="14" bodyfile="HtmlElements.cpp" bodystart="1031" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_h_t_m_l_button_element_1ade284e2bd40507c1b7871f05b10445b2" prot="public" static="no" mutable="no">
+        <type>DOMString</type>
+        <definition>DOMString HTMLButtonElement::formTarget</definition>
+        <argsstring></argsstring>
+        <name>formTarget</name>
+        <qualifiedname>HTMLButtonElement::formTarget</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="1032" column="19" bodyfile="HtmlElements.cpp" bodystart="1032" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_h_t_m_l_button_element_1a95a6da02ecd8a9ff9721442b2e7557cd" prot="public" static="no" mutable="no">
+        <type>DOMString</type>
+        <definition>DOMString HTMLButtonElement::name</definition>
+        <argsstring></argsstring>
+        <name>name</name>
+        <qualifiedname>HTMLButtonElement::name</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="1033" column="19" bodyfile="HtmlElements.cpp" bodystart="1033" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_h_t_m_l_button_element_1ae0caf64982c2dbe4211c3c53cb565bf7" prot="public" static="no" mutable="no">
+        <type>DOMString</type>
+        <definition>DOMString HTMLButtonElement::type</definition>
+        <argsstring></argsstring>
+        <name>type</name>
+        <qualifiedname>HTMLButtonElement::type</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="1034" column="19" bodyfile="HtmlElements.cpp" bodystart="1034" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_h_t_m_l_button_element_1a673c06d764d7c6d078da95c4a669286b" prot="public" static="no" mutable="no">
+        <type>DOMString</type>
+        <definition>DOMString HTMLButtonElement::value</definition>
+        <argsstring></argsstring>
+        <name>value</name>
+        <qualifiedname>HTMLButtonElement::value</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="1035" column="19" bodyfile="HtmlElements.cpp" bodystart="1035" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_h_t_m_l_button_element_1a5794852d5ce4ae294b8a2d371740320e" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool HTMLButtonElement::willValidate</definition>
+        <argsstring></argsstring>
+        <name>willValidate</name>
+        <qualifiedname>HTMLButtonElement::willValidate</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="1037" column="14" bodyfile="HtmlElements.cpp" bodystart="1037" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_h_t_m_l_button_element_1a3baee1900374782e54b429fcf55c0153" prot="public" static="no" mutable="no">
+        <type><ref refid="struct_validity_state" kindref="compound">ValidityState</ref></type>
+        <definition>ValidityState HTMLButtonElement::validity</definition>
+        <argsstring></argsstring>
+        <name>validity</name>
+        <qualifiedname>HTMLButtonElement::validity</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="1038" column="23" bodyfile="HtmlElements.cpp" bodystart="1038" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_h_t_m_l_button_element_1af62a5ae27ab2569b426ca76a2598d52d" prot="public" static="no" mutable="no">
+        <type>DOMString</type>
+        <definition>DOMString HTMLButtonElement::validationMessage</definition>
+        <argsstring></argsstring>
+        <name>validationMessage</name>
+        <qualifiedname>HTMLButtonElement::validationMessage</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="1039" column="19" bodyfile="HtmlElements.cpp" bodystart="1039" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_h_t_m_l_button_element_1ab55639ceea7821038fc0afe59777a53a" prot="public" static="no" mutable="no">
+        <type>NodeList</type>
+        <definition>NodeList HTMLButtonElement::labels</definition>
+        <argsstring></argsstring>
+        <name>labels</name>
+        <qualifiedname>HTMLButtonElement::labels</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="1044" column="18" bodyfile="HtmlElements.cpp" bodystart="1044" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_h_t_m_l_button_element_1a4dccf017340bc2e6a6cacf2d0c542770" prot="public" static="no" mutable="no">
+        <type>Element *</type>
+        <definition>Element* HTMLButtonElement::popoverTargetElement</definition>
+        <argsstring></argsstring>
+        <name>popoverTargetElement</name>
+        <qualifiedname>HTMLButtonElement::popoverTargetElement</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="1046" column="17" bodyfile="HtmlElements.cpp" bodystart="1046" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_h_t_m_l_button_element_1a45aebbdc6c617fe3622724a0c4bc5339" prot="public" static="no" mutable="no">
+        <type>DOMString</type>
+        <definition>DOMString HTMLButtonElement::popoverTargetAction</definition>
+        <argsstring></argsstring>
+        <name>popoverTargetAction</name>
+        <qualifiedname>HTMLButtonElement::popoverTargetAction</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="1047" column="19" bodyfile="HtmlElements.cpp" bodystart="1047" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="class_h_t_m_l_button_element_1adb25e154c47cdc5a1dd4f269af064b7c" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>HTMLButtonElement::HTMLButtonElement</definition>
+        <argsstring>()</argsstring>
+        <name>HTMLButtonElement</name>
+        <qualifiedname>HTMLButtonElement::HTMLButtonElement</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="1022" column="9" bodyfile="HtmlElements.cpp" bodystart="1022" bodyend="1022"/>
+      </memberdef>
+      <memberdef kind="function" id="class_h_t_m_l_button_element_1a7f471f03ca1980328978ac94d949cbd3" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool HTMLButtonElement::checkValidity</definition>
+        <argsstring>()</argsstring>
+        <name>checkValidity</name>
+        <qualifiedname>HTMLButtonElement::checkValidity</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="1040" column="14"/>
+      </memberdef>
+      <memberdef kind="function" id="class_h_t_m_l_button_element_1a22682b234e96db8fb354ac914ca31da1" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool HTMLButtonElement::reportValidity</definition>
+        <argsstring>()</argsstring>
+        <name>reportValidity</name>
+        <qualifiedname>HTMLButtonElement::reportValidity</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="1041" column="14"/>
+      </memberdef>
+      <memberdef kind="function" id="class_h_t_m_l_button_element_1a1d4fe488533bde8c1d27358e8d26802d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void HTMLButtonElement::setCustomValidity</definition>
+        <argsstring>(DOMString error)</argsstring>
+        <name>setCustomValidity</name>
+        <qualifiedname>HTMLButtonElement::setCustomValidity</qualifiedname>
+        <param>
+          <type>DOMString</type>
+          <declname>error</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="1042" column="14"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="3">
+        <label>Element</label>
+      </node>
+      <node id="1">
+        <label>HTMLButtonElement</label>
+        <link refid="class_h_t_m_l_button_element"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>HTMLElement</label>
+        <link refid="class_h_t_m_l_element"/>
+        <childnode refid="3" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="3">
+        <label>Element</label>
+      </node>
+      <node id="1">
+        <label>HTMLButtonElement</label>
+        <link refid="class_h_t_m_l_button_element"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+        <childnode refid="4" relation="usage">
+          <edgelabel>form</edgelabel>
+        </childnode>
+        <childnode refid="7" relation="usage">
+          <edgelabel>validity</edgelabel>
+        </childnode>
+      </node>
+      <node id="6">
+        <label>HTMLCollection</label>
+      </node>
+      <node id="2">
+        <label>HTMLElement</label>
+        <link refid="class_h_t_m_l_element"/>
+        <childnode refid="3" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>HTMLFormControlsCollection</label>
+        <link refid="class_h_t_m_l_form_controls_collection"/>
+        <childnode refid="6" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>HTMLFormElement</label>
+        <link refid="class_h_t_m_l_form_element"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+        <childnode refid="5" relation="usage">
+          <edgelabel>elements</edgelabel>
+        </childnode>
+      </node>
+      <node id="7">
+        <label>ValidityState</label>
+        <link refid="struct_validity_state"/>
+      </node>
+    </collaborationgraph>
+    <location file="HtmlElements.cpp" line="1020" column="1" bodyfile="HtmlElements.cpp" bodystart="1020" bodyend="1048"/>
+    <listofallmembers>
+      <member refid="class_h_t_m_l_element_1a34f5929019d1f62156f9dba13a54d082" prot="public" virt="non-virtual"><scope>HTMLButtonElement</scope><name>accessKey</name></member>
+      <member refid="class_h_t_m_l_element_1aab20f7a1cbba885509eeadd23ae676a4" prot="public" virt="non-virtual"><scope>HTMLButtonElement</scope><name>accessKeyLabel</name></member>
+      <member refid="class_h_t_m_l_element_1a4c341258f8600bb0d061f147d980fb71" prot="public" virt="non-virtual"><scope>HTMLButtonElement</scope><name>attachInternals</name></member>
+      <member refid="class_h_t_m_l_element_1afcd9d9037543f93fd468ca2f397f6fb1" prot="public" virt="non-virtual"><scope>HTMLButtonElement</scope><name>autocapitalize</name></member>
+      <member refid="class_h_t_m_l_element_1a6565458cb2869f8b3ef8a5bc635b6af5" prot="public" virt="non-virtual"><scope>HTMLButtonElement</scope><name>autocorrect</name></member>
+      <member refid="class_h_t_m_l_element_1a82f585ce5247efc80d3bcd83c4e64aff" prot="public" virt="non-virtual"><scope>HTMLButtonElement</scope><name>autofocus</name></member>
+      <member refid="class_h_t_m_l_element_1a3359744a29b30e0e7f9bf782e203be70" prot="public" virt="non-virtual"><scope>HTMLButtonElement</scope><name>blur</name></member>
+      <member refid="class_h_t_m_l_button_element_1a7f471f03ca1980328978ac94d949cbd3" prot="public" virt="non-virtual"><scope>HTMLButtonElement</scope><name>checkValidity</name></member>
+      <member refid="class_h_t_m_l_element_1aa3ae4ebe265852f5b18ca97c42690acc" prot="public" virt="non-virtual"><scope>HTMLButtonElement</scope><name>classname</name></member>
+      <member refid="class_h_t_m_l_element_1a23d7391ed5de254618b27e9b4b235659" prot="public" virt="non-virtual"><scope>HTMLButtonElement</scope><name>click</name></member>
+      <member refid="class_h_t_m_l_button_element_1a365e302e24fed3f60082ce87d8cede64" prot="public" virt="non-virtual"><scope>HTMLButtonElement</scope><name>command</name></member>
+      <member refid="class_h_t_m_l_button_element_1adbca1bc975d1de465f418fa91e24407a" prot="public" virt="non-virtual"><scope>HTMLButtonElement</scope><name>commandForElement</name></member>
+      <member refid="class_h_t_m_l_element_1a1aa6efe89cc078f89c5353929ec59ad2" prot="public" virt="non-virtual"><scope>HTMLButtonElement</scope><name>dir</name></member>
+      <member refid="class_h_t_m_l_button_element_1a27f23607d2bc0867f5a02cbf4889c4fc" prot="public" virt="non-virtual"><scope>HTMLButtonElement</scope><name>disabled</name></member>
+      <member refid="class_h_t_m_l_element_1a751f062860bb6b8e72ecd61ceb88b100" prot="public" virt="non-virtual"><scope>HTMLButtonElement</scope><name>draggable</name></member>
+      <member refid="class_h_t_m_l_element_1a8e7d731e966a64e878d6bd6e822a6f5c" prot="public" virt="non-virtual"><scope>HTMLButtonElement</scope><name>focus</name></member>
+      <member refid="class_h_t_m_l_button_element_1abde336c29f0d5e183f9c54de3381aec1" prot="public" virt="non-virtual"><scope>HTMLButtonElement</scope><name>form</name></member>
+      <member refid="class_h_t_m_l_button_element_1ab4dac9eaafdbd910e7d76e3786cea016" prot="public" virt="non-virtual"><scope>HTMLButtonElement</scope><name>formAction</name></member>
+      <member refid="class_h_t_m_l_button_element_1a19863fabe89c80798341ab08fc874944" prot="public" virt="non-virtual"><scope>HTMLButtonElement</scope><name>formEnctype</name></member>
+      <member refid="class_h_t_m_l_button_element_1a95b7b70ad8e78c6ee7f21fe8c571c0a0" prot="public" virt="non-virtual"><scope>HTMLButtonElement</scope><name>formMethod</name></member>
+      <member refid="class_h_t_m_l_button_element_1a6f6d993403a01039bfc69d81f26a0ea6" prot="public" virt="non-virtual"><scope>HTMLButtonElement</scope><name>formNoValidate</name></member>
+      <member refid="class_h_t_m_l_button_element_1ade284e2bd40507c1b7871f05b10445b2" prot="public" virt="non-virtual"><scope>HTMLButtonElement</scope><name>formTarget</name></member>
+      <member refid="class_h_t_m_l_element_1a1e295cf654398a2738da85f9d3c905b0" prot="public" virt="non-virtual"><scope>HTMLButtonElement</scope><name>headingOffset</name></member>
+      <member refid="class_h_t_m_l_element_1ad166a49ba19635a2e4ca3df474858181" prot="public" virt="non-virtual"><scope>HTMLButtonElement</scope><name>headingReset</name></member>
+      <member refid="class_h_t_m_l_element_1ac87a008f78788b17f5c8961f9007f6e4" prot="public" virt="non-virtual"><scope>HTMLButtonElement</scope><name>hidden</name></member>
+      <member refid="class_h_t_m_l_element_1a3c776d3db47cb3a9d0f8a27fed739b4f" prot="public" virt="non-virtual"><scope>HTMLButtonElement</scope><name>hidePopover</name></member>
+      <member refid="class_h_t_m_l_button_element_1adb25e154c47cdc5a1dd4f269af064b7c" prot="public" virt="non-virtual"><scope>HTMLButtonElement</scope><name>HTMLButtonElement</name></member>
+      <member refid="class_h_t_m_l_element_1ac88990568d6d3db84a41483fbbf3422d" prot="public" virt="non-virtual"><scope>HTMLButtonElement</scope><name>HTMLElement</name></member>
+      <member refid="class_h_t_m_l_element_1a0d4276f08d39f385d4a36030a0136376" prot="public" virt="non-virtual"><scope>HTMLButtonElement</scope><name>id</name></member>
+      <member refid="class_h_t_m_l_element_1ad87ee3f4e1fc2c1a064cda454ba5dec3" prot="public" virt="non-virtual"><scope>HTMLButtonElement</scope><name>inert</name></member>
+      <member refid="class_h_t_m_l_element_1ab2f17f5a21719b8f89de9e42767669ca" prot="public" virt="non-virtual"><scope>HTMLButtonElement</scope><name>innerText</name></member>
+      <member refid="class_h_t_m_l_button_element_1ab55639ceea7821038fc0afe59777a53a" prot="public" virt="non-virtual"><scope>HTMLButtonElement</scope><name>labels</name></member>
+      <member refid="class_h_t_m_l_element_1a5210bdf34a9f9437e701facb98d0d929" prot="public" virt="non-virtual"><scope>HTMLButtonElement</scope><name>lang</name></member>
+      <member refid="class_h_t_m_l_button_element_1a95a6da02ecd8a9ff9721442b2e7557cd" prot="public" virt="non-virtual"><scope>HTMLButtonElement</scope><name>name</name></member>
+      <member refid="class_h_t_m_l_element_1adf3ac36c36e3bc7aee4799fb58b68b3d" prot="public" virt="non-virtual"><scope>HTMLButtonElement</scope><name>nonce</name></member>
+      <member refid="class_h_t_m_l_element_1ae01f3838f2d334cc79e343e7530ca4f9" prot="public" virt="non-virtual"><scope>HTMLButtonElement</scope><name>outerText</name></member>
+      <member refid="class_h_t_m_l_element_1a55ff5d14da80ff7b7f663d3d6215387c" prot="public" virt="non-virtual"><scope>HTMLButtonElement</scope><name>popover</name></member>
+      <member refid="class_h_t_m_l_button_element_1a45aebbdc6c617fe3622724a0c4bc5339" prot="public" virt="non-virtual"><scope>HTMLButtonElement</scope><name>popoverTargetAction</name></member>
+      <member refid="class_h_t_m_l_button_element_1a4dccf017340bc2e6a6cacf2d0c542770" prot="public" virt="non-virtual"><scope>HTMLButtonElement</scope><name>popoverTargetElement</name></member>
+      <member refid="class_h_t_m_l_button_element_1a22682b234e96db8fb354ac914ca31da1" prot="public" virt="non-virtual"><scope>HTMLButtonElement</scope><name>reportValidity</name></member>
+      <member refid="class_h_t_m_l_button_element_1a1d4fe488533bde8c1d27358e8d26802d" prot="public" virt="non-virtual"><scope>HTMLButtonElement</scope><name>setCustomValidity</name></member>
+      <member refid="class_h_t_m_l_element_1afa4af2705fb03a14cfa534f59d134b15" prot="public" virt="non-virtual"><scope>HTMLButtonElement</scope><name>showPopover</name></member>
+      <member refid="class_h_t_m_l_element_1ac89fd46c28c72618fe80fb1962b725e8" prot="public" virt="non-virtual"><scope>HTMLButtonElement</scope><name>spellcheck</name></member>
+      <member refid="class_h_t_m_l_element_1aa1934fbb36b074b224e2d81d04baeb38" prot="public" virt="non-virtual"><scope>HTMLButtonElement</scope><name>tabIndex</name></member>
+      <member refid="class_h_t_m_l_element_1ab7a16d9ff2c240912fa946c6f4466c13" prot="public" virt="non-virtual"><scope>HTMLButtonElement</scope><name>title</name></member>
+      <member refid="class_h_t_m_l_element_1a74026637504c1456b7619d7611b1ba87" prot="public" virt="non-virtual"><scope>HTMLButtonElement</scope><name>togglePopover</name></member>
+      <member refid="class_h_t_m_l_element_1a3f14e5b88a6bdae0cfd42b512a48b4eb" prot="public" virt="non-virtual"><scope>HTMLButtonElement</scope><name>translate</name></member>
+      <member refid="class_h_t_m_l_button_element_1ae0caf64982c2dbe4211c3c53cb565bf7" prot="public" virt="non-virtual"><scope>HTMLButtonElement</scope><name>type</name></member>
+      <member refid="class_h_t_m_l_button_element_1af62a5ae27ab2569b426ca76a2598d52d" prot="public" virt="non-virtual"><scope>HTMLButtonElement</scope><name>validationMessage</name></member>
+      <member refid="class_h_t_m_l_button_element_1a3baee1900374782e54b429fcf55c0153" prot="public" virt="non-virtual"><scope>HTMLButtonElement</scope><name>validity</name></member>
+      <member refid="class_h_t_m_l_button_element_1a673c06d764d7c6d078da95c4a669286b" prot="public" virt="non-virtual"><scope>HTMLButtonElement</scope><name>value</name></member>
+      <member refid="class_h_t_m_l_button_element_1a5794852d5ce4ae294b8a2d371740320e" prot="public" virt="non-virtual"><scope>HTMLButtonElement</scope><name>willValidate</name></member>
+      <member refid="class_h_t_m_l_element_1a7e5a08fa4e11484d77226ae2bd28ad69" prot="public" virt="non-virtual"><scope>HTMLButtonElement</scope><name>writingSuggestions</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

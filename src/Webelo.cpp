@@ -245,6 +245,8 @@ class Window{
         Event* getEvent(){
             return this->event;
         }
+
+        virtual ~Window() = default;
 };
 
 // EVENT -TARGET STUFF
@@ -252,6 +254,8 @@ class Window{
 class EventListener{
     public:
         void handleEvent(const Event* event);
+
+        virtual ~EventListener() = default;
 };
 
 struct event_listener{
@@ -336,6 +340,8 @@ class EventTarget{
         virtual EventTarget* get_the_parent(const Event* event){
             return nullptr;
         }
+
+        virtual ~EventTarget() = default;
 };
 
 class AbortSignal: public EventTarget{
@@ -387,6 +393,8 @@ class AbortSignal: public EventTarget{
         std::any getreason(){
             return this->reason;
         }
+
+        virtual ~AbortSignal() = default;
 };
 
 class AbortController{
@@ -394,6 +402,8 @@ class AbortController{
         AbortSignal* signal;
         AbortController();
         void abort(std::any reason = nullptr) const;
+
+        virtual ~AbortController() = default;
 };
 
 
@@ -530,6 +540,8 @@ class Event{
         virtual Event* newObject(){
             return new Event(this->type);
         }
+
+        virtual ~Event() = default;
 };
 
 
@@ -546,6 +558,8 @@ class CustomEvent: public Event{
         CustomEvent(const CustomEvent* temp): Event(temp->type, temp->bubbles, temp->cancelable, temp->composed){
             this->detail = temp->detail;
         };
+
+        virtual ~CustomEvent() = default;
 };
 
 
@@ -700,6 +714,8 @@ class Node: public EventTarget{
             auto a = std::find(this->childNodes.node_list.begin(), this->childNodes.node_list.end(), this);
             return a - this->childNodes.node_list.begin();
         }
+
+        virtual ~Node() = default;
 };
 
 struct ImportNodeOptions{
@@ -710,6 +726,8 @@ struct ImportNodeOptions{
 class NodeFilter{
     public:
         void acceptNode(Node* node){};
+
+        virtual ~NodeFilter() = default;
 };
 
 class NodeIterator{
@@ -730,6 +748,8 @@ class NodeIterator{
         unsigned short filter_node(Node* node);
 
         NodeIterator(){};
+
+        virtual ~NodeIterator() = default;
 };
 
 class TreeWalker{
@@ -752,6 +772,8 @@ class TreeWalker{
         Node* nextSibling();
         Node* previousNode();
         Node* nextNode();
+
+        virtual ~TreeWalker() = default;
 };
 
 
@@ -763,6 +785,8 @@ class AbstractRange{
         Node* endContainer;
         unsigned long endOffset;
         bool collapsed();
+
+        virtual ~AbstractRange() = default;
 };
 
 struct StaticRangeInit{
@@ -782,6 +806,8 @@ struct StaticRangeInit{
 class StaticRange: public AbstractRange{
     public:
         StaticRange(StaticRangeInit init);
+
+        virtual ~StaticRange() = default;
 };
 
 
@@ -817,6 +843,9 @@ class Range: public AbstractRange{
 
         //TODO: stringifier;
         DOMString stringification_behavior();
+
+
+        virtual ~Range() = default;
 };
 
 
@@ -913,6 +942,8 @@ class ParentNode: public Node {
         virtual void making_it_abstract(){};
 
         ParentNode(node_type nodeType, DOMString nodeName, Document* ownerDocument, Node* parentNode): Node(nodeType, nodeName, ownerDocument, parentNode){};
+
+        virtual ~ParentNode() = default;
 };
 
 //Exposed to window only
@@ -935,6 +966,8 @@ class Attr: public Node{
             if (this->ownerElement==nullptr){ this->value = value; }
             // else{ change_attribute_value(this, value); }
         }
+
+        virtual ~Attr() = default;
 };
 
 
@@ -962,6 +995,8 @@ class CharacterData: public Node{
         virtual void setdata(DOMString data){
             replace_data(this, 0, this->length(),data);
         }
+
+        virtual ~CharacterData() = default;
 };
 
 class Text: public CharacterData{
@@ -979,6 +1014,8 @@ class Text: public CharacterData{
         };
         Text* splitText(unsigned long offset); //NewObject
 
+        virtual ~Text() = default;
+
 };
 
 //Exposed to window only
@@ -991,6 +1028,8 @@ class ProcessingInstruction: public CharacterData{
         }
 
         ProcessingInstruction(Document* ownerdoc = nullptr, Node* parentnode = nullptr): CharacterData(ownerdoc, parentnode){};
+
+        virtual ~ProcessingInstruction() = default;
 
 };
 
@@ -1006,6 +1045,8 @@ class Comment: public CharacterData{
             this->setdata(data);
         };
 
+        virtual ~Comment() = default;
+
 };
 
 //Exposed to window only
@@ -1016,6 +1057,7 @@ class CDATASection: public Text{
             replace_data(dynamic_cast<Node*>(this),0, this->length(),data);
         }
 
+        virtual ~CDATASection() = default;
 };
 
 
@@ -1081,6 +1123,8 @@ class Document: public ParentNode{
         }
 
         virtual void making_it_abstract(){};
+
+        virtual ~Document() = default;
 };
 
 //Exposed to window only
@@ -1110,6 +1154,8 @@ class DocumentType: public Node{
             return systemId;
         }
 
+        virtual ~DocumentType() = default;
+
 };
 
 class DocumentFragment: public ParentNode{
@@ -1117,6 +1163,8 @@ class DocumentFragment: public ParentNode{
         Element* associatedHost = nullptr;
         // friend Element* getElementById(Node* node ,const DOMString &elementId);
         DocumentFragment(Document* ownerdoc = nullptr, Node* parentnode = nullptr): ParentNode(DOCUMENT_FRAGMENT_NODE, "#document-fragment", ownerdoc, parentnode){};
+
+        virtual ~DocumentFragment() = default;
 
 };
 
@@ -1144,6 +1192,7 @@ class ShadowRoot: public DocumentFragment{
         //     return this->associatedHost;
         // }
 
+        virtual ~ShadowRoot() = default;
 };
 
 
@@ -1183,6 +1232,8 @@ class NamedNodeMap{
         Attr* setNamedItemNS(Attr* attr);
         Attr* removeNamedItem(DOMString qualifiedName);
         Attr* removeNamedItemNS(std::optional<DOMString> namesp, DOMString localName);
+
+        virtual ~NamedNodeMap() = default;
 };
 
 
@@ -1313,6 +1364,8 @@ class Element: public ParentNode{
             // assign_slottables_for_tree(this->getRootNode())
         }
 
+        virtual ~Element() = default;
+
 };
 
 class HTMLSlotElement: public Element{};
@@ -1329,6 +1382,8 @@ class DOMImplementation{
         //qualifiedName is LegacyNullToEmptyString
         Document* createHTMLDocument(std::optional<DOMString> title);
         bool hasFeature();
+
+        virtual ~DOMImplementation() = default;
 };
 
 
@@ -1401,6 +1456,8 @@ class DOMTokenList{
             //     this->list = ParseOrderedSet(this->getvalue());
             // }
         }
+
+        virtual ~DOMTokenList() = default;
 };
 
 

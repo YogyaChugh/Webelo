@@ -187,6 +187,8 @@ class ElementInternals{
 
 class DOMStringMap{
     public:
+        DOMStringMap(){}
+        
         DOMString get(DOMString name);
         void set(DOMString name, DOMString value);
         void del(DOMString name);
@@ -231,7 +233,7 @@ class HTMLElement: public Element{
         bool headingReset;
 
 
-        DOMStringMap dataset;
+
         DOMString nonce;
         bool autofocus;
         long tabIndex;
@@ -252,7 +254,8 @@ class HTMLUnknownElement: public HTMLElement{};
 
 class HTMLHtmlElement: public HTMLElement{
     public:
-        HTMLHtmlElement(){};
+        HTMLHtmlElement(){
+        };
 };
 
 class HTMLHeadElement: public HTMLElement{
@@ -6584,66 +6587,64 @@ void delete_all(){
     logs = "";
 }
 
-bool process_html(const py::dict &input_dict, Document* doc=nullptr, Node* parent=nullptr){
+bool process_html(const py::dict &input_dict, Document* doc=nullptr, Node* parent=nullptr) {
+    Document* docji = doc ? doc : new Document();
+    Node* parentji = parent ? parent : dynamic_cast<Node*>(docji);
     std::string name = "";
     py::dict attributes;
     py::list children;
     std::string content = "";
-    Node* parentji = parent;
-    HTMLElement* temp;
-    Document* docji = doc;
-    if (!docji){
-        docji = new Document();
+    try {
+        if (input_dict.contains("name"))
+            name = input_dict["name"].cast<std::string>();
+        if (input_dict.contains("attrs"))
+            attributes = input_dict["attrs"].cast<py::dict>();
+        if (input_dict.contains("content"))
+            content = input_dict["content"].cast<std::string>();
+        if (input_dict.contains("children"))
+            children = input_dict["children"].cast<py::list>();
+    } catch (const std::exception &e) {
+        logs += "Error reading input_dict keys: " + std::string(e.what()) + "\n";
+        return false;
     }
-    if (parent==nullptr){
-        parentji = dynamic_cast<Node*>(doc);
-    }
-    else{
-        parentji = dynamic_cast<Node*>(parent);
-    }
-    for (auto item: input_dict){
-        std::string key = item.first.cast<std::string>();
-        if (key=="name"){
-            name = item.second.cast<std::string>();
-        }
-        else if (key=="attrs"){
-            attributes = py::cast<py::dict>(item.second);
-        }
-        else if (key=="content"){
-            content = item.second.cast<std::string>();
-        }
-        else if (key=="children"){
-            children = py::cast<py::list>(item.second);
-            try{
-                temp = create_an_element(name, docji,  dynamic_cast<Node*>(parentji), attributes, content);
-            }
-            catch(...){
-                logs+="There's an error in creating key " + name + "\n";
-                std::cout<<"There's an error in creating key "<<name;
-            }
-            if (temp){
-                logs+="Successfully generated: " + name + "\n";
-                std::cout<<"Successfully generated: "<<name<<std::endl;
-                temp->parentNode = parent;
+
+    // Skip [document] or Text nodes for element creation
+    HTMLElement* temp = nullptr;
+    if (name != "[document]" && name != "Text") {
+        try{
+            temp = create_an_element(name, docji, parentji, attributes, content);
+            if (temp) {
+                logs += "Successfully created: " + name + "\n";
+                temp->parentNode = parentji;
                 els.push_back(temp);
-                Element* temp2 = dynamic_cast<Element*>(parentji);
-                if (temp2){
-                    temp->parentElement = temp2;
-                }
-                parentji = dynamic_cast<Node*>(temp);
-                for (auto child: children){
-                    process_html(py::cast<py::dict>(child), doc, parentji);
-                }
+                Element* parentElem = dynamic_cast<Element*>(parentji);
+                if (parentElem) temp->parentElement = parentElem;
+                parentji = temp; // only update parent if element exists
+            } else {
+                logs += "Error creating " + name + "\n";
             }
         }
+        catch(...){}
     }
+
+    // Recursively process children
+    int count = 0;
+    for (auto child: children) {
+        process_html(child.cast<py::dict>(), docji, parentji);
+        count++;
+    }
+
     return true;
 }
+
+
 
 PYBIND11_MODULE(Webelo, m){
     m.doc() = "C++ DOM Library";
     py::class_<Document>(m, "Document");
     py::class_<Node>(m, "Node");
+    py::class_<HTMLHtmlElement>(m, "HTMLHtmlElement")
+    .def(py::init<>());
     m.def("process_html", &process_html,"Processes the HTML custom dictionary & creates element objects/attributes/text tooooo",
           py::arg("input_dict"),
           py::arg("doc") = nullptr,
@@ -6651,3 +6652,10 @@ PYBIND11_MODULE(Webelo, m){
     m.def("delete_all",&delete_all, "Deletes all previously created instances !");
     m.def("getlogs",&getlogs, "Fetch all logs !!");
 };
+
+
+int main(){
+    py::dict attributes;
+    std::string content = "";
+    create_an_element(std::string("html"),nullptr,nullptr,attributes,content);
+}

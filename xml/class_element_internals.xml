@@ -1,0 +1,252 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.14.0" xml:lang="en-US">
+  <compounddef id="class_element_internals" kind="class" language="C++" prot="public">
+    <compoundname>ElementInternals</compoundname>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="class_element_internals_1ad01b38e27df15cd944ce246cdd38775e" prot="public" static="no" mutable="no">
+        <type>ShadowRoot *</type>
+        <definition>ShadowRoot* ElementInternals::shadowRoot</definition>
+        <argsstring></argsstring>
+        <name>shadowRoot</name>
+        <qualifiedname>ElementInternals::shadowRoot</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="172" column="20" bodyfile="HtmlElements.cpp" bodystart="172" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_element_internals_1a21a68dfd0bb6411190ff2240d2c0e8c5" prot="public" static="no" mutable="no">
+        <type><ref refid="class_h_t_m_l_form_element" kindref="compound">HTMLFormElement</ref> *</type>
+        <definition>HTMLFormElement* ElementInternals::form</definition>
+        <argsstring></argsstring>
+        <name>form</name>
+        <qualifiedname>ElementInternals::form</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="174" column="25" bodyfile="HtmlElements.cpp" bodystart="174" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_element_internals_1a3d01d908a97a794c5220c3eea0ea54b4" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool ElementInternals::willValidate</definition>
+        <argsstring></argsstring>
+        <name>willValidate</name>
+        <qualifiedname>ElementInternals::willValidate</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="177" column="14" bodyfile="HtmlElements.cpp" bodystart="177" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_element_internals_1af69365e6c820e65cc71540d7c239945b" prot="public" static="no" mutable="no">
+        <type><ref refid="struct_validity_state" kindref="compound">ValidityState</ref></type>
+        <definition>ValidityState ElementInternals::validity</definition>
+        <argsstring></argsstring>
+        <name>validity</name>
+        <qualifiedname>ElementInternals::validity</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="178" column="23" bodyfile="HtmlElements.cpp" bodystart="178" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_element_internals_1aa87b89e652b59ba9e643a6d226c10d0a" prot="public" static="no" mutable="no">
+        <type>DOMString</type>
+        <definition>DOMString ElementInternals::validationMessage</definition>
+        <argsstring></argsstring>
+        <name>validationMessage</name>
+        <qualifiedname>ElementInternals::validationMessage</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="179" column="19" bodyfile="HtmlElements.cpp" bodystart="179" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_element_internals_1a1eaf496e95996e4f6ff383e908189d22" prot="public" static="no" mutable="no">
+        <type>NodeList</type>
+        <definition>NodeList ElementInternals::labels</definition>
+        <argsstring></argsstring>
+        <name>labels</name>
+        <qualifiedname>ElementInternals::labels</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="183" column="18" bodyfile="HtmlElements.cpp" bodystart="183" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_element_internals_1a91196bde29ed649abec870ebeafdcca5" prot="public" static="no" mutable="no">
+        <type><ref refid="class_custom_state_set" kindref="compound">CustomStateSet</ref></type>
+        <definition>CustomStateSet ElementInternals::states</definition>
+        <argsstring></argsstring>
+        <name>states</name>
+        <qualifiedname>ElementInternals::states</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="185" column="24" bodyfile="HtmlElements.cpp" bodystart="185" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="class_element_internals_1a1876b0082872a2145a8bc6811d258d7a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void ElementInternals::setFormValue</definition>
+        <argsstring>(USVString value, USVString state)</argsstring>
+        <name>setFormValue</name>
+        <qualifiedname>ElementInternals::setFormValue</qualifiedname>
+        <param>
+          <type>USVString</type>
+          <declname>value</declname>
+        </param>
+        <param>
+          <type>USVString</type>
+          <declname>state</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="173" column="14"/>
+      </memberdef>
+      <memberdef kind="function" id="class_element_internals_1a0ae28dff8a1227dc8b09ad420c2a2b4a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void ElementInternals::setValidity</definition>
+        <argsstring>(ValidityStateFlags flags, DOMString message, HTMLElement *anchor)</argsstring>
+        <name>setValidity</name>
+        <qualifiedname>ElementInternals::setValidity</qualifiedname>
+        <param>
+          <type><ref refid="struct_validity_state_flags" kindref="compound">ValidityStateFlags</ref></type>
+          <declname>flags</declname>
+        </param>
+        <param>
+          <type>DOMString</type>
+          <declname>message</declname>
+        </param>
+        <param>
+          <type><ref refid="class_h_t_m_l_element" kindref="compound">HTMLElement</ref> *</type>
+          <declname>anchor</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="176" column="14"/>
+      </memberdef>
+      <memberdef kind="function" id="class_element_internals_1a3cb6a151328d01b3a925a40aae502ce6" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool ElementInternals::checkValidity</definition>
+        <argsstring>()</argsstring>
+        <name>checkValidity</name>
+        <qualifiedname>ElementInternals::checkValidity</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="180" column="14"/>
+      </memberdef>
+      <memberdef kind="function" id="class_element_internals_1a8ccece6b82b3db45708e7149c70e997f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool ElementInternals::reportValidity</definition>
+        <argsstring>()</argsstring>
+        <name>reportValidity</name>
+        <qualifiedname>ElementInternals::reportValidity</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="181" column="14"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="8">
+        <label>CustomStateSet</label>
+        <link refid="class_custom_state_set"/>
+      </node>
+      <node id="4">
+        <label>Element</label>
+      </node>
+      <node id="1">
+        <label>ElementInternals</label>
+        <link refid="class_element_internals"/>
+        <childnode refid="2" relation="usage">
+          <edgelabel>form</edgelabel>
+        </childnode>
+        <childnode refid="7" relation="usage">
+          <edgelabel>validity</edgelabel>
+        </childnode>
+        <childnode refid="8" relation="usage">
+          <edgelabel>states</edgelabel>
+        </childnode>
+      </node>
+      <node id="6">
+        <label>HTMLCollection</label>
+      </node>
+      <node id="3">
+        <label>HTMLElement</label>
+        <link refid="class_h_t_m_l_element"/>
+        <childnode refid="4" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>HTMLFormControlsCollection</label>
+        <link refid="class_h_t_m_l_form_controls_collection"/>
+        <childnode refid="6" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>HTMLFormElement</label>
+        <link refid="class_h_t_m_l_form_element"/>
+        <childnode refid="3" relation="public-inheritance">
+        </childnode>
+        <childnode refid="5" relation="usage">
+          <edgelabel>elements</edgelabel>
+        </childnode>
+      </node>
+      <node id="7">
+        <label>ValidityState</label>
+        <link refid="struct_validity_state"/>
+      </node>
+    </collaborationgraph>
+    <location file="HtmlElements.cpp" line="170" column="1" bodyfile="HtmlElements.cpp" bodystart="170" bodyend="186"/>
+    <listofallmembers>
+      <member refid="class_element_internals_1a3cb6a151328d01b3a925a40aae502ce6" prot="public" virt="non-virtual"><scope>ElementInternals</scope><name>checkValidity</name></member>
+      <member refid="class_element_internals_1a21a68dfd0bb6411190ff2240d2c0e8c5" prot="public" virt="non-virtual"><scope>ElementInternals</scope><name>form</name></member>
+      <member refid="class_element_internals_1a1eaf496e95996e4f6ff383e908189d22" prot="public" virt="non-virtual"><scope>ElementInternals</scope><name>labels</name></member>
+      <member refid="class_element_internals_1a8ccece6b82b3db45708e7149c70e997f" prot="public" virt="non-virtual"><scope>ElementInternals</scope><name>reportValidity</name></member>
+      <member refid="class_element_internals_1a1876b0082872a2145a8bc6811d258d7a" prot="public" virt="non-virtual"><scope>ElementInternals</scope><name>setFormValue</name></member>
+      <member refid="class_element_internals_1a0ae28dff8a1227dc8b09ad420c2a2b4a" prot="public" virt="non-virtual"><scope>ElementInternals</scope><name>setValidity</name></member>
+      <member refid="class_element_internals_1ad01b38e27df15cd944ce246cdd38775e" prot="public" virt="non-virtual"><scope>ElementInternals</scope><name>shadowRoot</name></member>
+      <member refid="class_element_internals_1a91196bde29ed649abec870ebeafdcca5" prot="public" virt="non-virtual"><scope>ElementInternals</scope><name>states</name></member>
+      <member refid="class_element_internals_1aa87b89e652b59ba9e643a6d226c10d0a" prot="public" virt="non-virtual"><scope>ElementInternals</scope><name>validationMessage</name></member>
+      <member refid="class_element_internals_1af69365e6c820e65cc71540d7c239945b" prot="public" virt="non-virtual"><scope>ElementInternals</scope><name>validity</name></member>
+      <member refid="class_element_internals_1a3d01d908a97a794c5220c3eea0ea54b4" prot="public" virt="non-virtual"><scope>ElementInternals</scope><name>willValidate</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

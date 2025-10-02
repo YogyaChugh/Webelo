@@ -1,0 +1,374 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.14.0" xml:lang="en-US">
+  <compounddef id="md__t_o_d_o" kind="page">
+    <compoundname>md__t_o_d_o</compoundname>
+    <title>TODO&apos;S</title>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para><anchor id="md__t_o_d_o_1autotoc_md8"/></para>
+<sect1 id="md__t_o_d_o_1autotoc_md9">
+<title>GLOBAL TODO&apos;S</title><para><itemizedlist>
+<listitem><para>Comment Sorting</para>
+</listitem><listitem><para>Resolve Header Files</para>
+</listitem><listitem><para>Private/Public Resolve</para>
+</listitem><listitem><para>CEReactions ?</para>
+</listitem><listitem><para>NewObject, SameObject</para>
+</listitem><listitem><para>This setter/getter resolving !</para>
+</listitem><listitem><para>There could be a problem in the future with null character cause it&apos;s \0 and also end of string ! So just noting it down !!</para>
+</listitem><listitem><para>ServiceWorkerGlobalScope implementation in:<itemizedlist>
+<listitem><para>add_event_listener</para>
+</listitem><listitem><para>removeEventListener</para>
+</listitem><listitem><para>removeAllEventListeners</para>
+</listitem></itemizedlist>
+</para>
+</listitem><listitem><para>Remember to remove MouseEvent from events.hpp when later rewriting &amp; also adding to algos_events.cpp dispatch_event algo.</para>
+</listitem></itemizedlist>
+</para>
+</sect1>
+<sect1 id="md__t_o_d_o_1autotoc_md10">
+<title>Personal Remember</title><para><itemizedlist>
+<listitem><para>Do check <computeroutput>events.md</computeroutput> currentTarget value explanation. Might need improv</para>
+</listitem><listitem><para>Change reference to <computeroutput>shadow.md</computeroutput> in <computeroutput>events.md</computeroutput></para>
+</listitem><listitem><para>Add <computeroutput>path_structs</computeroutput> in docs</para>
+</listitem><listitem><para>DO NOT RUN THIS BEFORE HAVING THE FULL Windows OBJECT FROM HTML SPEC</para>
+</listitem><listitem><para>DO CHECK dispatchEvent for associatedDocument of target before running</para>
+</listitem><listitem><para>add_abort_algo() for abortsignal</para>
+</listitem><listitem><para>Do change slot in dispatch_event in case the name changes in Element &amp; Text ! Also, it&apos;s implementation</para>
+</listitem><listitem><para>Just logging a possible error: preceding struct check in invoke algo for events.</para>
+</listitem><listitem><para>Could be later ! Add eventConstructor in fire_event</para>
+</listitem><listitem><para>the getnodeValue() &amp;&amp; gettextContent() method in Node class returns a &quot;&quot; rather than nullptr</para>
+</listitem><listitem><para>Can add later (special cloning steps in other specifications) for <computeroutput>clone_node</computeroutput> in algos_node.cpp</para>
+</listitem><listitem><para>Could be error in node.cpp compareDocumentPosition</para>
+</listitem><listitem><para>Node&apos;s node document can be changed using the adopt algo</para>
+</listitem><listitem><para>Encoding sort for Document object</para>
+</listitem><listitem><para>Doctype and mode check eveywhere ! all functions change</para>
+</listitem><listitem><para>Controversial ownerDocument vs nodeDocument</para>
+</listitem><listitem><para>Running normal split instead strict split <computeroutput>base_algos.cpp</computeroutput></para>
+</listitem><listitem><para>Replace seteventPhase() #Later</para>
+</listitem><listitem><para>Always have a newObject func in new Event derived clases</para>
+</listitem><listitem><para>Work on onabort attribute in <computeroutput>AbortSignal</computeroutput> object !</para>
+</listitem></itemizedlist>
+</para>
+</sect1>
+<sect1 id="md__t_o_d_o_1autotoc_md11">
+<title>Algorithms</title><para><blockquote><para>Remember to check all calls to these algo&apos;s in-order to rectify arg issues ! </para>
+</blockquote><itemizedlist>
+<listitem><para><strike>parse_ordered_set</strike></para>
+</listitem><listitem><para><strike>serialize_ordered_set</strike></para>
+</listitem><listitem><para>scope_match_selectors_string</para>
+</listitem><listitem><para><strike>clone_node</strike></para>
+</listitem><listitem><para><strike>clone_a_single_node</strike></para>
+</listitem><listitem><para><strike>locate_a_namespace_prefix</strike></para>
+</listitem><listitem><para><strike>locate_a_namespace</strike></para>
+</listitem><listitem><para><strike>add_event_listener</strike></para>
+</listitem><listitem><para><strike>remove_event_listener</strike></para>
+</listitem><listitem><para>preInsertNode</para>
+</listitem><listitem><para>replaceNode</para>
+</listitem><listitem><para>preRemoveNode</para>
+</listitem><listitem><para><strike>ValidNamespacePrefix</strike></para>
+</listitem><listitem><para><strike>ValidElementLocalName</strike><itemizedlist>
+<listitem><para><strike>Very Important ! Just 2 steps left !!</strike></para>
+</listitem></itemizedlist>
+</para>
+</listitem><listitem><para><strike>ValidAttributeLocalName</strike></para>
+</listitem><listitem><para><strike>ValidDocTypeName</strike></para>
+</listitem><listitem><para><strike>flatten_element_creation_options</strike></para>
+</listitem><listitem><para>create_element</para>
+</listitem><listitem><para><strike>internal_create_element_ns</strike></para>
+</listitem><listitem><para>adopt</para>
+</listitem><listitem><para><strike>ValidateAndExtract</strike><itemizedlist>
+<listitem><para><strike>Check for namespace XML,d XMLNS</strike></para>
+</listitem></itemizedlist>
+</para>
+</listitem><listitem><para><strike>check_shadow_including_descendant</strike></para>
+</listitem><listitem><para><strike>find_root</strike></para>
+</listitem><listitem><para><strike>is_closed_shadow_hidden</strike></para>
+</listitem><listitem><para><strike>retarget</strike></para>
+</listitem><listitem><para>create_element_internal</para>
+</listitem><listitem><para>handle_attribute_changes</para>
+</listitem><listitem><para><strike>change_attribute_value</strike></para>
+</listitem><listitem><para><strike>append_attribute</strike></para>
+</listitem><listitem><para><strike>remove_attribute</strike></para>
+</listitem><listitem><para><strike>replace_attribute</strike></para>
+</listitem><listitem><para><strike>FetchAttributeByName</strike></para>
+</listitem><listitem><para><strike>FetchAttributeByNamespaceAndLocalName</strike></para>
+</listitem><listitem><para><strike>FetchAttributeValue</strike></para>
+</listitem><listitem><para><strike>set_attribute</strike></para>
+</listitem><listitem><para><strike>set_attribute_value</strike></para>
+</listitem><listitem><para><strike>remove_attribute_by_name</strike></para>
+</listitem><listitem><para><strike>remove_attribute_by_namespace</strike></para>
+</listitem><listitem><para><strike>html_uppercased_qualified_name</strike></para>
+</listitem><listitem><para><strike>attach_shadow_root</strike></para>
+</listitem><listitem><para>listElementsWithQualifiedName</para>
+</listitem><listitem><para>listElementsWithNamespaceAndLocalName</para>
+</listitem><listitem><para>listElementsWithClassNames</para>
+</listitem><listitem><para><strike>insert_adjacent</strike></para>
+</listitem><listitem><para>SetExistingAttributeValue</para>
+</listitem><listitem><para>replace_data</para>
+</listitem><listitem><para><strike>substring_data</strike></para>
+</listitem><listitem><para>DetermineNodeLength</para>
+</listitem><listitem><para><strike>split_text_node</strike></para>
+</listitem><listitem><para><strike>descendant_text_node</strike></para>
+</listitem><listitem><para><strike>child_text_content</strike></para>
+</listitem><listitem><para><strike>contiguous_exclusive_text_nodes</strike></para>
+</listitem><listitem><para><strike>contiguous_text_nodes</strike></para>
+</listitem><listitem><para><strike>check_exclusive_text_node</strike></para>
+</listitem><listitem><para>StrictSplitText</para>
+</listitem><listitem><para><strike>string_replace_all</strike></para>
+</listitem><listitem><para>replace_all</para>
+</listitem><listitem><para>replace</para>
+</listitem><listitem><para>remove_node</para>
+</listitem><listitem><para>move_all</para>
+</listitem><listitem><para>append_node</para>
+</listitem><listitem><para>scope_match_selectors_string</para>
+</listitem><listitem><para><strike>nodequals</strike></para>
+</listitem><listitem><para><strike>position</strike></para>
+</listitem><listitem><para><strike>static_range_valid</strike></para>
+</listitem><listitem><para><strike>contained_in_range</strike></para>
+</listitem><listitem><para><strike>partially_contained_in_range</strike></para>
+</listitem><listitem><para>pre_remove_range - live range pre-remove steps</para>
+</listitem><listitem><para><strike>extract_range</strike></para>
+</listitem><listitem><para><strike>insert_node_in_range</strike></para>
+</listitem><listitem><para><strike>traverse_sibling</strike></para>
+</listitem><listitem><para><strike>traverse_children</strike></para>
+</listitem><listitem><para><strike>default_passive_value</strike></para>
+</listitem><listitem><para><strike>retard</strike></para>
+</listitem></itemizedlist>
+</para>
+</sect1>
+<sect1 id="md__t_o_d_o_1autotoc_md12">
+<title>Event</title><para><itemizedlist>
+<listitem><para>Realm implementation in <computeroutput>inner_event_creation_steps</computeroutput> &amp; <computeroutput>base.cpp</computeroutput> #JS</para>
+</listitem><listitem><para>Special event constructing steps for each specification in <computeroutput>inner_event_creation_steps</computeroutput> - <bold>JUST A NOTE</bold> #JS</para>
+</listitem><listitem><para><strike>Implementation of <computeroutput>relative_high_resolution_coarse_time</computeroutput> in <computeroutput>inner_event_creation_steps</computeroutput></strike></para>
+</listitem></itemizedlist>
+</para>
+</sect1>
+<sect1 id="md__t_o_d_o_1autotoc_md13">
+<title>CustomEvent</title></sect1>
+<sect1 id="md__t_o_d_o_1autotoc_md14">
+<title>EventTarget</title><para><itemizedlist>
+<listitem><para>In algo for events, <computeroutput>default_passive_value</computeroutput> body element check after HTML work done. #HTML</para>
+</listitem><listitem><para><strike>Add <computeroutput>algo</computeroutput> for <computeroutput>add_event_listener</computeroutput></strike></para>
+</listitem><listitem><para>Service Worker Global Scope: #JS<itemizedlist>
+<listitem><para>add_event_listener</para>
+</listitem><listitem><para>remove_event_listener</para>
+</listitem></itemizedlist>
+</para>
+</listitem><listitem><para>Set <computeroutput>targetOverride</computeroutput> to target&apos;s <computeroutput>associatedDocument</computeroutput> in <computeroutput>dispatch_event</computeroutput> #HTML</para>
+</listitem><listitem><para><strike>Assert for <computeroutput>slot</computeroutput> check in <computeroutput>dispatch_event</computeroutput> after implementation of Slot</strike></para>
+</listitem><listitem><para><strike>Implement check for <bold>shadow-including inclusive ancestor</bold> in <computeroutput>dispatch_event</computeroutput></strike></para>
+</listitem><listitem><para>After implementation of realm/global object, remember to complete <computeroutput>inner_invoke</computeroutput> func in <computeroutput>algos_events</computeroutput> #JS</para>
+</listitem><listitem><para>Relevant <computeroutput>realm</computeroutput> implementation with <computeroutput>eventConstructor</computeroutput> in <computeroutput>fire_event</computeroutput> in algos for events. #JS</para>
+</listitem><listitem><para>This <computeroutput>realm</computeroutput> boi implementation in <computeroutput>create_event</computeroutput> tooooo. #JS</para>
+</listitem><listitem><para><strike>Complete the <computeroutput>retard</computeroutput> function after shadow-inclusing ancestor.</strike></para>
+</listitem></itemizedlist>
+</para>
+</sect1>
+<sect1 id="md__t_o_d_o_1autotoc_md15">
+<title>AbortController</title></sect1>
+<sect1 id="md__t_o_d_o_1autotoc_md16">
+<title>AbortSignal</title><para><itemizedlist>
+<listitem><para>Mf global object to trouble again ! #HTML</para>
+</listitem><listitem><para>Current realm implementation in <computeroutput>_any</computeroutput> method #JS</para>
+</listitem><listitem><para>The same thing above in the creating #JS</para>
+</listitem><listitem><para><computeroutput>onabort</computeroutput> implementation after HTML #HTML</para>
+</listitem></itemizedlist>
+</para>
+</sect1>
+<sect1 id="md__t_o_d_o_1autotoc_md17">
+<title>Mutation Algo&apos;s</title><para><itemizedlist>
+<listitem><para><strike><computeroutput>host-including inclusive ancestor</computeroutput> implementation, then for <computeroutput>ensure_pre_insert_validity</computeroutput></strike></para>
+</listitem><listitem><para><strike>Point 6 in <computeroutput>ensure_pre_insert_validity</computeroutput> after figuring out best way to find type of child.</strike></para>
+</listitem><listitem><para>Next sibling stuff in <computeroutput>pre_insert_node</computeroutput></para>
+</listitem><listitem><para>Insert node addition after implementation in <computeroutput>pre_insert_node</computeroutput></para>
+</listitem><listitem><para>Doctype (others too) check in <computeroutput>ensure_pre_insert_validity</computeroutput></para>
+</listitem><listitem><para>Some global way to have live ranges stored. Then implement in:<itemizedlist>
+<listitem><para>insert_node</para>
+</listitem></itemizedlist>
+</para>
+</listitem></itemizedlist>
+</para>
+</sect1>
+<sect1 id="md__t_o_d_o_1autotoc_md18">
+<title>ParentNode</title><para><itemizedlist>
+<listitem><para>To write definition after selector stuff:<itemizedlist>
+<listitem><para>Element* querySelector(DOMString selectors);</para>
+</listitem><listitem><para>NodeList querySelectorAll(DOMString selectors);</para>
+</listitem></itemizedlist>
+</para>
+</listitem><listitem><para>Constructor required boi</para>
+</listitem></itemizedlist>
+</para>
+</sect1>
+<sect1 id="md__t_o_d_o_1autotoc_md19">
+<title>Slottable</title><para><itemizedlist>
+<listitem><para>Change type of <computeroutput>assignedSlot</computeroutput> from DOMString to <computeroutput>HTMLSlotElement</computeroutput> after HTML implementation. #HTML</para>
+</listitem></itemizedlist>
+</para>
+</sect1>
+<sect1 id="md__t_o_d_o_1autotoc_md20">
+<title>Node</title><para><itemizedlist>
+<listitem><para><strike>Meaningfull virtual func -&gt; abstract class</strike></para>
+</listitem><listitem><para><strike><computeroutput>getTheParent</computeroutput> algo</strike></para>
+</listitem><listitem><para><computeroutput>registered_observer_list</computeroutput> implementation</para>
+</listitem><listitem><para><computeroutput>serialize</computeroutput> algo</para>
+</listitem><listitem><para><computeroutput>baseURI</computeroutput> after node document&apos;s document base URI sorted after HTML implementation.</para>
+</listitem><listitem><para><computeroutput>normalize()</computeroutput> - This is fucking tough !</para>
+</listitem><listitem><para><strike><computeroutput>cloneNode()</computeroutput></strike></para>
+</listitem><listitem><para><strike>JS Work for equalAlgo - isEqualNode()</strike></para>
+</listitem><listitem><para><strike><computeroutput>compareDocumentPosition()</computeroutput></strike></para>
+</listitem><listitem><para><strike>tolower() to be made especially for ASCII</strike></para>
+</listitem><listitem><para>Rewrites:<itemizedlist>
+<listitem><para>nodeType: all kids</para>
+</listitem><listitem><para>nodeName: all kids</para>
+</listitem><listitem><para>nodeValue: Attr, CharacteData</para>
+</listitem><listitem><para>textContent: Attr, CharacterData, Element, DocumentFragment</para>
+</listitem><listitem><para>cloneNode(): ShadowRoot</para>
+</listitem><listitem><para>lookupPrefix(): all kids</para>
+</listitem></itemizedlist>
+</para>
+</listitem><listitem><para>In <computeroutput>clone_a_single_node</computeroutput> algo, check for global custom element registry</para>
+</listitem><listitem><para>In <computeroutput>clone_a_single_node</computeroutput> algo, complete the custom element registry #HTML</para>
+</listitem></itemizedlist>
+</para>
+</sect1>
+<sect1 id="md__t_o_d_o_1autotoc_md21">
+<title>Document</title><para><itemizedlist>
+<listitem><para>Opaque Origin #HTML</para>
+</listitem><listitem><para><computeroutput>getTheParent</computeroutput> algo incomplete: browsing context &amp; relevant global object</para>
+</listitem><listitem><para><computeroutput>serialize</computeroutput> algo</para>
+</listitem><listitem><para>Constructor work to set origin to origin of current global object&apos;s <computeroutput>associated Doc</computeroutput> #HTML</para>
+</listitem><listitem><para>Resolve this in <computeroutput>createProcessingInstruction</computeroutput> for <computeroutput>Document</computeroutput> -&gt; If target does not match the Name production</para>
+</listitem><listitem><para>Complete:<itemizedlist>
+<listitem><para><computeroutput>createEvent()</computeroutput> #HTML</para>
+</listitem><listitem><para><computeroutput>createRange()</computeroutput> # After Range implementation</para>
+</listitem><listitem><para><computeroutput>createNodeIterator()</computeroutput> # After NodeIterator implementation</para>
+</listitem><listitem><para><computeroutput>createTreeWalker()</computeroutput> # After TreeWalker implementation</para>
+</listitem></itemizedlist>
+</para>
+</listitem><listitem><para>is_scoped var in <computeroutput>flatten_element_creation_options</computeroutput> and in <computeroutput>importNode</computeroutput> #HTML</para>
+</listitem><listitem><para>looking up a custom element registry for <computeroutput>flatten_element_creation_options</computeroutput> and in <computeroutput>importNode</computeroutput> #HTML</para>
+</listitem></itemizedlist>
+</para>
+</sect1>
+<sect1 id="md__t_o_d_o_1autotoc_md22">
+<title>DOMImplementation</title><para><itemizedlist>
+<listitem><para>Empty dict passing to internalCreateElementNS resolving !</para>
+</listitem></itemizedlist>
+</para>
+</sect1>
+<sect1 id="md__t_o_d_o_1autotoc_md23">
+<title>DocumentType</title></sect1>
+<sect1 id="md__t_o_d_o_1autotoc_md24">
+<title>DocumentFragment</title><para><itemizedlist>
+<listitem><para>Define it&apos;s constructor using current global object value req #HTML</para>
+</listitem></itemizedlist>
+</para>
+</sect1>
+<sect1 id="md__t_o_d_o_1autotoc_md25">
+<title>ShadowRoot</title><para><itemizedlist>
+<listitem><para>onslotchange attribute event handler</para>
+</listitem></itemizedlist>
+</para>
+</sect1>
+<sect1 id="md__t_o_d_o_1autotoc_md26">
+<title>Element</title><para><itemizedlist>
+<listitem><para>customElementDefinition implementation #HTML</para>
+</listitem><listitem><para><strike>is value implementation #HTML</strike></para>
+</listitem><listitem><para><strike>validCustomElementName #HTML</strike></para>
+</listitem><listitem><para><strike>tagName getter steps with HTMLUpperCasedQualifiedName</strike></para>
+</listitem><listitem><para>Complete CustomElementRegistry class !</para>
+</listitem><listitem><para>shadowRoot resolve with getter steps !</para>
+</listitem><listitem><para>Implement<itemizedlist>
+<listitem><para><strike>setAttribute()</strike></para>
+</listitem><listitem><para><strike>hasAttribute()</strike></para>
+</listitem><listitem><para><strike>toggleAttribute()</strike></para>
+</listitem><listitem><para>closest() #CSS</para>
+</listitem><listitem><para>matches() #CSS</para>
+</listitem><listitem><para>webkitMatchesSelector() #CSS</para>
+</listitem></itemizedlist>
+</para>
+</listitem><listitem><para><strike>Implement <computeroutput>refect</computeroutput></strike></para>
+</listitem><listitem><para>create_element algo with #HTML</para>
+</listitem><listitem><para><computeroutput>fetch_attribute</computeroutput> in HTML namespace #HTML</para>
+</listitem><listitem><para>getter method for classList after <computeroutput>DOMTokenList</computeroutput></para>
+</listitem><listitem><para>HTML namespace check in <computeroutput>setAttribute</computeroutput> &amp; <computeroutput>hasAttribute</computeroutput> &amp;&amp; <computeroutput>toggleAttribute</computeroutput> #HTML</para>
+</listitem><listitem><para>is_scoped in <computeroutput>attachShadow</computeroutput> #HTML</para>
+</listitem><listitem><para>Custom stuff in <computeroutput>attach_shadow_root</computeroutput> algo in algos_docs.cpp #HTML</para>
+</listitem></itemizedlist>
+</para>
+</sect1>
+<sect1 id="md__t_o_d_o_1autotoc_md27">
+<title>NamedNodeMap</title><para><itemizedlist>
+<listitem><para>supported property names</para>
+</listitem></itemizedlist>
+</para>
+</sect1>
+<sect1 id="md__t_o_d_o_1autotoc_md28">
+<title>Attr</title></sect1>
+<sect1 id="md__t_o_d_o_1autotoc_md29">
+<title>CharacterData</title><para><itemizedlist>
+<listitem><para>Setter steps for data</para>
+</listitem></itemizedlist>
+</para>
+</sect1>
+<sect1 id="md__t_o_d_o_1autotoc_md30">
+<title>Text</title><para><itemizedlist>
+<listitem><para>Constructor after figuring out current global object from Realm #HTML</para>
+</listitem><listitem><para>In <computeroutput>split_text_node</computeroutput>, complete after completing <computeroutput>Range</computeroutput></para>
+</listitem><listitem><para>wholeText() implementation later after learning tree structure implementation</para>
+</listitem></itemizedlist>
+</para>
+</sect1>
+<sect1 id="md__t_o_d_o_1autotoc_md31">
+<title>ProcessingInstruction</title></sect1>
+<sect1 id="md__t_o_d_o_1autotoc_md32">
+<title>Comment</title><para><itemizedlist>
+<listitem><para>Constructor after figuring out dude about current global object ! #HTML</para>
+</listitem></itemizedlist>
+</para>
+</sect1>
+<sect1 id="md__t_o_d_o_1autotoc_md33">
+<title>AbstractRange</title></sect1>
+<sect1 id="md__t_o_d_o_1autotoc_md34">
+<title>StaticRange</title></sect1>
+<sect1 id="md__t_o_d_o_1autotoc_md35">
+<title>Range</title><para><itemizedlist>
+<listitem><para>Wtf is this <computeroutput>stringifier</computeroutput> ! check definition boi</para>
+</listitem><listitem><para>Constructor after figuring out dude about current global object ! #HTML</para>
+</listitem><listitem><para><computeroutput>deleteContents()</computeroutput> - Implementation of nodes_to_remove</para>
+</listitem><listitem><para>clone children flag in <computeroutput>clone_contents</computeroutput> algo</para>
+</listitem><listitem><para>Text nodes contained in this range in tree order in <computeroutput>stringification_behavior</computeroutput></para>
+</listitem><listitem><para>non-Text node is partially contained in range in <computeroutput>surroundContents</computeroutput> method</para>
+</listitem></itemizedlist>
+</para>
+</sect1>
+<sect1 id="md__t_o_d_o_1autotoc_md36">
+<title>NodeIterator</title><para><itemizedlist>
+<listitem><para><computeroutput>filter_node</computeroutput> method complete later</para>
+</listitem><listitem><para><computeroutput>pre_remove_steps</computeroutput> complete</para>
+</listitem><listitem><para>Implement iterator collection</para>
+</listitem><listitem><para>After above step, complete <computeroutput>traverse</computeroutput> algo</para>
+</listitem></itemizedlist>
+</para>
+</sect1>
+<sect1 id="md__t_o_d_o_1autotoc_md37">
+<title>TreeWalker</title><para><itemizedlist>
+<listitem><para><computeroutput>filter_node</computeroutput> method complete later</para>
+</listitem></itemizedlist>
+</para>
+</sect1>
+<sect1 id="md__t_o_d_o_1autotoc_md38">
+<title>NodeFilter</title></sect1>
+<sect1 id="md__t_o_d_o_1autotoc_md39">
+<title>DOMTokenList</title><para><itemizedlist>
+<listitem><para>Supported tokens resolve based on specifications in <computeroutput>validate()</computeroutput> </para>
+</listitem></itemizedlist>
+</para>
+</sect1>
+    </detaileddescription>
+    <location file="TODO.md"/>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.14.0" xml:lang="en-US">
+  <compounddef id="class_custom_state_set" kind="class" language="C++" prot="public">
+    <compoundname>CustomStateSet</compoundname>
+    <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="class_custom_state_set_1a4d67eff80952e8f9da00f470f7315504" prot="private" static="no" mutable="no">
+        <type>std::vector&lt; DOMString &gt;</type>
+        <definition>std::vector&lt;DOMString&gt; CustomStateSet::states</definition>
+        <argsstring></argsstring>
+        <name>states</name>
+        <qualifiedname>CustomStateSet::states</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="124" column="17" bodyfile="HtmlElements.cpp" bodystart="124" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="HtmlElements.cpp" line="123" column="1" bodyfile="HtmlElements.cpp" bodystart="123" bodyend="125"/>
+    <listofallmembers>
+      <member refid="class_custom_state_set_1a4d67eff80952e8f9da00f470f7315504" prot="private" virt="non-virtual"><scope>CustomStateSet</scope><name>states</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,287 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.14.0" xml:lang="en-US">
+  <compounddef id="class_h_t_m_l_track_element" kind="class" language="C++" prot="public">
+    <compoundname>HTMLTrackElement</compoundname>
+    <basecompoundref refid="class_h_t_m_l_element" prot="public" virt="non-virtual">HTMLElement</basecompoundref>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="class_h_t_m_l_track_element_1aabc033fc44adb2b3caf222eb46690dc5" prot="public" static="no" mutable="no">
+        <type>DOMString</type>
+        <definition>DOMString HTMLTrackElement::kind</definition>
+        <argsstring></argsstring>
+        <name>kind</name>
+        <qualifiedname>HTMLTrackElement::kind</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="786" column="19" bodyfile="HtmlElements.cpp" bodystart="786" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_h_t_m_l_track_element_1a60069edd12cf92b1020edb244f0ff2ea" prot="public" static="no" mutable="no">
+        <type>USVString</type>
+        <definition>USVString HTMLTrackElement::src</definition>
+        <argsstring></argsstring>
+        <name>src</name>
+        <qualifiedname>HTMLTrackElement::src</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="787" column="19" bodyfile="HtmlElements.cpp" bodystart="787" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_h_t_m_l_track_element_1a00f3e6c59ba8f13db3ff9d9c4cf49641" prot="public" static="no" mutable="no">
+        <type>DOMString</type>
+        <definition>DOMString HTMLTrackElement::srclang</definition>
+        <argsstring></argsstring>
+        <name>srclang</name>
+        <qualifiedname>HTMLTrackElement::srclang</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="788" column="19" bodyfile="HtmlElements.cpp" bodystart="788" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_h_t_m_l_track_element_1a55ca46d5920b2d1e03e20c8af0b52b27" prot="public" static="no" mutable="no">
+        <type>DOMString</type>
+        <definition>DOMString HTMLTrackElement::label</definition>
+        <argsstring></argsstring>
+        <name>label</name>
+        <qualifiedname>HTMLTrackElement::label</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="789" column="19" bodyfile="HtmlElements.cpp" bodystart="789" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_h_t_m_l_track_element_1acb3b801ebec6f383d2de5531b2e612fe" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool HTMLTrackElement::defaul</definition>
+        <argsstring></argsstring>
+        <name>defaul</name>
+        <qualifiedname>HTMLTrackElement::defaul</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="790" column="14" bodyfile="HtmlElements.cpp" bodystart="790" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_h_t_m_l_track_element_1ae73c439589e79b6f1cf00916e9c76114" prot="public" static="no" mutable="no">
+        <type>const unsigned short</type>
+        <definition>const unsigned short HTMLTrackElement::NONE</definition>
+        <argsstring></argsstring>
+        <name>NONE</name>
+        <qualifiedname>HTMLTrackElement::NONE</qualifiedname>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="792" column="30" bodyfile="HtmlElements.cpp" bodystart="792" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_h_t_m_l_track_element_1aaa62fa45f4e44640bbac03f2198028ef" prot="public" static="no" mutable="no">
+        <type>const unsigned short</type>
+        <definition>const unsigned short HTMLTrackElement::LOADING</definition>
+        <argsstring></argsstring>
+        <name>LOADING</name>
+        <qualifiedname>HTMLTrackElement::LOADING</qualifiedname>
+        <initializer>= 1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="793" column="30" bodyfile="HtmlElements.cpp" bodystart="793" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_h_t_m_l_track_element_1a7d386a1a8c90c1d15b6d719412dc8a7c" prot="public" static="no" mutable="no">
+        <type>const unsigned short</type>
+        <definition>const unsigned short HTMLTrackElement::LOADED</definition>
+        <argsstring></argsstring>
+        <name>LOADED</name>
+        <qualifiedname>HTMLTrackElement::LOADED</qualifiedname>
+        <initializer>= 2</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="794" column="30" bodyfile="HtmlElements.cpp" bodystart="794" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_h_t_m_l_track_element_1a69db47de72a68d7bf419c59f28c1008a" prot="public" static="no" mutable="no">
+        <type>const unsigned short</type>
+        <definition>const unsigned short HTMLTrackElement::ERROR</definition>
+        <argsstring></argsstring>
+        <name>ERROR</name>
+        <qualifiedname>HTMLTrackElement::ERROR</qualifiedname>
+        <initializer>= 3</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="795" column="30" bodyfile="HtmlElements.cpp" bodystart="795" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_h_t_m_l_track_element_1a8d23973c17e8c6f4dc2a9221d047ee0f" prot="public" static="no" mutable="no">
+        <type>unsigned short</type>
+        <definition>unsigned short HTMLTrackElement::readyState</definition>
+        <argsstring></argsstring>
+        <name>readyState</name>
+        <qualifiedname>HTMLTrackElement::readyState</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="796" column="24" bodyfile="HtmlElements.cpp" bodystart="796" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_h_t_m_l_track_element_1ae15f9f9ac71228fbfab371d178b4df7f" prot="public" static="no" mutable="no">
+        <type><ref refid="class_text_track" kindref="compound">TextTrack</ref></type>
+        <definition>TextTrack HTMLTrackElement::track</definition>
+        <argsstring></argsstring>
+        <name>track</name>
+        <qualifiedname>HTMLTrackElement::track</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="798" column="19" bodyfile="HtmlElements.cpp" bodystart="798" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="class_h_t_m_l_track_element_1a87ab20efd59456b4475d9b63f34388e6" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>HTMLTrackElement::HTMLTrackElement</definition>
+        <argsstring>()</argsstring>
+        <name>HTMLTrackElement</name>
+        <qualifiedname>HTMLTrackElement::HTMLTrackElement</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="784" column="9" bodyfile="HtmlElements.cpp" bodystart="784" bodyend="784"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="3">
+        <label>Element</label>
+      </node>
+      <node id="2">
+        <label>HTMLElement</label>
+        <link refid="class_h_t_m_l_element"/>
+        <childnode refid="3" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>HTMLTrackElement</label>
+        <link refid="class_h_t_m_l_track_element"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="3">
+        <label>Element</label>
+      </node>
+      <node id="5">
+        <label>EventTarget</label>
+      </node>
+      <node id="2">
+        <label>HTMLElement</label>
+        <link refid="class_h_t_m_l_element"/>
+        <childnode refid="3" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>HTMLTrackElement</label>
+        <link refid="class_h_t_m_l_track_element"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+        <childnode refid="4" relation="usage">
+          <edgelabel>track</edgelabel>
+        </childnode>
+      </node>
+      <node id="4">
+        <label>TextTrack</label>
+        <link refid="class_text_track"/>
+        <childnode refid="5" relation="public-inheritance">
+        </childnode>
+        <childnode refid="6" relation="usage">
+          <edgelabel>activeCues</edgelabel>
+          <edgelabel>cues</edgelabel>
+        </childnode>
+      </node>
+      <node id="6">
+        <label>TextTrackCueList</label>
+        <link refid="class_text_track_cue_list"/>
+      </node>
+    </collaborationgraph>
+    <location file="HtmlElements.cpp" line="782" column="1" bodyfile="HtmlElements.cpp" bodystart="782" bodyend="799"/>
+    <listofallmembers>
+      <member refid="class_h_t_m_l_element_1a34f5929019d1f62156f9dba13a54d082" prot="public" virt="non-virtual"><scope>HTMLTrackElement</scope><name>accessKey</name></member>
+      <member refid="class_h_t_m_l_element_1aab20f7a1cbba885509eeadd23ae676a4" prot="public" virt="non-virtual"><scope>HTMLTrackElement</scope><name>accessKeyLabel</name></member>
+      <member refid="class_h_t_m_l_element_1a4c341258f8600bb0d061f147d980fb71" prot="public" virt="non-virtual"><scope>HTMLTrackElement</scope><name>attachInternals</name></member>
+      <member refid="class_h_t_m_l_element_1afcd9d9037543f93fd468ca2f397f6fb1" prot="public" virt="non-virtual"><scope>HTMLTrackElement</scope><name>autocapitalize</name></member>
+      <member refid="class_h_t_m_l_element_1a6565458cb2869f8b3ef8a5bc635b6af5" prot="public" virt="non-virtual"><scope>HTMLTrackElement</scope><name>autocorrect</name></member>
+      <member refid="class_h_t_m_l_element_1a82f585ce5247efc80d3bcd83c4e64aff" prot="public" virt="non-virtual"><scope>HTMLTrackElement</scope><name>autofocus</name></member>
+      <member refid="class_h_t_m_l_element_1a3359744a29b30e0e7f9bf782e203be70" prot="public" virt="non-virtual"><scope>HTMLTrackElement</scope><name>blur</name></member>
+      <member refid="class_h_t_m_l_element_1aa3ae4ebe265852f5b18ca97c42690acc" prot="public" virt="non-virtual"><scope>HTMLTrackElement</scope><name>classname</name></member>
+      <member refid="class_h_t_m_l_element_1a23d7391ed5de254618b27e9b4b235659" prot="public" virt="non-virtual"><scope>HTMLTrackElement</scope><name>click</name></member>
+      <member refid="class_h_t_m_l_track_element_1acb3b801ebec6f383d2de5531b2e612fe" prot="public" virt="non-virtual"><scope>HTMLTrackElement</scope><name>defaul</name></member>
+      <member refid="class_h_t_m_l_element_1a1aa6efe89cc078f89c5353929ec59ad2" prot="public" virt="non-virtual"><scope>HTMLTrackElement</scope><name>dir</name></member>
+      <member refid="class_h_t_m_l_element_1a751f062860bb6b8e72ecd61ceb88b100" prot="public" virt="non-virtual"><scope>HTMLTrackElement</scope><name>draggable</name></member>
+      <member refid="class_h_t_m_l_track_element_1a69db47de72a68d7bf419c59f28c1008a" prot="public" virt="non-virtual"><scope>HTMLTrackElement</scope><name>ERROR</name></member>
+      <member refid="class_h_t_m_l_element_1a8e7d731e966a64e878d6bd6e822a6f5c" prot="public" virt="non-virtual"><scope>HTMLTrackElement</scope><name>focus</name></member>
+      <member refid="class_h_t_m_l_element_1a1e295cf654398a2738da85f9d3c905b0" prot="public" virt="non-virtual"><scope>HTMLTrackElement</scope><name>headingOffset</name></member>
+      <member refid="class_h_t_m_l_element_1ad166a49ba19635a2e4ca3df474858181" prot="public" virt="non-virtual"><scope>HTMLTrackElement</scope><name>headingReset</name></member>
+      <member refid="class_h_t_m_l_element_1ac87a008f78788b17f5c8961f9007f6e4" prot="public" virt="non-virtual"><scope>HTMLTrackElement</scope><name>hidden</name></member>
+      <member refid="class_h_t_m_l_element_1a3c776d3db47cb3a9d0f8a27fed739b4f" prot="public" virt="non-virtual"><scope>HTMLTrackElement</scope><name>hidePopover</name></member>
+      <member refid="class_h_t_m_l_element_1ac88990568d6d3db84a41483fbbf3422d" prot="public" virt="non-virtual"><scope>HTMLTrackElement</scope><name>HTMLElement</name></member>
+      <member refid="class_h_t_m_l_track_element_1a87ab20efd59456b4475d9b63f34388e6" prot="public" virt="non-virtual"><scope>HTMLTrackElement</scope><name>HTMLTrackElement</name></member>
+      <member refid="class_h_t_m_l_element_1a0d4276f08d39f385d4a36030a0136376" prot="public" virt="non-virtual"><scope>HTMLTrackElement</scope><name>id</name></member>
+      <member refid="class_h_t_m_l_element_1ad87ee3f4e1fc2c1a064cda454ba5dec3" prot="public" virt="non-virtual"><scope>HTMLTrackElement</scope><name>inert</name></member>
+      <member refid="class_h_t_m_l_element_1ab2f17f5a21719b8f89de9e42767669ca" prot="public" virt="non-virtual"><scope>HTMLTrackElement</scope><name>innerText</name></member>
+      <member refid="class_h_t_m_l_track_element_1aabc033fc44adb2b3caf222eb46690dc5" prot="public" virt="non-virtual"><scope>HTMLTrackElement</scope><name>kind</name></member>
+      <member refid="class_h_t_m_l_track_element_1a55ca46d5920b2d1e03e20c8af0b52b27" prot="public" virt="non-virtual"><scope>HTMLTrackElement</scope><name>label</name></member>
+      <member refid="class_h_t_m_l_element_1a5210bdf34a9f9437e701facb98d0d929" prot="public" virt="non-virtual"><scope>HTMLTrackElement</scope><name>lang</name></member>
+      <member refid="class_h_t_m_l_track_element_1a7d386a1a8c90c1d15b6d719412dc8a7c" prot="public" virt="non-virtual"><scope>HTMLTrackElement</scope><name>LOADED</name></member>
+      <member refid="class_h_t_m_l_track_element_1aaa62fa45f4e44640bbac03f2198028ef" prot="public" virt="non-virtual"><scope>HTMLTrackElement</scope><name>LOADING</name></member>
+      <member refid="class_h_t_m_l_element_1adf3ac36c36e3bc7aee4799fb58b68b3d" prot="public" virt="non-virtual"><scope>HTMLTrackElement</scope><name>nonce</name></member>
+      <member refid="class_h_t_m_l_track_element_1ae73c439589e79b6f1cf00916e9c76114" prot="public" virt="non-virtual"><scope>HTMLTrackElement</scope><name>NONE</name></member>
+      <member refid="class_h_t_m_l_element_1ae01f3838f2d334cc79e343e7530ca4f9" prot="public" virt="non-virtual"><scope>HTMLTrackElement</scope><name>outerText</name></member>
+      <member refid="class_h_t_m_l_element_1a55ff5d14da80ff7b7f663d3d6215387c" prot="public" virt="non-virtual"><scope>HTMLTrackElement</scope><name>popover</name></member>
+      <member refid="class_h_t_m_l_track_element_1a8d23973c17e8c6f4dc2a9221d047ee0f" prot="public" virt="non-virtual"><scope>HTMLTrackElement</scope><name>readyState</name></member>
+      <member refid="class_h_t_m_l_element_1afa4af2705fb03a14cfa534f59d134b15" prot="public" virt="non-virtual"><scope>HTMLTrackElement</scope><name>showPopover</name></member>
+      <member refid="class_h_t_m_l_element_1ac89fd46c28c72618fe80fb1962b725e8" prot="public" virt="non-virtual"><scope>HTMLTrackElement</scope><name>spellcheck</name></member>
+      <member refid="class_h_t_m_l_track_element_1a60069edd12cf92b1020edb244f0ff2ea" prot="public" virt="non-virtual"><scope>HTMLTrackElement</scope><name>src</name></member>
+      <member refid="class_h_t_m_l_track_element_1a00f3e6c59ba8f13db3ff9d9c4cf49641" prot="public" virt="non-virtual"><scope>HTMLTrackElement</scope><name>srclang</name></member>
+      <member refid="class_h_t_m_l_element_1aa1934fbb36b074b224e2d81d04baeb38" prot="public" virt="non-virtual"><scope>HTMLTrackElement</scope><name>tabIndex</name></member>
+      <member refid="class_h_t_m_l_element_1ab7a16d9ff2c240912fa946c6f4466c13" prot="public" virt="non-virtual"><scope>HTMLTrackElement</scope><name>title</name></member>
+      <member refid="class_h_t_m_l_element_1a74026637504c1456b7619d7611b1ba87" prot="public" virt="non-virtual"><scope>HTMLTrackElement</scope><name>togglePopover</name></member>
+      <member refid="class_h_t_m_l_track_element_1ae15f9f9ac71228fbfab371d178b4df7f" prot="public" virt="non-virtual"><scope>HTMLTrackElement</scope><name>track</name></member>
+      <member refid="class_h_t_m_l_element_1a3f14e5b88a6bdae0cfd42b512a48b4eb" prot="public" virt="non-virtual"><scope>HTMLTrackElement</scope><name>translate</name></member>
+      <member refid="class_h_t_m_l_element_1a7e5a08fa4e11484d77226ae2bd28ad69" prot="public" virt="non-virtual"><scope>HTMLTrackElement</scope><name>writingSuggestions</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,128 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.14.0" xml:lang="en-US">
+  <compounddef id="class_h_t_m_l_details_element" kind="class" language="C++" prot="public">
+    <compoundname>HTMLDetailsElement</compoundname>
+    <basecompoundref refid="class_h_t_m_l_element" prot="public" virt="non-virtual">HTMLElement</basecompoundref>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="class_h_t_m_l_details_element_1a25e5182610c3e7931abef44db0690886" prot="public" static="no" mutable="no">
+        <type>DOMString</type>
+        <definition>DOMString HTMLDetailsElement::name</definition>
+        <argsstring></argsstring>
+        <name>name</name>
+        <qualifiedname>HTMLDetailsElement::name</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="1261" column="19" bodyfile="HtmlElements.cpp" bodystart="1261" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_h_t_m_l_details_element_1a2ba38be49b1493e6c88047a107fc1fac" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool HTMLDetailsElement::open</definition>
+        <argsstring></argsstring>
+        <name>open</name>
+        <qualifiedname>HTMLDetailsElement::open</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="1262" column="14" bodyfile="HtmlElements.cpp" bodystart="1262" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="class_h_t_m_l_details_element_1a6dff70123d4d055761a35df84ef0cdfd" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>HTMLDetailsElement::HTMLDetailsElement</definition>
+        <argsstring>()</argsstring>
+        <name>HTMLDetailsElement</name>
+        <qualifiedname>HTMLDetailsElement::HTMLDetailsElement</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="1259" column="9" bodyfile="HtmlElements.cpp" bodystart="1259" bodyend="1259"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="3">
+        <label>Element</label>
+      </node>
+      <node id="1">
+        <label>HTMLDetailsElement</label>
+        <link refid="class_h_t_m_l_details_element"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>HTMLElement</label>
+        <link refid="class_h_t_m_l_element"/>
+        <childnode refid="3" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="3">
+        <label>Element</label>
+      </node>
+      <node id="1">
+        <label>HTMLDetailsElement</label>
+        <link refid="class_h_t_m_l_details_element"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>HTMLElement</label>
+        <link refid="class_h_t_m_l_element"/>
+        <childnode refid="3" relation="public-inheritance">
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="HtmlElements.cpp" line="1257" column="1" bodyfile="HtmlElements.cpp" bodystart="1257" bodyend="1263"/>
+    <listofallmembers>
+      <member refid="class_h_t_m_l_element_1a34f5929019d1f62156f9dba13a54d082" prot="public" virt="non-virtual"><scope>HTMLDetailsElement</scope><name>accessKey</name></member>
+      <member refid="class_h_t_m_l_element_1aab20f7a1cbba885509eeadd23ae676a4" prot="public" virt="non-virtual"><scope>HTMLDetailsElement</scope><name>accessKeyLabel</name></member>
+      <member refid="class_h_t_m_l_element_1a4c341258f8600bb0d061f147d980fb71" prot="public" virt="non-virtual"><scope>HTMLDetailsElement</scope><name>attachInternals</name></member>
+      <member refid="class_h_t_m_l_element_1afcd9d9037543f93fd468ca2f397f6fb1" prot="public" virt="non-virtual"><scope>HTMLDetailsElement</scope><name>autocapitalize</name></member>
+      <member refid="class_h_t_m_l_element_1a6565458cb2869f8b3ef8a5bc635b6af5" prot="public" virt="non-virtual"><scope>HTMLDetailsElement</scope><name>autocorrect</name></member>
+      <member refid="class_h_t_m_l_element_1a82f585ce5247efc80d3bcd83c4e64aff" prot="public" virt="non-virtual"><scope>HTMLDetailsElement</scope><name>autofocus</name></member>
+      <member refid="class_h_t_m_l_element_1a3359744a29b30e0e7f9bf782e203be70" prot="public" virt="non-virtual"><scope>HTMLDetailsElement</scope><name>blur</name></member>
+      <member refid="class_h_t_m_l_element_1aa3ae4ebe265852f5b18ca97c42690acc" prot="public" virt="non-virtual"><scope>HTMLDetailsElement</scope><name>classname</name></member>
+      <member refid="class_h_t_m_l_element_1a23d7391ed5de254618b27e9b4b235659" prot="public" virt="non-virtual"><scope>HTMLDetailsElement</scope><name>click</name></member>
+      <member refid="class_h_t_m_l_element_1a1aa6efe89cc078f89c5353929ec59ad2" prot="public" virt="non-virtual"><scope>HTMLDetailsElement</scope><name>dir</name></member>
+      <member refid="class_h_t_m_l_element_1a751f062860bb6b8e72ecd61ceb88b100" prot="public" virt="non-virtual"><scope>HTMLDetailsElement</scope><name>draggable</name></member>
+      <member refid="class_h_t_m_l_element_1a8e7d731e966a64e878d6bd6e822a6f5c" prot="public" virt="non-virtual"><scope>HTMLDetailsElement</scope><name>focus</name></member>
+      <member refid="class_h_t_m_l_element_1a1e295cf654398a2738da85f9d3c905b0" prot="public" virt="non-virtual"><scope>HTMLDetailsElement</scope><name>headingOffset</name></member>
+      <member refid="class_h_t_m_l_element_1ad166a49ba19635a2e4ca3df474858181" prot="public" virt="non-virtual"><scope>HTMLDetailsElement</scope><name>headingReset</name></member>
+      <member refid="class_h_t_m_l_element_1ac87a008f78788b17f5c8961f9007f6e4" prot="public" virt="non-virtual"><scope>HTMLDetailsElement</scope><name>hidden</name></member>
+      <member refid="class_h_t_m_l_element_1a3c776d3db47cb3a9d0f8a27fed739b4f" prot="public" virt="non-virtual"><scope>HTMLDetailsElement</scope><name>hidePopover</name></member>
+      <member refid="class_h_t_m_l_details_element_1a6dff70123d4d055761a35df84ef0cdfd" prot="public" virt="non-virtual"><scope>HTMLDetailsElement</scope><name>HTMLDetailsElement</name></member>
+      <member refid="class_h_t_m_l_element_1ac88990568d6d3db84a41483fbbf3422d" prot="public" virt="non-virtual"><scope>HTMLDetailsElement</scope><name>HTMLElement</name></member>
+      <member refid="class_h_t_m_l_element_1a0d4276f08d39f385d4a36030a0136376" prot="public" virt="non-virtual"><scope>HTMLDetailsElement</scope><name>id</name></member>
+      <member refid="class_h_t_m_l_element_1ad87ee3f4e1fc2c1a064cda454ba5dec3" prot="public" virt="non-virtual"><scope>HTMLDetailsElement</scope><name>inert</name></member>
+      <member refid="class_h_t_m_l_element_1ab2f17f5a21719b8f89de9e42767669ca" prot="public" virt="non-virtual"><scope>HTMLDetailsElement</scope><name>innerText</name></member>
+      <member refid="class_h_t_m_l_element_1a5210bdf34a9f9437e701facb98d0d929" prot="public" virt="non-virtual"><scope>HTMLDetailsElement</scope><name>lang</name></member>
+      <member refid="class_h_t_m_l_details_element_1a25e5182610c3e7931abef44db0690886" prot="public" virt="non-virtual"><scope>HTMLDetailsElement</scope><name>name</name></member>
+      <member refid="class_h_t_m_l_element_1adf3ac36c36e3bc7aee4799fb58b68b3d" prot="public" virt="non-virtual"><scope>HTMLDetailsElement</scope><name>nonce</name></member>
+      <member refid="class_h_t_m_l_details_element_1a2ba38be49b1493e6c88047a107fc1fac" prot="public" virt="non-virtual"><scope>HTMLDetailsElement</scope><name>open</name></member>
+      <member refid="class_h_t_m_l_element_1ae01f3838f2d334cc79e343e7530ca4f9" prot="public" virt="non-virtual"><scope>HTMLDetailsElement</scope><name>outerText</name></member>
+      <member refid="class_h_t_m_l_element_1a55ff5d14da80ff7b7f663d3d6215387c" prot="public" virt="non-virtual"><scope>HTMLDetailsElement</scope><name>popover</name></member>
+      <member refid="class_h_t_m_l_element_1afa4af2705fb03a14cfa534f59d134b15" prot="public" virt="non-virtual"><scope>HTMLDetailsElement</scope><name>showPopover</name></member>
+      <member refid="class_h_t_m_l_element_1ac89fd46c28c72618fe80fb1962b725e8" prot="public" virt="non-virtual"><scope>HTMLDetailsElement</scope><name>spellcheck</name></member>
+      <member refid="class_h_t_m_l_element_1aa1934fbb36b074b224e2d81d04baeb38" prot="public" virt="non-virtual"><scope>HTMLDetailsElement</scope><name>tabIndex</name></member>
+      <member refid="class_h_t_m_l_element_1ab7a16d9ff2c240912fa946c6f4466c13" prot="public" virt="non-virtual"><scope>HTMLDetailsElement</scope><name>title</name></member>
+      <member refid="class_h_t_m_l_element_1a74026637504c1456b7619d7611b1ba87" prot="public" virt="non-virtual"><scope>HTMLDetailsElement</scope><name>togglePopover</name></member>
+      <member refid="class_h_t_m_l_element_1a3f14e5b88a6bdae0cfd42b512a48b4eb" prot="public" virt="non-virtual"><scope>HTMLDetailsElement</scope><name>translate</name></member>
+      <member refid="class_h_t_m_l_element_1a7e5a08fa4e11484d77226ae2bd28ad69" prot="public" virt="non-virtual"><scope>HTMLDetailsElement</scope><name>writingSuggestions</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

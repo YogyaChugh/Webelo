@@ -1,0 +1,180 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.14.0" xml:lang="en-US">
+  <compounddef id="struct_validity_state" kind="struct" language="C++" prot="public">
+    <compoundname>ValidityState</compoundname>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="struct_validity_state_1ad79f095a0d3832c8e01f6657ae6c6711" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool ValidityState::valueMissing</definition>
+        <argsstring></argsstring>
+        <name>valueMissing</name>
+        <qualifiedname>ValidityState::valueMissing</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="152" column="8" bodyfile="HtmlElements.cpp" bodystart="152" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_validity_state_1a06825fb55ba5472978e6aeff81a25fcd" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool ValidityState::typeMismatch</definition>
+        <argsstring></argsstring>
+        <name>typeMismatch</name>
+        <qualifiedname>ValidityState::typeMismatch</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="153" column="8" bodyfile="HtmlElements.cpp" bodystart="153" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_validity_state_1a79f70a5a74da3f2b2f9458054702958b" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool ValidityState::patternMismatch</definition>
+        <argsstring></argsstring>
+        <name>patternMismatch</name>
+        <qualifiedname>ValidityState::patternMismatch</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="154" column="8" bodyfile="HtmlElements.cpp" bodystart="154" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_validity_state_1adccddeb6b234f84b91dee9b0f74743ff" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool ValidityState::tooLong</definition>
+        <argsstring></argsstring>
+        <name>tooLong</name>
+        <qualifiedname>ValidityState::tooLong</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="155" column="8" bodyfile="HtmlElements.cpp" bodystart="155" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_validity_state_1a290afe3a85d7dfdea7bb2374b0660e93" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool ValidityState::tooShort</definition>
+        <argsstring></argsstring>
+        <name>tooShort</name>
+        <qualifiedname>ValidityState::tooShort</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="156" column="8" bodyfile="HtmlElements.cpp" bodystart="156" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_validity_state_1af436016216a405c72c1f128c248ed066" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool ValidityState::rangeUnderflow</definition>
+        <argsstring></argsstring>
+        <name>rangeUnderflow</name>
+        <qualifiedname>ValidityState::rangeUnderflow</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="157" column="8" bodyfile="HtmlElements.cpp" bodystart="157" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_validity_state_1af86a457ff8e1931106688ce9ac66466b" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool ValidityState::rangeOverflow</definition>
+        <argsstring></argsstring>
+        <name>rangeOverflow</name>
+        <qualifiedname>ValidityState::rangeOverflow</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="158" column="8" bodyfile="HtmlElements.cpp" bodystart="158" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_validity_state_1aa7797e0ca0c7f9fc3e57f6073c81d0ee" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool ValidityState::stepMismatch</definition>
+        <argsstring></argsstring>
+        <name>stepMismatch</name>
+        <qualifiedname>ValidityState::stepMismatch</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="159" column="8" bodyfile="HtmlElements.cpp" bodystart="159" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_validity_state_1ade5a8747405c07d7683f4382351d147c" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool ValidityState::badInput</definition>
+        <argsstring></argsstring>
+        <name>badInput</name>
+        <qualifiedname>ValidityState::badInput</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="160" column="8" bodyfile="HtmlElements.cpp" bodystart="160" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_validity_state_1ab6a6163a89b1cc5a30bbb20aaeef9cd1" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool ValidityState::customError</definition>
+        <argsstring></argsstring>
+        <name>customError</name>
+        <qualifiedname>ValidityState::customError</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="161" column="8" bodyfile="HtmlElements.cpp" bodystart="161" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_validity_state_1a06868942ad61ae74b01bee3c59812d27" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool ValidityState::valid</definition>
+        <argsstring></argsstring>
+        <name>valid</name>
+        <qualifiedname>ValidityState::valid</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="162" column="8" bodyfile="HtmlElements.cpp" bodystart="162" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="HtmlElements.cpp" line="151" column="1" bodyfile="HtmlElements.cpp" bodystart="151" bodyend="163"/>
+    <listofallmembers>
+      <member refid="struct_validity_state_1ade5a8747405c07d7683f4382351d147c" prot="public" virt="non-virtual"><scope>ValidityState</scope><name>badInput</name></member>
+      <member refid="struct_validity_state_1ab6a6163a89b1cc5a30bbb20aaeef9cd1" prot="public" virt="non-virtual"><scope>ValidityState</scope><name>customError</name></member>
+      <member refid="struct_validity_state_1a79f70a5a74da3f2b2f9458054702958b" prot="public" virt="non-virtual"><scope>ValidityState</scope><name>patternMismatch</name></member>
+      <member refid="struct_validity_state_1af86a457ff8e1931106688ce9ac66466b" prot="public" virt="non-virtual"><scope>ValidityState</scope><name>rangeOverflow</name></member>
+      <member refid="struct_validity_state_1af436016216a405c72c1f128c248ed066" prot="public" virt="non-virtual"><scope>ValidityState</scope><name>rangeUnderflow</name></member>
+      <member refid="struct_validity_state_1aa7797e0ca0c7f9fc3e57f6073c81d0ee" prot="public" virt="non-virtual"><scope>ValidityState</scope><name>stepMismatch</name></member>
+      <member refid="struct_validity_state_1adccddeb6b234f84b91dee9b0f74743ff" prot="public" virt="non-virtual"><scope>ValidityState</scope><name>tooLong</name></member>
+      <member refid="struct_validity_state_1a290afe3a85d7dfdea7bb2374b0660e93" prot="public" virt="non-virtual"><scope>ValidityState</scope><name>tooShort</name></member>
+      <member refid="struct_validity_state_1a06825fb55ba5472978e6aeff81a25fcd" prot="public" virt="non-virtual"><scope>ValidityState</scope><name>typeMismatch</name></member>
+      <member refid="struct_validity_state_1a06868942ad61ae74b01bee3c59812d27" prot="public" virt="non-virtual"><scope>ValidityState</scope><name>valid</name></member>
+      <member refid="struct_validity_state_1ad79f095a0d3832c8e01f6657ae6c6711" prot="public" virt="non-virtual"><scope>ValidityState</scope><name>valueMissing</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

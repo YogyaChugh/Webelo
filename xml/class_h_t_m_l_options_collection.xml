@@ -1,0 +1,136 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.14.0" xml:lang="en-US">
+  <compounddef id="class_h_t_m_l_options_collection" kind="class" language="C++" prot="public">
+    <compoundname>HTMLOptionsCollection</compoundname>
+    <basecompoundref prot="public" virt="non-virtual">HTMLCollection</basecompoundref>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="class_h_t_m_l_options_collection_1a260fcc19ab0bc3de4559d1bdaf4756b6" prot="public" static="no" mutable="no">
+        <type>unsigned long</type>
+        <definition>unsigned long HTMLOptionsCollection::length</definition>
+        <argsstring></argsstring>
+        <name>length</name>
+        <qualifiedname>HTMLOptionsCollection::length</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="1067" column="23" bodyfile="HtmlElements.cpp" bodystart="1067" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_h_t_m_l_options_collection_1a13a0691a524619401bdfdc5cf954f799" prot="public" static="no" mutable="no">
+        <type>long</type>
+        <definition>long HTMLOptionsCollection::selectedIndex</definition>
+        <argsstring></argsstring>
+        <name>selectedIndex</name>
+        <qualifiedname>HTMLOptionsCollection::selectedIndex</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="1072" column="14" bodyfile="HtmlElements.cpp" bodystart="1072" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="class_h_t_m_l_options_collection_1a5c30d070855bfe40578eeca4041192f0" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void HTMLOptionsCollection::set</definition>
+        <argsstring>(unsigned long index, HTMLOptionElement *option)</argsstring>
+        <name>set</name>
+        <qualifiedname>HTMLOptionsCollection::set</qualifiedname>
+        <param>
+          <type>unsigned long</type>
+          <declname>index</declname>
+        </param>
+        <param>
+          <type><ref refid="class_h_t_m_l_option_element" kindref="compound">HTMLOptionElement</ref> *</type>
+          <declname>option</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="1068" column="14"/>
+      </memberdef>
+      <memberdef kind="function" id="class_h_t_m_l_options_collection_1afabea2ff3a7d8528425538954f17f183" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void HTMLOptionsCollection::add</definition>
+        <argsstring>(std::variant&lt; HTMLOptionElement, HTMLOptGroupElement &gt; element, std::variant&lt; HTMLElement *, long &gt; before=nullptr)</argsstring>
+        <name>add</name>
+        <qualifiedname>HTMLOptionsCollection::add</qualifiedname>
+        <param>
+          <type>std::variant&lt; <ref refid="class_h_t_m_l_option_element" kindref="compound">HTMLOptionElement</ref>, <ref refid="class_h_t_m_l_opt_group_element" kindref="compound">HTMLOptGroupElement</ref> &gt;</type>
+          <declname>element</declname>
+        </param>
+        <param>
+          <type>std::variant&lt; <ref refid="class_h_t_m_l_element" kindref="compound">HTMLElement</ref> *, long &gt;</type>
+          <declname>before</declname>
+          <defval>nullptr</defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="1069" column="14"/>
+      </memberdef>
+      <memberdef kind="function" id="class_h_t_m_l_options_collection_1ab21c09d61d3435b88ee53874e5a45aea" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void HTMLOptionsCollection::remove</definition>
+        <argsstring>(long index)</argsstring>
+        <name>remove</name>
+        <qualifiedname>HTMLOptionsCollection::remove</qualifiedname>
+        <param>
+          <type>long</type>
+          <declname>index</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="1070" column="14"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="2">
+        <label>HTMLCollection</label>
+      </node>
+      <node id="1">
+        <label>HTMLOptionsCollection</label>
+        <link refid="class_h_t_m_l_options_collection"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="2">
+        <label>HTMLCollection</label>
+      </node>
+      <node id="1">
+        <label>HTMLOptionsCollection</label>
+        <link refid="class_h_t_m_l_options_collection"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="HtmlElements.cpp" line="1065" column="1" bodyfile="HtmlElements.cpp" bodystart="1065" bodyend="1073"/>
+    <listofallmembers>
+      <member refid="class_h_t_m_l_options_collection_1afabea2ff3a7d8528425538954f17f183" prot="public" virt="non-virtual"><scope>HTMLOptionsCollection</scope><name>add</name></member>
+      <member refid="class_h_t_m_l_options_collection_1a260fcc19ab0bc3de4559d1bdaf4756b6" prot="public" virt="non-virtual"><scope>HTMLOptionsCollection</scope><name>length</name></member>
+      <member refid="class_h_t_m_l_options_collection_1ab21c09d61d3435b88ee53874e5a45aea" prot="public" virt="non-virtual"><scope>HTMLOptionsCollection</scope><name>remove</name></member>
+      <member refid="class_h_t_m_l_options_collection_1a13a0691a524619401bdfdc5cf954f799" prot="public" virt="non-virtual"><scope>HTMLOptionsCollection</scope><name>selectedIndex</name></member>
+      <member refid="class_h_t_m_l_options_collection_1a5c30d070855bfe40578eeca4041192f0" prot="public" virt="non-virtual"><scope>HTMLOptionsCollection</scope><name>set</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

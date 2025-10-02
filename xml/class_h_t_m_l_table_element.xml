@@ -1,0 +1,336 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.14.0" xml:lang="en-US">
+  <compounddef id="class_h_t_m_l_table_element" kind="class" language="C++" prot="public">
+    <compoundname>HTMLTableElement</compoundname>
+    <basecompoundref refid="class_h_t_m_l_element" prot="public" virt="non-virtual">HTMLElement</basecompoundref>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="class_h_t_m_l_table_element_1a8c399010f66e1bd33cb616930b837129" prot="public" static="no" mutable="no">
+        <type><ref refid="class_h_t_m_l_table_caption_element" kindref="compound">HTMLTableCaptionElement</ref> *</type>
+        <definition>HTMLTableCaptionElement* HTMLTableElement::caption</definition>
+        <argsstring></argsstring>
+        <name>caption</name>
+        <qualifiedname>HTMLTableElement::caption</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="882" column="33" bodyfile="HtmlElements.cpp" bodystart="882" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_h_t_m_l_table_element_1a5be920483e6e52a458224bebbd4ce0b1" prot="public" static="no" mutable="no">
+        <type><ref refid="class_h_t_m_l_table_section_element" kindref="compound">HTMLTableSectionElement</ref> *</type>
+        <definition>HTMLTableSectionElement* HTMLTableElement::tHead</definition>
+        <argsstring></argsstring>
+        <name>tHead</name>
+        <qualifiedname>HTMLTableElement::tHead</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="886" column="33" bodyfile="HtmlElements.cpp" bodystart="886" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_h_t_m_l_table_element_1a94520567372d05329ba218bc8cea2998" prot="public" static="no" mutable="no">
+        <type><ref refid="class_h_t_m_l_table_section_element" kindref="compound">HTMLTableSectionElement</ref> *</type>
+        <definition>HTMLTableSectionElement* HTMLTableElement::tFoot</definition>
+        <argsstring></argsstring>
+        <name>tFoot</name>
+        <qualifiedname>HTMLTableElement::tFoot</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="890" column="33" bodyfile="HtmlElements.cpp" bodystart="890" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_h_t_m_l_table_element_1a0f0e5b6c8a3aa457d4d1893c2a9486a7" prot="public" static="no" mutable="no">
+        <type>HTMLCollection</type>
+        <definition>HTMLCollection HTMLTableElement::tBodies</definition>
+        <argsstring></argsstring>
+        <name>tBodies</name>
+        <qualifiedname>HTMLTableElement::tBodies</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="894" column="24" bodyfile="HtmlElements.cpp" bodystart="894" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_h_t_m_l_table_element_1a2ca95499e2f3ac70f6af24b8ea42c29d" prot="public" static="no" mutable="no">
+        <type>HTMLCollection</type>
+        <definition>HTMLCollection HTMLTableElement::rows</definition>
+        <argsstring></argsstring>
+        <name>rows</name>
+        <qualifiedname>HTMLTableElement::rows</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="897" column="24" bodyfile="HtmlElements.cpp" bodystart="897" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="class_h_t_m_l_table_element_1ab5fff9053970bbfaac326bea09877636" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>HTMLTableElement::HTMLTableElement</definition>
+        <argsstring>()</argsstring>
+        <name>HTMLTableElement</name>
+        <qualifiedname>HTMLTableElement::HTMLTableElement</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="880" column="9" bodyfile="HtmlElements.cpp" bodystart="880" bodyend="880"/>
+      </memberdef>
+      <memberdef kind="function" id="class_h_t_m_l_table_element_1a24c7217d4eb2fb00e1cd4d6ad9ce9576" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="class_h_t_m_l_table_caption_element" kindref="compound">HTMLTableCaptionElement</ref></type>
+        <definition>HTMLTableCaptionElement HTMLTableElement::createCaption</definition>
+        <argsstring>()</argsstring>
+        <name>createCaption</name>
+        <qualifiedname>HTMLTableElement::createCaption</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="883" column="33"/>
+      </memberdef>
+      <memberdef kind="function" id="class_h_t_m_l_table_element_1aad7a03ee76520304dec4863d92277af2" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void HTMLTableElement::deleteCaption</definition>
+        <argsstring>()</argsstring>
+        <name>deleteCaption</name>
+        <qualifiedname>HTMLTableElement::deleteCaption</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="884" column="14"/>
+      </memberdef>
+      <memberdef kind="function" id="class_h_t_m_l_table_element_1a5e6f90cd4435c26f6e0ee6e1f3c59e98" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="class_h_t_m_l_table_section_element" kindref="compound">HTMLTableSectionElement</ref></type>
+        <definition>HTMLTableSectionElement HTMLTableElement::createTHead</definition>
+        <argsstring>()</argsstring>
+        <name>createTHead</name>
+        <qualifiedname>HTMLTableElement::createTHead</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="887" column="33"/>
+      </memberdef>
+      <memberdef kind="function" id="class_h_t_m_l_table_element_1ade5f5ab88c97e00c80bd21f1e9a0dd32" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void HTMLTableElement::deleteTHead</definition>
+        <argsstring>()</argsstring>
+        <name>deleteTHead</name>
+        <qualifiedname>HTMLTableElement::deleteTHead</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="888" column="14"/>
+      </memberdef>
+      <memberdef kind="function" id="class_h_t_m_l_table_element_1a85a982cc83e6e7b250a3483a1c68a880" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="class_h_t_m_l_table_section_element" kindref="compound">HTMLTableSectionElement</ref></type>
+        <definition>HTMLTableSectionElement HTMLTableElement::createTFoot</definition>
+        <argsstring>()</argsstring>
+        <name>createTFoot</name>
+        <qualifiedname>HTMLTableElement::createTFoot</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="891" column="33"/>
+      </memberdef>
+      <memberdef kind="function" id="class_h_t_m_l_table_element_1a3acc284dc51cd997bd37f5eb31eb019e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void HTMLTableElement::deleteTFoot</definition>
+        <argsstring>()</argsstring>
+        <name>deleteTFoot</name>
+        <qualifiedname>HTMLTableElement::deleteTFoot</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="892" column="14"/>
+      </memberdef>
+      <memberdef kind="function" id="class_h_t_m_l_table_element_1a3df9c49a70ec459fdecb394be4db6f5d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="class_h_t_m_l_table_section_element" kindref="compound">HTMLTableSectionElement</ref></type>
+        <definition>HTMLTableSectionElement HTMLTableElement::createTBody</definition>
+        <argsstring>()</argsstring>
+        <name>createTBody</name>
+        <qualifiedname>HTMLTableElement::createTBody</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="895" column="33"/>
+      </memberdef>
+      <memberdef kind="function" id="class_h_t_m_l_table_element_1ab723fdc44adf67dc593b3a50b2c51185" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="class_h_t_m_l_table_row_element" kindref="compound">HTMLTableRowElement</ref></type>
+        <definition>HTMLTableRowElement HTMLTableElement::insertRow</definition>
+        <argsstring>(long index=-1)</argsstring>
+        <name>insertRow</name>
+        <qualifiedname>HTMLTableElement::insertRow</qualifiedname>
+        <param>
+          <type>long</type>
+          <declname>index</declname>
+          <defval>-1</defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="898" column="29"/>
+      </memberdef>
+      <memberdef kind="function" id="class_h_t_m_l_table_element_1a854859a9d5f613cdbf26611b591548d9" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void HTMLTableElement::deleteRow</definition>
+        <argsstring>(long index)</argsstring>
+        <name>deleteRow</name>
+        <qualifiedname>HTMLTableElement::deleteRow</qualifiedname>
+        <param>
+          <type>long</type>
+          <declname>index</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="899" column="14"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="3">
+        <label>Element</label>
+      </node>
+      <node id="2">
+        <label>HTMLElement</label>
+        <link refid="class_h_t_m_l_element"/>
+        <childnode refid="3" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>HTMLTableElement</label>
+        <link refid="class_h_t_m_l_table_element"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="3">
+        <label>Element</label>
+      </node>
+      <node id="2">
+        <label>HTMLElement</label>
+        <link refid="class_h_t_m_l_element"/>
+        <childnode refid="3" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>HTMLTableCaptionElement</label>
+        <link refid="class_h_t_m_l_table_caption_element"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>HTMLTableElement</label>
+        <link refid="class_h_t_m_l_table_element"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+        <childnode refid="4" relation="usage">
+          <edgelabel>caption</edgelabel>
+        </childnode>
+        <childnode refid="5" relation="usage">
+          <edgelabel>tFoot</edgelabel>
+          <edgelabel>tHead</edgelabel>
+        </childnode>
+      </node>
+      <node id="5">
+        <label>HTMLTableSectionElement</label>
+        <link refid="class_h_t_m_l_table_section_element"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="HtmlElements.cpp" line="878" column="1" bodyfile="HtmlElements.cpp" bodystart="878" bodyend="900"/>
+    <listofallmembers>
+      <member refid="class_h_t_m_l_element_1a34f5929019d1f62156f9dba13a54d082" prot="public" virt="non-virtual"><scope>HTMLTableElement</scope><name>accessKey</name></member>
+      <member refid="class_h_t_m_l_element_1aab20f7a1cbba885509eeadd23ae676a4" prot="public" virt="non-virtual"><scope>HTMLTableElement</scope><name>accessKeyLabel</name></member>
+      <member refid="class_h_t_m_l_element_1a4c341258f8600bb0d061f147d980fb71" prot="public" virt="non-virtual"><scope>HTMLTableElement</scope><name>attachInternals</name></member>
+      <member refid="class_h_t_m_l_element_1afcd9d9037543f93fd468ca2f397f6fb1" prot="public" virt="non-virtual"><scope>HTMLTableElement</scope><name>autocapitalize</name></member>
+      <member refid="class_h_t_m_l_element_1a6565458cb2869f8b3ef8a5bc635b6af5" prot="public" virt="non-virtual"><scope>HTMLTableElement</scope><name>autocorrect</name></member>
+      <member refid="class_h_t_m_l_element_1a82f585ce5247efc80d3bcd83c4e64aff" prot="public" virt="non-virtual"><scope>HTMLTableElement</scope><name>autofocus</name></member>
+      <member refid="class_h_t_m_l_element_1a3359744a29b30e0e7f9bf782e203be70" prot="public" virt="non-virtual"><scope>HTMLTableElement</scope><name>blur</name></member>
+      <member refid="class_h_t_m_l_table_element_1a8c399010f66e1bd33cb616930b837129" prot="public" virt="non-virtual"><scope>HTMLTableElement</scope><name>caption</name></member>
+      <member refid="class_h_t_m_l_element_1aa3ae4ebe265852f5b18ca97c42690acc" prot="public" virt="non-virtual"><scope>HTMLTableElement</scope><name>classname</name></member>
+      <member refid="class_h_t_m_l_element_1a23d7391ed5de254618b27e9b4b235659" prot="public" virt="non-virtual"><scope>HTMLTableElement</scope><name>click</name></member>
+      <member refid="class_h_t_m_l_table_element_1a24c7217d4eb2fb00e1cd4d6ad9ce9576" prot="public" virt="non-virtual"><scope>HTMLTableElement</scope><name>createCaption</name></member>
+      <member refid="class_h_t_m_l_table_element_1a3df9c49a70ec459fdecb394be4db6f5d" prot="public" virt="non-virtual"><scope>HTMLTableElement</scope><name>createTBody</name></member>
+      <member refid="class_h_t_m_l_table_element_1a85a982cc83e6e7b250a3483a1c68a880" prot="public" virt="non-virtual"><scope>HTMLTableElement</scope><name>createTFoot</name></member>
+      <member refid="class_h_t_m_l_table_element_1a5e6f90cd4435c26f6e0ee6e1f3c59e98" prot="public" virt="non-virtual"><scope>HTMLTableElement</scope><name>createTHead</name></member>
+      <member refid="class_h_t_m_l_table_element_1aad7a03ee76520304dec4863d92277af2" prot="public" virt="non-virtual"><scope>HTMLTableElement</scope><name>deleteCaption</name></member>
+      <member refid="class_h_t_m_l_table_element_1a854859a9d5f613cdbf26611b591548d9" prot="public" virt="non-virtual"><scope>HTMLTableElement</scope><name>deleteRow</name></member>
+      <member refid="class_h_t_m_l_table_element_1a3acc284dc51cd997bd37f5eb31eb019e" prot="public" virt="non-virtual"><scope>HTMLTableElement</scope><name>deleteTFoot</name></member>
+      <member refid="class_h_t_m_l_table_element_1ade5f5ab88c97e00c80bd21f1e9a0dd32" prot="public" virt="non-virtual"><scope>HTMLTableElement</scope><name>deleteTHead</name></member>
+      <member refid="class_h_t_m_l_element_1a1aa6efe89cc078f89c5353929ec59ad2" prot="public" virt="non-virtual"><scope>HTMLTableElement</scope><name>dir</name></member>
+      <member refid="class_h_t_m_l_element_1a751f062860bb6b8e72ecd61ceb88b100" prot="public" virt="non-virtual"><scope>HTMLTableElement</scope><name>draggable</name></member>
+      <member refid="class_h_t_m_l_element_1a8e7d731e966a64e878d6bd6e822a6f5c" prot="public" virt="non-virtual"><scope>HTMLTableElement</scope><name>focus</name></member>
+      <member refid="class_h_t_m_l_element_1a1e295cf654398a2738da85f9d3c905b0" prot="public" virt="non-virtual"><scope>HTMLTableElement</scope><name>headingOffset</name></member>
+      <member refid="class_h_t_m_l_element_1ad166a49ba19635a2e4ca3df474858181" prot="public" virt="non-virtual"><scope>HTMLTableElement</scope><name>headingReset</name></member>
+      <member refid="class_h_t_m_l_element_1ac87a008f78788b17f5c8961f9007f6e4" prot="public" virt="non-virtual"><scope>HTMLTableElement</scope><name>hidden</name></member>
+      <member refid="class_h_t_m_l_element_1a3c776d3db47cb3a9d0f8a27fed739b4f" prot="public" virt="non-virtual"><scope>HTMLTableElement</scope><name>hidePopover</name></member>
+      <member refid="class_h_t_m_l_element_1ac88990568d6d3db84a41483fbbf3422d" prot="public" virt="non-virtual"><scope>HTMLTableElement</scope><name>HTMLElement</name></member>
+      <member refid="class_h_t_m_l_table_element_1ab5fff9053970bbfaac326bea09877636" prot="public" virt="non-virtual"><scope>HTMLTableElement</scope><name>HTMLTableElement</name></member>
+      <member refid="class_h_t_m_l_element_1a0d4276f08d39f385d4a36030a0136376" prot="public" virt="non-virtual"><scope>HTMLTableElement</scope><name>id</name></member>
+      <member refid="class_h_t_m_l_element_1ad87ee3f4e1fc2c1a064cda454ba5dec3" prot="public" virt="non-virtual"><scope>HTMLTableElement</scope><name>inert</name></member>
+      <member refid="class_h_t_m_l_element_1ab2f17f5a21719b8f89de9e42767669ca" prot="public" virt="non-virtual"><scope>HTMLTableElement</scope><name>innerText</name></member>
+      <member refid="class_h_t_m_l_table_element_1ab723fdc44adf67dc593b3a50b2c51185" prot="public" virt="non-virtual"><scope>HTMLTableElement</scope><name>insertRow</name></member>
+      <member refid="class_h_t_m_l_element_1a5210bdf34a9f9437e701facb98d0d929" prot="public" virt="non-virtual"><scope>HTMLTableElement</scope><name>lang</name></member>
+      <member refid="class_h_t_m_l_element_1adf3ac36c36e3bc7aee4799fb58b68b3d" prot="public" virt="non-virtual"><scope>HTMLTableElement</scope><name>nonce</name></member>
+      <member refid="class_h_t_m_l_element_1ae01f3838f2d334cc79e343e7530ca4f9" prot="public" virt="non-virtual"><scope>HTMLTableElement</scope><name>outerText</name></member>
+      <member refid="class_h_t_m_l_element_1a55ff5d14da80ff7b7f663d3d6215387c" prot="public" virt="non-virtual"><scope>HTMLTableElement</scope><name>popover</name></member>
+      <member refid="class_h_t_m_l_table_element_1a2ca95499e2f3ac70f6af24b8ea42c29d" prot="public" virt="non-virtual"><scope>HTMLTableElement</scope><name>rows</name></member>
+      <member refid="class_h_t_m_l_element_1afa4af2705fb03a14cfa534f59d134b15" prot="public" virt="non-virtual"><scope>HTMLTableElement</scope><name>showPopover</name></member>
+      <member refid="class_h_t_m_l_element_1ac89fd46c28c72618fe80fb1962b725e8" prot="public" virt="non-virtual"><scope>HTMLTableElement</scope><name>spellcheck</name></member>
+      <member refid="class_h_t_m_l_element_1aa1934fbb36b074b224e2d81d04baeb38" prot="public" virt="non-virtual"><scope>HTMLTableElement</scope><name>tabIndex</name></member>
+      <member refid="class_h_t_m_l_table_element_1a0f0e5b6c8a3aa457d4d1893c2a9486a7" prot="public" virt="non-virtual"><scope>HTMLTableElement</scope><name>tBodies</name></member>
+      <member refid="class_h_t_m_l_table_element_1a94520567372d05329ba218bc8cea2998" prot="public" virt="non-virtual"><scope>HTMLTableElement</scope><name>tFoot</name></member>
+      <member refid="class_h_t_m_l_table_element_1a5be920483e6e52a458224bebbd4ce0b1" prot="public" virt="non-virtual"><scope>HTMLTableElement</scope><name>tHead</name></member>
+      <member refid="class_h_t_m_l_element_1ab7a16d9ff2c240912fa946c6f4466c13" prot="public" virt="non-virtual"><scope>HTMLTableElement</scope><name>title</name></member>
+      <member refid="class_h_t_m_l_element_1a74026637504c1456b7619d7611b1ba87" prot="public" virt="non-virtual"><scope>HTMLTableElement</scope><name>togglePopover</name></member>
+      <member refid="class_h_t_m_l_element_1a3f14e5b88a6bdae0cfd42b512a48b4eb" prot="public" virt="non-virtual"><scope>HTMLTableElement</scope><name>translate</name></member>
+      <member refid="class_h_t_m_l_element_1a7e5a08fa4e11484d77226ae2bd28ad69" prot="public" virt="non-virtual"><scope>HTMLTableElement</scope><name>writingSuggestions</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

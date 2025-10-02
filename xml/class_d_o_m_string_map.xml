@@ -1,0 +1,91 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.14.0" xml:lang="en-US">
+  <compounddef id="class_d_o_m_string_map" kind="class" language="C++" prot="public">
+    <compoundname>DOMStringMap</compoundname>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="class_d_o_m_string_map_1a7fd472a589dbbf35c7821fb795a17a7f" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>DOMStringMap::DOMStringMap</definition>
+        <argsstring>()</argsstring>
+        <name>DOMStringMap</name>
+        <qualifiedname>DOMStringMap::DOMStringMap</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="190" column="9" bodyfile="HtmlElements.cpp" bodystart="190" bodyend="190"/>
+      </memberdef>
+      <memberdef kind="function" id="class_d_o_m_string_map_1ac166e84396ae8353e5ea110c9bd5f0ff" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>DOMString</type>
+        <definition>DOMString DOMStringMap::get</definition>
+        <argsstring>(DOMString name)</argsstring>
+        <name>get</name>
+        <qualifiedname>DOMStringMap::get</qualifiedname>
+        <param>
+          <type>DOMString</type>
+          <declname>name</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="192" column="19"/>
+      </memberdef>
+      <memberdef kind="function" id="class_d_o_m_string_map_1ace2f1f856570e6e535b71341b299d58c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void DOMStringMap::set</definition>
+        <argsstring>(DOMString name, DOMString value)</argsstring>
+        <name>set</name>
+        <qualifiedname>DOMStringMap::set</qualifiedname>
+        <param>
+          <type>DOMString</type>
+          <declname>name</declname>
+        </param>
+        <param>
+          <type>DOMString</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="193" column="14"/>
+      </memberdef>
+      <memberdef kind="function" id="class_d_o_m_string_map_1a5479d2de650ffd1d581aba284810084a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void DOMStringMap::del</definition>
+        <argsstring>(DOMString name)</argsstring>
+        <name>del</name>
+        <qualifiedname>DOMStringMap::del</qualifiedname>
+        <param>
+          <type>DOMString</type>
+          <declname>name</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="194" column="14"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="HtmlElements.cpp" line="188" column="1" bodyfile="HtmlElements.cpp" bodystart="188" bodyend="195"/>
+    <listofallmembers>
+      <member refid="class_d_o_m_string_map_1a5479d2de650ffd1d581aba284810084a" prot="public" virt="non-virtual"><scope>DOMStringMap</scope><name>del</name></member>
+      <member refid="class_d_o_m_string_map_1a7fd472a589dbbf35c7821fb795a17a7f" prot="public" virt="non-virtual"><scope>DOMStringMap</scope><name>DOMStringMap</name></member>
+      <member refid="class_d_o_m_string_map_1ac166e84396ae8353e5ea110c9bd5f0ff" prot="public" virt="non-virtual"><scope>DOMStringMap</scope><name>get</name></member>
+      <member refid="class_d_o_m_string_map_1ace2f1f856570e6e535b71341b299d58c" prot="public" virt="non-virtual"><scope>DOMStringMap</scope><name>set</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

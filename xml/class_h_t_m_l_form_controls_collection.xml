@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.14.0" xml:lang="en-US">
+  <compounddef id="class_h_t_m_l_form_controls_collection" kind="class" language="C++" prot="public">
+    <compoundname>HTMLFormControlsCollection</compoundname>
+    <basecompoundref prot="public" virt="non-virtual">HTMLCollection</basecompoundref>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="class_h_t_m_l_form_controls_collection_1a3410adcf2562fde08139b495b546ac97" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>std::variant&lt; <ref refid="class_radio_node_list" kindref="compound">RadioNodeList</ref> *, Element * &gt;</type>
+        <definition>std::variant&lt; RadioNodeList *, Element * &gt; HTMLFormControlsCollection::namedItem</definition>
+        <argsstring>(DOMString name)</argsstring>
+        <name>namedItem</name>
+        <qualifiedname>HTMLFormControlsCollection::namedItem</qualifiedname>
+        <param>
+          <type>DOMString</type>
+          <declname>name</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="909" column="22"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="2">
+        <label>HTMLCollection</label>
+      </node>
+      <node id="1">
+        <label>HTMLFormControlsCollection</label>
+        <link refid="class_h_t_m_l_form_controls_collection"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="2">
+        <label>HTMLCollection</label>
+      </node>
+      <node id="1">
+        <label>HTMLFormControlsCollection</label>
+        <link refid="class_h_t_m_l_form_controls_collection"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="HtmlElements.cpp" line="907" column="1" bodyfile="HtmlElements.cpp" bodystart="907" bodyend="910"/>
+    <listofallmembers>
+      <member refid="class_h_t_m_l_form_controls_collection_1a3410adcf2562fde08139b495b546ac97" prot="public" virt="non-virtual"><scope>HTMLFormControlsCollection</scope><name>namedItem</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

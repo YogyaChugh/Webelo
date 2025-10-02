@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.14.0" xml:lang="en-US">
+  <compounddef id="struct_toggle_popover_options" kind="struct" language="C++" prot="public">
+    <compoundname>TogglePopoverOptions</compoundname>
+    <basecompoundref refid="struct_show_popover_options" prot="public" virt="non-virtual">ShowPopoverOptions</basecompoundref>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="struct_toggle_popover_options_1a37336fac795c114aedeb03f7e1edc0ae" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool TogglePopoverOptions::force</definition>
+        <argsstring></argsstring>
+        <name>force</name>
+        <qualifiedname>TogglePopoverOptions::force</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="135" column="10" bodyfile="HtmlElements.cpp" bodystart="135" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="2">
+        <label>ShowPopoverOptions</label>
+        <link refid="struct_show_popover_options"/>
+      </node>
+      <node id="1">
+        <label>TogglePopoverOptions</label>
+        <link refid="struct_toggle_popover_options"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="4">
+        <label>Element</label>
+      </node>
+      <node id="3">
+        <label>HTMLElement</label>
+        <link refid="class_h_t_m_l_element"/>
+        <childnode refid="4" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>ShowPopoverOptions</label>
+        <link refid="struct_show_popover_options"/>
+        <childnode refid="3" relation="usage">
+          <edgelabel>source</edgelabel>
+        </childnode>
+      </node>
+      <node id="1">
+        <label>TogglePopoverOptions</label>
+        <link refid="struct_toggle_popover_options"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="HtmlElements.cpp" line="134" column="1" bodyfile="HtmlElements.cpp" bodystart="134" bodyend="136"/>
+    <listofallmembers>
+      <member refid="struct_toggle_popover_options_1a37336fac795c114aedeb03f7e1edc0ae" prot="public" virt="non-virtual"><scope>TogglePopoverOptions</scope><name>force</name></member>
+      <member refid="struct_show_popover_options_1a97c8d68c579a8009d8f9514a7897ef3b" prot="public" virt="non-virtual"><scope>TogglePopoverOptions</scope><name>source</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

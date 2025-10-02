@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.14.0" xml:lang="en-US">
+  <compounddef id="class_time_ranges" kind="class" language="C++" prot="public">
+    <compoundname>TimeRanges</compoundname>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="class_time_ranges_1ae9f2b1e133ac7821f35956114a3a0235" prot="public" static="no" mutable="no">
+        <type>unsigned long</type>
+        <definition>unsigned long TimeRanges::length</definition>
+        <argsstring></argsstring>
+        <name>length</name>
+        <qualifiedname>TimeRanges::length</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="606" column="23" bodyfile="HtmlElements.cpp" bodystart="606" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="class_time_ranges_1ae2d193add6521e975890d33fcc44bd7e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>double</type>
+        <definition>double TimeRanges::start</definition>
+        <argsstring>(unsigned long index)</argsstring>
+        <name>start</name>
+        <qualifiedname>TimeRanges::start</qualifiedname>
+        <param>
+          <type>unsigned long</type>
+          <declname>index</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="607" column="16"/>
+      </memberdef>
+      <memberdef kind="function" id="class_time_ranges_1af601e6234a9ccf3e48dbe78921a9146b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>double</type>
+        <definition>double TimeRanges::end</definition>
+        <argsstring>(unsigned long index)</argsstring>
+        <name>end</name>
+        <qualifiedname>TimeRanges::end</qualifiedname>
+        <param>
+          <type>unsigned long</type>
+          <declname>index</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="608" column="16"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="HtmlElements.cpp" line="604" column="1" bodyfile="HtmlElements.cpp" bodystart="604" bodyend="609"/>
+    <listofallmembers>
+      <member refid="class_time_ranges_1af601e6234a9ccf3e48dbe78921a9146b" prot="public" virt="non-virtual"><scope>TimeRanges</scope><name>end</name></member>
+      <member refid="class_time_ranges_1ae9f2b1e133ac7821f35956114a3a0235" prot="public" virt="non-virtual"><scope>TimeRanges</scope><name>length</name></member>
+      <member refid="class_time_ranges_1ae2d193add6521e975890d33fcc44bd7e" prot="public" virt="non-virtual"><scope>TimeRanges</scope><name>start</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

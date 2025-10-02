@@ -3,6 +3,7 @@ import ctypes
 import re
 import bs4
 import Webelo
+from datetime import datetime
 
 # Just to tell u guyz, all the project is written by me by hand except this file contains some portion written by AI
 # All other files are 100% NON-AI :) AND THIS FILE ONLY CONSTITUES ABOUT 5% of the whole project (and code editor part of this file is not AI (JUST SOME DOM TREE PART))
@@ -187,6 +188,8 @@ def compute_positions(node, depth=0, x=0):
 
     return child_x
 
+sctags = ["area","base","br","col","embed","hr","img","input","link","meta","param","source","track","wbr"]
+
 
 
 # Draw it baby !!
@@ -216,20 +219,24 @@ def draw_tree(canvas, node):
         root.config(cursor="arrow")
     def on_click(event, node=node):
         extraContent.delete('1.0','end')
-        text = f"""Tag: {node['name']}\nAttrs:"""
+        text = f"""Tag: {node['name']}\n\nAttributes:"""
         for i in node['attrs']:
-            text+=f"\n\t\t{i}: {node['attrs'][i]}"
+            text+=f"\n\t{i}: {node['attrs'][i]}"
         if node['attrs']=={}:
             text+=f"\n\t\tNone"
-        text += f"""\nChildren:\n\t\t"""
+        text += f"""\nSelf-Closing: {True if node['name'] in sctags else False}\n"""
+        text += f"""\nCreated At: {datetime.now()}\n"""
+        text += f"""\nChildren:"""
         bro = 0
+        if node['children']==[]:
+            text+=f" None"
+        else:
+            text+=f"\n\t\t"
         for i in node['children']:
             if bro!=0 and bro!=len(node['children']):
                 text+=f", "
             bro+=1
             text+=f"{i['name']}"
-        if node['children']==[]:
-            text+=f"None"
         text += f"""\nContent:"""
         if node.get('content'):
             brot = node['content'].split('\n')
@@ -256,21 +263,24 @@ def draw_tree(canvas, node):
 
 
 # This is a function i wrote to create the dictionary !!
-def print_children(some):
+def print_children(some,logs):
+    logs = logs
     dom_tree = {}
     if (type(some)!=bs4.element.NavigableString):
         if some.name:
             dom_tree["name"] = some.name
             dom_tree["attrs"] = some.attrs
-            dom_tree['children'] = []
+            dom_tree["content"] = ""
             if some.string:
                 dom_tree['content'] = some.string
+            dom_tree['children'] = []
+            logs+=f"Created Element {some.name}\n"
         try:
             d = 0
             for child in some.children:
                 if d==0: dom_tree["children"] = []
                 d+=1
-                pp = print_children(child)
+                pp,logs = print_children(child,logs)
                 if pp!={}:
                     dom_tree["children"].append(pp)
         except:
@@ -278,10 +288,12 @@ def print_children(some):
     else:
         dom_tree["name"] = "Text"
         dom_tree['attrs'] = {}
-        dom_tree['children'] = []
+        dom_tree["content"] = ""
         if some.string:
             dom_tree['content'] = some.string
-    return dom_tree
+        dom_tree['children'] = []
+        logs+=f"Created Text Node\n"
+    return dom_tree, logs
 
 
 # I don't know how this works ! cause i didn't have time to learn this much depth of tkinter :)
@@ -299,15 +311,16 @@ def bind_mousewheel(canvas):
         
 # here I have parsed the html and got the canvas with it !!
 soup = bs4.BeautifulSoup(html_text, 'html.parser')
-dom_tree = print_children(soup)
+logs = ""
+dom_tree,logs = print_children(soup,logs)
+print(dom_tree)
+
+extraContent.insert('1.0',logs)
 
 # Heiii ! Do you see my binding working ! hehe
 Webelo.process_html(dom_tree)
-logs = Webelo.getlogs()
-if type(logs)==str:
-    extraContent.insert('1.0',logs)
-print(type(logs))
-print(logs)
+# print(type(logs))
+# print(logs)
 
 canvas = Canvas(right_frame, bg="black", relief="solid", borderwidth=2)
 canvas.pack(fill="both", expand=True)

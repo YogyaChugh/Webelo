@@ -1,0 +1,90 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.14.0" xml:lang="en-US">
+  <compounddef id="class_audio_track" kind="class" language="C++" prot="public">
+    <compoundname>AudioTrack</compoundname>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="class_audio_track_1af579b8ead2eb24d378ee91d1388abff1" prot="public" static="no" mutable="no">
+        <type>DOMString</type>
+        <definition>DOMString AudioTrack::id</definition>
+        <argsstring></argsstring>
+        <name>id</name>
+        <qualifiedname>AudioTrack::id</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="624" column="19" bodyfile="HtmlElements.cpp" bodystart="624" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_audio_track_1a78e6f696b3333a8380550c76f8edd33b" prot="public" static="no" mutable="no">
+        <type>DOMString</type>
+        <definition>DOMString AudioTrack::kind</definition>
+        <argsstring></argsstring>
+        <name>kind</name>
+        <qualifiedname>AudioTrack::kind</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="625" column="19" bodyfile="HtmlElements.cpp" bodystart="625" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_audio_track_1a533aedff75b0bd9fee98b37d8aebd1ba" prot="public" static="no" mutable="no">
+        <type>DOMString</type>
+        <definition>DOMString AudioTrack::label</definition>
+        <argsstring></argsstring>
+        <name>label</name>
+        <qualifiedname>AudioTrack::label</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="626" column="19" bodyfile="HtmlElements.cpp" bodystart="626" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_audio_track_1aa91cfb7f24a7fefa92c2de6d6ac9cecb" prot="public" static="no" mutable="no">
+        <type>DOMString</type>
+        <definition>DOMString AudioTrack::language</definition>
+        <argsstring></argsstring>
+        <name>language</name>
+        <qualifiedname>AudioTrack::language</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="627" column="19" bodyfile="HtmlElements.cpp" bodystart="627" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_audio_track_1aa0122daaadb58a600bd773539f3c5d4b" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool AudioTrack::enabled</definition>
+        <argsstring></argsstring>
+        <name>enabled</name>
+        <qualifiedname>AudioTrack::enabled</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="HtmlElements.cpp" line="628" column="14" bodyfile="HtmlElements.cpp" bodystart="628" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="HtmlElements.cpp" line="622" column="1" bodyfile="HtmlElements.cpp" bodystart="622" bodyend="629"/>
+    <listofallmembers>
+      <member refid="class_audio_track_1aa0122daaadb58a600bd773539f3c5d4b" prot="public" virt="non-virtual"><scope>AudioTrack</scope><name>enabled</name></member>
+      <member refid="class_audio_track_1af579b8ead2eb24d378ee91d1388abff1" prot="public" virt="non-virtual"><scope>AudioTrack</scope><name>id</name></member>
+      <member refid="class_audio_track_1a78e6f696b3333a8380550c76f8edd33b" prot="public" virt="non-virtual"><scope>AudioTrack</scope><name>kind</name></member>
+      <member refid="class_audio_track_1a533aedff75b0bd9fee98b37d8aebd1ba" prot="public" virt="non-virtual"><scope>AudioTrack</scope><name>label</name></member>
+      <member refid="class_audio_track_1aa91cfb7f24a7fefa92c2de6d6ac9cecb" prot="public" virt="non-virtual"><scope>AudioTrack</scope><name>language</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>
