@@ -4,6 +4,8 @@ import re
 import bs4
 import Webelo
 from datetime import datetime
+import webbrowser
+from tkinterweb import HtmlFrame # import the HtmlFrame widget
 
 # Just to tell u guyz, all the project is written by me by hand except this file contains some portion written by AI
 # All other files are 100% NON-AI :) AND THIS FILE ONLY CONSTITUES ABOUT 5% of the whole project (and code editor part of this file is not AI (JUST SOME DOM TREE PART))
@@ -261,6 +263,10 @@ def draw_tree(canvas, node):
             )
             draw_tree(canvas, child)
 
+    content = editArea.get("1.0", "end-1c")
+    with open("temp.html",'w') as ok:
+        ok.write(content)
+
 
 # This is a function i wrote to create the dictionary !!
 def print_children(some,logs):
@@ -307,26 +313,61 @@ def bind_mousewheel(canvas):
         if hasattr(event, "delta") and event.state & 0x0001:
             canvas.xview_scroll(int(-1*(event.delta/120)), "units")
     canvas.bind("<MouseWheel>", on_scroll, add="+")
+
+
+def reload_dom(event=None):
+    global dom_tree, logs
+    canvas.delete("all")
+    html_text = editArea.get("1.0", "end")
+    soup = bs4.BeautifulSoup(html_text, 'html.parser')
+    logs="Click on a tag in tree to get more info !\nAlso, use Ctrl+S to reload !\n\n"
+    dom_tree, logs = print_children(soup, logs)
+    extraContent.delete("1.0", "end")
+    extraContent.insert("1.0", logs)
+    Webelo.process_html(dom_tree)
+    content = editArea.get("1.0",'end-1c')
+    if content!="":
+        canvas.create_text(100, 40, text="DOM Tree", font=("Arial", 24), fill="white")
+    compute_positions(dom_tree)
+    draw_tree(canvas, dom_tree)
+    canvas.update_idletasks()
+    canvas.config(scrollregion=canvas.bbox("all"))
         
         
 # here I have parsed the html and got the canvas with it !!
 soup = bs4.BeautifulSoup(html_text, 'html.parser')
-logs = ""
+logs = "Click on a tag in tree to get more info !\nAlso, use Ctrl+S to reload !\n\n"
 dom_tree,logs = print_children(soup,logs)
-print(dom_tree)
+# print(dom_tree)
 
 extraContent.insert('1.0',logs)
+root.bind('<Control-s>', reload_dom)
 
 # Heiii ! Do you see my binding working ! hehe
 Webelo.process_html(dom_tree)
 # print(type(logs))
 # print(logs)
 
+def open_browser():
+    root2 = Tk()
+    root2.title("Running Demo Instance")
+    frame = HtmlFrame(root2)
+    try:
+        with open("temp.html",'r') as f:
+            data = f.read()
+        frame.load_html(data)
+    except:
+        frame.load_html(html_text)
+    frame.pack(fill="both", expand=True)
+    root2.mainloop()
+button = Button(root, text="RUN IT BOI !", command=open_browser, bg="#61AFEF", fg="white")
+button.place(relx=1.0, y=10,x=-10, anchor="ne")
+
 canvas = Canvas(right_frame, bg="black", relief="solid", borderwidth=2)
 canvas.pack(fill="both", expand=True)
-canvas.create_text(100, 40, text="DOM Tree", font=("Arial", 24), fill="white")
-
-
+content = editArea.get("1.0",'end-1c')
+if content!="":
+    canvas.create_text(100, 40, text="DOM Tree", font=("Arial", 24), fill="white")
 
 # positions and the baby tree :)
 compute_positions(dom_tree)
@@ -337,6 +378,31 @@ canvas.config(scrollregion=canvas.bbox("all"))
 bind_mousewheel(canvas)
 
 changes()
+
+import tkinter.messagebox as msg
+
+popup = Toplevel(root)
+popup.title("Special Note")
+popup.geometry("1000x380")
+popup.resizable = False
+popup.minsize = (1000,380)
+popup.maxsize = (1000,380)
+
+# Message text
+msg = Label(popup, text="This is just a demonstration visualizing HTML the way browsers will !\nMy main project ain't this but the layer behind it\nLuckily, it's also a library which you can use like any c++ library\n\nWhy is it useful??\n\t\tWhether creating a web scraper of your own or a webbrowser or even\n a small URL finder the library will help you store the content in the most feasible way\nAlso, providing stuff for events & what not !!!\n\nBest Thing??\nIt even adheres (follows) the OG WHATWG documentation so that's how other browsers do it toooo", font=("Arial", 12))
+msg.pack(pady=10)
+# Clickable link
+link = Label(popup, text="Documentation", fg="blue", cursor="hand2", font=("Arial", 12, "underline"))
+link.pack()
+link2 = Label(popup, text="Library Examples", fg="blue", cursor="hand2", font=("Arial", 12, "underline"))
+link2.pack()
+link3 = Label(popup, text="Github", fg="blue", cursor="hand2", font=("Arial", 12, "underline"))
+link3.pack()
+
+# Bind click to open URL
+link.bind("<Button-1>", lambda e: webbrowser.open("https://example.com"))
+link2.bind("<Button-1>", lambda e: webbrowser.open("https://example.com"))
+link3.bind("<Button-1>", lambda e: webbrowser.open("https://example.com"))
 
 # it won't run without this as the documentation says
 root.mainloop()

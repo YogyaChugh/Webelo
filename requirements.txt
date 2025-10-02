@@ -1,6 +1,5 @@
 bs4
 lxml
-tkinter
 tkinterweb
 pybind11
 breathe
