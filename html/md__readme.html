@@ -91,22 +91,22 @@ $(function(){initNavTree('md__readme.html','',''); });
   <div class="headertitle"><div class="title">WEBELO </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md19"></a></p>
-<p>A browser !!</p>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md20"></a>
-Current Implementation</h1>
-<p>Currently, creating the basis for any web-browser related stuff #DOM ! Soon, set to HTML Parsing and then diving to the visuals !!! Follow to keep updated on this amazing software.</p>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md21"></a>
+<div class="textblock"><p><a class="anchor" id="autotoc_md0"></a></p>
+<p>An HTML Visualizer &amp; DOM Library</p>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md1"></a>
 DOM</h1>
-<p>A <span class="tt">Document Object Model</span> for storing and working of tree for HTML and XML documents. It defines a tree with preorder depth first traversal order.</p>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md22"></a>
+<p>A <span class="tt"><a class="el" href="class_document.html">Document</a> Object Model</span> for storing and working of tree for HTML and XML documents.</p>
+<p>Alongside, it consists of an <span class="tt">HTML Visualizer</span> to visualize how your html looks to the browser.</p>
+<p>It defines a complex tree of classes with preorder depth first traversal order.</p>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md2"></a>
 What exactly is it ??</h2>
-<p>Basically, it is a tree implementation strictly abiding to the rules of the <a href="https://dom.spec.whatwg.org/">DOM STANDARD</a> defined by an organization named <a href="https://whatwg.org/">WhatWG</a>.</p>
+<p>Basically, it is a very complex tree implementation strictly abiding to the rules of the <a href="https://dom.spec.whatwg.org/">DOM STANDARD</a> defined by an organization named <a href="https://whatwg.org/">WhatWG</a>.</p>
+<p>It is the most crucial part of a browser &amp; they basically depend on this. The functions you use <span class="tt">addEventListener()</span>, <span class="tt">dipatchEvent()</span>, <span class="tt">document.write()</span>, etc.. are all written in this library :)</p>
 <p>It is the <span class="tt">intermediate</span> which is created when <span class="tt">HTML</span> is parsed.</p>
 <p>So let's understand this clearly ! In broader sense:-</p>
 <p>When we load a website, its HTML, CSS and JS is fetched and every component is parsed. <br  />
 </p><ul>
-<li>First <span class="tt">HTML</span> is parsed and <span class="tt">DOM</span> ( Document Object Model ) tree is created !</li>
+<li>First <span class="tt">HTML</span> is parsed and <span class="tt">DOM</span> ( <a class="el" href="class_document.html">Document</a> Object Model ) tree is created !</li>
 <li>Then <span class="tt">CSS</span> is parsed and <span class="tt">CSSOM</span> ( CSS Object Model ) is created !</li>
 <li>Both the <span class="tt">DOM</span> and <span class="tt">CSSOM</span> are combined to create the <span class="tt">Render Tree</span> !</li>
 <li>Finally using the <span class="tt">Render Tree</span>, we see the website on the screen after<br  />
@@ -115,23 +115,28 @@ What exactly is it ??</h2>
 <blockquote class="doxtable">
 <p>This repository implements the <span class="tt">DOM tree</span> for the HTML parsing ! </p>
 </blockquote>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md23"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md3"></a>
 Interesting Fact</h2>
 <p>There are so many browsers in the world like Google Chrome, Brave, Microsoft Edge, Firefox,etc.. but how is it that a website looks the same on all of them ???<br  />
 <br  />
  <span class="tt">Reason</span> <br  />
  This is possible because of the <span class="tt">standards</span> that all browsers or specifically rendering engines follow !<br  />
  And that's what we are doing here, following the <a href="https://dom.spec.whatwg.org/">DOM Standard</a> by <a href="https://whatwg.org/">WhatWG</a> !</p>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md24"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md4"></a>
 Running</h2>
-<p>Currently, the base classes are being defined so running it won't do anything ! Implementation for API coming soon...</p>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md25"></a>
+<p>There are 2 parts: 1) HTML Visualizer - Running executables from [Releases]("https://github.com/YogyaChugh/Webelo/release/latest") - (It runs the library using bindings too, but mainly written in Python) 2) DOM Library - Just clone this repository and include the <span class="tt"><a class="el" href="_webelo_8cpp_source.html">src/Webelo.cpp</a></span> in your file and you are set yo go !!</p>
+<blockquote class="doxtable">
+<p>You can run the examples <a href="https://github.com/YogyaChugh/Webelo/tree/master/examples">here</a> to test bro/sis !! </p>
+</blockquote>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md5"></a>
+Documentation</h2>
+<p>Docs are available at <a href="https://webelo.onrender.com">https://webelo.onrender.com</a> for DOM Library</p>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md6"></a>
 Contributing</h2>
 <p>Yup ! Anyone can contribute, just know c++ and dive into the documentation ! But don't get bored, there's HTML Parser and browser coming up after that ! It's a chain !</p>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md26"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md7"></a>
 Bindings</h2>
-<p>Bindings for Python, Rust and JS will be available after initial release.</p>
-<p><img src="https://hackatime-badge.hackclub.com/U09218J0E94/DOM" alt="Typing animation" class="inline"/> </p>
+<p>Bindings for Python, Rust and JS will be available after initial release. </p>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->

@@ -1,0 +1,277 @@
+\doxysection{Abort\+Signal Class Reference}
+\hypertarget{class_abort_signal}{}\label{class_abort_signal}\index{AbortSignal@{AbortSignal}}
+Inheritance diagram for Abort\+Signal\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_abort_signal}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_abort_signal_a7f9a1a4b4088cb89d616ccfa0fd3aefa}{throw\+If\+Aborted}} ()
+\item 
+\mbox{\hyperlink{class_abort_signal}{Abort\+Signal}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_abort_signal_a1dd8c454d1ae110407a369d6eebf725c}{create\+\_\+object}} ()
+\item 
+bool \mbox{\hyperlink{class_abort_signal_af27296d6b2846a0b3498a237f954687d}{getaborted}} ()
+\item 
+bool \mbox{\hyperlink{class_abort_signal_a83574a9f67808d4e7747a3241b655e59}{isaborted}} ()
+\item 
+bool \mbox{\hyperlink{class_abort_signal_ab02d30a211325ee5ad6831dae8fb0956}{getdependent}} ()
+\item 
+void \mbox{\hyperlink{class_abort_signal_ae29107103e66d9f55ef6c7fcd4fd3ca8}{setdependent}} (bool dependent)
+\item 
+std\+::any \mbox{\hyperlink{class_abort_signal_a61d9f59d9ea28ccabf51ff61a92de48e}{getreason}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_event_target}{Event\+Target}}}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_event_target_a58682c21cf0388b97a877b186c870365}{add\+Event\+Listener}} (DOMString \&type, \mbox{\hyperlink{class_event_listener}{Event\+Listener}} \texorpdfstring{$\ast$}{*}callback, std\+::variant$<$ \mbox{\hyperlink{struct_add_event_listener_options}{Add\+Event\+Listener\+Options}}, bool $>$ \&options)
+\item 
+void \mbox{\hyperlink{class_event_target_ab37aaaa5ed2e070613320e0f638e2adf}{remove\+Event\+Listener}} (DOMString \&type, \mbox{\hyperlink{class_event_listener}{Event\+Listener}} \texorpdfstring{$\ast$}{*}callback, bool capture)
+\item 
+void \mbox{\hyperlink{class_event_target_a3c5a4008edc7b9a85b3751ffebecd7a4}{remove\+All\+Event\+Listeners}} ()
+\item 
+bool \mbox{\hyperlink{class_event_target_a4d062d5e105c747d4edd9715e68d5ad6}{dispatch\+Event}} (\mbox{\hyperlink{class_event}{Event}} \texorpdfstring{$\ast$}{*}event)
+\item 
+bool \mbox{\hyperlink{class_event_target_a03a78ba45ab2cdfb77adc33c73a4cbb4}{operator==}} (const \mbox{\hyperlink{class_event_target}{Event\+Target}} \&a)
+\item 
+bool \mbox{\hyperlink{class_event_target_a393e17e431520f4df9313ca2237f25bf}{operator!=}} (const \mbox{\hyperlink{class_event_target}{Event\+Target}} \&a)
+\item 
+virtual \mbox{\hyperlink{class_event_target}{Event\+Target}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_event_target_a9984bf77a4194ed91460f66ce23a435d}{get\+\_\+the\+\_\+parent}} (const \mbox{\hyperlink{class_event}{Event}} \texorpdfstring{$\ast$}{*}event)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{class_abort_signal}{Abort\+Signal}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_abort_signal_a5b2b3c7de01d0029dfad6845e2b98950}{abort}} (std\+::any reason=nullptr)
+\item 
+static \mbox{\hyperlink{class_abort_signal}{Abort\+Signal}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_abort_signal_a4146e345f86408e436bf098ef53f0b14}{timeout}} (unsigned long long milliseconds)
+\item 
+static \mbox{\hyperlink{class_abort_signal}{Abort\+Signal}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_abort_signal_a6e6ca9ddf9a004a640077fb2ec812e43}{\+\_\+any}} (std\+::vector$<$ \mbox{\hyperlink{class_abort_signal}{Abort\+Signal}} \texorpdfstring{$\ast$}{*} $>$ signals)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{class_abort_signal_a56e88ebc230bebc38198c64872f4f2bb}{aborted}}
+\item 
+bool \mbox{\hyperlink{class_abort_signal_a5459ec9ffb02364046099b851aa2f57a}{dependent}} = false
+\item 
+std\+::any \mbox{\hyperlink{class_abort_signal_a750231e4352afc1da3a2ddf8a51efbf3}{reason}} = nullptr
+\item 
+\mbox{\hyperlink{class_event_handler}{Event\+Handler}} \mbox{\hyperlink{class_abort_signal_a0f3c122a8695fc290c5bfc5b28898b27}{onabort}}
+\item 
+std\+::vector$<$ \mbox{\hyperlink{class_abort_signal}{Abort\+Signal}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{class_abort_signal_a54459ebf342f4d2b165ecbea87e0f214}{source\+\_\+signals}} = \{\}
+\item 
+std\+::vector$<$ \mbox{\hyperlink{class_abort_signal}{Abort\+Signal}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{class_abort_signal_a73064fe526520a3ec89dcf54cabc3265}{dependent\+\_\+signals}} = \{\}
+\item 
+std\+::vector$<$ std\+::function$<$ void()$>$ $>$ \mbox{\hyperlink{class_abort_signal_a39a6996b444e1f5f47365a10da011057}{abort\+\_\+algos}} = \{\}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{class_event_target}{Event\+Target}}}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{class_event_target_a18eff1e304f2e6bdee0a9e3875b59527}{has\+\_\+activation\+\_\+behavior}} = false
+\item 
+bool \mbox{\hyperlink{class_event_target_a9f139193d0b5800d48b9066462fbc33e}{has\+\_\+legacy\+\_\+canceled\+\_\+activation\+\_\+behavior}} = false
+\item 
+bool \mbox{\hyperlink{class_event_target_a5e4ceca6c7a90af50a015755f1af3d34}{has\+\_\+legacy\+\_\+pre\+\_\+activation\+\_\+behavior}} = false
+\item 
+std\+::function$<$ void(\mbox{\hyperlink{class_event}{Event}} \texorpdfstring{$\ast$}{*}event)$>$ \mbox{\hyperlink{class_event_target_a516fde701d19ae92736ac58c53cb8948}{activation\+\_\+behavior\+\_\+algorithm}} = \mbox{[}$\,$\mbox{]}(\mbox{\hyperlink{class_event}{Event}}\texorpdfstring{$\ast$}{*} event) \{\}
+\item 
+std\+::function$<$ void()$>$ \mbox{\hyperlink{class_event_target_aa3713cf4cca2cfaec13e41a19add979e}{legacy\+\_\+canceled\+\_\+activation\+\_\+behavior\+\_\+algorithm}} = \mbox{[}$\,$\mbox{]}() \{\}
+\item 
+std\+::function$<$ void()$>$ \mbox{\hyperlink{class_event_target_a2f9c8cb9eba55ecc229b9313f269fe0e}{legacy\+\_\+pre\+\_\+activation\+\_\+behavior\+\_\+algorithm}} = \mbox{[}$\,$\mbox{]}() \{\}
+\item 
+std\+::vector$<$ \mbox{\hyperlink{structevent__listener}{event\+\_\+listener}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{class_event_target_a3eb05c71dd6fb764b7c1f69ed75f5bf7}{event\+\_\+listener\+\_\+list}} = \{\}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{_webelo_8cpp_source_l00348}{348}} of file \mbox{\hyperlink{_webelo_8cpp_source}{Webelo.\+cpp}}.
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_abort_signal_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_abort_signal_a6e6ca9ddf9a004a640077fb2ec812e43}\index{AbortSignal@{AbortSignal}!\_any@{\_any}}
+\index{\_any@{\_any}!AbortSignal@{AbortSignal}}
+\doxysubsubsection{\texorpdfstring{\_any()}{\_any()}}
+{\footnotesize\ttfamily \label{class_abort_signal_a6e6ca9ddf9a004a640077fb2ec812e43} 
+\mbox{\hyperlink{class_abort_signal}{Abort\+Signal}} \texorpdfstring{$\ast$}{*} Abort\+Signal\+::\+\_\+any (\begin{DoxyParamCaption}\item[{std\+::vector$<$ \mbox{\hyperlink{class_abort_signal}{Abort\+Signal}} \texorpdfstring{$\ast$}{*} $>$}]{signals}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{_webelo_8cpp_source_l03828}{3828}} of file \mbox{\hyperlink{_webelo_8cpp_source}{Webelo.\+cpp}}.
+
+\Hypertarget{class_abort_signal_a5b2b3c7de01d0029dfad6845e2b98950}\index{AbortSignal@{AbortSignal}!abort@{abort}}
+\index{abort@{abort}!AbortSignal@{AbortSignal}}
+\doxysubsubsection{\texorpdfstring{abort()}{abort()}}
+{\footnotesize\ttfamily \label{class_abort_signal_a5b2b3c7de01d0029dfad6845e2b98950} 
+\mbox{\hyperlink{class_abort_signal}{Abort\+Signal}} \texorpdfstring{$\ast$}{*} Abort\+Signal\+::abort (\begin{DoxyParamCaption}\item[{std\+::any}]{reason}{ = {\ttfamily nullptr}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{_webelo_8cpp_source_l03810}{3810}} of file \mbox{\hyperlink{_webelo_8cpp_source}{Webelo.\+cpp}}.
+
+\Hypertarget{class_abort_signal_a1dd8c454d1ae110407a369d6eebf725c}\index{AbortSignal@{AbortSignal}!create\_object@{create\_object}}
+\index{create\_object@{create\_object}!AbortSignal@{AbortSignal}}
+\doxysubsubsection{\texorpdfstring{create\_object()}{create\_object()}}
+{\footnotesize\ttfamily \label{class_abort_signal_a1dd8c454d1ae110407a369d6eebf725c} 
+\mbox{\hyperlink{class_abort_signal}{Abort\+Signal}} \texorpdfstring{$\ast$}{*} Abort\+Signal\+::create\+\_\+object (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{_webelo_8cpp_source_l00369}{369}} of file \mbox{\hyperlink{_webelo_8cpp_source}{Webelo.\+cpp}}.
+
+\Hypertarget{class_abort_signal_af27296d6b2846a0b3498a237f954687d}\index{AbortSignal@{AbortSignal}!getaborted@{getaborted}}
+\index{getaborted@{getaborted}!AbortSignal@{AbortSignal}}
+\doxysubsubsection{\texorpdfstring{getaborted()}{getaborted()}}
+{\footnotesize\ttfamily \label{class_abort_signal_af27296d6b2846a0b3498a237f954687d} 
+bool Abort\+Signal\+::getaborted (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{_webelo_8cpp_source_l00373}{373}} of file \mbox{\hyperlink{_webelo_8cpp_source}{Webelo.\+cpp}}.
+
+\Hypertarget{class_abort_signal_ab02d30a211325ee5ad6831dae8fb0956}\index{AbortSignal@{AbortSignal}!getdependent@{getdependent}}
+\index{getdependent@{getdependent}!AbortSignal@{AbortSignal}}
+\doxysubsubsection{\texorpdfstring{getdependent()}{getdependent()}}
+{\footnotesize\ttfamily \label{class_abort_signal_ab02d30a211325ee5ad6831dae8fb0956} 
+bool Abort\+Signal\+::getdependent (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{_webelo_8cpp_source_l00388}{388}} of file \mbox{\hyperlink{_webelo_8cpp_source}{Webelo.\+cpp}}.
+
+\Hypertarget{class_abort_signal_a61d9f59d9ea28ccabf51ff61a92de48e}\index{AbortSignal@{AbortSignal}!getreason@{getreason}}
+\index{getreason@{getreason}!AbortSignal@{AbortSignal}}
+\doxysubsubsection{\texorpdfstring{getreason()}{getreason()}}
+{\footnotesize\ttfamily \label{class_abort_signal_a61d9f59d9ea28ccabf51ff61a92de48e} 
+std\+::any Abort\+Signal\+::getreason (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{_webelo_8cpp_source_l00394}{394}} of file \mbox{\hyperlink{_webelo_8cpp_source}{Webelo.\+cpp}}.
+
+\Hypertarget{class_abort_signal_a83574a9f67808d4e7747a3241b655e59}\index{AbortSignal@{AbortSignal}!isaborted@{isaborted}}
+\index{isaborted@{isaborted}!AbortSignal@{AbortSignal}}
+\doxysubsubsection{\texorpdfstring{isaborted()}{isaborted()}}
+{\footnotesize\ttfamily \label{class_abort_signal_a83574a9f67808d4e7747a3241b655e59} 
+bool Abort\+Signal\+::isaborted (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{_webelo_8cpp_source_l00376}{376}} of file \mbox{\hyperlink{_webelo_8cpp_source}{Webelo.\+cpp}}.
+
+\Hypertarget{class_abort_signal_ae29107103e66d9f55ef6c7fcd4fd3ca8}\index{AbortSignal@{AbortSignal}!setdependent@{setdependent}}
+\index{setdependent@{setdependent}!AbortSignal@{AbortSignal}}
+\doxysubsubsection{\texorpdfstring{setdependent()}{setdependent()}}
+{\footnotesize\ttfamily \label{class_abort_signal_ae29107103e66d9f55ef6c7fcd4fd3ca8} 
+void Abort\+Signal\+::setdependent (\begin{DoxyParamCaption}\item[{bool}]{dependent}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{_webelo_8cpp_source_l00391}{391}} of file \mbox{\hyperlink{_webelo_8cpp_source}{Webelo.\+cpp}}.
+
+\Hypertarget{class_abort_signal_a7f9a1a4b4088cb89d616ccfa0fd3aefa}\index{AbortSignal@{AbortSignal}!throwIfAborted@{throwIfAborted}}
+\index{throwIfAborted@{throwIfAborted}!AbortSignal@{AbortSignal}}
+\doxysubsubsection{\texorpdfstring{throwIfAborted()}{throwIfAborted()}}
+{\footnotesize\ttfamily \label{class_abort_signal_a7f9a1a4b4088cb89d616ccfa0fd3aefa} 
+void Abort\+Signal\+::throw\+If\+Aborted (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_webelo_8cpp_source_l03832}{3832}} of file \mbox{\hyperlink{_webelo_8cpp_source}{Webelo.\+cpp}}.
+
+\Hypertarget{class_abort_signal_a4146e345f86408e436bf098ef53f0b14}\index{AbortSignal@{AbortSignal}!timeout@{timeout}}
+\index{timeout@{timeout}!AbortSignal@{AbortSignal}}
+\doxysubsubsection{\texorpdfstring{timeout()}{timeout()}}
+{\footnotesize\ttfamily \label{class_abort_signal_a4146e345f86408e436bf098ef53f0b14} 
+\mbox{\hyperlink{class_abort_signal}{Abort\+Signal}} \texorpdfstring{$\ast$}{*} Abort\+Signal\+::timeout (\begin{DoxyParamCaption}\item[{unsigned long long}]{milliseconds}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+MF GLOBAL OBJECT AGAIN HERE
+
+Definition at line \mbox{\hyperlink{_webelo_8cpp_source_l03821}{3821}} of file \mbox{\hyperlink{_webelo_8cpp_source}{Webelo.\+cpp}}.
+
+
+
+\label{doc-variable-members}
+\Hypertarget{class_abort_signal_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_abort_signal_a39a6996b444e1f5f47365a10da011057}\index{AbortSignal@{AbortSignal}!abort\_algos@{abort\_algos}}
+\index{abort\_algos@{abort\_algos}!AbortSignal@{AbortSignal}}
+\doxysubsubsection{\texorpdfstring{abort\_algos}{abort\_algos}}
+{\footnotesize\ttfamily \label{class_abort_signal_a39a6996b444e1f5f47365a10da011057} 
+std\+::vector$<$std\+::function$<$void()$>$ $>$ Abort\+Signal\+::abort\+\_\+algos = \{\}}
+
+
+
+Definition at line \mbox{\hyperlink{_webelo_8cpp_source_l00367}{367}} of file \mbox{\hyperlink{_webelo_8cpp_source}{Webelo.\+cpp}}.
+
+\Hypertarget{class_abort_signal_a56e88ebc230bebc38198c64872f4f2bb}\index{AbortSignal@{AbortSignal}!aborted@{aborted}}
+\index{aborted@{aborted}!AbortSignal@{AbortSignal}}
+\doxysubsubsection{\texorpdfstring{aborted}{aborted}}
+{\footnotesize\ttfamily \label{class_abort_signal_a56e88ebc230bebc38198c64872f4f2bb} 
+bool Abort\+Signal\+::aborted}
+
+
+
+Definition at line \mbox{\hyperlink{_webelo_8cpp_source_l00350}{350}} of file \mbox{\hyperlink{_webelo_8cpp_source}{Webelo.\+cpp}}.
+
+\Hypertarget{class_abort_signal_a5459ec9ffb02364046099b851aa2f57a}\index{AbortSignal@{AbortSignal}!dependent@{dependent}}
+\index{dependent@{dependent}!AbortSignal@{AbortSignal}}
+\doxysubsubsection{\texorpdfstring{dependent}{dependent}}
+{\footnotesize\ttfamily \label{class_abort_signal_a5459ec9ffb02364046099b851aa2f57a} 
+bool Abort\+Signal\+::dependent = false}
+
+
+
+Definition at line \mbox{\hyperlink{_webelo_8cpp_source_l00351}{351}} of file \mbox{\hyperlink{_webelo_8cpp_source}{Webelo.\+cpp}}.
+
+\Hypertarget{class_abort_signal_a73064fe526520a3ec89dcf54cabc3265}\index{AbortSignal@{AbortSignal}!dependent\_signals@{dependent\_signals}}
+\index{dependent\_signals@{dependent\_signals}!AbortSignal@{AbortSignal}}
+\doxysubsubsection{\texorpdfstring{dependent\_signals}{dependent\_signals}}
+{\footnotesize\ttfamily \label{class_abort_signal_a73064fe526520a3ec89dcf54cabc3265} 
+std\+::vector$<$\mbox{\hyperlink{class_abort_signal}{Abort\+Signal}}\texorpdfstring{$\ast$}{*}$>$ Abort\+Signal\+::dependent\+\_\+signals = \{\}}
+
+
+
+Definition at line \mbox{\hyperlink{_webelo_8cpp_source_l00365}{365}} of file \mbox{\hyperlink{_webelo_8cpp_source}{Webelo.\+cpp}}.
+
+\Hypertarget{class_abort_signal_a0f3c122a8695fc290c5bfc5b28898b27}\index{AbortSignal@{AbortSignal}!onabort@{onabort}}
+\index{onabort@{onabort}!AbortSignal@{AbortSignal}}
+\doxysubsubsection{\texorpdfstring{onabort}{onabort}}
+{\footnotesize\ttfamily \label{class_abort_signal_a0f3c122a8695fc290c5bfc5b28898b27} 
+\mbox{\hyperlink{class_event_handler}{Event\+Handler}} Abort\+Signal\+::onabort}
+
+
+
+Definition at line \mbox{\hyperlink{_webelo_8cpp_source_l00353}{353}} of file \mbox{\hyperlink{_webelo_8cpp_source}{Webelo.\+cpp}}.
+
+\Hypertarget{class_abort_signal_a750231e4352afc1da3a2ddf8a51efbf3}\index{AbortSignal@{AbortSignal}!reason@{reason}}
+\index{reason@{reason}!AbortSignal@{AbortSignal}}
+\doxysubsubsection{\texorpdfstring{reason}{reason}}
+{\footnotesize\ttfamily \label{class_abort_signal_a750231e4352afc1da3a2ddf8a51efbf3} 
+std\+::any Abort\+Signal\+::reason = nullptr}
+
+
+
+Definition at line \mbox{\hyperlink{_webelo_8cpp_source_l00352}{352}} of file \mbox{\hyperlink{_webelo_8cpp_source}{Webelo.\+cpp}}.
+
+\Hypertarget{class_abort_signal_a54459ebf342f4d2b165ecbea87e0f214}\index{AbortSignal@{AbortSignal}!source\_signals@{source\_signals}}
+\index{source\_signals@{source\_signals}!AbortSignal@{AbortSignal}}
+\doxysubsubsection{\texorpdfstring{source\_signals}{source\_signals}}
+{\footnotesize\ttfamily \label{class_abort_signal_a54459ebf342f4d2b165ecbea87e0f214} 
+std\+::vector$<$\mbox{\hyperlink{class_abort_signal}{Abort\+Signal}}\texorpdfstring{$\ast$}{*}$>$ Abort\+Signal\+::source\+\_\+signals = \{\}}
+
+
+
+Definition at line \mbox{\hyperlink{_webelo_8cpp_source_l00364}{364}} of file \mbox{\hyperlink{_webelo_8cpp_source}{Webelo.\+cpp}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/Webelo.\+cpp\end{DoxyCompactItemize}

@@ -1,0 +1,219 @@
+\doxysection{Event\+Target Class Reference}
+\hypertarget{class_event_target}{}\label{class_event_target}\index{EventTarget@{EventTarget}}
+Inheritance diagram for Event\+Target\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.309693cm]{class_event_target}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_event_target_a58682c21cf0388b97a877b186c870365}{add\+Event\+Listener}} (DOMString \&type, \mbox{\hyperlink{class_event_listener}{Event\+Listener}} \texorpdfstring{$\ast$}{*}callback, std\+::variant$<$ \mbox{\hyperlink{struct_add_event_listener_options}{Add\+Event\+Listener\+Options}}, bool $>$ \&options)
+\item 
+void \mbox{\hyperlink{class_event_target_ab37aaaa5ed2e070613320e0f638e2adf}{remove\+Event\+Listener}} (DOMString \&type, \mbox{\hyperlink{class_event_listener}{Event\+Listener}} \texorpdfstring{$\ast$}{*}callback, bool capture)
+\item 
+void \mbox{\hyperlink{class_event_target_a3c5a4008edc7b9a85b3751ffebecd7a4}{remove\+All\+Event\+Listeners}} ()
+\item 
+bool \mbox{\hyperlink{class_event_target_a4d062d5e105c747d4edd9715e68d5ad6}{dispatch\+Event}} (\mbox{\hyperlink{class_event}{Event}} \texorpdfstring{$\ast$}{*}event)
+\item 
+bool \mbox{\hyperlink{class_event_target_a03a78ba45ab2cdfb77adc33c73a4cbb4}{operator==}} (const \mbox{\hyperlink{class_event_target}{Event\+Target}} \&a)
+\item 
+bool \mbox{\hyperlink{class_event_target_a393e17e431520f4df9313ca2237f25bf}{operator!=}} (const \mbox{\hyperlink{class_event_target}{Event\+Target}} \&a)
+\item 
+virtual \mbox{\hyperlink{class_event_target}{Event\+Target}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_event_target_a9984bf77a4194ed91460f66ce23a435d}{get\+\_\+the\+\_\+parent}} (const \mbox{\hyperlink{class_event}{Event}} \texorpdfstring{$\ast$}{*}event)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{class_event_target_a18eff1e304f2e6bdee0a9e3875b59527}{has\+\_\+activation\+\_\+behavior}} = false
+\item 
+bool \mbox{\hyperlink{class_event_target_a9f139193d0b5800d48b9066462fbc33e}{has\+\_\+legacy\+\_\+canceled\+\_\+activation\+\_\+behavior}} = false
+\item 
+bool \mbox{\hyperlink{class_event_target_a5e4ceca6c7a90af50a015755f1af3d34}{has\+\_\+legacy\+\_\+pre\+\_\+activation\+\_\+behavior}} = false
+\item 
+std\+::function$<$ void(\mbox{\hyperlink{class_event}{Event}} \texorpdfstring{$\ast$}{*}event)$>$ \mbox{\hyperlink{class_event_target_a516fde701d19ae92736ac58c53cb8948}{activation\+\_\+behavior\+\_\+algorithm}} = \mbox{[}$\,$\mbox{]}(\mbox{\hyperlink{class_event}{Event}}\texorpdfstring{$\ast$}{*} event) \{\}
+\item 
+std\+::function$<$ void()$>$ \mbox{\hyperlink{class_event_target_aa3713cf4cca2cfaec13e41a19add979e}{legacy\+\_\+canceled\+\_\+activation\+\_\+behavior\+\_\+algorithm}} = \mbox{[}$\,$\mbox{]}() \{\}
+\item 
+std\+::function$<$ void()$>$ \mbox{\hyperlink{class_event_target_a2f9c8cb9eba55ecc229b9313f269fe0e}{legacy\+\_\+pre\+\_\+activation\+\_\+behavior\+\_\+algorithm}} = \mbox{[}$\,$\mbox{]}() \{\}
+\item 
+std\+::vector$<$ \mbox{\hyperlink{structevent__listener}{event\+\_\+listener}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{class_event_target_a3eb05c71dd6fb764b7c1f69ed75f5bf7}{event\+\_\+listener\+\_\+list}} = \{\}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{_webelo_8cpp_source_l00304}{304}} of file \mbox{\hyperlink{_webelo_8cpp_source}{Webelo.\+cpp}}.
+
+
+
+\label{doc-constructors}
+\Hypertarget{class_event_target_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_event_target_aa4526be9da6fedb0f691083761d09bf9}\index{EventTarget@{EventTarget}!EventTarget@{EventTarget}}
+\index{EventTarget@{EventTarget}!EventTarget@{EventTarget}}
+\doxysubsubsection{\texorpdfstring{EventTarget()}{EventTarget()}}
+{\footnotesize\ttfamily \label{class_event_target_aa4526be9da6fedb0f691083761d09bf9} 
+Event\+Target\+::\+Event\+Target (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{_webelo_8cpp_source_l00317}{317}} of file \mbox{\hyperlink{_webelo_8cpp_source}{Webelo.\+cpp}}.
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_event_target_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_event_target_a58682c21cf0388b97a877b186c870365}\index{EventTarget@{EventTarget}!addEventListener@{addEventListener}}
+\index{addEventListener@{addEventListener}!EventTarget@{EventTarget}}
+\doxysubsubsection{\texorpdfstring{addEventListener()}{addEventListener()}}
+{\footnotesize\ttfamily \label{class_event_target_a58682c21cf0388b97a877b186c870365} 
+void Event\+Target\+::add\+Event\+Listener (\begin{DoxyParamCaption}\item[{DOMString \&}]{type}{, }\item[{\mbox{\hyperlink{class_event_listener}{Event\+Listener}} \texorpdfstring{$\ast$}{*}}]{callback}{, }\item[{std\+::variant$<$ \mbox{\hyperlink{struct_add_event_listener_options}{Add\+Event\+Listener\+Options}}, bool $>$ \&}]{options}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_webelo_8cpp_source_l03761}{3761}} of file \mbox{\hyperlink{_webelo_8cpp_source}{Webelo.\+cpp}}.
+
+\Hypertarget{class_event_target_a4d062d5e105c747d4edd9715e68d5ad6}\index{EventTarget@{EventTarget}!dispatchEvent@{dispatchEvent}}
+\index{dispatchEvent@{dispatchEvent}!EventTarget@{EventTarget}}
+\doxysubsubsection{\texorpdfstring{dispatchEvent()}{dispatchEvent()}}
+{\footnotesize\ttfamily \label{class_event_target_a4d062d5e105c747d4edd9715e68d5ad6} 
+bool Event\+Target\+::dispatch\+Event (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_event}{Event}} \texorpdfstring{$\ast$}{*}}]{event}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_webelo_8cpp_source_l03785}{3785}} of file \mbox{\hyperlink{_webelo_8cpp_source}{Webelo.\+cpp}}.
+
+\Hypertarget{class_event_target_a9984bf77a4194ed91460f66ce23a435d}\index{EventTarget@{EventTarget}!get\_the\_parent@{get\_the\_parent}}
+\index{get\_the\_parent@{get\_the\_parent}!EventTarget@{EventTarget}}
+\doxysubsubsection{\texorpdfstring{get\_the\_parent()}{get\_the\_parent()}}
+{\footnotesize\ttfamily \label{class_event_target_a9984bf77a4194ed91460f66ce23a435d} 
+virtual \mbox{\hyperlink{class_event_target}{Event\+Target}} \texorpdfstring{$\ast$}{*} Event\+Target\+::get\+\_\+the\+\_\+parent (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_event}{Event}} \texorpdfstring{$\ast$}{*}}]{event}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Definition at line \mbox{\hyperlink{_webelo_8cpp_source_l00341}{341}} of file \mbox{\hyperlink{_webelo_8cpp_source}{Webelo.\+cpp}}.
+
+\Hypertarget{class_event_target_a393e17e431520f4df9313ca2237f25bf}\index{EventTarget@{EventTarget}!operator"!=@{operator"!=}}
+\index{operator"!=@{operator"!=}!EventTarget@{EventTarget}}
+\doxysubsubsection{\texorpdfstring{operator"!=()}{operator!=()}}
+{\footnotesize\ttfamily \label{class_event_target_a393e17e431520f4df9313ca2237f25bf} 
+bool Event\+Target\+::operator!= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_event_target}{Event\+Target}} \&}]{a}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{_webelo_8cpp_source_l00337}{337}} of file \mbox{\hyperlink{_webelo_8cpp_source}{Webelo.\+cpp}}.
+
+\Hypertarget{class_event_target_a03a78ba45ab2cdfb77adc33c73a4cbb4}\index{EventTarget@{EventTarget}!operator==@{operator==}}
+\index{operator==@{operator==}!EventTarget@{EventTarget}}
+\doxysubsubsection{\texorpdfstring{operator==()}{operator==()}}
+{\footnotesize\ttfamily \label{class_event_target_a03a78ba45ab2cdfb77adc33c73a4cbb4} 
+bool Event\+Target\+::operator== (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_event_target}{Event\+Target}} \&}]{a}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{_webelo_8cpp_source_l00324}{324}} of file \mbox{\hyperlink{_webelo_8cpp_source}{Webelo.\+cpp}}.
+
+\Hypertarget{class_event_target_a3c5a4008edc7b9a85b3751ffebecd7a4}\index{EventTarget@{EventTarget}!removeAllEventListeners@{removeAllEventListeners}}
+\index{removeAllEventListeners@{removeAllEventListeners}!EventTarget@{EventTarget}}
+\doxysubsubsection{\texorpdfstring{removeAllEventListeners()}{removeAllEventListeners()}}
+{\footnotesize\ttfamily \label{class_event_target_a3c5a4008edc7b9a85b3751ffebecd7a4} 
+void Event\+Target\+::remove\+All\+Event\+Listeners (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_webelo_8cpp_source_l03777}{3777}} of file \mbox{\hyperlink{_webelo_8cpp_source}{Webelo.\+cpp}}.
+
+\Hypertarget{class_event_target_ab37aaaa5ed2e070613320e0f638e2adf}\index{EventTarget@{EventTarget}!removeEventListener@{removeEventListener}}
+\index{removeEventListener@{removeEventListener}!EventTarget@{EventTarget}}
+\doxysubsubsection{\texorpdfstring{removeEventListener()}{removeEventListener()}}
+{\footnotesize\ttfamily \label{class_event_target_ab37aaaa5ed2e070613320e0f638e2adf} 
+void Event\+Target\+::remove\+Event\+Listener (\begin{DoxyParamCaption}\item[{DOMString \&}]{type}{, }\item[{\mbox{\hyperlink{class_event_listener}{Event\+Listener}} \texorpdfstring{$\ast$}{*}}]{callback}{, }\item[{bool}]{capture}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_webelo_8cpp_source_l03766}{3766}} of file \mbox{\hyperlink{_webelo_8cpp_source}{Webelo.\+cpp}}.
+
+
+
+\label{doc-variable-members}
+\Hypertarget{class_event_target_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_event_target_a516fde701d19ae92736ac58c53cb8948}\index{EventTarget@{EventTarget}!activation\_behavior\_algorithm@{activation\_behavior\_algorithm}}
+\index{activation\_behavior\_algorithm@{activation\_behavior\_algorithm}!EventTarget@{EventTarget}}
+\doxysubsubsection{\texorpdfstring{activation\_behavior\_algorithm}{activation\_behavior\_algorithm}}
+{\footnotesize\ttfamily \label{class_event_target_a516fde701d19ae92736ac58c53cb8948} 
+std\+::function$<$void(\mbox{\hyperlink{class_event}{Event}}\texorpdfstring{$\ast$}{*} event)$>$ Event\+Target\+::activation\+\_\+behavior\+\_\+algorithm = \mbox{[}$\,$\mbox{]}(\mbox{\hyperlink{class_event}{Event}}\texorpdfstring{$\ast$}{*} event) \{\}}
+
+
+
+Definition at line \mbox{\hyperlink{_webelo_8cpp_source_l00311}{311}} of file \mbox{\hyperlink{_webelo_8cpp_source}{Webelo.\+cpp}}.
+
+\Hypertarget{class_event_target_a3eb05c71dd6fb764b7c1f69ed75f5bf7}\index{EventTarget@{EventTarget}!event\_listener\_list@{event\_listener\_list}}
+\index{event\_listener\_list@{event\_listener\_list}!EventTarget@{EventTarget}}
+\doxysubsubsection{\texorpdfstring{event\_listener\_list}{event\_listener\_list}}
+{\footnotesize\ttfamily \label{class_event_target_a3eb05c71dd6fb764b7c1f69ed75f5bf7} 
+std\+::vector$<$\mbox{\hyperlink{structevent__listener}{event\+\_\+listener}}\texorpdfstring{$\ast$}{*}$>$ Event\+Target\+::event\+\_\+listener\+\_\+list = \{\}}
+
+
+
+Definition at line \mbox{\hyperlink{_webelo_8cpp_source_l00315}{315}} of file \mbox{\hyperlink{_webelo_8cpp_source}{Webelo.\+cpp}}.
+
+\Hypertarget{class_event_target_a18eff1e304f2e6bdee0a9e3875b59527}\index{EventTarget@{EventTarget}!has\_activation\_behavior@{has\_activation\_behavior}}
+\index{has\_activation\_behavior@{has\_activation\_behavior}!EventTarget@{EventTarget}}
+\doxysubsubsection{\texorpdfstring{has\_activation\_behavior}{has\_activation\_behavior}}
+{\footnotesize\ttfamily \label{class_event_target_a18eff1e304f2e6bdee0a9e3875b59527} 
+bool Event\+Target\+::has\+\_\+activation\+\_\+behavior = false}
+
+
+
+Definition at line \mbox{\hyperlink{_webelo_8cpp_source_l00306}{306}} of file \mbox{\hyperlink{_webelo_8cpp_source}{Webelo.\+cpp}}.
+
+\Hypertarget{class_event_target_a9f139193d0b5800d48b9066462fbc33e}\index{EventTarget@{EventTarget}!has\_legacy\_canceled\_activation\_behavior@{has\_legacy\_canceled\_activation\_behavior}}
+\index{has\_legacy\_canceled\_activation\_behavior@{has\_legacy\_canceled\_activation\_behavior}!EventTarget@{EventTarget}}
+\doxysubsubsection{\texorpdfstring{has\_legacy\_canceled\_activation\_behavior}{has\_legacy\_canceled\_activation\_behavior}}
+{\footnotesize\ttfamily \label{class_event_target_a9f139193d0b5800d48b9066462fbc33e} 
+bool Event\+Target\+::has\+\_\+legacy\+\_\+canceled\+\_\+activation\+\_\+behavior = false}
+
+
+
+Definition at line \mbox{\hyperlink{_webelo_8cpp_source_l00307}{307}} of file \mbox{\hyperlink{_webelo_8cpp_source}{Webelo.\+cpp}}.
+
+\Hypertarget{class_event_target_a5e4ceca6c7a90af50a015755f1af3d34}\index{EventTarget@{EventTarget}!has\_legacy\_pre\_activation\_behavior@{has\_legacy\_pre\_activation\_behavior}}
+\index{has\_legacy\_pre\_activation\_behavior@{has\_legacy\_pre\_activation\_behavior}!EventTarget@{EventTarget}}
+\doxysubsubsection{\texorpdfstring{has\_legacy\_pre\_activation\_behavior}{has\_legacy\_pre\_activation\_behavior}}
+{\footnotesize\ttfamily \label{class_event_target_a5e4ceca6c7a90af50a015755f1af3d34} 
+bool Event\+Target\+::has\+\_\+legacy\+\_\+pre\+\_\+activation\+\_\+behavior = false}
+
+
+
+Definition at line \mbox{\hyperlink{_webelo_8cpp_source_l00308}{308}} of file \mbox{\hyperlink{_webelo_8cpp_source}{Webelo.\+cpp}}.
+
+\Hypertarget{class_event_target_aa3713cf4cca2cfaec13e41a19add979e}\index{EventTarget@{EventTarget}!legacy\_canceled\_activation\_behavior\_algorithm@{legacy\_canceled\_activation\_behavior\_algorithm}}
+\index{legacy\_canceled\_activation\_behavior\_algorithm@{legacy\_canceled\_activation\_behavior\_algorithm}!EventTarget@{EventTarget}}
+\doxysubsubsection{\texorpdfstring{legacy\_canceled\_activation\_behavior\_algorithm}{legacy\_canceled\_activation\_behavior\_algorithm}}
+{\footnotesize\ttfamily \label{class_event_target_aa3713cf4cca2cfaec13e41a19add979e} 
+std\+::function$<$void()$>$ Event\+Target\+::legacy\+\_\+canceled\+\_\+activation\+\_\+behavior\+\_\+algorithm = \mbox{[}$\,$\mbox{]}() \{\}}
+
+
+
+Definition at line \mbox{\hyperlink{_webelo_8cpp_source_l00312}{312}} of file \mbox{\hyperlink{_webelo_8cpp_source}{Webelo.\+cpp}}.
+
+\Hypertarget{class_event_target_a2f9c8cb9eba55ecc229b9313f269fe0e}\index{EventTarget@{EventTarget}!legacy\_pre\_activation\_behavior\_algorithm@{legacy\_pre\_activation\_behavior\_algorithm}}
+\index{legacy\_pre\_activation\_behavior\_algorithm@{legacy\_pre\_activation\_behavior\_algorithm}!EventTarget@{EventTarget}}
+\doxysubsubsection{\texorpdfstring{legacy\_pre\_activation\_behavior\_algorithm}{legacy\_pre\_activation\_behavior\_algorithm}}
+{\footnotesize\ttfamily \label{class_event_target_a2f9c8cb9eba55ecc229b9313f269fe0e} 
+std\+::function$<$void()$>$ Event\+Target\+::legacy\+\_\+pre\+\_\+activation\+\_\+behavior\+\_\+algorithm = \mbox{[}$\,$\mbox{]}() \{\}}
+
+
+
+Definition at line \mbox{\hyperlink{_webelo_8cpp_source_l00313}{313}} of file \mbox{\hyperlink{_webelo_8cpp_source}{Webelo.\+cpp}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/Webelo.\+cpp\end{DoxyCompactItemize}

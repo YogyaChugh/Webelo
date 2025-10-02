@@ -24,53 +24,58 @@
 */
 var NAVTREE =
 [
-  [ "My Project", "index.html", [
+  [ "WEBELO", "index.html", [
+    [ "WEBELO", "index.html#autotoc_md0", [
+      [ "DOM", "index.html#autotoc_md1", [
+        [ "What exactly is it ??", "index.html#autotoc_md2", null ],
+        [ "Interesting Fact", "index.html#autotoc_md3", null ],
+        [ "Running", "index.html#autotoc_md4", null ],
+        [ "Documentation", "index.html#autotoc_md5", null ],
+        [ "Contributing", "index.html#autotoc_md6", null ],
+        [ "Bindings", "index.html#autotoc_md7", null ]
+      ] ]
+    ] ],
     [ "Important", "md__essentials.html", [
-      [ "Ideology", "md__essentials.html#autotoc_md1", null ],
-      [ "Optimizations", "md__essentials.html#autotoc_md2", null ],
-      [ "Notes", "md__essentials.html#autotoc_md3", null ]
+      [ "Ideology", "md__essentials.html#autotoc_md9", null ],
+      [ "Optimizations", "md__essentials.html#autotoc_md10", null ],
+      [ "Notes", "md__essentials.html#autotoc_md11", null ]
     ] ],
     [ "EVENTS", "md_events.html", [
-      [ "Event", "md_events.html#autotoc_md5", [
-        [ "Flags", "md_events.html#autotoc_md6", null ],
-        [ "Read-only Attributes", "md_events.html#autotoc_md7", null ],
-        [ "Editable Values", "md_events.html#autotoc_md8", null ],
-        [ "Methods", "md_events.html#autotoc_md9", null ],
-        [ "Concept for shadow DOM", "md_events.html#autotoc_md11", null ]
+      [ "Event", "md_events.html#autotoc_md13", [
+        [ "Flags", "md_events.html#autotoc_md14", null ],
+        [ "Read-only Attributes", "md_events.html#autotoc_md15", null ],
+        [ "Editable Values", "md_events.html#autotoc_md16", null ],
+        [ "Methods", "md_events.html#autotoc_md17", null ],
+        [ "Concept for shadow DOM", "md_events.html#autotoc_md19", null ]
       ] ],
-      [ "CustomEvent", "md_events.html#autotoc_md13", [
-        [ "Read-only Attributes", "md_events.html#autotoc_md14", null ],
-        [ "Methods", "md_events.html#autotoc_md15", null ]
+      [ "CustomEvent", "md_events.html#autotoc_md21", [
+        [ "Read-only Attributes", "md_events.html#autotoc_md22", null ],
+        [ "Methods", "md_events.html#autotoc_md23", null ]
       ] ],
-      [ "EventTarget", "md_events.html#autotoc_md17", [
-        [ "Read-only Attributes", "md_events.html#autotoc_md18", null ]
+      [ "EventTarget", "md_events.html#autotoc_md25", [
+        [ "Read-only Attributes", "md_events.html#autotoc_md26", null ]
       ] ]
     ] ],
     [ "extras", "md_extras.html", null ],
-    [ "WEBELO", "md__readme.html", [
-      [ "Current Implementation", "md__readme.html#autotoc_md20", null ],
-      [ "DOM", "md__readme.html#autotoc_md21", [
-        [ "What exactly is it ??", "md__readme.html#autotoc_md22", null ],
-        [ "Interesting Fact", "md__readme.html#autotoc_md23", null ],
-        [ "Running", "md__readme.html#autotoc_md24", null ],
-        [ "Contributing", "md__readme.html#autotoc_md25", null ],
-        [ "Bindings", "md__readme.html#autotoc_md26", null ]
-      ] ]
-    ] ],
-    [ "Children", "md_tree.html", [
-      [ "Parsing", "md_tree.html#autotoc_md28", null ]
-    ] ],
     [ "Classes", "annotated.html", [
       [ "Class List", "annotated.html", "annotated_dup" ],
       [ "Class Index", "classes.html", null ],
-      [ "Class Hierarchy", "hierarchy.html", "hierarchy" ]
+      [ "Class Hierarchy", "hierarchy.html", "hierarchy" ],
+      [ "Class Members", "functions.html", [
+        [ "All", "functions.html", null ],
+        [ "Functions", "functions_func.html", null ],
+        [ "Variables", "functions_vars.html", null ]
+      ] ]
+    ] ],
+    [ "Files", "files.html", [
+      [ "File List", "files.html", "files_dup" ]
     ] ]
   ] ]
 ];
 
 var NAVTREEINDEX =
 [
-"annotated.html"
+"_webelo_8cpp_source.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronization';

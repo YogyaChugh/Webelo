@@ -1,0 +1,605 @@
+\doxysection{Event Class Reference}
+\hypertarget{class_event}{}\label{class_event}\index{Event@{Event}}
+Inheritance diagram for Event\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_event}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_event_a22b47621cff44f301fa22f622e66a645}{Event}} (const DOMString \&type, bool bubbles=false, bool cancelable=false, bool composed=false)
+\item 
+\mbox{\hyperlink{class_event_a91e59a9fd769d73b6b51b30faa97e81d}{Event}} (const \mbox{\hyperlink{class_event}{Event}} \texorpdfstring{$\ast$}{*}temp)
+\item 
+void \mbox{\hyperlink{class_event_af26087b0d81ba6c42320e329074da84a}{inner\+\_\+event\+\_\+creation\+\_\+steps}} (\mbox{\hyperlink{class_event}{Event}} \texorpdfstring{$\ast$}{*}event, \mbox{\hyperlink{class_realm}{Realm}} \texorpdfstring{$\ast$}{*}realm, DOMHigh\+Res\+Time\+Stamp \&time, bool bubbles=false, bool cancelable=false, bool composed=false)
+\item 
+void \mbox{\hyperlink{class_event_a7876d076f2332b65cc0c4ad020908836}{init\+Event}} (DOMString type, bool bubbles=false, bool cancelable=false)
+\item 
+void \mbox{\hyperlink{class_event_a69732f24bfeabbef113cf128e81ed27f}{stop\+Propagation}} ()
+\item 
+void \mbox{\hyperlink{class_event_a4cf1f9861fdcb51b0a8f6f312cfafa74}{stop\+Immediate\+Propagation}} ()
+\item 
+void \mbox{\hyperlink{class_event_ad0cb4e80c9353bd6226c5e45ae3dbe10}{prevent\+Default}} ()
+\item 
+std\+::vector$<$ \mbox{\hyperlink{class_event_target}{Event\+Target}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{class_event_a1a5699aa255f9ace0d00ece3b5cfa578}{composed\+Path}} ()
+\item 
+void \mbox{\hyperlink{class_event_aad830dd25c02e8902ab1e11c527801db}{set\+\_\+canceled\+\_\+flag}} ()
+\item 
+DOMString \mbox{\hyperlink{class_event_aff4b60c5aef68de49957d0df5e029df7}{gettype}} () const
+\item 
+\mbox{\hyperlink{class_event_target}{Event\+Target}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_event_a6380856f937198c5cf88d6572dcfc81a}{gettarget}} () const
+\item 
+\mbox{\hyperlink{class_event_target}{Event\+Target}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_event_a0851a76c9d08d7cc0f588ab4dfcbfa8c}{getsrc\+Element}} () const
+\item 
+\mbox{\hyperlink{class_event_target}{Event\+Target}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_event_a04ac8753624875080ff5da8de98cc28e}{getrelated\+Target}} () const
+\item 
+\mbox{\hyperlink{class_event_target}{Event\+Target}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_event_aa1bcc456a30732eae81aa242574ce40f}{getcurrent\+Target}} () const
+\item 
+enum event\+\_\+phase \mbox{\hyperlink{class_event_ae251fd89f825ee16cf5bdefb89349f82}{getevent\+Phase}} () const
+\item 
+void \mbox{\hyperlink{class_event_ac0f39bb02cb038d4416ed4bc00db3a38}{setevent\+Phase}} (enum event\+\_\+phase temp)
+\item 
+bool \mbox{\hyperlink{class_event_a9df7a77e2887594637e4db76c0ade2cd}{getbubbles}} () const
+\item 
+bool \mbox{\hyperlink{class_event_a3eb2ddf2b8d6b43fe5f853f5c78d5e43}{getcancelable}} () const
+\item 
+bool \mbox{\hyperlink{class_event_af965779e09b70e7da287509aef2a3093}{getdefault\+Prevented}} () const
+\item 
+bool \mbox{\hyperlink{class_event_a4a3db40498ddd27cabf311329cae2962}{getcomposed}} () const
+\item 
+bool \mbox{\hyperlink{class_event_a1d1cbb671ea1931f4668d13a0825b2c8}{getis\+Trusted}} () const
+\item 
+DOMHigh\+Res\+Time\+Stamp \mbox{\hyperlink{class_event_a556432d37e80f39e698822d2b5b5d2f5}{gettime\+Stamp}} () const
+\item 
+bool \mbox{\hyperlink{class_event_af409c9fb7ffac0f4945b24eea5325c9d}{getcancel\+Bubble}} () const
+\item 
+void \mbox{\hyperlink{class_event_a043f405963e938eaa864432a16429179}{setcancel\+Bubble}} (bool value)
+\item 
+bool \mbox{\hyperlink{class_event_a8258d75391530b119e028e4b42153af5}{getreturn\+Value}} () const
+\item 
+void \mbox{\hyperlink{class_event_a48215c9e5c258b082047ba0c5933d6a7}{setreturn\+Value}} (bool value)
+\item 
+virtual bool \mbox{\hyperlink{class_event_a2816dbbcd098c2a769c6111cfee9594c}{operator==}} (\mbox{\hyperlink{class_event}{Event}} \texorpdfstring{$\ast$}{*}ev)
+\item 
+virtual \mbox{\hyperlink{class_event}{Event}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_event_a7d6d8a51f4fc4cf9bafb06e8b7a60713}{new\+Object}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+DOMString \mbox{\hyperlink{class_event_a8a1e0e604947b80e0a2c78b027d23bc8}{type}} = "{}"{}
+\item 
+\mbox{\hyperlink{class_event_target}{Event\+Target}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_event_ab0280a0a6211d147b278e895a35d452d}{target}} = nullptr
+\item 
+\mbox{\hyperlink{class_event_target}{Event\+Target}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_event_a3f812cada41b1cf168017a5b2e5c2c11}{related\+Target}} = nullptr
+\item 
+\mbox{\hyperlink{class_event_target}{Event\+Target}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_event_af5bf7665bb66881c6b3aba9e90f5ada0}{current\+Target}} = nullptr
+\item 
+enum event\+\_\+phase \mbox{\hyperlink{class_event_a9befae9e12cc0eacd37e6e66e0dbcf06}{event\+Phase}} = NONE
+\item 
+bool \mbox{\hyperlink{class_event_a2519bf8e6cfb834ab5086d2d7470b8ee}{bubbles}}
+\item 
+bool \mbox{\hyperlink{class_event_a1c2d8c4b104f6617a87ea099089e62a0}{cancelable}}
+\item 
+bool \mbox{\hyperlink{class_event_ac481d2499a5fb481cdfe75c312cda38f}{composed}}
+\item 
+DOMHigh\+Res\+Time\+Stamp \mbox{\hyperlink{class_event_af178dc080e530eddd17f3b43d7aba56f}{time\+Stamp}}
+\item 
+bool \mbox{\hyperlink{class_event_a5197a6b98eb5b9a4aec315e6596c0153}{is\+Trusted}} = false
+\item 
+bool \mbox{\hyperlink{class_event_a8fe171cf46a2d4335aa82c7be411c5ba}{stop\+\_\+propagation\+\_\+flag}} = false
+\item 
+bool \mbox{\hyperlink{class_event_aee819ac9058a34a7d9b61e4c2db503c7}{stop\+\_\+immediate\+\_\+propagation\+\_\+flag}} = false
+\item 
+bool \mbox{\hyperlink{class_event_a3048349a92597009c9dd40999829c872}{canceled\+\_\+flag}} = false
+\item 
+bool \mbox{\hyperlink{class_event_a478ce63e168759b3da0fb68b503988e6}{in\+\_\+passive\+\_\+listener\+\_\+flag}} = false
+\item 
+bool \mbox{\hyperlink{class_event_a9ad70fa6669978a9ef2b33cfae5d68ee}{composed\+\_\+flag}} = false
+\item 
+bool \mbox{\hyperlink{class_event_ae8d8e35f8630d7c08d46452735701bab}{initialized\+\_\+flag}} = false
+\item 
+bool \mbox{\hyperlink{class_event_a27fea7f068522d6a456d4fb52c6c0967}{dispatch\+\_\+flag}} = false
+\item 
+std\+::vector$<$ \mbox{\hyperlink{structpath__structs}{path\+\_\+structs}} $>$ \mbox{\hyperlink{class_event_a8fbacd7fc9f1be1ecd770e2914a39e1b}{path}} = \{\}
+\item 
+std\+::vector$<$ \mbox{\hyperlink{class_event_target}{Event\+Target}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{class_event_a669ecd88460563c625eb42828c4db6ba}{touch\+\_\+target\+\_\+list}} = \{\}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{_webelo_8cpp_source_l00433}{433}} of file \mbox{\hyperlink{_webelo_8cpp_source}{Webelo.\+cpp}}.
+
+
+
+\label{doc-constructors}
+\Hypertarget{class_event_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_event_a22b47621cff44f301fa22f622e66a645}\index{Event@{Event}!Event@{Event}}
+\index{Event@{Event}!Event@{Event}}
+\doxysubsubsection{\texorpdfstring{Event()}{Event()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_event_a22b47621cff44f301fa22f622e66a645} 
+Event\+::\+Event (\begin{DoxyParamCaption}\item[{const DOMString \&}]{type}{, }\item[{bool}]{bubbles}{ = {\ttfamily false}, }\item[{bool}]{cancelable}{ = {\ttfamily false}, }\item[{bool}]{composed}{ = {\ttfamily false}}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_webelo_8cpp_source_l03630}{3630}} of file \mbox{\hyperlink{_webelo_8cpp_source}{Webelo.\+cpp}}.
+
+\Hypertarget{class_event_a91e59a9fd769d73b6b51b30faa97e81d}\index{Event@{Event}!Event@{Event}}
+\index{Event@{Event}!Event@{Event}}
+\doxysubsubsection{\texorpdfstring{Event()}{Event()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_event_a91e59a9fd769d73b6b51b30faa97e81d} 
+Event\+::\+Event (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_event}{Event}} \texorpdfstring{$\ast$}{*}}]{temp}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_webelo_8cpp_source_l03636}{3636}} of file \mbox{\hyperlink{_webelo_8cpp_source}{Webelo.\+cpp}}.
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_event_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_event_a1a5699aa255f9ace0d00ece3b5cfa578}\index{Event@{Event}!composedPath@{composedPath}}
+\index{composedPath@{composedPath}!Event@{Event}}
+\doxysubsubsection{\texorpdfstring{composedPath()}{composedPath()}}
+{\footnotesize\ttfamily \label{class_event_a1a5699aa255f9ace0d00ece3b5cfa578} 
+std\+::vector$<$ \mbox{\hyperlink{class_event_target}{Event\+Target}} \texorpdfstring{$\ast$}{*} $>$ Event\+::composed\+Path (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_webelo_8cpp_source_l03677}{3677}} of file \mbox{\hyperlink{_webelo_8cpp_source}{Webelo.\+cpp}}.
+
+\Hypertarget{class_event_a9df7a77e2887594637e4db76c0ade2cd}\index{Event@{Event}!getbubbles@{getbubbles}}
+\index{getbubbles@{getbubbles}!Event@{Event}}
+\doxysubsubsection{\texorpdfstring{getbubbles()}{getbubbles()}}
+{\footnotesize\ttfamily \label{class_event_a9df7a77e2887594637e4db76c0ade2cd} 
+bool Event\+::getbubbles (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{_webelo_8cpp_source_l00496}{496}} of file \mbox{\hyperlink{_webelo_8cpp_source}{Webelo.\+cpp}}.
+
+\Hypertarget{class_event_a3eb2ddf2b8d6b43fe5f853f5c78d5e43}\index{Event@{Event}!getcancelable@{getcancelable}}
+\index{getcancelable@{getcancelable}!Event@{Event}}
+\doxysubsubsection{\texorpdfstring{getcancelable()}{getcancelable()}}
+{\footnotesize\ttfamily \label{class_event_a3eb2ddf2b8d6b43fe5f853f5c78d5e43} 
+bool Event\+::getcancelable (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{_webelo_8cpp_source_l00499}{499}} of file \mbox{\hyperlink{_webelo_8cpp_source}{Webelo.\+cpp}}.
+
+\Hypertarget{class_event_af409c9fb7ffac0f4945b24eea5325c9d}\index{Event@{Event}!getcancelBubble@{getcancelBubble}}
+\index{getcancelBubble@{getcancelBubble}!Event@{Event}}
+\doxysubsubsection{\texorpdfstring{getcancelBubble()}{getcancelBubble()}}
+{\footnotesize\ttfamily \label{class_event_af409c9fb7ffac0f4945b24eea5325c9d} 
+bool Event\+::getcancel\+Bubble (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{_webelo_8cpp_source_l00515}{515}} of file \mbox{\hyperlink{_webelo_8cpp_source}{Webelo.\+cpp}}.
+
+\Hypertarget{class_event_a4a3db40498ddd27cabf311329cae2962}\index{Event@{Event}!getcomposed@{getcomposed}}
+\index{getcomposed@{getcomposed}!Event@{Event}}
+\doxysubsubsection{\texorpdfstring{getcomposed()}{getcomposed()}}
+{\footnotesize\ttfamily \label{class_event_a4a3db40498ddd27cabf311329cae2962} 
+bool Event\+::getcomposed (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{_webelo_8cpp_source_l00505}{505}} of file \mbox{\hyperlink{_webelo_8cpp_source}{Webelo.\+cpp}}.
+
+\Hypertarget{class_event_aa1bcc456a30732eae81aa242574ce40f}\index{Event@{Event}!getcurrentTarget@{getcurrentTarget}}
+\index{getcurrentTarget@{getcurrentTarget}!Event@{Event}}
+\doxysubsubsection{\texorpdfstring{getcurrentTarget()}{getcurrentTarget()}}
+{\footnotesize\ttfamily \label{class_event_aa1bcc456a30732eae81aa242574ce40f} 
+\mbox{\hyperlink{class_event_target}{Event\+Target}} \texorpdfstring{$\ast$}{*} Event\+::getcurrent\+Target (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{_webelo_8cpp_source_l00487}{487}} of file \mbox{\hyperlink{_webelo_8cpp_source}{Webelo.\+cpp}}.
+
+\Hypertarget{class_event_af965779e09b70e7da287509aef2a3093}\index{Event@{Event}!getdefaultPrevented@{getdefaultPrevented}}
+\index{getdefaultPrevented@{getdefaultPrevented}!Event@{Event}}
+\doxysubsubsection{\texorpdfstring{getdefaultPrevented()}{getdefaultPrevented()}}
+{\footnotesize\ttfamily \label{class_event_af965779e09b70e7da287509aef2a3093} 
+bool Event\+::getdefault\+Prevented (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{_webelo_8cpp_source_l00502}{502}} of file \mbox{\hyperlink{_webelo_8cpp_source}{Webelo.\+cpp}}.
+
+\Hypertarget{class_event_ae251fd89f825ee16cf5bdefb89349f82}\index{Event@{Event}!geteventPhase@{geteventPhase}}
+\index{geteventPhase@{geteventPhase}!Event@{Event}}
+\doxysubsubsection{\texorpdfstring{geteventPhase()}{geteventPhase()}}
+{\footnotesize\ttfamily \label{class_event_ae251fd89f825ee16cf5bdefb89349f82} 
+enum event\+\_\+phase Event\+::getevent\+Phase (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{_webelo_8cpp_source_l00490}{490}} of file \mbox{\hyperlink{_webelo_8cpp_source}{Webelo.\+cpp}}.
+
+\Hypertarget{class_event_a1d1cbb671ea1931f4668d13a0825b2c8}\index{Event@{Event}!getisTrusted@{getisTrusted}}
+\index{getisTrusted@{getisTrusted}!Event@{Event}}
+\doxysubsubsection{\texorpdfstring{getisTrusted()}{getisTrusted()}}
+{\footnotesize\ttfamily \label{class_event_a1d1cbb671ea1931f4668d13a0825b2c8} 
+bool Event\+::getis\+Trusted (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{_webelo_8cpp_source_l00508}{508}} of file \mbox{\hyperlink{_webelo_8cpp_source}{Webelo.\+cpp}}.
+
+\Hypertarget{class_event_a04ac8753624875080ff5da8de98cc28e}\index{Event@{Event}!getrelatedTarget@{getrelatedTarget}}
+\index{getrelatedTarget@{getrelatedTarget}!Event@{Event}}
+\doxysubsubsection{\texorpdfstring{getrelatedTarget()}{getrelatedTarget()}}
+{\footnotesize\ttfamily \label{class_event_a04ac8753624875080ff5da8de98cc28e} 
+\mbox{\hyperlink{class_event_target}{Event\+Target}} \texorpdfstring{$\ast$}{*} Event\+::getrelated\+Target (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{_webelo_8cpp_source_l00484}{484}} of file \mbox{\hyperlink{_webelo_8cpp_source}{Webelo.\+cpp}}.
+
+\Hypertarget{class_event_a8258d75391530b119e028e4b42153af5}\index{Event@{Event}!getreturnValue@{getreturnValue}}
+\index{getreturnValue@{getreturnValue}!Event@{Event}}
+\doxysubsubsection{\texorpdfstring{getreturnValue()}{getreturnValue()}}
+{\footnotesize\ttfamily \label{class_event_a8258d75391530b119e028e4b42153af5} 
+bool Event\+::getreturn\+Value (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{_webelo_8cpp_source_l00524}{524}} of file \mbox{\hyperlink{_webelo_8cpp_source}{Webelo.\+cpp}}.
+
+\Hypertarget{class_event_a0851a76c9d08d7cc0f588ab4dfcbfa8c}\index{Event@{Event}!getsrcElement@{getsrcElement}}
+\index{getsrcElement@{getsrcElement}!Event@{Event}}
+\doxysubsubsection{\texorpdfstring{getsrcElement()}{getsrcElement()}}
+{\footnotesize\ttfamily \label{class_event_a0851a76c9d08d7cc0f588ab4dfcbfa8c} 
+\mbox{\hyperlink{class_event_target}{Event\+Target}} \texorpdfstring{$\ast$}{*} Event\+::getsrc\+Element (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{_webelo_8cpp_source_l00481}{481}} of file \mbox{\hyperlink{_webelo_8cpp_source}{Webelo.\+cpp}}.
+
+\Hypertarget{class_event_a6380856f937198c5cf88d6572dcfc81a}\index{Event@{Event}!gettarget@{gettarget}}
+\index{gettarget@{gettarget}!Event@{Event}}
+\doxysubsubsection{\texorpdfstring{gettarget()}{gettarget()}}
+{\footnotesize\ttfamily \label{class_event_a6380856f937198c5cf88d6572dcfc81a} 
+\mbox{\hyperlink{class_event_target}{Event\+Target}} \texorpdfstring{$\ast$}{*} Event\+::gettarget (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{_webelo_8cpp_source_l00478}{478}} of file \mbox{\hyperlink{_webelo_8cpp_source}{Webelo.\+cpp}}.
+
+\Hypertarget{class_event_a556432d37e80f39e698822d2b5b5d2f5}\index{Event@{Event}!gettimeStamp@{gettimeStamp}}
+\index{gettimeStamp@{gettimeStamp}!Event@{Event}}
+\doxysubsubsection{\texorpdfstring{gettimeStamp()}{gettimeStamp()}}
+{\footnotesize\ttfamily \label{class_event_a556432d37e80f39e698822d2b5b5d2f5} 
+DOMHigh\+Res\+Time\+Stamp Event\+::gettime\+Stamp (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{_webelo_8cpp_source_l00511}{511}} of file \mbox{\hyperlink{_webelo_8cpp_source}{Webelo.\+cpp}}.
+
+\Hypertarget{class_event_aff4b60c5aef68de49957d0df5e029df7}\index{Event@{Event}!gettype@{gettype}}
+\index{gettype@{gettype}!Event@{Event}}
+\doxysubsubsection{\texorpdfstring{gettype()}{gettype()}}
+{\footnotesize\ttfamily \label{class_event_aff4b60c5aef68de49957d0df5e029df7} 
+DOMString Event\+::gettype (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{_webelo_8cpp_source_l00475}{475}} of file \mbox{\hyperlink{_webelo_8cpp_source}{Webelo.\+cpp}}.
+
+\Hypertarget{class_event_a7876d076f2332b65cc0c4ad020908836}\index{Event@{Event}!initEvent@{initEvent}}
+\index{initEvent@{initEvent}!Event@{Event}}
+\doxysubsubsection{\texorpdfstring{initEvent()}{initEvent()}}
+{\footnotesize\ttfamily \label{class_event_a7876d076f2332b65cc0c4ad020908836} 
+void Event\+::init\+Event (\begin{DoxyParamCaption}\item[{DOMString}]{type}{, }\item[{bool}]{bubbles}{ = {\ttfamily false}, }\item[{bool}]{cancelable}{ = {\ttfamily false}}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_webelo_8cpp_source_l03662}{3662}} of file \mbox{\hyperlink{_webelo_8cpp_source}{Webelo.\+cpp}}.
+
+\Hypertarget{class_event_af26087b0d81ba6c42320e329074da84a}\index{Event@{Event}!inner\_event\_creation\_steps@{inner\_event\_creation\_steps}}
+\index{inner\_event\_creation\_steps@{inner\_event\_creation\_steps}!Event@{Event}}
+\doxysubsubsection{\texorpdfstring{inner\_event\_creation\_steps()}{inner\_event\_creation\_steps()}}
+{\footnotesize\ttfamily \label{class_event_af26087b0d81ba6c42320e329074da84a} 
+void Event\+::inner\+\_\+event\+\_\+creation\+\_\+steps (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_event}{Event}} \texorpdfstring{$\ast$}{*}}]{event}{, }\item[{\mbox{\hyperlink{class_realm}{Realm}} \texorpdfstring{$\ast$}{*}}]{realm}{, }\item[{DOMHigh\+Res\+Time\+Stamp \&}]{time}{, }\item[{bool}]{bubbles}{ = {\ttfamily false}, }\item[{bool}]{cancelable}{ = {\ttfamily false}, }\item[{bool}]{composed}{ = {\ttfamily false}}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_webelo_8cpp_source_l03622}{3622}} of file \mbox{\hyperlink{_webelo_8cpp_source}{Webelo.\+cpp}}.
+
+\Hypertarget{class_event_a7d6d8a51f4fc4cf9bafb06e8b7a60713}\index{Event@{Event}!newObject@{newObject}}
+\index{newObject@{newObject}!Event@{Event}}
+\doxysubsubsection{\texorpdfstring{newObject()}{newObject()}}
+{\footnotesize\ttfamily \label{class_event_a7d6d8a51f4fc4cf9bafb06e8b7a60713} 
+virtual \mbox{\hyperlink{class_event}{Event}} \texorpdfstring{$\ast$}{*} Event\+::new\+Object (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Definition at line \mbox{\hyperlink{_webelo_8cpp_source_l00541}{541}} of file \mbox{\hyperlink{_webelo_8cpp_source}{Webelo.\+cpp}}.
+
+\Hypertarget{class_event_a2816dbbcd098c2a769c6111cfee9594c}\index{Event@{Event}!operator==@{operator==}}
+\index{operator==@{operator==}!Event@{Event}}
+\doxysubsubsection{\texorpdfstring{operator==()}{operator==()}}
+{\footnotesize\ttfamily \label{class_event_a2816dbbcd098c2a769c6111cfee9594c} 
+virtual bool Event\+::operator== (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_event}{Event}} \texorpdfstring{$\ast$}{*}}]{ev}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Definition at line \mbox{\hyperlink{_webelo_8cpp_source_l00534}{534}} of file \mbox{\hyperlink{_webelo_8cpp_source}{Webelo.\+cpp}}.
+
+\Hypertarget{class_event_ad0cb4e80c9353bd6226c5e45ae3dbe10}\index{Event@{Event}!preventDefault@{preventDefault}}
+\index{preventDefault@{preventDefault}!Event@{Event}}
+\doxysubsubsection{\texorpdfstring{preventDefault()}{preventDefault()}}
+{\footnotesize\ttfamily \label{class_event_ad0cb4e80c9353bd6226c5e45ae3dbe10} 
+void Event\+::prevent\+Default (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_webelo_8cpp_source_l03657}{3657}} of file \mbox{\hyperlink{_webelo_8cpp_source}{Webelo.\+cpp}}.
+
+\Hypertarget{class_event_aad830dd25c02e8902ab1e11c527801db}\index{Event@{Event}!set\_canceled\_flag@{set\_canceled\_flag}}
+\index{set\_canceled\_flag@{set\_canceled\_flag}!Event@{Event}}
+\doxysubsubsection{\texorpdfstring{set\_canceled\_flag()}{set\_canceled\_flag()}}
+{\footnotesize\ttfamily \label{class_event_aad830dd25c02e8902ab1e11c527801db} 
+void Event\+::set\+\_\+canceled\+\_\+flag (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{_webelo_8cpp_source_l03651}{3651}} of file \mbox{\hyperlink{_webelo_8cpp_source}{Webelo.\+cpp}}.
+
+\Hypertarget{class_event_a043f405963e938eaa864432a16429179}\index{Event@{Event}!setcancelBubble@{setcancelBubble}}
+\index{setcancelBubble@{setcancelBubble}!Event@{Event}}
+\doxysubsubsection{\texorpdfstring{setcancelBubble()}{setcancelBubble()}}
+{\footnotesize\ttfamily \label{class_event_a043f405963e938eaa864432a16429179} 
+void Event\+::setcancel\+Bubble (\begin{DoxyParamCaption}\item[{bool}]{value}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{_webelo_8cpp_source_l00518}{518}} of file \mbox{\hyperlink{_webelo_8cpp_source}{Webelo.\+cpp}}.
+
+\Hypertarget{class_event_ac0f39bb02cb038d4416ed4bc00db3a38}\index{Event@{Event}!seteventPhase@{seteventPhase}}
+\index{seteventPhase@{seteventPhase}!Event@{Event}}
+\doxysubsubsection{\texorpdfstring{seteventPhase()}{seteventPhase()}}
+{\footnotesize\ttfamily \label{class_event_ac0f39bb02cb038d4416ed4bc00db3a38} 
+void Event\+::setevent\+Phase (\begin{DoxyParamCaption}\item[{enum event\+\_\+phase}]{temp}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{_webelo_8cpp_source_l00493}{493}} of file \mbox{\hyperlink{_webelo_8cpp_source}{Webelo.\+cpp}}.
+
+\Hypertarget{class_event_a48215c9e5c258b082047ba0c5933d6a7}\index{Event@{Event}!setreturnValue@{setreturnValue}}
+\index{setreturnValue@{setreturnValue}!Event@{Event}}
+\doxysubsubsection{\texorpdfstring{setreturnValue()}{setreturnValue()}}
+{\footnotesize\ttfamily \label{class_event_a48215c9e5c258b082047ba0c5933d6a7} 
+void Event\+::setreturn\+Value (\begin{DoxyParamCaption}\item[{bool}]{value}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{_webelo_8cpp_source_l00527}{527}} of file \mbox{\hyperlink{_webelo_8cpp_source}{Webelo.\+cpp}}.
+
+\Hypertarget{class_event_a4cf1f9861fdcb51b0a8f6f312cfafa74}\index{Event@{Event}!stopImmediatePropagation@{stopImmediatePropagation}}
+\index{stopImmediatePropagation@{stopImmediatePropagation}!Event@{Event}}
+\doxysubsubsection{\texorpdfstring{stopImmediatePropagation()}{stopImmediatePropagation()}}
+{\footnotesize\ttfamily \label{class_event_a4cf1f9861fdcb51b0a8f6f312cfafa74} 
+void Event\+::stop\+Immediate\+Propagation (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{_webelo_8cpp_source_l03646}{3646}} of file \mbox{\hyperlink{_webelo_8cpp_source}{Webelo.\+cpp}}.
+
+\Hypertarget{class_event_a69732f24bfeabbef113cf128e81ed27f}\index{Event@{Event}!stopPropagation@{stopPropagation}}
+\index{stopPropagation@{stopPropagation}!Event@{Event}}
+\doxysubsubsection{\texorpdfstring{stopPropagation()}{stopPropagation()}}
+{\footnotesize\ttfamily \label{class_event_a69732f24bfeabbef113cf128e81ed27f} 
+void Event\+::stop\+Propagation (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{_webelo_8cpp_source_l03642}{3642}} of file \mbox{\hyperlink{_webelo_8cpp_source}{Webelo.\+cpp}}.
+
+
+
+\label{doc-variable-members}
+\Hypertarget{class_event_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_event_a2519bf8e6cfb834ab5086d2d7470b8ee}\index{Event@{Event}!bubbles@{bubbles}}
+\index{bubbles@{bubbles}!Event@{Event}}
+\doxysubsubsection{\texorpdfstring{bubbles}{bubbles}}
+{\footnotesize\ttfamily \label{class_event_a2519bf8e6cfb834ab5086d2d7470b8ee} 
+bool Event\+::bubbles}
+
+
+
+Definition at line \mbox{\hyperlink{_webelo_8cpp_source_l00440}{440}} of file \mbox{\hyperlink{_webelo_8cpp_source}{Webelo.\+cpp}}.
+
+\Hypertarget{class_event_a1c2d8c4b104f6617a87ea099089e62a0}\index{Event@{Event}!cancelable@{cancelable}}
+\index{cancelable@{cancelable}!Event@{Event}}
+\doxysubsubsection{\texorpdfstring{cancelable}{cancelable}}
+{\footnotesize\ttfamily \label{class_event_a1c2d8c4b104f6617a87ea099089e62a0} 
+bool Event\+::cancelable}
+
+
+
+Definition at line \mbox{\hyperlink{_webelo_8cpp_source_l00441}{441}} of file \mbox{\hyperlink{_webelo_8cpp_source}{Webelo.\+cpp}}.
+
+\Hypertarget{class_event_a3048349a92597009c9dd40999829c872}\index{Event@{Event}!canceled\_flag@{canceled\_flag}}
+\index{canceled\_flag@{canceled\_flag}!Event@{Event}}
+\doxysubsubsection{\texorpdfstring{canceled\_flag}{canceled\_flag}}
+{\footnotesize\ttfamily \label{class_event_a3048349a92597009c9dd40999829c872} 
+bool Event\+::canceled\+\_\+flag = false}
+
+
+
+Definition at line \mbox{\hyperlink{_webelo_8cpp_source_l00456}{456}} of file \mbox{\hyperlink{_webelo_8cpp_source}{Webelo.\+cpp}}.
+
+\Hypertarget{class_event_ac481d2499a5fb481cdfe75c312cda38f}\index{Event@{Event}!composed@{composed}}
+\index{composed@{composed}!Event@{Event}}
+\doxysubsubsection{\texorpdfstring{composed}{composed}}
+{\footnotesize\ttfamily \label{class_event_ac481d2499a5fb481cdfe75c312cda38f} 
+bool Event\+::composed}
+
+
+
+Definition at line \mbox{\hyperlink{_webelo_8cpp_source_l00442}{442}} of file \mbox{\hyperlink{_webelo_8cpp_source}{Webelo.\+cpp}}.
+
+\Hypertarget{class_event_a9ad70fa6669978a9ef2b33cfae5d68ee}\index{Event@{Event}!composed\_flag@{composed\_flag}}
+\index{composed\_flag@{composed\_flag}!Event@{Event}}
+\doxysubsubsection{\texorpdfstring{composed\_flag}{composed\_flag}}
+{\footnotesize\ttfamily \label{class_event_a9ad70fa6669978a9ef2b33cfae5d68ee} 
+bool Event\+::composed\+\_\+flag = false}
+
+
+
+Definition at line \mbox{\hyperlink{_webelo_8cpp_source_l00458}{458}} of file \mbox{\hyperlink{_webelo_8cpp_source}{Webelo.\+cpp}}.
+
+\Hypertarget{class_event_af5bf7665bb66881c6b3aba9e90f5ada0}\index{Event@{Event}!currentTarget@{currentTarget}}
+\index{currentTarget@{currentTarget}!Event@{Event}}
+\doxysubsubsection{\texorpdfstring{currentTarget}{currentTarget}}
+{\footnotesize\ttfamily \label{class_event_af5bf7665bb66881c6b3aba9e90f5ada0} 
+\mbox{\hyperlink{class_event_target}{Event\+Target}}\texorpdfstring{$\ast$}{*} Event\+::current\+Target = nullptr}
+
+
+
+Definition at line \mbox{\hyperlink{_webelo_8cpp_source_l00438}{438}} of file \mbox{\hyperlink{_webelo_8cpp_source}{Webelo.\+cpp}}.
+
+\Hypertarget{class_event_a27fea7f068522d6a456d4fb52c6c0967}\index{Event@{Event}!dispatch\_flag@{dispatch\_flag}}
+\index{dispatch\_flag@{dispatch\_flag}!Event@{Event}}
+\doxysubsubsection{\texorpdfstring{dispatch\_flag}{dispatch\_flag}}
+{\footnotesize\ttfamily \label{class_event_a27fea7f068522d6a456d4fb52c6c0967} 
+bool Event\+::dispatch\+\_\+flag = false}
+
+
+
+Definition at line \mbox{\hyperlink{_webelo_8cpp_source_l00460}{460}} of file \mbox{\hyperlink{_webelo_8cpp_source}{Webelo.\+cpp}}.
+
+\Hypertarget{class_event_a9befae9e12cc0eacd37e6e66e0dbcf06}\index{Event@{Event}!eventPhase@{eventPhase}}
+\index{eventPhase@{eventPhase}!Event@{Event}}
+\doxysubsubsection{\texorpdfstring{eventPhase}{eventPhase}}
+{\footnotesize\ttfamily \label{class_event_a9befae9e12cc0eacd37e6e66e0dbcf06} 
+enum event\+\_\+phase Event\+::event\+Phase = NONE}
+
+
+
+Definition at line \mbox{\hyperlink{_webelo_8cpp_source_l00439}{439}} of file \mbox{\hyperlink{_webelo_8cpp_source}{Webelo.\+cpp}}.
+
+\Hypertarget{class_event_a478ce63e168759b3da0fb68b503988e6}\index{Event@{Event}!in\_passive\_listener\_flag@{in\_passive\_listener\_flag}}
+\index{in\_passive\_listener\_flag@{in\_passive\_listener\_flag}!Event@{Event}}
+\doxysubsubsection{\texorpdfstring{in\_passive\_listener\_flag}{in\_passive\_listener\_flag}}
+{\footnotesize\ttfamily \label{class_event_a478ce63e168759b3da0fb68b503988e6} 
+bool Event\+::in\+\_\+passive\+\_\+listener\+\_\+flag = false}
+
+
+
+Definition at line \mbox{\hyperlink{_webelo_8cpp_source_l00457}{457}} of file \mbox{\hyperlink{_webelo_8cpp_source}{Webelo.\+cpp}}.
+
+\Hypertarget{class_event_ae8d8e35f8630d7c08d46452735701bab}\index{Event@{Event}!initialized\_flag@{initialized\_flag}}
+\index{initialized\_flag@{initialized\_flag}!Event@{Event}}
+\doxysubsubsection{\texorpdfstring{initialized\_flag}{initialized\_flag}}
+{\footnotesize\ttfamily \label{class_event_ae8d8e35f8630d7c08d46452735701bab} 
+bool Event\+::initialized\+\_\+flag = false}
+
+
+
+Definition at line \mbox{\hyperlink{_webelo_8cpp_source_l00459}{459}} of file \mbox{\hyperlink{_webelo_8cpp_source}{Webelo.\+cpp}}.
+
+\Hypertarget{class_event_a5197a6b98eb5b9a4aec315e6596c0153}\index{Event@{Event}!isTrusted@{isTrusted}}
+\index{isTrusted@{isTrusted}!Event@{Event}}
+\doxysubsubsection{\texorpdfstring{isTrusted}{isTrusted}}
+{\footnotesize\ttfamily \label{class_event_a5197a6b98eb5b9a4aec315e6596c0153} 
+bool Event\+::is\+Trusted = false}
+
+
+
+Definition at line \mbox{\hyperlink{_webelo_8cpp_source_l00445}{445}} of file \mbox{\hyperlink{_webelo_8cpp_source}{Webelo.\+cpp}}.
+
+\Hypertarget{class_event_a8fbacd7fc9f1be1ecd770e2914a39e1b}\index{Event@{Event}!path@{path}}
+\index{path@{path}!Event@{Event}}
+\doxysubsubsection{\texorpdfstring{path}{path}}
+{\footnotesize\ttfamily \label{class_event_a8fbacd7fc9f1be1ecd770e2914a39e1b} 
+std\+::vector$<$\mbox{\hyperlink{structpath__structs}{path\+\_\+structs}}$>$ Event\+::path = \{\}}
+
+
+
+Definition at line \mbox{\hyperlink{_webelo_8cpp_source_l00463}{463}} of file \mbox{\hyperlink{_webelo_8cpp_source}{Webelo.\+cpp}}.
+
+\Hypertarget{class_event_a3f812cada41b1cf168017a5b2e5c2c11}\index{Event@{Event}!relatedTarget@{relatedTarget}}
+\index{relatedTarget@{relatedTarget}!Event@{Event}}
+\doxysubsubsection{\texorpdfstring{relatedTarget}{relatedTarget}}
+{\footnotesize\ttfamily \label{class_event_a3f812cada41b1cf168017a5b2e5c2c11} 
+\mbox{\hyperlink{class_event_target}{Event\+Target}}\texorpdfstring{$\ast$}{*} Event\+::related\+Target = nullptr}
+
+
+
+Definition at line \mbox{\hyperlink{_webelo_8cpp_source_l00437}{437}} of file \mbox{\hyperlink{_webelo_8cpp_source}{Webelo.\+cpp}}.
+
+\Hypertarget{class_event_aee819ac9058a34a7d9b61e4c2db503c7}\index{Event@{Event}!stop\_immediate\_propagation\_flag@{stop\_immediate\_propagation\_flag}}
+\index{stop\_immediate\_propagation\_flag@{stop\_immediate\_propagation\_flag}!Event@{Event}}
+\doxysubsubsection{\texorpdfstring{stop\_immediate\_propagation\_flag}{stop\_immediate\_propagation\_flag}}
+{\footnotesize\ttfamily \label{class_event_aee819ac9058a34a7d9b61e4c2db503c7} 
+bool Event\+::stop\+\_\+immediate\+\_\+propagation\+\_\+flag = false}
+
+
+
+Definition at line \mbox{\hyperlink{_webelo_8cpp_source_l00455}{455}} of file \mbox{\hyperlink{_webelo_8cpp_source}{Webelo.\+cpp}}.
+
+\Hypertarget{class_event_a8fe171cf46a2d4335aa82c7be411c5ba}\index{Event@{Event}!stop\_propagation\_flag@{stop\_propagation\_flag}}
+\index{stop\_propagation\_flag@{stop\_propagation\_flag}!Event@{Event}}
+\doxysubsubsection{\texorpdfstring{stop\_propagation\_flag}{stop\_propagation\_flag}}
+{\footnotesize\ttfamily \label{class_event_a8fe171cf46a2d4335aa82c7be411c5ba} 
+bool Event\+::stop\+\_\+propagation\+\_\+flag = false}
+
+
+
+Definition at line \mbox{\hyperlink{_webelo_8cpp_source_l00454}{454}} of file \mbox{\hyperlink{_webelo_8cpp_source}{Webelo.\+cpp}}.
+
+\Hypertarget{class_event_ab0280a0a6211d147b278e895a35d452d}\index{Event@{Event}!target@{target}}
+\index{target@{target}!Event@{Event}}
+\doxysubsubsection{\texorpdfstring{target}{target}}
+{\footnotesize\ttfamily \label{class_event_ab0280a0a6211d147b278e895a35d452d} 
+\mbox{\hyperlink{class_event_target}{Event\+Target}}\texorpdfstring{$\ast$}{*} Event\+::target = nullptr}
+
+
+
+Definition at line \mbox{\hyperlink{_webelo_8cpp_source_l00436}{436}} of file \mbox{\hyperlink{_webelo_8cpp_source}{Webelo.\+cpp}}.
+
+\Hypertarget{class_event_af178dc080e530eddd17f3b43d7aba56f}\index{Event@{Event}!timeStamp@{timeStamp}}
+\index{timeStamp@{timeStamp}!Event@{Event}}
+\doxysubsubsection{\texorpdfstring{timeStamp}{timeStamp}}
+{\footnotesize\ttfamily \label{class_event_af178dc080e530eddd17f3b43d7aba56f} 
+DOMHigh\+Res\+Time\+Stamp Event\+::time\+Stamp}
+
+
+
+Definition at line \mbox{\hyperlink{_webelo_8cpp_source_l00443}{443}} of file \mbox{\hyperlink{_webelo_8cpp_source}{Webelo.\+cpp}}.
+
+\Hypertarget{class_event_a669ecd88460563c625eb42828c4db6ba}\index{Event@{Event}!touch\_target\_list@{touch\_target\_list}}
+\index{touch\_target\_list@{touch\_target\_list}!Event@{Event}}
+\doxysubsubsection{\texorpdfstring{touch\_target\_list}{touch\_target\_list}}
+{\footnotesize\ttfamily \label{class_event_a669ecd88460563c625eb42828c4db6ba} 
+std\+::vector$<$\mbox{\hyperlink{class_event_target}{Event\+Target}}\texorpdfstring{$\ast$}{*}$>$ Event\+::touch\+\_\+target\+\_\+list = \{\}}
+
+
+
+Definition at line \mbox{\hyperlink{_webelo_8cpp_source_l00464}{464}} of file \mbox{\hyperlink{_webelo_8cpp_source}{Webelo.\+cpp}}.
+
+\Hypertarget{class_event_a8a1e0e604947b80e0a2c78b027d23bc8}\index{Event@{Event}!type@{type}}
+\index{type@{type}!Event@{Event}}
+\doxysubsubsection{\texorpdfstring{type}{type}}
+{\footnotesize\ttfamily \label{class_event_a8a1e0e604947b80e0a2c78b027d23bc8} 
+DOMString Event\+::type = "{}"{}}
+
+
+
+Definition at line \mbox{\hyperlink{_webelo_8cpp_source_l00435}{435}} of file \mbox{\hyperlink{_webelo_8cpp_source}{Webelo.\+cpp}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/Webelo.\+cpp\end{DoxyCompactItemize}

@@ -1,7 +1,8 @@
 var searchData=
 [
-  ['validitystate_0',['ValidityState',['../struct_validity_state.html',1,'']]],
-  ['validitystateflags_1',['ValidityStateFlags',['../struct_validity_state_flags.html',1,'']]],
-  ['videotrack_2',['VideoTrack',['../class_video_track.html',1,'']]],
-  ['videotracklist_3',['VideoTrackList',['../class_video_track_list.html',1,'']]]
+  ['shadowroot_0',['ShadowRoot',['../class_shadow_root.html',1,'']]],
+  ['shadowrootinit_1',['ShadowRootInit',['../struct_shadow_root_init.html',1,'']]],
+  ['staticrange_2',['StaticRange',['../class_static_range.html',1,'']]],
+  ['staticrangeinit_3',['StaticRangeInit',['../struct_static_range_init.html',1,'']]],
+  ['syntaxerror_4',['SyntaxError',['../class_syntax_error.html',1,'']]]
 ];

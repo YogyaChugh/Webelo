@@ -1,0 +1,52 @@
+\doxysection{utf8.\+h}
+\hypertarget{utf8_8h_source}{}\label{utf8_8h_source}\index{src/utf8.h@{src/utf8.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{utf8_8h_source_l00001}00001\ \textcolor{comment}{//\ Copyright\ 2006\ Nemanja\ Trifunovic}}
+\DoxyCodeLine{\Hypertarget{utf8_8h_source_l00002}00002\ }
+\DoxyCodeLine{\Hypertarget{utf8_8h_source_l00003}00003\ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{utf8_8h_source_l00004}00004\ \textcolor{comment}{Permission\ is\ hereby\ granted,\ free\ of\ charge,\ to\ any\ person\ or\ organization}}
+\DoxyCodeLine{\Hypertarget{utf8_8h_source_l00005}00005\ \textcolor{comment}{obtaining\ a\ copy\ of\ the\ software\ and\ accompanying\ documentation\ covered\ by}}
+\DoxyCodeLine{\Hypertarget{utf8_8h_source_l00006}00006\ \textcolor{comment}{this\ license\ (the\ "{}Software"{})\ to\ use,\ reproduce,\ display,\ distribute,}}
+\DoxyCodeLine{\Hypertarget{utf8_8h_source_l00007}00007\ \textcolor{comment}{execute,\ and\ transmit\ the\ Software,\ and\ to\ prepare\ derivative\ works\ of\ the}}
+\DoxyCodeLine{\Hypertarget{utf8_8h_source_l00008}00008\ \textcolor{comment}{Software,\ and\ to\ permit\ third-\/parties\ to\ whom\ the\ Software\ is\ furnished\ to}}
+\DoxyCodeLine{\Hypertarget{utf8_8h_source_l00009}00009\ \textcolor{comment}{do\ so,\ all\ subject\ to\ the\ following:}}
+\DoxyCodeLine{\Hypertarget{utf8_8h_source_l00010}00010\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{utf8_8h_source_l00011}00011\ \textcolor{comment}{The\ copyright\ notices\ in\ the\ Software\ and\ this\ entire\ statement,\ including}}
+\DoxyCodeLine{\Hypertarget{utf8_8h_source_l00012}00012\ \textcolor{comment}{the\ above\ license\ grant,\ this\ restriction\ and\ the\ following\ disclaimer,}}
+\DoxyCodeLine{\Hypertarget{utf8_8h_source_l00013}00013\ \textcolor{comment}{must\ be\ included\ in\ all\ copies\ of\ the\ Software,\ in\ whole\ or\ in\ part,\ and}}
+\DoxyCodeLine{\Hypertarget{utf8_8h_source_l00014}00014\ \textcolor{comment}{all\ derivative\ works\ of\ the\ Software,\ unless\ such\ copies\ or\ derivative}}
+\DoxyCodeLine{\Hypertarget{utf8_8h_source_l00015}00015\ \textcolor{comment}{works\ are\ solely\ in\ the\ form\ of\ machine-\/executable\ object\ code\ generated\ by}}
+\DoxyCodeLine{\Hypertarget{utf8_8h_source_l00016}00016\ \textcolor{comment}{a\ source\ language\ processor.}}
+\DoxyCodeLine{\Hypertarget{utf8_8h_source_l00017}00017\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{utf8_8h_source_l00018}00018\ \textcolor{comment}{THE\ SOFTWARE\ IS\ PROVIDED\ "{}AS\ IS"{},\ WITHOUT\ WARRANTY\ OF\ ANY\ KIND,\ EXPRESS\ OR}}
+\DoxyCodeLine{\Hypertarget{utf8_8h_source_l00019}00019\ \textcolor{comment}{IMPLIED,\ INCLUDING\ BUT\ NOT\ LIMITED\ TO\ THE\ WARRANTIES\ OF\ MERCHANTABILITY,}}
+\DoxyCodeLine{\Hypertarget{utf8_8h_source_l00020}00020\ \textcolor{comment}{FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE,\ TITLE\ AND\ NON-\/INFRINGEMENT.\ IN\ NO\ EVENT}}
+\DoxyCodeLine{\Hypertarget{utf8_8h_source_l00021}00021\ \textcolor{comment}{SHALL\ THE\ COPYRIGHT\ HOLDERS\ OR\ ANYONE\ DISTRIBUTING\ THE\ SOFTWARE\ BE\ LIABLE}}
+\DoxyCodeLine{\Hypertarget{utf8_8h_source_l00022}00022\ \textcolor{comment}{FOR\ ANY\ DAMAGES\ OR\ OTHER\ LIABILITY,\ WHETHER\ IN\ CONTRACT,\ TORT\ OR\ OTHERWISE,}}
+\DoxyCodeLine{\Hypertarget{utf8_8h_source_l00023}00023\ \textcolor{comment}{ARISING\ FROM,\ OUT\ OF\ OR\ IN\ CONNECTION\ WITH\ THE\ SOFTWARE\ OR\ THE\ USE\ OR\ OTHER}}
+\DoxyCodeLine{\Hypertarget{utf8_8h_source_l00024}00024\ \textcolor{comment}{DEALINGS\ IN\ THE\ SOFTWARE.}}
+\DoxyCodeLine{\Hypertarget{utf8_8h_source_l00025}00025\ \textcolor{comment}{*/}}
+\DoxyCodeLine{\Hypertarget{utf8_8h_source_l00026}00026\ }
+\DoxyCodeLine{\Hypertarget{utf8_8h_source_l00027}00027\ }
+\DoxyCodeLine{\Hypertarget{utf8_8h_source_l00028}00028\ \textcolor{preprocessor}{\#ifndef\ UTF8\_FOR\_CPP\_2675DCD0\_9480\_4c0c\_B92A\_CC14C027B731}}
+\DoxyCodeLine{\Hypertarget{utf8_8h_source_l00029}00029\ \textcolor{preprocessor}{\#define\ UTF8\_FOR\_CPP\_2675DCD0\_9480\_4c0c\_B92A\_CC14C027B731}}
+\DoxyCodeLine{\Hypertarget{utf8_8h_source_l00030}00030\ }
+\DoxyCodeLine{\Hypertarget{utf8_8h_source_l00031}00031\ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{utf8_8h_source_l00032}00032\ \textcolor{comment}{To\ control\ the\ C++\ language\ version\ used\ by\ the\ library,\ you\ can\ define\ UTF\_CPP\_CPLUSPLUS\ macro}}
+\DoxyCodeLine{\Hypertarget{utf8_8h_source_l00033}00033\ \textcolor{comment}{and\ set\ it\ to\ one\ of\ the\ values\ used\ by\ the\ \_\_cplusplus\ predefined\ macro.}}
+\DoxyCodeLine{\Hypertarget{utf8_8h_source_l00034}00034\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{utf8_8h_source_l00035}00035\ \textcolor{comment}{For\ instance,}}
+\DoxyCodeLine{\Hypertarget{utf8_8h_source_l00036}00036\ \textcolor{comment}{\ \ \ \ \#define\ UTF\_CPP\_CPLUSPLUS\ 199711L}}
+\DoxyCodeLine{\Hypertarget{utf8_8h_source_l00037}00037\ \textcolor{comment}{will\ cause\ the\ UTF-\/8\ CPP\ library\ to\ use\ only\ types\ and\ language\ features\ available\ in\ the\ C++\ 98\ standard.}}
+\DoxyCodeLine{\Hypertarget{utf8_8h_source_l00038}00038\ \textcolor{comment}{Some\ library\ features\ will\ be\ disabled.}}
+\DoxyCodeLine{\Hypertarget{utf8_8h_source_l00039}00039\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{utf8_8h_source_l00040}00040\ \textcolor{comment}{If\ you\ leave\ UTF\_CPP\_CPLUSPLUS\ undefined,\ it\ will\ be\ internally\ assigned\ to\ \_\_cplusplus.}}
+\DoxyCodeLine{\Hypertarget{utf8_8h_source_l00041}00041\ \textcolor{comment}{*/}}
+\DoxyCodeLine{\Hypertarget{utf8_8h_source_l00042}00042\ }
+\DoxyCodeLine{\Hypertarget{utf8_8h_source_l00043}00043\ \textcolor{preprocessor}{\#include\ "{}utf8/checked.h"{}}}
+\DoxyCodeLine{\Hypertarget{utf8_8h_source_l00044}00044\ \textcolor{preprocessor}{\#include\ "{}utf8/unchecked.h"{}}}
+\DoxyCodeLine{\Hypertarget{utf8_8h_source_l00045}00045\ }
+\DoxyCodeLine{\Hypertarget{utf8_8h_source_l00046}00046\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ header\ guard}}
+
+\end{DoxyCode}

@@ -1,7 +1,7 @@
 \chapter{EVENTS }
 \hypertarget{md_events}{}\label{md_events}\index{EVENTS@{EVENTS}}
-\label{md_events_autotoc_md4}%
-\Hypertarget{md_events_autotoc_md4}%
+\label{md_events_autotoc_md12}%
+\Hypertarget{md_events_autotoc_md12}%
 
 
 Events allow signalling something has occured and it can be anything from a simple user interaction to a website page loading !~\newline
@@ -13,16 +13,16 @@ Reference\+: \href{https://developer.mozilla.org/en-US/docs/Web/API/Event}{\text
 
 \begin{quote}
 Note\+: Event\+Targets here are base classes for big things like body element, paragraph element,etc.. \end{quote}
-\hypertarget{md_events_autotoc_md5}{}\doxysection{\texorpdfstring{Event}{Event}}\label{md_events_autotoc_md5}
+\hypertarget{md_events_autotoc_md13}{}\doxysection{\texorpdfstring{Event}{Event}}\label{md_events_autotoc_md13}
 Definition and meaning for all attributes \& methods along with info for JS Binding.
 
 \begin{quote}
 Almost all attributes are private and can only be accessed by member functions~\newline
  Therefore, getter and setter functions for easier access are being provided for both read-\/only and full-\/access attributes ! \end{quote}
-\hypertarget{md_events_autotoc_md6}{}\doxysubsection{\texorpdfstring{Flags}{Flags}}\label{md_events_autotoc_md6}
+\hypertarget{md_events_autotoc_md14}{}\doxysubsection{\texorpdfstring{Flags}{Flags}}\label{md_events_autotoc_md14}
 {\ttfamily stop\+\_\+propagation\+\_\+flag}
 \begin{DoxyItemize}
-\item Set to {\ttfamily true} for stopping propagation of current Event. {\ttfamily stop\+\_\+immediate\+\_\+propagation\+\_\+flag}
+\item Set to {\ttfamily true} for stopping propagation of current \doxylink{class_event}{Event}. {\ttfamily stop\+\_\+immediate\+\_\+propagation\+\_\+flag}
 \item Set to {\ttfamily true} for stopping propagation for all event handlers of current element and elements too.
 \end{DoxyItemize}
 
@@ -33,21 +33,21 @@ Not Much Info about what these do \+:-\/
 \item composed\+\_\+flag
 \item initialized\+\_\+flag
 \item dispatch\+\_\+flag
-\end{DoxyItemize}\hypertarget{md_events_autotoc_md7}{}\doxysubsection{\texorpdfstring{Read-\/only Attributes}{Read-\/only Attributes}}\label{md_events_autotoc_md7}
+\end{DoxyItemize}\hypertarget{md_events_autotoc_md15}{}\doxysubsection{\texorpdfstring{Read-\/only Attributes}{Read-\/only Attributes}}\label{md_events_autotoc_md15}
 {\ttfamily DOMString type}
 \begin{DoxyItemize}
 \item Initially, "{}"{} (empty string)
-\item Type of the Event like {\ttfamily click}, {\ttfamily haschange}, {\ttfamily submit}, etc...
+\item Type of the \doxylink{class_event}{Event} like {\ttfamily click}, {\ttfamily haschange}, {\ttfamily submit}, etc...
 \end{DoxyItemize}
 
-{\ttfamily Event\+Target \texorpdfstring{$\ast$}{*}target}
+{\ttfamily \doxylink{class_event_target}{Event\+Target} \texorpdfstring{$\ast$}{*}target}
 \begin{DoxyItemize}
 \item Initially nullptr
-\item The Original Event\+Target that triggered the event. It is reference to the object to which the event was originally dispatched.
+\item The Original \doxylink{class_event_target}{Event\+Target} that triggered the event. It is reference to the object to which the event was originally dispatched.
 \end{DoxyItemize}
 
 \begin{quote}
-{\bfseries{Event\+Target \texorpdfstring{$\ast$}{*}src\+Element}} is legacy support only for {\ttfamily target}. Only getter/setter methods are implemented for it. \end{quote}
+{\bfseries{\doxylink{class_event_target}{Event\+Target} \texorpdfstring{$\ast$}{*}src\+Element}} is legacy support only for {\ttfamily target}. Only getter/setter methods are implemented for it. \end{quote}
 
 
 {\ttfamily Eventtarget \texorpdfstring{$\ast$}{*}related\+Target}
@@ -57,7 +57,7 @@ Not Much Info about what these do \+:-\/
 \item Think of it like an extra toothbrush you might take for ur girlfriend \+:)
 \end{DoxyItemize}
 
-{\ttfamily Event\+Target \texorpdfstring{$\ast$}{*}current\+Target}
+{\ttfamily \doxylink{class_event_target}{Event\+Target} \texorpdfstring{$\ast$}{*}current\+Target}
 \begin{DoxyItemize}
 \item Initially nullptr
 \item It\textquotesingle{}s value is present only inside an event handler. Outside it, it will be null
@@ -97,27 +97,27 @@ Not Much Info about what these do \+:-\/
 
 {\ttfamily DOMHigh\+Res\+Time\+Stamp time\+Stamp}
 \begin{DoxyItemize}
-\item Stores the time at which Event was created.
+\item Stores the time at which \doxylink{class_event}{Event} was created.
 \item You can get the string representation using {\ttfamily ctime()} function from {\ttfamily ctime} library
 \end{DoxyItemize}
 
 \begin{quote}
-{\bfseries{bool default\+Prevented}} is legacy only and is implemented as a getter function for cancelable value. The default\+Prevented read-\/only property of the Event interface returns a boolean value indicating whether or not the call to Event.\+prevent\+Default() canceled the event. \end{quote}
-\hypertarget{md_events_autotoc_md8}{}\doxysubsection{\texorpdfstring{Editable Values}{Editable Values}}\label{md_events_autotoc_md8}
+{\bfseries{bool default\+Prevented}} is legacy only and is implemented as a getter function for cancelable value. The default\+Prevented read-\/only property of the \doxylink{class_event}{Event} interface returns a boolean value indicating whether or not the call to Event.\+prevent\+Default() canceled the event. \end{quote}
+\hypertarget{md_events_autotoc_md16}{}\doxysubsection{\texorpdfstring{Editable Values}{Editable Values}}\label{md_events_autotoc_md16}
 \begin{quote}
 {\bfseries{bool return\+Value}} is legacy only and is implemented as a \uline{{\itshape special}} getter/setter function for cancelable value. It returns whether default action for this event has been cancelled or not. Basically returning negation of {\ttfamily canceled flag} \end{quote}
 
 
-{\ttfamily std\+::vector\texorpdfstring{$<$}{<}std\+::unique\+\_\+ptr\texorpdfstring{$<$}{<}path\+\_\+structs\texorpdfstring{$>$}{>}\texorpdfstring{$>$}{>} path}
+{\ttfamily std\+::vector\texorpdfstring{$<$}{<}std\+::unique\+\_\+ptr\texorpdfstring{$<$}{<}\doxylink{structpath__structs}{path\+\_\+structs}\texorpdfstring{$>$}{>}\texorpdfstring{$>$}{>} path}
 \begin{DoxyItemize}
 \item Default Empty \{\}
 \item The path where the elements will be stored in propagation from the element invoked till the top of document.
 \end{DoxyItemize}
 
-{\ttfamily std\+::vector\texorpdfstring{$<$}{<}Event\+Target\texorpdfstring{$>$}{>} touch\+\_\+target\+\_\+list = \{\}}
+{\ttfamily std\+::vector\texorpdfstring{$<$}{<}\doxylink{class_event_target}{Event\+Target}\texorpdfstring{$>$}{>} touch\+\_\+target\+\_\+list = \{\}}
 \begin{DoxyItemize}
 \item Reserved for Touch\+Event interface
-\end{DoxyItemize}\hypertarget{md_events_autotoc_md9}{}\doxysubsection{\texorpdfstring{Methods}{Methods}}\label{md_events_autotoc_md9}
+\end{DoxyItemize}\hypertarget{md_events_autotoc_md17}{}\doxysubsection{\texorpdfstring{Methods}{Methods}}\label{md_events_autotoc_md17}
 {\ttfamily std\+::vector\texorpdfstring{$<$}{<}Event\+Target\texorpdfstring{$\ast$}{*}\texorpdfstring{$>$}{>} composed\+Path()}
 \begin{DoxyItemize}
 \item Returns the event\textquotesingle{}s path (an array of objects on which listeners will be invoked). This does not include nodes in shadow trees if the shadow root was created with its Shadow\+Root.\+mode closed
@@ -142,7 +142,7 @@ Not Much Info about what these do \+:-\/
 \begin{DoxyItemize}
 \item Tells the browser not to perform the default action associated with the event.
 \item Sets the {\ttfamily canceled} flag to true if {\ttfamily cancelable} attribute value is true and {\ttfamily in\+\_\+passive\+\_\+listener\+\_\+flag} is not set (false).
-\item The {\ttfamily prevent\+Default()} method of the Event interface tells the user agent that if the event does not get explicitly handled, its default action should not be taken as it normally would be.
+\item The {\ttfamily prevent\+Default()} method of the \doxylink{class_event}{Event} interface tells the user agent that if the event does not get explicitly handled, its default action should not be taken as it normally would be.
 \item The event continues to propagate as usual, unless one of its event listeners calls {\ttfamily stop\+Propagation()} or {\ttfamily stop\+Immediate\+Propagation()}, either of which terminates propagation at once.
 \item As noted below, calling {\ttfamily prevent\+Default()} for a non-\/cancelable event, such as one dispatched via {\ttfamily Event\+Target.\+dispatch\+Event()}, without specifying cancelable\+: true has no effect.
 \item If a passive listener calls {\ttfamily prevent\+Default()}, nothing will happen and a console warning may be generated.
@@ -151,7 +151,7 @@ Not Much Info about what these do \+:-\/
 {\ttfamily void init\+Event(DOMString \&type, bool bubbles = false, bool cancelable = false)}
 \begin{DoxyItemize}
 \item Legacy baby
-\item Initializes the value of an Event created. If the event has already been dispatched, this method does nothing. Use the constructor (Event() instead).
+\item Initializes the value of an \doxylink{class_event}{Event} created. If the event has already been dispatched, this method does nothing. Use the constructor (\doxylink{class_event}{Event()} instead).
 \end{DoxyItemize}
 
 {\ttfamily void set\+\_\+canceled\+\_\+flag() inline}
@@ -160,10 +160,10 @@ Not Much Info about what these do \+:-\/
 \item It just checks if canceled is true and in\+\_\+passive\+\_\+listener\+\_\+flag is false, and then sets the canceled\+\_\+flag to true.
 \end{DoxyItemize}
 
-{\ttfamily Event(const DOMString \&type, bool bubbles = false, bool cancelable = false, bool composed = false)}
+{\ttfamily \doxylink{class_event}{Event}(const DOMString \&type, bool bubbles = false, bool cancelable = false, bool composed = false)}
 \begin{DoxyItemize}
 \item Initializes the event
-\item Sets {\ttfamily type} for the {\ttfamily Event}
+\item Sets {\ttfamily type} for the {\ttfamily \doxylink{class_event}{Event}}
 \item Calls {\ttfamily inner\+\_\+event\+\_\+creation\+\_\+steps} with current time
 \end{DoxyItemize}
 
@@ -179,28 +179,28 @@ Not Much Info about what these do \+:-\/
 \end{DoxyItemize}
 
 \DoxyHorRuler{0}
- \hypertarget{md_events_autotoc_md11}{}\doxysubsection{\texorpdfstring{Concept for shadow DOM}{Concept for shadow DOM}}\label{md_events_autotoc_md11}
+ \hypertarget{md_events_autotoc_md19}{}\doxysubsection{\texorpdfstring{Concept for shadow DOM}{Concept for shadow DOM}}\label{md_events_autotoc_md19}
 So, this was actually so confusing for me and that\textquotesingle{}s why I am explaining this all. So when any event handler is attached and whenever event is provoked using user interaction or {\ttfamily dispatch\+Event()}, this all happens.~\newline
 ~\newline
  First {\ttfamily path} is created starting from the element that had the event started and going to the top of the DOM. Then the {\ttfamily composed\+Path()} method does further processing when called. There can be different cases here !~\newline
- 1) The element is outside a shadow tree, then it just goes from that element to the top which could be Document or window. 2) The element is inside a shadow tree. It also has 4 cases\+:-\/ 1) Shadow tree is closed and {\ttfamily composed} in event is true, then the path includes the shadow root to the top. The hierarchy inside the shadow tree isn\textquotesingle{}t included. 2) Shadow tree is closed and {\ttfamily composed} in event is false, path just contains the shadow root. 3) Shadow tree is open and {\ttfamily composed} in event is true, then the path has the full order from the element invoked to the top including shadow tree hierarchy. 4) Shadow tree is open and {\ttfamily composed} in event is false, then the path has elements from the element invoked till the shadow root.
+ 1) The element is outside a shadow tree, then it just goes from that element to the top which could be \doxylink{class_document}{Document} or window. 2) The element is inside a shadow tree. It also has 4 cases\+:-\/ 1) Shadow tree is closed and {\ttfamily composed} in event is true, then the path includes the shadow root to the top. The hierarchy inside the shadow tree isn\textquotesingle{}t included. 2) Shadow tree is closed and {\ttfamily composed} in event is false, path just contains the shadow root. 3) Shadow tree is open and {\ttfamily composed} in event is true, then the path has the full order from the element invoked to the top including shadow tree hierarchy. 4) Shadow tree is open and {\ttfamily composed} in event is false, then the path has elements from the element invoked till the shadow root.
 
 It also removes the shadow roots !
 
 This is how the {\ttfamily path} for the current event is calculated. Furthermore, the {\ttfamily compose\+Path()} method works on this path to have the shadow roots removed and also not including the shadow DOM notes if its mode is closed.
 
 \DoxyHorRuler{0}
-\hypertarget{md_events_autotoc_md13}{}\doxysection{\texorpdfstring{Custom\+Event}{Custom\+Event}}\label{md_events_autotoc_md13}
-It\textquotesingle{}s a derived class of {\ttfamily Event} with an extra {\ttfamily detail} attribute to store information.\hypertarget{md_events_autotoc_md14}{}\doxysubsection{\texorpdfstring{Read-\/only Attributes}{Read-\/only Attributes}}\label{md_events_autotoc_md14}
+\hypertarget{md_events_autotoc_md21}{}\doxysection{\texorpdfstring{Custom\+Event}{Custom\+Event}}\label{md_events_autotoc_md21}
+It\textquotesingle{}s a derived class of {\ttfamily \doxylink{class_event}{Event}} with an extra {\ttfamily detail} attribute to store information.\hypertarget{md_events_autotoc_md22}{}\doxysubsection{\texorpdfstring{Read-\/only Attributes}{Read-\/only Attributes}}\label{md_events_autotoc_md22}
 {\ttfamily std\+::any detail}
 \begin{DoxyItemize}
 \item Initially nullptr
 \item Could be anything
 \item From the {\ttfamily any} lib
-\end{DoxyItemize}\hypertarget{md_events_autotoc_md15}{}\doxysubsection{\texorpdfstring{Methods}{Methods}}\label{md_events_autotoc_md15}
-{\ttfamily Custom\+Event(DOMString const \&type, bool bubbles = false, bool cancelable = false, bool composed = false, std\+::any \&detail = nullptr)}
+\end{DoxyItemize}\hypertarget{md_events_autotoc_md23}{}\doxysubsection{\texorpdfstring{Methods}{Methods}}\label{md_events_autotoc_md23}
+{\ttfamily \doxylink{class_custom_event}{Custom\+Event}(DOMString const \&type, bool bubbles = false, bool cancelable = false, bool composed = false, std\+::any \&detail = nullptr)}
 \begin{DoxyItemize}
-\item Just setting the {\ttfamily detail} attribute \& calling the {\ttfamily Event} constructor
+\item Just setting the {\ttfamily detail} attribute \& calling the {\ttfamily \doxylink{class_event}{Event}} constructor
 \end{DoxyItemize}
 
 {\ttfamily void init\+Custom\+Event(DOMString const \&type, bool bubbles = false, bool cancelable = false, std\+::any \&detail = nullptr)}
@@ -209,14 +209,14 @@ It\textquotesingle{}s a derived class of {\ttfamily Event} with an extra {\ttfam
 \item Legacy too
 \end{DoxyItemize}
 
-{\ttfamily Custom\+Event(const Custom\+Event\texorpdfstring{$\ast$}{*} temp)}
+{\ttfamily \doxylink{class_custom_event}{Custom\+Event(const Custom\+Event\texorpdfstring{$\ast$}{*} temp)}}
 \begin{DoxyItemize}
 \item Copy constructor
 \item Copied values\+: {\ttfamily detail}, \begin{quote}
-Refer copy constructor for {\ttfamily Event} for other values copied. \end{quote}
+Refer copy constructor for {\ttfamily \doxylink{class_event}{Event}} for other values copied. \end{quote}
 
 \end{DoxyItemize}
 
 \DoxyHorRuler{0}
-\hypertarget{md_events_autotoc_md17}{}\doxysection{\texorpdfstring{Event\+Target}{Event\+Target}}\label{md_events_autotoc_md17}
-It\textquotesingle{}s the base class for anything inside of the DOM like nodes, document, elements, etc... It sets the base layer so that event listeners can be added and also events can easily propagate through the multiple Event\+Targets.\hypertarget{md_events_autotoc_md18}{}\doxysubsection{\texorpdfstring{Read-\/only Attributes}{Read-\/only Attributes}}\label{md_events_autotoc_md18}
+\hypertarget{md_events_autotoc_md25}{}\doxysection{\texorpdfstring{Event\+Target}{Event\+Target}}\label{md_events_autotoc_md25}
+It\textquotesingle{}s the base class for anything inside of the DOM like nodes, document, elements, etc... It sets the base layer so that event listeners can be added and also events can easily propagate through the multiple Event\+Targets.\hypertarget{md_events_autotoc_md26}{}\doxysubsection{\texorpdfstring{Read-\/only Attributes}{Read-\/only Attributes}}\label{md_events_autotoc_md26}

@@ -1,0 +1,228 @@
+\doxysection{Processing\+Instruction Class Reference}
+\hypertarget{class_processing_instruction}{}\label{class_processing_instruction}\index{ProcessingInstruction@{ProcessingInstruction}}
+Inheritance diagram for Processing\+Instruction\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=4.000000cm]{class_processing_instruction}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual void \mbox{\hyperlink{class_processing_instruction_a41603941b1012686802fd43a0e6bc51c}{setdata}} (DOMString data) override
+\item 
+\mbox{\hyperlink{class_processing_instruction_ac811d98bfd6787d6db578d75193131d5}{Processing\+Instruction}} (\mbox{\hyperlink{class_document}{Document}} \texorpdfstring{$\ast$}{*}ownerdoc=nullptr, \mbox{\hyperlink{class_node}{Node}} \texorpdfstring{$\ast$}{*}parentnode=nullptr)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_character_data}{Character\+Data}}}
+\begin{DoxyCompactItemize}
+\item 
+unsigned long \mbox{\hyperlink{class_character_data_a91288713968c002301a12ac59dd07d72}{length}} ()
+\item 
+DOMString \mbox{\hyperlink{class_character_data_a9170c557f5f652c9f8dafd7b72917702}{substring\+Data}} (unsigned long offset, unsigned long count)
+\item 
+void \mbox{\hyperlink{class_character_data_a6774d971ab759a7dfc91b94b43770261}{append\+Data}} (DOMString data)
+\item 
+void \mbox{\hyperlink{class_character_data_a47730eaa0413ddbbe8c00df4d12b32db}{insert\+Data}} (unsigned long offset, DOMString data)
+\item 
+void \mbox{\hyperlink{class_character_data_aa4872fe44b9112704c0fe4e52a4a5cbe}{delete\+Data}} (unsigned long offset, unsigned long count)
+\item 
+void \mbox{\hyperlink{class_character_data_a0380ff02b00ee64c147de850fa294b32}{replace\+Data}} (unsigned long offset, unsigned long count, DOMString data)
+\item 
+\mbox{\hyperlink{class_element}{Element}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_character_data_ab8d55a7d3e73c0d556b20b4eb54917a7}{previous\+Element\+Sibling}} ()
+\item 
+\mbox{\hyperlink{class_element}{Element}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_character_data_ad1c7fe6f1fcb8317747b7996f1bdaf9e}{next\+Element\+Sibling}} ()
+\item 
+\mbox{\hyperlink{class_character_data_aa9dda0ace19558aff527afdec1ba3a60}{Character\+Data}} (\mbox{\hyperlink{class_document}{Document}} \texorpdfstring{$\ast$}{*}ownerdoc=nullptr, \mbox{\hyperlink{class_node}{Node}} \texorpdfstring{$\ast$}{*}parentnode=nullptr)
+\item 
+DOMString \mbox{\hyperlink{class_character_data_ae4f89abd33644fc868241f3795bb9ead}{getdata}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_node}{Node}}}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{class_node_a9f2cb07334ad3b05599d5f432218d473}{is\+Connected}} ()
+\item 
+virtual \mbox{\hyperlink{class_node}{Node}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_node_a3db586ddaa3e1cda137a5e24d8188006}{first\+Child}} ()
+\item 
+virtual \mbox{\hyperlink{class_node}{Node}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_node_a13a802d8f107d9845f72913b421f4cca}{last\+Child}} ()
+\item 
+virtual \mbox{\hyperlink{class_node}{Node}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_node_a68105b0a889eabb3d1d9951bcecaccc5}{previous\+Sibling}} ()
+\item 
+virtual \mbox{\hyperlink{class_node}{Node}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_node_a7ded9e13d9500df8663417406c4822fb}{next\+Sibling}} ()
+\item 
+bool \mbox{\hyperlink{class_node_a1d2482ecd610118bb728408e2a6f43d2}{has\+Child\+Nodes}} () const
+\item 
+\mbox{\hyperlink{class_node}{Node}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_node_ad9c1a21659d0b2c390786e76cc05d5ab}{get\+Root\+Node}} (bool composed=false)
+\item 
+void \mbox{\hyperlink{class_node_abe64eecf63dc440defd720779c2341bc}{normalize}} ()
+\item 
+\mbox{\hyperlink{class_node}{Node}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_node_a36392b1fedf12244dc3979a94effec94}{clone\+Node}} (bool subtree)
+\item 
+\mbox{\hyperlink{class_node_a9bed2cdfc02a4a33ee2de8266582598c}{Node}} (node\+\_\+type node\+Type, DOMString node\+Name, \mbox{\hyperlink{class_document}{Document}} \texorpdfstring{$\ast$}{*}owner\+Document=nullptr, \mbox{\hyperlink{class_node}{Node}} \texorpdfstring{$\ast$}{*}parent\+Node=nullptr)
+\item 
+unsigned long \mbox{\hyperlink{class_node_a99849a13f6c63fdf85cd114db6372a0d}{length}} ()
+\item 
+bool \mbox{\hyperlink{class_node_a17e0bd2703af8b398a2bd36a7c44c010}{is\+Equal\+Node}} (\mbox{\hyperlink{class_node}{Node}} \texorpdfstring{$\ast$}{*}other\+Node)
+\item 
+bool \mbox{\hyperlink{class_node_a077137672fc14795b5342a3a0a9b8952}{is\+Same\+Node}} (\mbox{\hyperlink{class_node}{Node}} \texorpdfstring{$\ast$}{*}other\+Node)
+\item 
+unsigned short \mbox{\hyperlink{class_node_a942427a9123eb6fdbfe420ae7297ada2}{compare\+Document\+Position}} (\mbox{\hyperlink{class_node}{Node}} \texorpdfstring{$\ast$}{*}other)
+\item 
+bool \mbox{\hyperlink{class_node_ac02bae2fff420e3b9e2592e6d3435da5}{contains}} (\mbox{\hyperlink{class_node}{Node}} \texorpdfstring{$\ast$}{*}other)
+\item 
+virtual std\+::optional$<$ DOMString $>$ \mbox{\hyperlink{class_node_a6342d3b46f000d7fedccba0c08e33655}{lookup\+Prefix}} (std\+::optional$<$ DOMString $>$ \&namesp)
+\item 
+std\+::optional$<$ DOMString $>$ \mbox{\hyperlink{class_node_a81830502bd40f43ef193eee0f634453b}{lookup\+Namespace\+URI}} (std\+::optional$<$ DOMString $>$ \&prefix)
+\item 
+bool \mbox{\hyperlink{class_node_ae2ef9d26099655c175e048b0a1e56950}{is\+Default\+Namespace}} (std\+::optional$<$ DOMString $>$ \&namesp)
+\item 
+\mbox{\hyperlink{class_node}{Node}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_node_ae7d2edeeae59a0c12f56810af0feb050}{insert\+Before}} (\mbox{\hyperlink{class_node}{Node}} \texorpdfstring{$\ast$}{*}node, \mbox{\hyperlink{class_node}{Node}} \texorpdfstring{$\ast$}{*}child)
+\item 
+\mbox{\hyperlink{class_node}{Node}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_node_a721182860d2adbe0fa4e1bb9ccb419b1}{append\+Child}} (\mbox{\hyperlink{class_node}{Node}} \texorpdfstring{$\ast$}{*}node)
+\item 
+\mbox{\hyperlink{class_node}{Node}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_node_a5da63c101eabb429ef55a87ca2edce1c}{replace\+Child}} (\mbox{\hyperlink{class_node}{Node}} \texorpdfstring{$\ast$}{*}node, \mbox{\hyperlink{class_node}{Node}} \texorpdfstring{$\ast$}{*}child)
+\item 
+\mbox{\hyperlink{class_node}{Node}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_node_ab53dd6926b0e922b8ed671d9cda1be7b}{remove\+Child}} (\mbox{\hyperlink{class_node}{Node}} \texorpdfstring{$\ast$}{*}child)
+\item 
+virtual \mbox{\hyperlink{class_node}{Node}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_node_aefc29fc813906687aa7a235eb9c04152}{get\+\_\+the\+\_\+parent}} (\mbox{\hyperlink{class_event}{Event}} \texorpdfstring{$\ast$}{*}event)
+\item 
+virtual std\+::optional$<$ DOMString $>$ \mbox{\hyperlink{class_node_a1ece01bf42cda0011154cb3dcf2abb89}{getnode\+Value}} ()
+\item 
+virtual void \mbox{\hyperlink{class_node_af67f3dbe7d2702d35f0fd74c72c2f54d}{setnode\+Value}} (DOMString \&val)
+\item 
+virtual std\+::optional$<$ DOMString $>$ \mbox{\hyperlink{class_node_ad5b61b4d387574fb8325e6de8c5265e8}{gettext\+Content}} ()
+\item 
+virtual void \mbox{\hyperlink{class_node_a39a1da42f626e7b1b781a2405423fceb}{settext\+Content}} (DOMString \&val)
+\item 
+bool \mbox{\hyperlink{class_node_aa87d71975b895108833b72597bc1647d}{operator==}} (\mbox{\hyperlink{class_node}{Node}} \&other)
+\item 
+bool \mbox{\hyperlink{class_node_a8858e3cbb1b977cf1a50884ebb168eef}{operator\texorpdfstring{$^\wedge$}{\string^}}} (\mbox{\hyperlink{class_node}{Node}} \texorpdfstring{$\ast$}{*}other)
+\item 
+unsigned long \mbox{\hyperlink{class_node_af1918d583d6cc1c866f895692f4425f8}{index}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_event_target}{Event\+Target}}}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_event_target_a58682c21cf0388b97a877b186c870365}{add\+Event\+Listener}} (DOMString \&type, \mbox{\hyperlink{class_event_listener}{Event\+Listener}} \texorpdfstring{$\ast$}{*}callback, std\+::variant$<$ \mbox{\hyperlink{struct_add_event_listener_options}{Add\+Event\+Listener\+Options}}, bool $>$ \&options)
+\item 
+void \mbox{\hyperlink{class_event_target_ab37aaaa5ed2e070613320e0f638e2adf}{remove\+Event\+Listener}} (DOMString \&type, \mbox{\hyperlink{class_event_listener}{Event\+Listener}} \texorpdfstring{$\ast$}{*}callback, bool capture)
+\item 
+void \mbox{\hyperlink{class_event_target_a3c5a4008edc7b9a85b3751ffebecd7a4}{remove\+All\+Event\+Listeners}} ()
+\item 
+bool \mbox{\hyperlink{class_event_target_a4d062d5e105c747d4edd9715e68d5ad6}{dispatch\+Event}} (\mbox{\hyperlink{class_event}{Event}} \texorpdfstring{$\ast$}{*}event)
+\item 
+bool \mbox{\hyperlink{class_event_target_a03a78ba45ab2cdfb77adc33c73a4cbb4}{operator==}} (const \mbox{\hyperlink{class_event_target}{Event\+Target}} \&a)
+\item 
+bool \mbox{\hyperlink{class_event_target_a393e17e431520f4df9313ca2237f25bf}{operator!=}} (const \mbox{\hyperlink{class_event_target}{Event\+Target}} \&a)
+\item 
+virtual \mbox{\hyperlink{class_event_target}{Event\+Target}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_event_target_a9984bf77a4194ed91460f66ce23a435d}{get\+\_\+the\+\_\+parent}} (const \mbox{\hyperlink{class_event}{Event}} \texorpdfstring{$\ast$}{*}event)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+DOMString \mbox{\hyperlink{class_processing_instruction_a7f63a76520ed7573cfd3d3e418471a7e}{target}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{class_node}{Node}}}
+\begin{DoxyCompactItemize}
+\item 
+node\+\_\+type \mbox{\hyperlink{class_node_aa3a4de5da5f317ed4f01537bba305323}{node\+Type}}
+\item 
+DOMString \mbox{\hyperlink{class_node_a2ef4f79e5f845243aadde49f8c74b001}{node\+Name}}
+\item 
+USVString \mbox{\hyperlink{class_node_a582cff6c01eb04d14cf2fe59b70e3852}{base\+URI}}
+\item 
+\mbox{\hyperlink{class_document}{Document}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_node_ab644809506dd2f26ed83f21b789c6c75}{owner\+Document}}
+\item 
+\mbox{\hyperlink{class_node}{Node}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_node_aa9e76719c03d49799a3017294d4dff23}{parent\+Node}}
+\item 
+\mbox{\hyperlink{class_element}{Element}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_node_a70698f28ba56a518f26628e9209d547b}{parent\+Element}} = nullptr
+\item 
+\mbox{\hyperlink{class_node_list}{Node\+List}} \mbox{\hyperlink{class_node_a47fcea2bbf439aef263e6dbc89750a2d}{child\+Nodes}}
+\item 
+DOMString \mbox{\hyperlink{class_node_a51976fe7fe8927f16bfc5ac8af8e5b7c}{node\+Value}}
+\item 
+DOMString \mbox{\hyperlink{class_node_a21a9f330819c56a8890b71fab6ed4ed7}{text\+Content}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{class_event_target}{Event\+Target}}}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{class_event_target_a18eff1e304f2e6bdee0a9e3875b59527}{has\+\_\+activation\+\_\+behavior}} = false
+\item 
+bool \mbox{\hyperlink{class_event_target_a9f139193d0b5800d48b9066462fbc33e}{has\+\_\+legacy\+\_\+canceled\+\_\+activation\+\_\+behavior}} = false
+\item 
+bool \mbox{\hyperlink{class_event_target_a5e4ceca6c7a90af50a015755f1af3d34}{has\+\_\+legacy\+\_\+pre\+\_\+activation\+\_\+behavior}} = false
+\item 
+std\+::function$<$ void(\mbox{\hyperlink{class_event}{Event}} \texorpdfstring{$\ast$}{*}event)$>$ \mbox{\hyperlink{class_event_target_a516fde701d19ae92736ac58c53cb8948}{activation\+\_\+behavior\+\_\+algorithm}} = \mbox{[}$\,$\mbox{]}(\mbox{\hyperlink{class_event}{Event}}\texorpdfstring{$\ast$}{*} event) \{\}
+\item 
+std\+::function$<$ void()$>$ \mbox{\hyperlink{class_event_target_aa3713cf4cca2cfaec13e41a19add979e}{legacy\+\_\+canceled\+\_\+activation\+\_\+behavior\+\_\+algorithm}} = \mbox{[}$\,$\mbox{]}() \{\}
+\item 
+std\+::function$<$ void()$>$ \mbox{\hyperlink{class_event_target_a2f9c8cb9eba55ecc229b9313f269fe0e}{legacy\+\_\+pre\+\_\+activation\+\_\+behavior\+\_\+algorithm}} = \mbox{[}$\,$\mbox{]}() \{\}
+\item 
+std\+::vector$<$ \mbox{\hyperlink{structevent__listener}{event\+\_\+listener}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{class_event_target_a3eb05c71dd6fb764b7c1f69ed75f5bf7}{event\+\_\+listener\+\_\+list}} = \{\}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{class_character_data}{Character\+Data}}}
+\begin{DoxyCompactItemize}
+\item 
+DOMString \mbox{\hyperlink{class_character_data_a7a7cf7f524b9f5064153132112474185}{data}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{_webelo_8cpp_source_l01037}{1037}} of file \mbox{\hyperlink{_webelo_8cpp_source}{Webelo.\+cpp}}.
+
+
+
+\label{doc-constructors}
+\Hypertarget{class_processing_instruction_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_processing_instruction_ac811d98bfd6787d6db578d75193131d5}\index{ProcessingInstruction@{ProcessingInstruction}!ProcessingInstruction@{ProcessingInstruction}}
+\index{ProcessingInstruction@{ProcessingInstruction}!ProcessingInstruction@{ProcessingInstruction}}
+\doxysubsubsection{\texorpdfstring{ProcessingInstruction()}{ProcessingInstruction()}}
+{\footnotesize\ttfamily \label{class_processing_instruction_ac811d98bfd6787d6db578d75193131d5} 
+Processing\+Instruction\+::\+Processing\+Instruction (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_document}{Document}} \texorpdfstring{$\ast$}{*}}]{ownerdoc}{ = {\ttfamily nullptr}, }\item[{\mbox{\hyperlink{class_node}{Node}} \texorpdfstring{$\ast$}{*}}]{parentnode}{ = {\ttfamily nullptr}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{_webelo_8cpp_source_l01045}{1045}} of file \mbox{\hyperlink{_webelo_8cpp_source}{Webelo.\+cpp}}.
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_processing_instruction_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_processing_instruction_a41603941b1012686802fd43a0e6bc51c}\index{ProcessingInstruction@{ProcessingInstruction}!setdata@{setdata}}
+\index{setdata@{setdata}!ProcessingInstruction@{ProcessingInstruction}}
+\doxysubsubsection{\texorpdfstring{setdata()}{setdata()}}
+{\footnotesize\ttfamily \label{class_processing_instruction_a41603941b1012686802fd43a0e6bc51c} 
+virtual void Processing\+Instruction\+::setdata (\begin{DoxyParamCaption}\item[{DOMString}]{data}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_character_data}{Character\+Data}}.
+
+
+
+Definition at line \mbox{\hyperlink{_webelo_8cpp_source_l01041}{1041}} of file \mbox{\hyperlink{_webelo_8cpp_source}{Webelo.\+cpp}}.
+
+
+
+\label{doc-variable-members}
+\Hypertarget{class_processing_instruction_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_processing_instruction_a7f63a76520ed7573cfd3d3e418471a7e}\index{ProcessingInstruction@{ProcessingInstruction}!target@{target}}
+\index{target@{target}!ProcessingInstruction@{ProcessingInstruction}}
+\doxysubsubsection{\texorpdfstring{target}{target}}
+{\footnotesize\ttfamily \label{class_processing_instruction_a7f63a76520ed7573cfd3d3e418471a7e} 
+DOMString Processing\+Instruction\+::target}
+
+
+
+Definition at line \mbox{\hyperlink{_webelo_8cpp_source_l01039}{1039}} of file \mbox{\hyperlink{_webelo_8cpp_source}{Webelo.\+cpp}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/Webelo.\+cpp\end{DoxyCompactItemize}

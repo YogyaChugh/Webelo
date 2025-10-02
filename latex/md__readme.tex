@@ -1,13 +1,18 @@
 \chapter{WEBELO }
 \hypertarget{md__readme}{}\label{md__readme}\index{WEBELO@{WEBELO}}
-\label{md__readme_autotoc_md19}%
-\Hypertarget{md__readme_autotoc_md19}%
+\label{md__readme_autotoc_md0}%
+\Hypertarget{md__readme_autotoc_md0}%
 
 
-A browser !!\hypertarget{md__readme_autotoc_md20}{}\doxysection{\texorpdfstring{Current Implementation}{Current Implementation}}\label{md__readme_autotoc_md20}
-Currently, creating the basis for any web-\/browser related stuff \#\+DOM ! Soon, set to HTML Parsing and then diving to the visuals !!! Follow to keep updated on this amazing software.\hypertarget{md__readme_autotoc_md21}{}\doxysection{\texorpdfstring{DOM}{DOM}}\label{md__readme_autotoc_md21}
-A {\ttfamily Document Object Model} for storing and working of tree for HTML and XML documents. It defines a tree with preorder depth first traversal order.\hypertarget{md__readme_autotoc_md22}{}\doxysubsection{\texorpdfstring{What exactly is it ??}{What exactly is it ??}}\label{md__readme_autotoc_md22}
-Basically, it is a tree implementation strictly abiding to the rules of the \href{https://dom.spec.whatwg.org/}{\texttt{DOM STANDARD}} defined by an organization named \href{https://whatwg.org/}{\texttt{What\+WG}}.
+An HTML Visualizer \& DOM Library\hypertarget{md__readme_autotoc_md1}{}\doxysection{\texorpdfstring{DOM}{DOM}}\label{md__readme_autotoc_md1}
+A {\ttfamily \doxylink{class_document}{Document} Object Model} for storing and working of tree for HTML and XML documents.
+
+Alongside, it consists of an {\ttfamily HTML Visualizer} to visualize how your html looks to the browser.
+
+It defines a complex tree of classes with preorder depth first traversal order.\hypertarget{md__readme_autotoc_md2}{}\doxysubsection{\texorpdfstring{What exactly is it ??}{What exactly is it ??}}\label{md__readme_autotoc_md2}
+Basically, it is a very complex tree implementation strictly abiding to the rules of the \href{https://dom.spec.whatwg.org/}{\texttt{DOM STANDARD}} defined by an organization named \href{https://whatwg.org/}{\texttt{What\+WG}}.
+
+It is the most crucial part of a browser \& they basically depend on this. The functions you use {\ttfamily add\+Event\+Listener()}, {\ttfamily dipatch\+Event()}, {\ttfamily document.\+write()}, etc.. are all written in this library \+:)
 
 It is the {\ttfamily intermediate} which is created when {\ttfamily HTML} is parsed.
 
@@ -16,7 +21,7 @@ So let\textquotesingle{}s understand this clearly ! In broader sense\+:-\/
 When we load a website, its HTML, CSS and JS is fetched and every component is parsed. ~\newline
 
 \begin{DoxyItemize}
-\item First {\ttfamily HTML} is parsed and {\ttfamily DOM} ( Document Object Model ) tree is created !
+\item First {\ttfamily HTML} is parsed and {\ttfamily DOM} ( \doxylink{class_document}{Document} Object Model ) tree is created !
 \item Then {\ttfamily CSS} is parsed and {\ttfamily CSSOM} ( CSS Object Model ) is created !
 \item Both the {\ttfamily DOM} and {\ttfamily CSSOM} are combined to create the {\ttfamily Render Tree} !
 \item Finally using the {\ttfamily Render Tree}, we see the website on the screen after~\newline
@@ -25,14 +30,17 @@ When we load a website, its HTML, CSS and JS is fetched and every component is p
 
 \begin{quote}
 This repository implements the {\ttfamily DOM tree} for the HTML parsing ! \end{quote}
-\hypertarget{md__readme_autotoc_md23}{}\doxysubsection{\texorpdfstring{Interesting Fact}{Interesting Fact}}\label{md__readme_autotoc_md23}
+\hypertarget{md__readme_autotoc_md3}{}\doxysubsection{\texorpdfstring{Interesting Fact}{Interesting Fact}}\label{md__readme_autotoc_md3}
 There are so many browsers in the world like Google Chrome, Brave, Microsoft Edge, Firefox,etc.. but how is it that a website looks the same on all of them ???~\newline
 ~\newline
  {\ttfamily Reason} ~\newline
  This is possible because of the {\ttfamily standards} that all browsers or specifically rendering engines follow !~\newline
- And that\textquotesingle{}s what we are doing here, following the \href{https://dom.spec.whatwg.org/}{\texttt{DOM Standard}} by \href{https://whatwg.org/}{\texttt{What\+WG}} !\hypertarget{md__readme_autotoc_md24}{}\doxysubsection{\texorpdfstring{Running}{Running}}\label{md__readme_autotoc_md24}
-Currently, the base classes are being defined so running it won\textquotesingle{}t do anything ! Implementation for API coming soon...\hypertarget{md__readme_autotoc_md25}{}\doxysubsection{\texorpdfstring{Contributing}{Contributing}}\label{md__readme_autotoc_md25}
-Yup ! Anyone can contribute, just know c++ and dive into the documentation ! But don\textquotesingle{}t get bored, there\textquotesingle{}s HTML Parser and browser coming up after that ! It\textquotesingle{}s a chain !\hypertarget{md__readme_autotoc_md26}{}\doxysubsection{\texorpdfstring{Bindings}{Bindings}}\label{md__readme_autotoc_md26}
-Bindings for Python, Rust and JS will be available after initial release.
+ And that\textquotesingle{}s what we are doing here, following the \href{https://dom.spec.whatwg.org/}{\texttt{DOM Standard}} by \href{https://whatwg.org/}{\texttt{What\+WG}} !\hypertarget{md__readme_autotoc_md4}{}\doxysubsection{\texorpdfstring{Running}{Running}}\label{md__readme_autotoc_md4}
+There are 2 parts\+: 1) HTML Visualizer -\/ Running executables from \mbox{[}Releases\mbox{]}("{}https\+://github.\+com/\+Yogya\+Chugh/\+Webelo/release/latest"{}) -\/ (It runs the library using bindings too, but mainly written in Python) 2) DOM Library -\/ Just clone this repository and include the {\ttfamily \doxylink{_webelo_8cpp_source}{src/\+Webelo.\+cpp}} in your file and you are set yo go !!
 
- 
+\begin{quote}
+You can run the examples \href{https://github.com/YogyaChugh/Webelo/tree/master/examples}{\texttt{here}} to test bro/sis !! \end{quote}
+\hypertarget{md__readme_autotoc_md5}{}\doxysubsection{\texorpdfstring{Documentation}{Documentation}}\label{md__readme_autotoc_md5}
+Docs are available at \href{https://webelo.onrender.com}{\texttt{https\+://webelo.\+onrender.\+com}} for DOM Library\hypertarget{md__readme_autotoc_md6}{}\doxysubsection{\texorpdfstring{Contributing}{Contributing}}\label{md__readme_autotoc_md6}
+Yup ! Anyone can contribute, just know c++ and dive into the documentation ! But don\textquotesingle{}t get bored, there\textquotesingle{}s HTML Parser and browser coming up after that ! It\textquotesingle{}s a chain !\hypertarget{md__readme_autotoc_md7}{}\doxysubsection{\texorpdfstring{Bindings}{Bindings}}\label{md__readme_autotoc_md7}
+Bindings for Python, Rust and JS will be available after initial release. 

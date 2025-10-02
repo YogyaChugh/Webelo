@@ -1,20 +1,21 @@
+\mainpage
 # WEBELO
 
-A browser !!
-
-## Current Implementation
-
-Currently, creating the basis for any web-browser related stuff #DOM ! Soon, set to HTML Parsing and then diving to the visuals !!!
-Follow to keep updated on this amazing software.
-
+An HTML Visualizer & DOM Library
 
 ## DOM
 
 A `Document Object Model` for storing and working of tree for HTML and XML documents.
-It defines a tree with preorder depth first traversal order.
+
+Alongside, it consists of an `HTML Visualizer` to visualize how your html looks to the browser.
+
+It defines a complex tree of classes with preorder depth first traversal order.
 
 ### What exactly is it ??
-Basically, it is a tree implementation strictly abiding to the rules of the [DOM STANDARD](https://dom.spec.whatwg.org/) defined by an organization named [WhatWG](https://whatwg.org/).
+Basically, it is a very complex tree implementation strictly abiding to the rules of the [DOM STANDARD](https://dom.spec.whatwg.org/) defined by an organization named [WhatWG](https://whatwg.org/).
+
+It is the most crucial part of a browser & they basically depend on this.
+The functions you use `addEventListener()`, `dipatchEvent()`, `document.write()`, etc.. are all written in this library :)
 
 It is the `intermediate` which is created when `HTML` is parsed.
 
@@ -36,14 +37,17 @@ There are so many browsers in the world like Google Chrome, Brave, Microsoft Edg
 This is possible because of the `standards` that all browsers or specifically rendering engines follow !<br> And that's what we are doing here, following the [DOM Standard](https://dom.spec.whatwg.org/) by [WhatWG](https://whatwg.org/) !
 
 ### Running
-Currently, the base classes are being defined so running it won't do anything ! Implementation for API coming soon...
+There are 2 parts:
+1) HTML Visualizer - Running executables from [Releases]("https://github.com/YogyaChugh/Webelo/release/latest") - (It runs the library using bindings too, but mainly written in Python)
+2) DOM Library - Just clone this repository and include the `src/Webelo.cpp` in your file and you are set yo go !!
+
+> You can run the examples [here](https://github.com/YogyaChugh/Webelo/tree/master/examples) to test bro/sis !!
+
+### Documentation
+Docs are available at https://webelo.onrender.com for DOM Library
 
 ### Contributing
 Yup ! Anyone can contribute, just know c++ and dive into the documentation ! But don't get bored, there's HTML Parser and browser coming up after that ! It's a chain !
 
 ### Bindings
 Bindings for Python, Rust and JS will be available after initial release.
-
-<p>
-  <img src="https://hackatime-badge.hackclub.com/U09218J0E94/DOM" alt="Typing animation">
-</p>

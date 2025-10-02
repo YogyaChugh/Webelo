@@ -1,0 +1,141 @@
+\doxysection{Node\+List Class Reference}
+\hypertarget{class_node_list}{}\label{class_node_list}\index{NodeList@{NodeList}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_node}{Node}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_node_list_a2ae60c9e6faa102fda434fe94e9d27a5}{item}} (const unsigned long index) const
+\item 
+\mbox{\hyperlink{class_node}{Node}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_node_list_a53c1fc758b9ed21b08cd2f734741d60f}{operator\mbox{[}$\,$\mbox{]}}} (unsigned long index) const
+\item 
+bool \mbox{\hyperlink{class_node_list_a16f69ff8638f3fc0bc8b4977952f629b}{operator==}} (const \mbox{\hyperlink{class_node_list}{Node\+List}} \texorpdfstring{$\ast$}{*}other\+Node\+List) const
+\item 
+unsigned long \mbox{\hyperlink{class_node_list_a875a170072b483b337c6fe1a8d3db50a}{length}} () const
+\item 
+void \mbox{\hyperlink{class_node_list_adbc3a6a6f80f489090675454587ec31d}{append}} (\mbox{\hyperlink{class_node}{Node}} \texorpdfstring{$\ast$}{*}node)
+\item 
+void \mbox{\hyperlink{class_node_list_a8b8c8fc667026b27227f87f52524088d}{insert}} (\mbox{\hyperlink{class_node}{Node}} \texorpdfstring{$\ast$}{*}node, const unsigned long \&index)
+\item 
+void \mbox{\hyperlink{class_node_list_a9aefcd40e08b045f135905b348838aea}{remove}} (\mbox{\hyperlink{class_node}{Node}} \texorpdfstring{$\ast$}{*}node)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\+::vector$<$ \mbox{\hyperlink{class_node}{Node}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{class_node_list_a478cd0c32dfc13f3d8691a78e52ffcfc}{node\+\_\+list}} = \{\}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{_webelo_8cpp_source_l00590}{590}} of file \mbox{\hyperlink{_webelo_8cpp_source}{Webelo.\+cpp}}.
+
+
+
+\label{doc-constructors}
+\Hypertarget{class_node_list_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_node_list_a77b664c0c6c93d1c6eccbd10581396af}\index{NodeList@{NodeList}!````~NodeList@{\texorpdfstring{$\sim$}{\string~}NodeList}}
+\index{````~NodeList@{\texorpdfstring{$\sim$}{\string~}NodeList}!NodeList@{NodeList}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}NodeList()}{\string~NodeList()}}
+{\footnotesize\ttfamily \label{class_node_list_a77b664c0c6c93d1c6eccbd10581396af} 
+Node\+List\+::\texorpdfstring{$\sim$}{\string~}\+Node\+List (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_webelo_8cpp_source_l03878}{3878}} of file \mbox{\hyperlink{_webelo_8cpp_source}{Webelo.\+cpp}}.
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_node_list_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_node_list_adbc3a6a6f80f489090675454587ec31d}\index{NodeList@{NodeList}!append@{append}}
+\index{append@{append}!NodeList@{NodeList}}
+\doxysubsubsection{\texorpdfstring{append()}{append()}}
+{\footnotesize\ttfamily \label{class_node_list_adbc3a6a6f80f489090675454587ec31d} 
+void Node\+List\+::append (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_node}{Node}} \texorpdfstring{$\ast$}{*}}]{node}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{_webelo_8cpp_source_l00607}{607}} of file \mbox{\hyperlink{_webelo_8cpp_source}{Webelo.\+cpp}}.
+
+\Hypertarget{class_node_list_a8b8c8fc667026b27227f87f52524088d}\index{NodeList@{NodeList}!insert@{insert}}
+\index{insert@{insert}!NodeList@{NodeList}}
+\doxysubsubsection{\texorpdfstring{insert()}{insert()}}
+{\footnotesize\ttfamily \label{class_node_list_a8b8c8fc667026b27227f87f52524088d} 
+void Node\+List\+::insert (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_node}{Node}} \texorpdfstring{$\ast$}{*}}]{node}{, }\item[{const unsigned long \&}]{index}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{_webelo_8cpp_source_l00611}{611}} of file \mbox{\hyperlink{_webelo_8cpp_source}{Webelo.\+cpp}}.
+
+\Hypertarget{class_node_list_a2ae60c9e6faa102fda434fe94e9d27a5}\index{NodeList@{NodeList}!item@{item}}
+\index{item@{item}!NodeList@{NodeList}}
+\doxysubsubsection{\texorpdfstring{item()}{item()}}
+{\footnotesize\ttfamily \label{class_node_list_a2ae60c9e6faa102fda434fe94e9d27a5} 
+\mbox{\hyperlink{class_node}{Node}} \texorpdfstring{$\ast$}{*} Node\+List\+::item (\begin{DoxyParamCaption}\item[{const unsigned long}]{index}{}\end{DoxyParamCaption}) const}
+
+
+
+Definition at line \mbox{\hyperlink{_webelo_8cpp_source_l03840}{3840}} of file \mbox{\hyperlink{_webelo_8cpp_source}{Webelo.\+cpp}}.
+
+\Hypertarget{class_node_list_a875a170072b483b337c6fe1a8d3db50a}\index{NodeList@{NodeList}!length@{length}}
+\index{length@{length}!NodeList@{NodeList}}
+\doxysubsubsection{\texorpdfstring{length()}{length()}}
+{\footnotesize\ttfamily \label{class_node_list_a875a170072b483b337c6fe1a8d3db50a} 
+unsigned long Node\+List\+::length (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [nodiscard]}}
+
+
+
+Definition at line \mbox{\hyperlink{_webelo_8cpp_source_l03849}{3849}} of file \mbox{\hyperlink{_webelo_8cpp_source}{Webelo.\+cpp}}.
+
+\Hypertarget{class_node_list_a16f69ff8638f3fc0bc8b4977952f629b}\index{NodeList@{NodeList}!operator==@{operator==}}
+\index{operator==@{operator==}!NodeList@{NodeList}}
+\doxysubsubsection{\texorpdfstring{operator==()}{operator==()}}
+{\footnotesize\ttfamily \label{class_node_list_a16f69ff8638f3fc0bc8b4977952f629b} 
+bool Node\+List\+::operator== (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_node_list}{Node\+List}} \texorpdfstring{$\ast$}{*}}]{other\+Node\+List}{}\end{DoxyParamCaption}) const}
+
+
+
+Definition at line \mbox{\hyperlink{_webelo_8cpp_source_l03853}{3853}} of file \mbox{\hyperlink{_webelo_8cpp_source}{Webelo.\+cpp}}.
+
+\Hypertarget{class_node_list_a53c1fc758b9ed21b08cd2f734741d60f}\index{NodeList@{NodeList}!operator\mbox{[}\mbox{]}@{operator[]}}
+\index{operator\mbox{[}\mbox{]}@{operator[]}!NodeList@{NodeList}}
+\doxysubsubsection{\texorpdfstring{operator[]()}{operator[]()}}
+{\footnotesize\ttfamily \label{class_node_list_a53c1fc758b9ed21b08cd2f734741d60f} 
+\mbox{\hyperlink{class_node}{Node}} \texorpdfstring{$\ast$}{*} Node\+List\+::operator\mbox{[}$\,$\mbox{]} (\begin{DoxyParamCaption}\item[{unsigned long}]{index}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{_webelo_8cpp_source_l00598}{598}} of file \mbox{\hyperlink{_webelo_8cpp_source}{Webelo.\+cpp}}.
+
+\Hypertarget{class_node_list_a9aefcd40e08b045f135905b348838aea}\index{NodeList@{NodeList}!remove@{remove}}
+\index{remove@{remove}!NodeList@{NodeList}}
+\doxysubsubsection{\texorpdfstring{remove()}{remove()}}
+{\footnotesize\ttfamily \label{class_node_list_a9aefcd40e08b045f135905b348838aea} 
+void Node\+List\+::remove (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_node}{Node}} \texorpdfstring{$\ast$}{*}}]{node}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_webelo_8cpp_source_l03866}{3866}} of file \mbox{\hyperlink{_webelo_8cpp_source}{Webelo.\+cpp}}.
+
+
+
+\label{doc-variable-members}
+\Hypertarget{class_node_list_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_node_list_a478cd0c32dfc13f3d8691a78e52ffcfc}\index{NodeList@{NodeList}!node\_list@{node\_list}}
+\index{node\_list@{node\_list}!NodeList@{NodeList}}
+\doxysubsubsection{\texorpdfstring{node\_list}{node\_list}}
+{\footnotesize\ttfamily \label{class_node_list_a478cd0c32dfc13f3d8691a78e52ffcfc} 
+std\+::vector$<$\mbox{\hyperlink{class_node}{Node}}\texorpdfstring{$\ast$}{*}$>$ Node\+List\+::node\+\_\+list = \{\}}
+
+
+
+Definition at line \mbox{\hyperlink{_webelo_8cpp_source_l00592}{592}} of file \mbox{\hyperlink{_webelo_8cpp_source}{Webelo.\+cpp}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/Webelo.\+cpp\end{DoxyCompactItemize}

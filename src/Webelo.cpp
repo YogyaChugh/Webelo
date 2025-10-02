@@ -235,6 +235,7 @@ bool dispatch_event(Event* event, EventTarget* target, std::optional<bool> legac
 
 
 
+
 // Classes & Structs
 
 class Window{
@@ -723,6 +724,15 @@ class Node: public EventTarget{
         virtual ~Node() = default;
 };
 
+std::ostream& operator<<(std::ostream& os, const Node& node) {
+    if (node.nodeType == 1) { // Example: ELEMENT_NODE
+        os << "ELEMENT NODE\n" << node.nodeName;
+    } else {
+        os << "OTHER NODE\n" << node.nodeName;
+    }
+    return os;
+}
+
 struct ImportNodeOptions{
     CustomElementRegistry* customElementRegistry;
     bool selfOnly = false;
@@ -921,7 +931,7 @@ class ParentNode: public Node {
             return children.item(0);
         };
         Element* lastElementChild() const{
-            return children.element_list.back();
+            return this->children.item(this->children.length()-1);
         };
 
         unsigned long childElementCount() const{
@@ -1095,7 +1105,7 @@ class Document: public ParentNode{
         HTMLCollection* getElementsByTagName(DOMString qualifiedName);
         HTMLCollection* getElementsByTagNameNS(std::optional<DOMString> namesp, DOMString localname);
         HTMLCollection* getElementsByClassName(std::vector<DOMString> &classNames);
-        // friend Element* getElementById(Node* node, const DOMString &elementId);
+        friend Element* getElementById(Node* node, const DOMString &elementId);
 
 
         Element* createElement(DOMString localName, std::variant<DOMString,ElementCreationOptions> options); //NOTE: Keep last argument as optional
@@ -1166,7 +1176,7 @@ class DocumentType: public Node{
 class DocumentFragment: public ParentNode{
     public:
         Element* associatedHost = nullptr;
-        // friend Element* getElementById(Node* node ,const DOMString &elementId);
+        friend Element* getElementById(Node* node ,const DOMString &elementId);
         DocumentFragment(Document* ownerdoc = nullptr, Node* parentnode = nullptr): ParentNode(DOCUMENT_FRAGMENT_NODE, "#document-fragment", ownerdoc, parentnode){};
 
         virtual ~DocumentFragment() = default;
@@ -1464,6 +1474,7 @@ class DOMTokenList{
 
         virtual ~DOMTokenList() = default;
 };
+
 
 
 
@@ -1808,7 +1819,13 @@ DOMString replace_data(Node* node, unsigned long offset, unsigned long count, DO
 }
 
 Element* create_element(Document* document, DOMString localName, std::optional<DOMString> namesp, std::optional<DOMString> prefix, std::optional<DOMString> is, bool synchronousCustomElements, std::variant<DOMString,std::nullptr_t,CustomElementRegistry> registry){
-    return nullptr;
+    Element* temp = new Element("global","e","k",new CustomElementRegistry(), UNDEFINED);
+    temp->ownerDocument = document;
+    temp->localName = localName;
+    temp->namespaceURI = namesp;
+    temp->prefix = prefix;
+    temp->is = is;
+    return temp;
 }
 
 void flatten_element_creation_options(std::variant<DOMString,ElementCreationOptions> options, Document* document, CustomElementRegistry* registry, std::optional<DOMString> &is){
@@ -2848,6 +2865,7 @@ bool inner_invoke(Event* event, std::vector<event_listener*> &listeners,enum eve
             continue;
         }
         if (event->type!=listener->type) {
+            std::cout<<"Event caught of type "<<event->type;
             continue;
         }
         found = true;
@@ -3369,9 +3387,9 @@ bool host_including_inclusive_ancestor(Node* A, Node* B){
 
 
 void ensure_pre_insert_validity(Node* node, Node* parent, Node* child){
-    // if (!(dynamic_cast<Document*>(parent)) && !(dynamic_cast<DocumentFragment*>(parent)) && !(dynamic_cast<Element*>(parent))){
-    //     throw HeirarchyRequestError("Shit boi !");
-    // }
+    if (!(dynamic_cast<Document*>(parent)) && !(dynamic_cast<DocumentFragment*>(parent)) && !(dynamic_cast<Element*>(parent))){
+        throw HeirarchyRequestError("Shit boi !");
+    }
 
     if (host_including_inclusive_ancestor(node, parent)){
         throw HeirarchyRequestError("Shit boi !");
@@ -3380,56 +3398,56 @@ void ensure_pre_insert_validity(Node* node, Node* parent, Node* child){
     if (child && child->parentNode != parent){
         throw NotFoundError("Not found fudge !");
     }
-    // if (!(dynamic_cast<DocumentFragment*>(node)) && !(dynamic_cast<DocumentType*>(node)) && !(dynamic_cast<Element*>(node)) && !(dynamic_cast<CharacterData*>(node))){
-    //     throw HeirarchyRequestError("Shit boi !");
-    // }
-    // if ((dynamic_cast<Text*>(node) && dynamic_cast<Document*>(parent)) || (dynamic_cast<DocumentType*>(node) && !(dynamic_cast<Document*>(parent)))){
-    //     throw HeirarchyRequestError("Shit boi !");
-    // }
-    // if (true){
-    //     bool element_count = 0;
-    //     bool doctype_count = 0;
-    //     for (auto a: parent->childNodes.node_list){
-    //         if (dynamic_cast<Element*>(a)){ element_count++; }
-    //         else if (dynamic_cast<DocumentType*>(a)){ doctype_count++; }
-    //     }
-    //     if (dynamic_cast<DocumentFragment*>(node)){
-    //         int count = 0;
-    //         bool has = false;
-    //         for (auto a: node->childNodes.node_list){
-    //             if (dynamic_cast<Element*>(a)){ count++; }
-    //             if (dynamic_cast<Text*>(a)){ has = true; }
-    //         }
-    //         if (count>1 || has){
-    //             throw HeirarchyRequestError("Shit boi !");
-    //         }
-    //         if (count==1){
-    //             if (element_count>0 && dynamic_cast<DocumentType*>(child)){
-    //                 throw HeirarchyRequestError("Shit boi !");
-    //             }
-    //         }
-    //     }
-    //     else if (dynamic_cast<Element*>(node)){
-    //         if (element_count>0 && dynamic_cast<DocumentType*>(child)){
-    //             throw HeirarchyRequestError("Shit boi !");
-    //         }
-    //     }
-    //     else if (dynamic_cast<DocumentType*>(node)){
-    //         if (doctype_count>0 && child){
-    //             throw HeirarchyRequestError("Shit boi !");
-    //         }
-    //         if (!child && element_count){
-    //             throw HeirarchyRequestError("Shit boi !");
-    //         }
-    //     }
-    // }
+    if (!(dynamic_cast<DocumentFragment*>(node)) && !(dynamic_cast<DocumentType*>(node)) && !(dynamic_cast<Element*>(node)) && !(dynamic_cast<CharacterData*>(node))){
+        throw HeirarchyRequestError("Shit boi !");
+    }
+    if ((dynamic_cast<Text*>(node) && dynamic_cast<Document*>(parent)) || (dynamic_cast<DocumentType*>(node) && !(dynamic_cast<Document*>(parent)))){
+        throw HeirarchyRequestError("Shit boi !");
+    }
+    if (true){
+        int element_count = 0;
+        int doctype_count = 0;
+        for (auto a: parent->childNodes.node_list){
+            if (dynamic_cast<Element*>(a)){ element_count++; }
+            else if (dynamic_cast<DocumentType*>(a)){ doctype_count++; }
+        }
+        if (dynamic_cast<DocumentFragment*>(node)){
+            int count = 0;
+            bool has = false;
+            for (auto a: node->childNodes.node_list){
+                if (dynamic_cast<Element*>(a)){ count++; }
+                if (dynamic_cast<Text*>(a)){ has = true; }
+            }
+            if (count>1 || has){
+                throw HeirarchyRequestError("Shit boi !");
+            }
+            if (count==1){
+                if (element_count>0 && dynamic_cast<DocumentType*>(child)){
+                    throw HeirarchyRequestError("Shit boi !");
+                }
+            }
+        }
+        else if (dynamic_cast<Element*>(node)){
+            if (element_count>0 && dynamic_cast<DocumentType*>(child)){
+                throw HeirarchyRequestError("Shit boi !");
+            }
+        }
+        else if (dynamic_cast<DocumentType*>(node)){
+            if (doctype_count>0 && child){
+                throw HeirarchyRequestError("Shit boi !");
+            }
+            if (!child && element_count){
+                throw HeirarchyRequestError("Shit boi !");
+            }
+        }
+    }
 }
 
 
 
 
 Node* pre_insert_node(Node* node, Node* parent, Node* child){
-    ensure_pre_insert_validity(node, parent, child);
+    // ensure_pre_insert_validity(node, parent, child);
     Node* referenceChild = child;
     if (referenceChild == node){
         referenceChild = node->nextSibling();
@@ -3440,19 +3458,19 @@ Node* pre_insert_node(Node* node, Node* parent, Node* child){
 
 void insert_node(Node* node, Node* parent, Node* child, bool suppress_observers){
     NodeList* nodes;
-    // if (dynamic_cast<DocumentFragment*>(node)){
-    //     nodes = &node->childNodes;
-    // }
-    // else{
-    //     nodes = new NodeList();
-    //     nodes->node_list.push_back(node);
-    // }
+    if (dynamic_cast<DocumentFragment*>(node)){
+        nodes = &node->childNodes;
+    }
+    else{
+        nodes = new NodeList();
+        nodes->node_list.push_back(node);
+    }
     int count = nodes->length();
     if (count==0){ return; }
-    // if (dynamic_cast<DocumentFragment*>(node)){
-    //     // remove_node(node);
-    //     queue_tree_mutation_record(node, new NodeList(), nodes, nullptr, nullptr);
-    // }
+    if (dynamic_cast<DocumentFragment*>(node)){
+        remove_node(node);
+        queue_tree_mutation_record(node, new NodeList(), nodes, nullptr, nullptr);
+    }
     if (child){
         //TODO
     }
@@ -3905,7 +3923,7 @@ inline Node* Node::firstChild(){
     return this->childNodes[0];
 }
 inline Node* Node::lastChild(){
-    return this->childNodes.node_list.back();
+    return this->childNodes.item(this->childNodes.length()-1);
 }
 Node* Node::previousSibling() {
     if (this->parentNode) {
@@ -4426,7 +4444,7 @@ Document* DOMImplementation::createHTMLDocument(std::optional<DOMString> title){
     document->type = HTML;
     document->contentType = "text/html";
     DocumentType* doct = new DocumentType("html");
-    // doct->ownerDocument = document;
+    doct->ownerDocument = document;
     pre_insert_node(dynamic_cast<Node*>(document), dynamic_cast<Node*>(doct), nullptr);
     Element* htmlElement = create_element(document, "html", "http://www.w3.org/1999/xhtml", std::nullopt);
     pre_insert_node(dynamic_cast<Node*>(document), dynamic_cast<Node*>(htmlElement), nullptr);
@@ -4436,10 +4454,11 @@ Document* DOMImplementation::createHTMLDocument(std::optional<DOMString> title){
         Element* titleElement = create_element(document, "title", "http://www.w3.org/1999/xhtml", std::nullopt);
         pre_insert_node(dynamic_cast<Node*>(headElement), dynamic_cast<Node*>(titleElement), nullptr);
         Text* text = new Text(title.value());
-        // text->ownerDocument = document;
+        text->ownerDocument = document;
         pre_insert_node(dynamic_cast<Node*>(titleElement), dynamic_cast<Node*>(text), nullptr);
     }
-    pre_insert_node(dynamic_cast<Node*>(htmlElement), dynamic_cast<Node*>(create_element(document, "body", "http://www.w3.org/1999/xhtml")), nullptr);
+    return document;
+    pre_insert_node(dynamic_cast<Node*>(htmlElement), dynamic_cast<Node*>(create_element(document, "body", "http://www.w3.org/1999/xhtml", std::nullopt)), nullptr);
     document->origin = this->associated_doc->origin;
     return document;
 }
