@@ -564,7 +564,12 @@ class CustomEvent: public Event{
 
 
 //Remember to remove when rewriting it
-class MouseEvent: public Event{};
+class MouseEvent: public Event{
+    public:
+        MouseEvent(const DOMString &type, bool bubbles = false, bool cancelable = false, bool composed = false):Event(type,bubbles,cancelable,composed){};
+
+        virtual ~MouseEvent() = default;
+};
 
 
 /*
@@ -3604,7 +3609,7 @@ void Event::inner_event_creation_steps(Event* event, Realm* realm, DOMHighResTim
     event->composed = composed;
 }
 
-Event::Event(const DOMString &type, bool bubbles, bool cancelable, bool composed){
+Event::Event(const DOMString &type, bool bubbles = false, bool cancelable = false, bool composed = false){
     DOMHighResTimeStamp now = time(NULL);
     inner_event_creation_steps(this, nullptr, now, bubbles, cancelable, composed);
     this->type = type;

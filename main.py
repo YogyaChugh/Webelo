@@ -400,9 +400,9 @@ link3 = Label(popup, text="Github", fg="blue", cursor="hand2", font=("Arial", 12
 link3.pack()
 
 # Bind click to open URL
-link.bind("<Button-1>", lambda e: webbrowser.open("https://example.com"))
+link.bind("<Button-1>", lambda e: webbrowser.open("https://webelo.onrender.com"))
 link2.bind("<Button-1>", lambda e: webbrowser.open("https://example.com"))
-link3.bind("<Button-1>", lambda e: webbrowser.open("https://example.com"))
+link3.bind("<Button-1>", lambda e: webbrowser.open("https://github.com/YogyaChugh/Webelo.git"))
 
 # it won't run without this as the documentation says
 root.mainloop()
