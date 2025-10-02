@@ -5,12 +5,19 @@ import bs4
 import Webelo
 from datetime import datetime
 import webbrowser
+import sys
+import os
 from tkinterweb import HtmlFrame # import the HtmlFrame widget
+
+if getattr(sys, 'frozen', False):
+    base_path = sys._MEIPASS
+else:
+    base_path = os.path.abspath(".")
 
 # Just to tell u guyz, all the project is written by me by hand except this file contains some portion written by AI
 # All other files are 100% NON-AI :) AND THIS FILE ONLY CONSTITUES ABOUT 5% of the whole project (and code editor part of this file is not AI (JUST SOME DOM TREE PART))
 
-with open("sample.html") as file:
+with open(os.path.join(base_path,"sample.html")) as file:
     html_text = file.read()
 
 ctypes.windll.shcore.SetProcessDpiAwareness(True)
@@ -264,7 +271,7 @@ def draw_tree(canvas, node):
             draw_tree(canvas, child)
 
     content = editArea.get("1.0", "end-1c")
-    with open("temp.html",'w') as ok:
+    with open(os.path.join(base_path,"temp.html"),'w') as ok:
         ok.write(content)
 
 
@@ -353,7 +360,7 @@ def open_browser():
     root2.title("Running Demo Instance")
     frame = HtmlFrame(root2)
     try:
-        with open("temp.html",'r') as f:
+        with open(os.path.join(base_path,"temp.html"),'r') as f:
             data = f.read()
         frame.load_html(data)
     except:
@@ -401,7 +408,7 @@ link3.pack()
 
 # Bind click to open URL
 link.bind("<Button-1>", lambda e: webbrowser.open("https://webelo.onrender.com"))
-link2.bind("<Button-1>", lambda e: webbrowser.open("https://example.com"))
+link2.bind("<Button-1>", lambda e: webbrowser.open("https://github.com/YogyaChugh/Webelo/tree/master/examples"))
 link3.bind("<Button-1>", lambda e: webbrowser.open("https://github.com/YogyaChugh/Webelo.git"))
 
 # it won't run without this as the documentation says
