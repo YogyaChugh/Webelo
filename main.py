@@ -25,6 +25,7 @@ ctypes.windll.shcore.SetProcessDpiAwareness(True)
 
 root = Tk()
 root.title("Webelo")
+root.iconbitmap(os.path.join(base_path, "logo.ico"))
 
 # So that it doesn't cover the fullscreen and gives some space lol :)
 width = root.winfo_screenwidth() - 100
@@ -48,11 +49,18 @@ right_frame.pack(side="left", fill="both", expand=True)
 bottom_frame = Frame(root, bg="#282C34")
 bottom_frame.pack(side="bottom", fill="x")
 
+started = 0
+
 
 # whoever reading this, don't even try !
 # hella easy, and this just updates color and all for html markup
 def changes(event=None):
-    global previousText
+    global previousText, started
+    
+    if started==2:
+        started = 3
+        reload_dom()
+    started+=1
 
     if editArea.get('1.0', END) == previousText:
         return
@@ -69,7 +77,7 @@ def changes(event=None):
             editArea.tag_config(f'{i}', foreground=token_colors[color])
             i+=1
 
-    previousText = editArea.get('1.0', END) 
+    previousText = editArea.get('1.0', END)
 
 
 # matching boi
@@ -163,7 +171,6 @@ extraContent.pack(
     side="bottom",
     anchor="s",
 )
-
 
 editArea.insert('1.0',html_text)
 editArea.bind('<KeyRelease>', changes) # Changes on key release :)
@@ -331,7 +338,10 @@ def reload_dom(event=None):
     dom_tree, logs = print_children(soup, logs)
     extraContent.delete("1.0", "end")
     extraContent.insert("1.0", logs)
+
+    # binding here
     Webelo.process_html(dom_tree)
+
     content = editArea.get("1.0",'end-1c')
     if content!="":
         canvas.create_text(100, 40, text="DOM Tree", font=("Arial", 24), fill="white")
@@ -351,13 +361,15 @@ extraContent.insert('1.0',logs)
 root.bind('<Control-s>', reload_dom)
 
 # Heiii ! Do you see my binding working ! hehe
-Webelo.process_html(dom_tree)
+# Webelo.process_html(dom_tree)
 # print(type(logs))
 # print(logs)
+
 
 def open_browser():
     root2 = Tk()
     root2.title("Running Demo Instance")
+    root2.iconbitmap(os.path.join(base_path, "logo.ico"))
     frame = HtmlFrame(root2)
     try:
         with open(os.path.join(base_path,"temp.html"),'r') as f:
