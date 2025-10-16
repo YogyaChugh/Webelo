@@ -1,1 +1,0 @@
-Full html visualizer using this API to be found at https://github.com/YogyaChugh/Webelo/releases/latest
