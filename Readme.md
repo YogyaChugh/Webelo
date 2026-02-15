@@ -1,7 +1,8 @@
-\mainpage
 # WEBELO
 
-An HTML Visualizer & DOM Library
+Rendering Engine for Browsers
+
+Currently, An HTML Visualizer & DOM Library but rendering engine's base is DOM and building the pyramid ...
 
 ## DOM
 
