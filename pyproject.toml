@@ -1,0 +1,15 @@
+[project]
+name = "webelo"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "breathe>=4.36.0",
+    "bs4>=0.0.2",
+    "lxml>=6.1.1",
+    "pybind11>=3.0.4",
+    "pyinstaller>=6.21.0",
+    "sphinx>=9.1.0",
+    "tkinterweb>=4.25.3",
+]
