@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://webelo.yogya.dev/sitemap.xml
